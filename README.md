@@ -34,6 +34,29 @@ colbourn_catalogue.csv
     N for a given k is the smallest N whose row has k at least your k
     (ca_query.py best does this for you).
 
+## R integration (r/)
+
+r/ca_verify_r.c and r/ca_verify.R
+:   The checker as a native R component: a single C file with a
+    registered .Call entry point and one R wrapper. The array passes
+    directly from R as an integer matrix, so there are no files and no
+    system calls. R's NA is the wildcard. Threading uses R's standard
+    OpenMP mechanism (portable to Windows via Rtools, automatic
+    single-threaded fallback). Symbols 0..v-1 or 1..v are detected
+    automatically.
+
+r/caverify_0.1.0.tar.gz
+:   The same two files as a complete self-contained R package that
+    passes R CMD check (status OK). Its tests include a randomized
+    cross-validation against an independent pure R implementation.
+    Usable directly as a dependency for packages that prefer to stay
+    free of C code.
+
+r/INTEGRATION.md
+:   Step-by-step instructions for either path: copying the two files
+    into an existing package, or depending on the demonstration
+    package.
+
 ## Validation
 
 The verifier was tested against all 77 covering arrays shipped in the CAs
