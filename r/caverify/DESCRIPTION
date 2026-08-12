@@ -14,5 +14,6 @@ License: MIT + file LICENSE
 URL: https://github.com/chrispbsmolen/ca-tools
 BugReports: https://github.com/chrispbsmolen/ca-tools/issues
 Encoding: UTF-8
+Language: en-US
 Imports: parallel
 NeedsCompilation: yes
