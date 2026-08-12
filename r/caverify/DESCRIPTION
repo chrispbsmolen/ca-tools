@@ -6,7 +6,7 @@ Authors@R: person("Christopher", "Smolen",
     email = "chrispbsmolen@gmail.com", role = c("aut", "cre"))
 Description: Verifies that an array covers every t-way interaction, the
     certificate check for covering arrays, using compiled C code with
-    optional OpenMP threading. Missing values are treated as wildcard
+    optional 'OpenMP' threading. Missing values are treated as wildcard
     ("flexible") entries that count as every symbol. Designed to be easy
     to embed in other packages: a single C file with a registered .Call
     entry point and one R wrapper.
