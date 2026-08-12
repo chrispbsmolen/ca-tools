@@ -45,12 +45,14 @@ r/ca_verify_r.c and r/ca_verify.R
     single-threaded fallback). Symbols 0..v-1 or 1..v are detected
     automatically.
 
-r/caverify_0.1.0.tar.gz
+r/caverify/
 :   The same two files as a complete self-contained R package that
     passes R CMD check (status OK). Its tests include a randomized
     cross-validation against an independent pure R implementation.
     Usable directly as a dependency for packages that prefer to stay
-    free of C code.
+    free of C code. Install with
+    `remotes::install_github("chrispbsmolen/ca-tools", subdir = "r/caverify")`,
+    or from CRAN once the submission clears.
 
 r/INTEGRATION.md
 :   Step-by-step instructions for either path: copying the two files
