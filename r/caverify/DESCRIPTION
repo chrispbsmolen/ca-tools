@@ -11,8 +11,8 @@ Description: Verifies that an array covers every t-way interaction, the
     to embed in other packages: a single C file with a registered .Call
     entry point and one R wrapper.
 License: MIT + file LICENSE
-URL: https://github.com/AXVIAM/ca-tools
-BugReports: https://github.com/AXVIAM/ca-tools/issues
+URL: https://github.com/chrispbsmolen/ca-tools
+BugReports: https://github.com/chrispbsmolen/ca-tools/issues
 Encoding: UTF-8
 Imports: parallel
 NeedsCompilation: yes
