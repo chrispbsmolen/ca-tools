@@ -1,3 +1,22 @@
+# caverify 0.2.0
+
+* Mixed-level covering arrays (MCAs): `v` now also accepts an integer
+  vector of length `ncol(x)` giving each column its own number of
+  symbols, or the string `"auto"` to infer per-column symbol counts
+  from each column's own maximum. Tuple counting and indexing in the C
+  kernel are mixed-radix; a uniform array is the degenerate case and
+  takes the same code path.
+* NA wildcard semantics unchanged: an NA entry counts as every symbol
+  of its own column.
+* Unchanged defaults: `v = NULL` still infers a single uniform value
+  from the data range exactly as in 0.1.x, and a scalar `v` behaves as
+  before, so existing callers (including package 'CAs') see identical
+  behaviour.
+* `print` shows mixed-level results with the levels profile in
+  exponent notation (e.g. `levels 4^2 3 2^3`).
+* Tests: mixed-level brute-force oracle plus randomized mixed-level
+  cross-validation added.
+
 # caverify 0.1.3
 
 * Fixed an installation failure on R-devel with clang 22, seen on the
