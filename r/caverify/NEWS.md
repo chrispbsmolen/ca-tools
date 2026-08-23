@@ -1,13 +1,21 @@
 # caverify 0.2.0
 
+* NA semantics corrected, a breaking change from 0.1.x. An NA marks a
+  flexible ("don't care") entry: a row now contributes nothing to a
+  projection in which it has an NA, so a verified array is covering no
+  matter how its NA entries are later filled. The 0.1.x behaviour let
+  one NA count as every symbol at once, per tuple independently, and
+  could certify arrays that no single choice of values would make
+  covering (a 4-run array passed as a strength-4 covering array on 21
+  four-level columns). Thanks to Ulrike Groemping for the
+  counterexample. The new behaviour also agrees exactly with
+  `CAs::coverage()` on arrays with NAs.
 * Mixed-level covering arrays (MCAs): `v` now also accepts an integer
   vector of length `ncol(x)` giving each column its own number of
   symbols, or the string `"auto"` to infer per-column symbol counts
   from each column's own maximum. Tuple counting and indexing in the C
   kernel are mixed-radix; a uniform array is the degenerate case and
   takes the same code path.
-* NA wildcard semantics unchanged: an NA entry counts as every symbol
-  of its own column.
 * Unchanged defaults: `v = NULL` still infers a single uniform value
   from the data range exactly as in 0.1.x, and a scalar `v` behaves as
   before, so existing callers (including package 'CAs') see identical

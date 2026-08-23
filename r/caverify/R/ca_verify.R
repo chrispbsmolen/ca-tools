@@ -11,8 +11,13 @@
 #' Tuple counts and indexing are mixed-radix; a uniform array is the
 #' degenerate case in which all radices coincide.
 #'
-#' Missing values (NA) are treated as wildcards ("flexible values"):
-#' an NA entry counts as every symbol of its own column simultaneously.
+#' Missing values (NA) mark flexible ("don't care") entries. A row
+#' contributes nothing to a projection in which it has an NA, so a
+#' verified array is covering no matter how its NA entries are later
+#' filled. (Versions 0.1.x instead let an NA count as every symbol at
+#' once, which could certify arrays that no single choice of values
+#' would make covering; changed in 0.2.0 following a counterexample
+#' by Ulrike Groemping.)
 #'
 #' Symbols may be coded 0..v-1 or 1..v; 1-based input is detected and
 #' shifted automatically (reported examples are given in the input

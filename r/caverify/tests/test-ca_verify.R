@@ -11,10 +11,9 @@ brute <- function(x, t, v) {
         hit <- logical(nrow(tuples))
         for (r in seq_len(nrow(sub))) {
             row <- sub[r, ]
+            if (anyNA(row)) next   ## don't-care: contributes nothing here
             ok <- rep(TRUE, nrow(tuples))
-            for (j in seq_len(t)) {
-                if (!is.na(row[j])) ok <- ok & (tuples[, j] == row[j])
-            }
+            for (j in seq_len(t)) ok <- ok & (tuples[, j] == row[j])
             hit <- hit | ok
         }
         if (!all(hit)) { gaps <- gaps + 1; miss <- miss + sum(!hit) }
@@ -38,9 +37,20 @@ b <- brute(br, 2, 2)
 stopifnot(!r$covered, r$gaps == b$gaps, r$missing_tuples == b$missing)
 stopifnot(nrow(r$examples) >= 1)
 
-## 4. wildcard row restores coverage
+## 4. don't-care semantics: an NA row contributes nothing, so adding
+## one cannot restore coverage (0.2.0 semantics change)
 wc <- rbind(br, c(NA, NA, NA))
-stopifnot(isTRUE(ca_verify(wc, 2)$covered))
+rwc <- ca_verify(wc, 2)
+rbr <- ca_verify(br, 2)
+stopifnot(!rwc$covered, rwc$gaps == rbr$gaps,
+          rwc$missing_tuples == rbr$missing_tuples)
+
+## 4b. regression: the Groemping counterexample. One concrete column
+## plus 20 all-NA columns must NOT verify at strength 4; every column
+## set is uncovered.
+gx <- cbind(1:4, matrix(NA_integer_, 4, 20))
+rg <- ca_verify(gx, 4)
+stopifnot(!rg$covered, rg$gaps == rg$colsets, rg$colsets == choose(21, 4))
 
 ## 5. 1-based auto-shift equivalence
 r0 <- ca_verify(ca, 2)
@@ -93,10 +103,9 @@ brute_mixed <- function(x, t, vs) {
         hit <- logical(nrow(tuples))
         for (r in seq_len(nrow(sub))) {
             row <- sub[r, ]
+            if (anyNA(row)) next   ## don't-care: contributes nothing here
             ok <- rep(TRUE, nrow(tuples))
-            for (j in seq_len(t)) {
-                if (!is.na(row[j])) ok <- ok & (tuples[, j] == row[j])
-            }
+            for (j in seq_len(t)) ok <- ok & (tuples[, j] == row[j])
             hit <- hit | ok
         }
         if (!all(hit)) { gaps <- gaps + 1; miss <- miss + sum(!hit) }
@@ -141,12 +150,15 @@ r1b <- ca_verify(plan + 1L, 2, v = c(3, 2, 2))
 stopifnot(r1b$gaps == r$gaps, r1b$missing_tuples == r$missing_tuples,
           all(r1b$examples[, 3:4] == r$examples[, 3:4] + 1L))
 
-## 15. NA wildcard in a mixed array counts as every symbol of its column
+## 15. mixed array: an NA row contributes nothing (don't-care
+## semantics), so it cannot restore broken coverage
 gap <- plan[-(1:2), ]                       ## break coverage
-rg <- ca_verify(gap, 2, v = c(3, 2, 2))
-stopifnot(!rg$covered)
-fix <- rbind(gap, c(NA, NA, NA))            ## wildcard row restores it
-stopifnot(isTRUE(ca_verify(fix, 2, v = c(3, 2, 2))$covered))
+rgap <- ca_verify(gap, 2, v = c(3, 2, 2))
+stopifnot(!rgap$covered)
+fix <- rbind(gap, c(NA, NA, NA))
+rfix <- ca_verify(fix, 2, v = c(3, 2, 2))
+stopifnot(!rfix$covered, rfix$gaps == rgap$gaps,
+          rfix$missing_tuples == rgap$missing_tuples)
 
 ## 16. randomized mixed-level cross-validation against the oracle,
 ## with and without NA wildcards, strengths 2 and 3

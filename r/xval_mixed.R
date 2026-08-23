@@ -9,12 +9,12 @@
 ##            missing tuples.
 ##   Track B: randomized mixed-level matrices (every column attaining
 ##            all its symbols, no NAs), same exact-agreement contract.
-##   Track C: NA wildcard semantics. caverify treats NA as "every
-##            symbol of its column"; CAs::coverage ignores rows that
-##            have an NA inside the projection. These differ BY DESIGN,
-##            so NA arrays are checked against a pure-R brute-force
-##            oracle with wildcard semantics, and the caverify/coverage
-##            divergence is demonstrated, not equated.
+##   Track C: NA ("don't care") semantics. As of 0.2.0 caverify and
+##            CAs::coverage agree: a row contributes nothing to a
+##            projection in which it has an NA. NA arrays are checked
+##            BOTH against a pure-R oracle and strictly against
+##            coverage(), plus a regression on the Groemping
+##            counterexample that broke the 0.1.x wildcard semantics.
 ##
 ## Contract for strict comparison (Tracks A and B): NA-free arrays,
 ## 0-based consecutive symbols, every column attains all its symbols
@@ -79,10 +79,9 @@ brute_mixed <- function(x, t, vs) {
         hit <- logical(nrow(tuples))
         for (r in seq_len(nrow(sub))) {
             row <- sub[r, ]
+            if (anyNA(row)) next   ## don't-care: contributes nothing here
             ok <- rep(TRUE, nrow(tuples))
-            for (j in seq_len(t)) {
-                if (!is.na(row[j])) ok <- ok & (tuples[, j] == row[j])
-            }
+            for (j in seq_len(t)) ok <- ok & (tuples[, j] == row[j])
             hit <- hit | ok
         }
         if (!all(hit)) { gaps <- gaps + 1; miss <- miss + sum(!hit) }
@@ -188,15 +187,20 @@ for (i in seq_len(NB)) {
     compare_one(x, t, as.integer(vs), paste0("rand", i))
 }
 
-## ---- Track C: NA wildcard semantics ----
-cat("--- Track C: NA wildcards vs oracle ---\n")
+## ---- Track C: NA don't-care semantics ----
+cat("--- Track C: NA arrays vs oracle AND vs coverage() ---\n")
 for (i in 1:200) {
     k <- sample(3:5, 1); t <- sample(2:min(3, k), 1)
     vs <- sample(2:4, k, replace = TRUE)
-    N <- sample((max(vs) + 1):15, 1)
+    N <- sample((max(vs) + 2):15, 1)
     x <- sapply(vs, function(v) c(sample(0:(v - 1)),
                                   sample(0:(v - 1), N - v, replace = TRUE)))
-    x[sample(length(x), sample(1:3, 1))] <- NA
+    ## punch NAs only below each column's attainment block, so every
+    ## column still shows all its symbols among the non-NA entries
+    ## (keeps her data-derived level counts equal to vs, the strict
+    ## contract). Column j's first vs[j] entries hold its permutation.
+    eligible <- which(rep(seq_len(N), k) > rep(vs, each = N))
+    x[sample(eligible, min(sample(1:3, 1), length(eligible)))] <- NA
     ncase <- ncase + 1L
     r <- ca_verify(x, t, v = as.integer(vs))
     b <- brute_mixed(x, t, as.integer(vs))
@@ -205,15 +209,15 @@ for (i in 1:200) {
         nfail <- nfail + 1L
         cat("MISMATCH vs oracle [NA rand", i, "]\n", sep = "")
     }
+    compare_one(x, t, as.integer(vs), paste0("NA-cov rand", i))
 }
-## demonstrate the documented caverify/coverage divergence on NA
-plan <- cbind(rep(0:2, each = 3), c(rep(0:1, 4), 1), c(rep(0:1, each = 4), 0))
-fixd <- rbind(plan[-(1:2), ], c(NA, NA, NA))
-r <- ca_verify(fixd, 2, v = c(3L, 2L, 2L))
-cv <- CAs::coverage(fixd, 2, verbose = 1)
-div_ok <- isTRUE(r$covered) && any(cv$ncovereds < cv$tots)
-cat(sprintf("NA-divergence demo as documented (wildcard vs ignored): %s\n", div_ok))
-if (!div_ok) nfail <- nfail + 1L
+## regression: the Groemping counterexample must NOT verify, and
+## caverify must agree with coverage() on an NA-bearing array
+gx <- cbind(1:4, matrix(NA_integer_, 4, 20))
+rg <- ca_verify(gx, 4)
+reg_ok <- !isTRUE(rg$covered) && rg$gaps == rg$colsets
+cat(sprintf("Groemping counterexample rejected: %s\n", reg_ok))
+if (!reg_ok) nfail <- nfail + 1L
 
 ## ---- summary ----
 cat(sprintf("cases: %d, mismatches: %d, skipped: %d\n", ncase, nfail, nskip))

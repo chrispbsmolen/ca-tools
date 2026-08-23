@@ -7,8 +7,10 @@ ca_verify(x, t, v = NULL, threads = NULL, report = 10L)
 }
 \arguments{
   \item{x}{an integer matrix or data frame of integers; rows are runs,
-    columns are factors. \code{NA} entries are wildcards ("flexible
-    values") and count as every symbol of their own column.}
+    columns are factors. \code{NA} marks a flexible ("don't care")
+    entry: a row contributes nothing to a projection in which it has
+    an \code{NA}, so a verified array is covering no matter how its
+    \code{NA} entries are later filled.}
   \item{t}{interaction strength to verify (positive integer).}
   \item{v}{number of symbols. One of: \code{NULL} (the default) to
     infer a single uniform value from the data range, exactly as in

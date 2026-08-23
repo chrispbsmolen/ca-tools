@@ -3,8 +3,8 @@
  *
  * Port of the standalone ca_verify CLI tool (C. Smolen, ca-tools) to a
  * native R entry point: the array arrives as an R integer matrix (no
- * files, no system calls), R's NA_integer_ is the wildcard ("flexible
- * value", counts as every symbol), and results return as an R list.
+ * files, no system calls), R's NA_integer_ marks a flexible
+ * ("don't care") entry, and results return as an R list.
  *
  * Mixed-level support (0.2.0): the number of symbols is a per-column
  * vector vs[0..k-1]; tuple ranks within a column set are mixed-radix
@@ -62,33 +62,23 @@ static int next_comb(int *c, int k, int t) {
     return 1;
 }
 
-/* mark tuples exhibited by row r on columns c[]; NA = wildcard
- * (expands over that column's own number of symbols, vs[c[j]]) */
+/* mark the tuple exhibited by row r on columns c[].
+ * NA ("don't care" / flexible value) semantics, 0.2.0: a row with an
+ * NA inside the projection contributes NOTHING to that projection.
+ * Coverage must hold on concrete entries alone, so the array stays
+ * covering no matter how the NAs are later filled. (The 0.1.x
+ * per-tuple wildcard credited one NA with every symbol at once,
+ * which certifies arrays no single filling could make covering;
+ * counterexample due to Ulrike Groemping, 2026-08-23.) */
 static void mark_row(uint64_t *bm, const int *m, int nrow, int r,
-                     const int *c, int t, const int *vs,
-                     const long long *mult) {
-    int wpos[MAX_T], nw = 0;
+                     const int *c, int t, const long long *mult) {
     long long base = 0;
     for (int j = 0; j < t; j++) {
         int s = m[r + (long long)c[j] * nrow];
-        if (s == NA_INTEGER) wpos[nw++] = j;
-        else base += (long long)s * mult[j];
+        if (s == NA_INTEGER) return;   /* contributes nothing here */
+        base += (long long)s * mult[j];
     }
-    if (nw == 0) {
-        bm[base >> 6] |= 1ULL << (base & 63);
-        return;
-    }
-    long long nexp = 1;
-    for (int i = 0; i < nw; i++) nexp *= vs[c[wpos[i]]];
-    for (long long e = 0; e < nexp; e++) {
-        long long idx = base, ee = e;
-        for (int i = 0; i < nw; i++) {
-            int vw = vs[c[wpos[i]]];
-            idx += (ee % vw) * mult[wpos[i]];
-            ee /= vw;
-        }
-        bm[idx >> 6] |= 1ULL << (idx & 63);
-    }
+    bm[base >> 6] |= 1ULL << (base & 63);
 }
 
 SEXP C_ca_verify(SEXP mat, SEXP t_, SEXP v_, SEXP nthreads_, SEXP maxreport_)
@@ -192,7 +182,7 @@ SEXP C_ca_verify(SEXP mat, SEXP t_, SEXP v_, SEXP nthreads_, SEXP maxreport_)
             const long long cwords = (vt + 63) >> 6;
             memset(bm, 0, (size_t) cwords * sizeof(uint64_t));
             for (int r = 0; r < nrow; r++)
-                mark_row(bm, m, nrow, r, cc, t, vs, mult);
+                mark_row(bm, m, nrow, r, cc, t, mult);
             long long covered = 0;
             for (long long i = 0; i < cwords; i++)
                 covered += __builtin_popcountll(bm[i]);
