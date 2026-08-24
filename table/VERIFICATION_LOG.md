@@ -24,14 +24,16 @@ in this version.
 ## The three dimension failures, resolved 2026-08-23
 
 CA_390_5_7_3, CA_478_5_8_3, CA_1544_5_28_3 (Dwyer, strength 5,
-three levels) failed dimension checks: the DWYERcat catalogue in CAs
-0.24 records N = 390, 478, 1544, but the repository files hold
-arrays of 351, 405, and 1542 rows. The Dwyer repository improves
-arrays in place while file names and downstream catalogues keep the
-old counts. Fresh downloads verified all three at their true sizes;
-351 and 405 equal the Colbourn best-known exactly. Resolution rows
-are appended in the table; the failed-attempt rows are retained
-unedited, history is never rewritten.
+three levels) failed dimension checks. The DWYERcat catalogue in CAs
+0.24 records N = 390, 478, 1544, matching the file names, but the
+repository files hold arrays of 351, 405, and 1542 rows. Whether the
+files changed after they were named or the recorded numbers were
+mistaken from the start is not determined here. Fresh downloads
+verified all three arrays at their actual sizes, and 351 and 405
+equal the Colbourn best-known exactly. Resolution rows are appended
+in the table. The failed-attempt rows are retained unedited, history
+is never rewritten, and their notes record the update-in-place
+reading held at stamp time, superseded by this section.
 
 ## Collection cross-check, 2026-08-23
 
