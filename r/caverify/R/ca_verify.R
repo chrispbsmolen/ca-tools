@@ -26,12 +26,16 @@
 #' @param x an integer matrix or data frame of integers, rows = runs,
 #'   columns = factors.
 #' @param t interaction strength to verify (a positive integer).
-#' @param v number of symbols. One of: NULL (default) to infer a single
-#'   uniform value from the data range, exactly as in versions 0.1.x; a
-#'   single integer >= 2 for a uniform array; an integer vector of
-#'   length ncol(x) giving each column its own number of symbols (a
-#'   mixed-level array); or the string "auto" to infer per-column
-#'   numbers of symbols from each column's own maximum.
+#' @param v number of symbols. One of: NULL (default) to infer
+#'   per-column symbol counts from each column's own maximum ("auto"
+#'   is an explicit alias for the same behaviour); a single integer
+#'   >= 2 declaring a uniform array; or an integer vector of length
+#'   ncol(x) giving each column its own number of symbols. Versions
+#'   0.1.x instead inferred one uniform value from the global data
+#'   range; changed on a recommendation by Ulrike Groemping, since a
+#'   default should not assume a uniform CA. Declare v explicitly
+#'   when the check should also catch a column that fails to reach
+#'   its intended number of symbols.
 #' @param threads number of threads. NULL (default) picks automatically:
 #'   half the machine's logical cores (data.table-style politeness),
 #'   single-threaded for small jobs, capped during CRAN checks, and
@@ -61,7 +65,7 @@
 #' ## full factorial, so any strength-2 projection is covered
 #' mca <- as.matrix(expand.grid(0:2, 0:1, 0:1))
 #' ca_verify(mca, t = 2, v = c(3, 2, 2))
-#' ca_verify(mca, t = 2, v = "auto")
+#' ca_verify(mca, t = 2)   # the default infers each column's count
 #' @export
 resolve_threads <- function(threads, k, t) {
     if (!is.null(threads)) return(max(1L, as.integer(threads)))
@@ -90,20 +94,19 @@ ca_verify <- function(x, t, v = NULL, threads = NULL, report = 10L) {
     if (!is.finite(rng[1L])) stop("'x' contains no non-missing values")
     shift <- 0L
 
-    if (is.null(v)) {
-        ## 0.1.x behaviour, unchanged: one uniform v from the data range
-        if (rng[1L] == 0L) v <- rng[2L] + 1L
-        else if (rng[1L] == 1L) { v <- rng[2L]; shift <- 1L }
-        else stop("cannot infer 'v': symbols start at ", rng[1L],
-                  " (expected 0- or 1-based); supply 'v' and 0-based symbols")
-        vs <- rep.int(as.integer(v), k)
-    } else if (identical(v, "auto")) {
-        ## per-column inference for mixed-level arrays
+    if (is.null(v) || identical(v, "auto")) {
+        ## default: per-column inference from each column's own maximum.
+        ## NULL behaves this way on U. Groemping's recommendation, since
+        ## a default should not assume a uniform CA ("auto" is kept as
+        ## an explicit alias). Note the tradeoff: an intended-uniform
+        ## array with a defective column (top symbol absent, or
+        ## constant) passes at the reduced per-column counts; declare a
+        ## scalar v where that defect-catching matters.
         colmax <- suppressWarnings(apply(x, 2L, max, na.rm = TRUE))
         if (any(!is.finite(colmax)))
             stop("cannot infer per-column symbol counts: column(s) ",
                  paste(which(!is.finite(colmax)), collapse = ", "),
-                 " are all NA; supply 'v' as a vector")
+                 " are all NA; supply 'v'")
         if (rng[1L] == 0L) vs <- as.integer(colmax) + 1L
         else if (rng[1L] == 1L) { vs <- as.integer(colmax); shift <- 1L }
         else stop("cannot infer symbol counts: symbols start at ", rng[1L],

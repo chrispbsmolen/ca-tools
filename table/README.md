@@ -61,10 +61,11 @@ v symbols". `tier` is the evidence class:
 - `FAILED_PENDING_RECHECK` - a verification attempt that failed its
   dimension check. Kept because history is never rewritten; each such
   row is superseded by a later resolution row. The three present at
-  publication all trace to one discrepancy, the Dwyer CA_Database
-  files hold fewer rows than their names and catalogued counts
-  state, cause undetermined. All three arrays verify at their
-  actual, smaller sizes.
+  publication share one cause, per U. Groemping: the Dwyer
+  CA_Database holds two arrays for some parameter sets, DWYERcat
+  lists both, and dwyerCA always fetches the smaller, so walking
+  every catalogue row trips the dimension check on the larger
+  twins. All three arrays verify at their actual sizes.
 - `DISPUTED` - reserved for verification failures that survive
   recheck. None at publication.
 

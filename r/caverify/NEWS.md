@@ -1,5 +1,12 @@
 # caverify 0.2.0
 
+* The default `v = NULL` now infers per-column symbol counts from each
+  column's own maximum, identical to `v = "auto"`, which remains as an
+  explicit alias. Versions 0.1.x inferred one uniform value from the
+  global data range, which misjudges mixed-level arrays; changed on a
+  recommendation by Ulrike Groemping, since a default should not
+  assume a uniform CA. Declare a scalar `v` where the check should
+  also catch a column that fails to reach its intended symbol count.
 * NA semantics corrected, a breaking change from 0.1.x. An NA marks a
   flexible ("don't care") entry: a row now contributes nothing to a
   projection in which it has an NA, so a verified array is covering no

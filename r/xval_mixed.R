@@ -211,11 +211,12 @@ for (i in 1:200) {
     }
     compare_one(x, t, as.integer(vs), paste0("NA-cov rand", i))
 }
-## regression: the Groemping counterexample must NOT verify, and
-## caverify must agree with coverage() on an NA-bearing array
+## regression: the Groemping counterexample must NOT verify (with v
+## declared; the per-column default errors on its all-NA columns)
 gx <- cbind(1:4, matrix(NA_integer_, 4, 20))
-rg <- ca_verify(gx, 4)
-reg_ok <- !isTRUE(rg$covered) && rg$gaps == rg$colsets
+null_errs <- inherits(try(ca_verify(gx, 4), silent = TRUE), "try-error")
+rg <- ca_verify(gx, 4, v = rep(4L, 21))
+reg_ok <- null_errs && !isTRUE(rg$covered) && rg$gaps == rg$colsets
 cat(sprintf("Groemping counterexample rejected: %s\n", reg_ok))
 if (!reg_ok) nfail <- nfail + 1L
 

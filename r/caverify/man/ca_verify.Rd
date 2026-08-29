@@ -13,14 +13,17 @@ ca_verify(x, t, v = NULL, threads = NULL, report = 10L)
     \code{NA} entries are later filled.}
   \item{t}{interaction strength to verify (positive integer).}
   \item{v}{number of symbols. One of: \code{NULL} (the default) to
-    infer a single uniform value from the data range, exactly as in
-    versions 0.1.x; a single integer \code{>= 2} for a uniform array;
-    an integer vector of length \code{ncol(x)} giving each column its
-    own number of symbols (a mixed-level array); or the string
-    \code{"auto"} to infer per-column symbol counts from each column's
-    own maximum. Symbols may be coded \code{0..v-1} or \code{1..v}
-    (per column for mixed levels); 1-based input is detected and
-    shifted automatically.}
+    infer per-column symbol counts from each column's own maximum
+    (\code{"auto"} is an explicit alias); a single integer
+    \code{>= 2} declaring a uniform array; or an integer vector of
+    length \code{ncol(x)} giving each column its own number of
+    symbols. Versions 0.1.x inferred one uniform value from the
+    global data range instead; changed on a recommendation by Ulrike
+    Groemping, a default should not assume a uniform CA. Declare
+    \code{v} explicitly when the check should also catch a column
+    that fails to reach its intended number of symbols. Symbols may
+    be coded \code{0..v-1} or \code{1..v} (per column for mixed
+    levels); 1-based input is detected and shifted automatically.}
   \item{threads}{number of threads. \code{NULL} (the default) picks
     automatically: half the machine's logical cores, single-threaded
     for small jobs, capped during CRAN checks. Override with
@@ -58,5 +61,5 @@ ca_verify(ca[-1, ], t = 2)    # removing a run breaks coverage
 # a mixed-level array: one 3-level and two 2-level columns
 mca <- as.matrix(expand.grid(0:2, 0:1, 0:1))
 ca_verify(mca, t = 2, v = c(3, 2, 2))
-ca_verify(mca, t = 2, v = "auto")
+ca_verify(mca, t = 2)   # the default infers each column's count
 }

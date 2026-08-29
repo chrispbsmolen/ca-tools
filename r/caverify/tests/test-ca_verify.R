@@ -46,11 +46,22 @@ stopifnot(!rwc$covered, rwc$gaps == rbr$gaps,
           rwc$missing_tuples == rbr$missing_tuples)
 
 ## 4b. regression: the Groemping counterexample. One concrete column
-## plus 20 all-NA columns must NOT verify at strength 4; every column
-## set is uncovered.
+## plus 20 all-NA columns. Under the per-column default the all-NA
+## columns are uninferable and the call must error informatively;
+## with v declared, every column set must report uncovered.
 gx <- cbind(1:4, matrix(NA_integer_, 4, 20))
-rg <- ca_verify(gx, 4)
+stopifnot(inherits(try(ca_verify(gx, 4), silent = TRUE), "try-error"))
+rg <- ca_verify(gx, 4, v = rep(4L, 21))
 stopifnot(!rg$covered, rg$gaps == rg$colsets, rg$colsets == choose(21, 4))
+
+## 4c. the default is per-column inference (0.2.0, on U. Groemping's
+## recommendation): a mixed-level array is judged correctly with no v
+plan0 <- cbind(rep(0:2, each = 3), c(rep(0:1, 4), 1), c(rep(0:1, each = 4), 0))
+rd <- ca_verify(plan0, 2)
+re <- ca_verify(plan0, 2, v = c(3, 2, 2))
+stopifnot(identical(rd$covered, re$covered), rd$gaps == re$gaps,
+          rd$missing_tuples == re$missing_tuples,
+          identical(rd$v, c(3L, 2L, 2L)))
 
 ## 5. 1-based auto-shift equivalence
 r0 <- ca_verify(ca, 2)
