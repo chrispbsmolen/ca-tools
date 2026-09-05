@@ -1,0 +1,5 @@
+flexpos random battery: 300 arrays (mixed levels, half with NAs)
+coverage-convention battery: 100 NA-bearing arrays vs R oracle
+markflex random battery: 120 arrays; identical row order in 120 
+
+ALL NCK FACES TESTS PASS

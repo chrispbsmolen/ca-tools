@@ -1,0 +1,10 @@
+manual example: achieved sizes over 10 seeds: 12 12 12 12 12 12 12 12 12 12 (optimum by eCAN is 12)
+smoke calibration, CA from cyc(19,2)+4 dup rows, t=3, tiny budget:
+  CAs: sizes 19 19 19 19  in 109.9 s (4 seeds)
+  ours: sizes 19 19 19 19 19 19 19 19  in 0.1 s (8 seeds)
+  (note: this instance reduces at the first removal check only; the inner search is exercised in 2b)
+inner-loop instance: k=7 v=3 t=2, N0 = 44  trivial strip = 18 
+  CAs: sizes 12 14 13 13  mean 13  in 37.7 s (4 seeds)
+  ours: sizes 13 14 14 13 14 13 14 13 13 13 14 13  mean 13.42  in 0.6 s (12 seeds)
+
+ALL NCK DRIVER TESTS PASS

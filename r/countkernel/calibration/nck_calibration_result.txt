@@ -1,0 +1,108 @@
+instances (NIST IPOG array, rows, best known, slack, flexible cell share):
+  nist_t2_k10_v3   N0 =   19  best =   14  slack =   5  flex = 0.174
+  nist_t3_k10_v2   N0 =   18  best =   12  slack =   6  flex = 0.083
+  nist_t2_k15_v3   N0 =   20  best =   15  slack =   5  flex = 0.123
+  nist_t2_k10_v4   N0 =   29  best =   24  slack =   5  flex = 0.059
+  nist_t2_k20_v3   N0 =   21  best =   15  slack =   6  flex = 0.081
+  nist_t2_k15_v4   N0 =   34  best =   26  slack =   8  flex = 0.096
+  nist_t3_k15_v2   N0 =   21  best =   17  slack =   4  flex = 0.067
+  nist_t2_k20_v4   N0 =   37  best =   28  slack =   9  flex = 0.097
+  nist_t2_k15_v5   N0 =   51  best =   40  slack =  11  flex = 0.088
+  nist_t3_k10_v3   N0 =   66  best =   45  slack =  21  flex = 0.059
+  nist_t3_k20_v2   N0 =   25  best =   18  slack =   7  flex = 0.078
+  nist_t3_k15_v3   N0 =   80  best =   51  slack =  29  flex = 0.051
+
+pilot: her postopNCK on nist_t2_k10_v3 one seed ...
+  N 19 -> 15, covered TRUE, 29.8 s
+projected wall clock for her side (5 seeds x 12 instances, 6 workers): 102 min, uncertainty about 3x either way
+our side is expected to be a small fraction of that.
+
+299 jobs remain
+progress: 6 of 299 jobs  elapsed 0.0 min  projected 0 min
+progress: 12 of 299 jobs  elapsed 0.0 min  projected 0 min
+progress: 18 of 299 jobs  elapsed 0.0 min  projected 0 min
+progress: 24 of 299 jobs  elapsed 0.9 min  projected 11 min
+progress: 30 of 299 jobs  elapsed 0.9 min  projected 9 min
+progress: 36 of 299 jobs  elapsed 0.9 min  projected 8 min
+progress: 42 of 299 jobs  elapsed 0.9 min  projected 7 min
+progress: 48 of 299 jobs  elapsed 2.9 min  projected 18 min
+progress: 54 of 299 jobs  elapsed 4.2 min  projected 23 min
+progress: 60 of 299 jobs  elapsed 4.2 min  projected 21 min
+progress: 66 of 299 jobs  elapsed 4.2 min  projected 19 min
+progress: 72 of 299 jobs  elapsed 6.8 min  projected 28 min
+progress: 78 of 299 jobs  elapsed 8.5 min  projected 33 min
+progress: 84 of 299 jobs  elapsed 8.5 min  projected 30 min
+progress: 90 of 299 jobs  elapsed 8.5 min  projected 28 min
+progress: 96 of 299 jobs  elapsed 9.7 min  projected 30 min
+progress: 102 of 299 jobs  elapsed 10.9 min  projected 32 min
+progress: 108 of 299 jobs  elapsed 10.9 min  projected 30 min
+progress: 114 of 299 jobs  elapsed 10.9 min  projected 29 min
+progress: 120 of 299 jobs  elapsed 15.1 min  projected 38 min
+progress: 126 of 299 jobs  elapsed 19.0 min  projected 45 min
+progress: 132 of 299 jobs  elapsed 19.1 min  projected 43 min
+progress: 138 of 299 jobs  elapsed 19.1 min  projected 41 min
+progress: 144 of 299 jobs  elapsed 19.1 min  projected 40 min
+progress: 150 of 299 jobs  elapsed 23.8 min  projected 47 min
+progress: 156 of 299 jobs  elapsed 23.8 min  projected 46 min
+progress: 162 of 299 jobs  elapsed 23.8 min  projected 44 min
+progress: 168 of 299 jobs  elapsed 23.8 min  projected 42 min
+progress: 174 of 299 jobs  elapsed 32.5 min  projected 56 min
+progress: 180 of 299 jobs  elapsed 32.5 min  projected 54 min
+progress: 186 of 299 jobs  elapsed 32.5 min  projected 52 min
+progress: 192 of 299 jobs  elapsed 32.5 min  projected 51 min
+progress: 198 of 299 jobs  elapsed 42.7 min  projected 65 min
+progress: 204 of 299 jobs  elapsed 51.9 min  projected 76 min
+progress: 210 of 299 jobs  elapsed 51.9 min  projected 74 min
+progress: 216 of 299 jobs  elapsed 51.9 min  projected 72 min
+progress: 222 of 299 jobs  elapsed 65.2 min  projected 88 min
+progress: 228 of 299 jobs  elapsed 82.7 min  projected 108 min
+progress: 234 of 299 jobs  elapsed 82.7 min  projected 106 min
+progress: 240 of 299 jobs  elapsed 82.7 min  projected 103 min
+progress: 246 of 299 jobs  elapsed 98.3 min  projected 120 min
+progress: 252 of 299 jobs  elapsed 115.3 min  projected 137 min
+progress: 258 of 299 jobs  elapsed 115.3 min  projected 134 min
+progress: 264 of 299 jobs  elapsed 115.3 min  projected 131 min
+progress: 270 of 299 jobs  elapsed 163.0 min  projected 180 min
+instances (NIST IPOG array, rows, best known, slack, flexible cell share):
+  nist_t2_k10_v3   N0 =   19  best =   14  slack =   5  flex = 0.174
+  nist_t3_k10_v2   N0 =   18  best =   12  slack =   6  flex = 0.083
+  nist_t2_k15_v3   N0 =   20  best =   15  slack =   5  flex = 0.123
+  nist_t2_k10_v4   N0 =   29  best =   24  slack =   5  flex = 0.059
+  nist_t2_k20_v3   N0 =   21  best =   15  slack =   6  flex = 0.081
+  nist_t2_k15_v4   N0 =   34  best =   26  slack =   8  flex = 0.096
+  nist_t3_k15_v2   N0 =   21  best =   17  slack =   4  flex = 0.067
+  nist_t2_k20_v4   N0 =   37  best =   28  slack =   9  flex = 0.097
+  nist_t2_k15_v5   N0 =   51  best =   40  slack =  11  flex = 0.088
+  nist_t3_k10_v3   N0 =   66  best =   45  slack =  21  flex = 0.059
+  nist_t3_k20_v2   N0 =   25  best =   18  slack =   7  flex = 0.078
+  nist_t3_k15_v3   N0 =   80  best =   51  slack =  29  flex = 0.051
+
+pilot: her postopNCK on nist_t2_k10_v3 one seed ...
+  N 19 -> 15, covered TRUE, 25.0 s
+projected wall clock for her side (5 seeds x 12 instances, 6 workers): 86 min, uncertainty about 3x either way
+our side is expected to be a small fraction of that.
+
+29 jobs remain
+progress: 6 of 29 jobs  elapsed 37.4 min  projected 181 min
+progress: 12 of 29 jobs  elapsed 37.5 min  projected 91 min
+progress: 18 of 29 jobs  elapsed 37.5 min  projected 60 min
+progress: 24 of 29 jobs  elapsed 37.5 min  projected 45 min
+progress: 29 of 29 jobs  elapsed 90.2 min  projected 90 min
+
+CALIBRATION SUMMARY (identical parameters: outerRetry=20, innerRetry=5, innerMaxnochange=15 )
+instance            N0  best | hers mean/min (n)      | ours mean/min (n)      | speed  all-covered
+nist_t2_k10_v3      19    14 |  15.20 /   15 ( 5)      |  15.05 /   15 (20)      |   190x  yes
+nist_t3_k10_v2      18    12 |  14.80 /   12 ( 5)      |  14.15 /   12 (20)      |   468x  yes
+nist_t2_k15_v3      20    15 |  17.00 /   17 ( 5)      |  17.40 /   17 (20)      |   408x  yes
+nist_t2_k10_v4      29    24 |  26.80 /   26 ( 5)      |  26.80 /   26 (20)      |   278x  yes
+nist_t2_k20_v3      21    15 |  18.80 /   18 ( 5)      |  19.10 /   19 (20)      |   659x  yes
+nist_t2_k15_v4      34    26 |  30.60 /   30 ( 5)      |  30.90 /   30 (20)      |   777x  yes
+nist_t3_k15_v2      21    17 |  18.80 /   18 ( 5)      |  18.90 /   18 (20)      |  1531x  yes
+nist_t2_k20_v4      37    28 |  34.00 /   34 ( 5)      |  34.15 /   33 (20)      |  1404x  yes
+nist_t2_k15_v5      51    40 |  47.20 /   47 ( 5)      |  47.70 /   47 (20)      |  1141x  yes
+nist_t3_k10_v3      66    45 |  58.00 /   57 ( 5)      |  57.95 /   57 (20)      |  1928x  yes
+nist_t3_k20_v2      25    18 |  22.20 /   22 ( 5)      |  22.25 /   22 (20)      |  1550x  yes
+nist_t3_k15_v3      80    51 |  72.20 /   72 ( 5)      |  72.30 /   71 (20)      |  4896x  yes
+
+every output of both engines verified covering
+CALIBRATION DONE
