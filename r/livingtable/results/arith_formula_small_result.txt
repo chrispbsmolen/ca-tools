@@ -1,0 +1,43 @@
+Derive: from == t + 1 on 71 of 71 
+
+== Derive: 71 table rows, exact 71, record above law 0, record below law 0, inexpressible 0; unresolved entries 33 ==
+Add n factors: n = 1 rows 133  n >= 2 rows 415 (open)
+
+== Add n factors: 548 table rows, exact 133, record above law 0, record below law 0, inexpressible 415; unresolved entries 548 ==
+ t v    k     N        Source N_pred
+ 5 3 7015  9803 Add 2 factors     NA
+ 5 3 7016  9965 Add 3 factors     NA
+ 6 3  352 22969 Add 2 factors     NA
+ 6 3  353 24427 Add 3 factors     NA
+ 6 3  354 29635 Add 3 factors     NA
+ 6 3  355 32929 Add 3 factors     NA
+ 6 3  356 34387 Add 3 factors     NA
+ 6 3  357 39595 Add 3 factors     NA
+ 6 3  358 42889 Add 3 factors     NA
+ 6 3  359 44347 Add 3 factors     NA
+ 6 3  360 49555 Add 3 factors     NA
+ 5 4 2162 29645 Add 2 factors     NA
+
+== Chateauneuf-Kreher doubling: 114 table rows, exact 111, record above law 3, record below law 0, inexpressible 0; unresolved entries 98 ==
+ t  v  k     N                      Source N_pred
+ 3 20 36 18677 Chateauneuf-Kreher doubling  18487
+ 3 20 38 18753 Chateauneuf-Kreher doubling  18563
+ 3 20 40 19019 Chateauneuf-Kreher doubling  18639
+PHF: k == b on 186 of 612 ; shapes: perfect hash family#,#,# 177, perfect hash family#,#,#,c 10, perfect hash family#,#,#S# 31, perfect hash family#,#,#T# 394 
+
+== perfect hash family: 612 table rows, exact 612, record above law 0, record below law 0, inexpressible 0; unresolved entries 612 ==
+PHF rows with fuse (not attempted): 18 
+
+== TIERS ==
+                             
+                              ARITHMETIC ARITH_ABOVE ARITH_OPEN
+  Add n factors                      133           0        415
+  Chateauneuf-Kreher doubling        111           3          0
+  Derive                              71           0          0
+  perfect hash family                612           0          0
+unresolved entries covered by these families: 1291 
+
+ ARITHMETIC ARITH_ABOVE  ARITH_OPEN 
+        873           3         415 
+
+SMALL FAMILIES RUN DONE

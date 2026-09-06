@@ -1,0 +1,6 @@
+ARITHMETIC entries: 4401  by family: Add a factor 26; Add n factors 365; Chateauneuf-Kreher doubling 95; Colbourn-Martirosyan-TVT-Walker 28; Derive 33; Direct product 206; fuse 147; Martirosyan-Colbourn 37; Martirosyan-TVT 366; perfect hash family 620; Power CT 445; Power N-CT 2033 
+identity: 4401 of 4401 ARITHMETIC entries reproduce their recorded N from the frozen record (0.8 s)
+data/arith_edges.csv: 10328 distinct child->lookup edges (multiplicity in mult, total lookups 14101 ); 206 range edges (direct product, any t = 2 row at that v); 1902 distinct table rows answer the non-range lookups
+ingredient rows feeding the most distinct ARITHMETIC entries (t,k,v):  (5,24,20) 82; (3,509,20) 68; (6,46,16) 48; (6,46,14) 47; (6,46,15) 47; (5,564,20) 43; (6,74,18) 38; (6,74,19) 38 
+ARITHMETIC entries that are ingredients of other ARITHMETIC entries: 240 
+IDENTITY DONE

@@ -1,0 +1,45 @@
+Martirosyan-Colbourn rows: 155  even k: 155  by (t, v):
+   
+     3  4  5  6  7  8  9 10 12
+  5  0 21 15 35 22 22  3 20  6
+  6  2  0  0  9  0  0  0  0  0
+
+== v <= 5, third ingredient eCAN(t-2, h, v^2) from the table: 38 rows ==
+
+ ARITHMETIC ARITH_ABOVE 
+         37           1 
+ t v    k     N N_pred diff   e_t e_t1 e_t2sq
+ 5 4 2374 45549  45534   15 18971 3404  16351
+
+== v >= 6: 117 rows; distinct residuals per (t, v) (must all be 1 for a constant reading) ==
+ t  v resid
+ 5  6     1
+ 6  6     1
+ 5  7     1
+ 5  8     1
+ 5  9     1
+ 5 10     1
+ 5 12     1
+
+the seven constants, each against 2 q^(t-2) - 1 - 2 (q - v^2), q the least prime power >= v^2:
+ t  v       C   q  closed rows hmax
+ 5  6  101303  37  101303   35 1407
+ 6  6 3748319  37 3748319    9  249
+ 5  7  235297  49  235297   22  705
+ 5  8  524287  64  524287   22  815
+ 5  9 1062881  81 1062881    3  690
+ 5 10 2060599 101 2060599   20  831
+ 5 12 6615887 149 6615887    6  767
+constants equal to the closed form: 7 of 7 
+v >= 6 rows reproduced with the constant: 117 of 117 
+
+== all rows by tier ==
+
+    ARITHMETIC    ARITH_ABOVE ARITH_INFERRED 
+            37              1            117 
+unresolved entries in the family: 155 
+
+    ARITHMETIC    ARITH_ABOVE ARITH_INFERRED 
+            37              1            117 
+
+MARTIROSYAN-COLBOURN RUN DONE

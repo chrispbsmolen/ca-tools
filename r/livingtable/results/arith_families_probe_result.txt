@@ -1,0 +1,68 @@
+== Add a factor: 31 rows; exact 24  record below law 7 (t = 4 only)
+ t  v    k      N       Source N_pred
+ 4  3 4714   2203 Add a factor   2377
+ 4  7 3495  35809 Add a factor  41101
+ 4  8 2814  61622 Add a factor  71030
+ 4  9 2635  92313 Add a factor 107361
+ 4 10 2597 172709 Add a factor 195659
+ 4 11 2597 188851 Add a factor 219321
+ 4 12 3114 337691 Add a factor 380327
+
+== blind search ^Colbourn-Martirosyan-TVT-Walker$ t = 3: 28 rows sampled, 26 fit some pattern; top forms:
+                                            pattern rows
+  N3(k1)*0 + N3(k2)*1 + N2(k1)*[v-1] + N2(k2)*[v-1]   23
+    N3(k1)*0 + N3(k2)*1 + N2(k1)*[v-1] + N2(k2)*[0]   12
+    N3(k1)*1 + N3(k2)*0 + N2(k1)*[v-2] + N2(k2)*[v]    9
+ N3(k1)*0 + N3(k2)*0 + N2(k1)*[2(v-1)] + N2(k2)*[v]    9
+      N3(k1)*0 + N3(k2)*1 + N2(k1)*[0] + N2(k2)*[0]    7
+
+== blind search ^Cohen-Colbourn-Ling$ t = 3: 60 rows sampled, 30 fit some pattern; top forms:
+                                            pattern rows
+    N3(k1)*1 + N3(k2)*1 + N2(k1)*[v+1] + N2(k2)*[1]    3
+ N3(k1)*1 + N3(k2)*1 + N2(k1)*[2(v-1)] + N2(k2)*[1]    3
+    N3(k1)*1 + N3(k2)*1 + N2(k1)*[v-2] + N2(k2)*[2]    3
+      N3(k1)*1 + N3(k2)*1 + N2(k1)*[v] + N2(k2)*[2]    3
+  N3(k1)*0 + N3(k2)*1 + N2(k1)*[v-2] + N2(k2)*[v-1]    3
+
+== blind search ^Colbourn-Martirosyan-TVT-Walker$ t = 4: 40 rows sampled, 15 fit some pattern; top forms:
+                                                                            pattern
+ N4(k1)*1 + N4(k2)*1 + N3(k1)*[v-2] + N3(k2)*[v-1] + N2(k1)*[v-1] + N2(k2)*[v(v-1)]
+     N4(k1)*0 + N4(k2)*1 + N3(k1)*[0] + N3(k2)*[v-2] + N2(k1)*[2(v-1)] + N2(k2)*[1]
+        N4(k1)*1 + N4(k2)*1 + N3(k1)*[v-1] + N3(k2)*[v-2] + N2(k1)*[0] + N2(k2)*[0]
+          N4(k1)*0 + N4(k2)*1 + N3(k1)*[0] + N3(k2)*[v-1] + N2(k1)*[0] + N2(k2)*[0]
+        N4(k1)*1 + N4(k2)*1 + N3(k1)*[v-2] + N3(k2)*[v-1] + N2(k1)*[0] + N2(k2)*[0]
+ rows
+    4
+    3
+    2
+    2
+    2
+
+Reading: CMTW t = 3 has one form on 23 of 28 rows, N3(k2) + (v-1)(N2(k1) + N2(k2)) with k = k1 k2,
+ a LEAD to check against the paper; t = 4 and CCL show no dominant form. Nothing admitted.
+
+== TERMINAL families among the unresolved (search results or published arrays, no table ingredient): 704 entries ==
+
+            orthogonal array                   projection 
+                         196                          137 
+                     Augment                          Add 
+                         103                           70 
+                         Fix Raaphorst-Moura-Stevens fuse 
+                          66                           30 
+                    extended                       Torres 
+                          20                           16 
+             Cyclotomy shift      Raaphorst-Moura-Stevens 
+                          13                           12 
+               cover starter                        Add a 
+                          12                            7 
+              Torres-Jimenez                Cover starter 
+                           7                            6 
+                   Ji-Li-Yin                    Cyclotomy 
+                           6                            2 
+              Cyclotomy mult 
+                           1 
+status of those entries in the sweep:
+   GAP NOIMPL 
+   697      7 
+
+FAMILIES PROBE DONE

@@ -1,0 +1,46 @@
+== fuse rows in the frozen table: 1354  by m: 1 929, 2 258, 3 112, 4 25, 5 19, 6 8, 7 3 ==
+exact: 1303  ingredient outside the table: 42  not exact with an ingredient (open): 9 
+
+not exact, by base tag shape and tier:
+                                
+                                 ARITH_OPEN INGREDIENT_OUTSIDE_TABLE
+  Raaphorst-Moura-Stevens                 0                        8
+  SCPHF LFSR (TJ-IM)                      0                        8
+  extended OA (Colbourn) special          7                        0
+  orthogonal array                        2                       26
+rows with an ingredient and not exact, record against law (all below):
+ t  v  k        N                              Source   N_pred
+ 6 10 13  2928200 extended OA (Colbourn) special fuse  3367428
+ 4 12 15    48672 extended OA (Colbourn) special fuse    54754
+ 5 12 15   632736 extended OA (Colbourn) special fuse   711826
+ 6 12 15  8225568 extended OA (Colbourn) special fuse  9253762
+ 2 16 18      286               orthogonal array fuse      287
+ 4 18 21   233928 extended OA (Colbourn) special fuse   253420
+ 5 18 21  4444632 extended OA (Colbourn) special fuse  4815016
+ 6 18 21 84448008 extended OA (Colbourn) special fuse 91485340
+ 2 24 26      622               orthogonal array fuse      623
+
+unresolved fuse rows: 162 
+                                 tier
+base                              ARITHMETIC ARITH_OPEN
+  Add # factors                            2          0
+  Cohen-Colbourn-Ling                      8          0
+  Colbourn-Martirosyan-TVT-Walker         96          0
+  Cyclotomy (Colbourn)                     1          0
+  Raaphorst-Moura-Stevens                 22          0
+  extended OA (Colbourn) special           0          7
+  perfect hash family#,#,#,c              18          0
+                                 tier
+base                              INGREDIENT_OUTSIDE_TABLE
+  Add # factors                                          0
+  Cohen-Colbourn-Ling                                    0
+  Colbourn-Martirosyan-TVT-Walker                        0
+  Cyclotomy (Colbourn)                                   0
+  Raaphorst-Moura-Stevens                                8
+  extended OA (Colbourn) special                         0
+  perfect hash family#,#,#,c                             0
+
+unresolved fuse rows whose unfused base row is itself a search result or published array (TERMINAL base):
+22 of 162 
+
+FUSE RUN DONE

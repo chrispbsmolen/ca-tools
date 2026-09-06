@@ -1,3 +1,5 @@
 
 caverify.Rcheck/
 *.tar.gz
+r/countkernel/*.o
+r/countkernel/*.so

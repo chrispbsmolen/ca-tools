@@ -1,0 +1,24 @@
+COVERAGE ACCOUNTING v2, 13641 entries, no omissions:
+
+  RESOLVED            987  (  7.2%)  verified by construction, record reproduced
+  BETTER               24  (  0.2%)  verified by construction, record beaten
+  LEAF               3623  ( 26.6%)  search or external array, rebuilt by CAs, no ingredients
+  ARITHMETIC         4401  ( 32.3%)  size law reproduces the record from table ingredients (claims)
+  ARITH_INFERRED      149  (  1.1%)  size law exact, reading possibly coincidental or an ingredient outside the table
+  ARITH_ABOVE          10  (  0.1%)  record above its own law: stale-record leads
+  ARITH_BELOW           0  (  0.0%)  record below the law: better ingredient reading exists
+  ARITH_BOUND_ONLY     13  (  0.1%)  postop tags: the law gives a bound only
+  TERMINAL_CLAIMED    700  (  5.1%)  search result or published array, no ingredient, unverified
+  ARITH_OPEN         2901  ( 21.3%)  attempted, law not recovered (papers pending)
+  NOT_ATTEMPTED       833  (  6.1%)  family not yet attempted (papers pending)
+
+sanity: classes sum to 13641 of 13641 
+
+verified by construction: 1011 (7.4%); leaves rebuilt by CAs, no ingredients: 3623 (26.6%); ARITHMETIC claims with a calibrated law: 4401 (32.3%)
+entries with no handle yet (open plus not attempted): 3734 (27.4%); terminal claims, never propagable: 700 (5.1%)
+
+by strength, share with a handle (verified, leaf, or ARITHMETIC, each counted apart above):
+    2     3     4     5     6 
+0.166 0.701 0.641 0.850 0.942 
+
+REPUBLISH DONE

@@ -1,0 +1,25 @@
+unresolved: 9007 
+
+         Direct product              Power N-CT                Colbourn 
+                   2101                    2093                     706 
+                    Add     perfect hash family             Martirosyan 
+                    653                     638                     527 
+               Power CT                   Cohen                PCAx2PCA 
+                    447                     326                     294 
+                PCAxPCA                Power CZ        orthogonal array 
+                    221                     212                     196 
+             projection                 Augment      Chateauneuf-Kreher 
+                    137                     103                     103 
+                    Fix Raaphorst-Moura-Stevens                  Derive 
+                     66                      42                      33 
+               extended               Cyclotomy                  Torres 
+                     20                      16                      16 
+          cover starter          Torres-Jimenez                   Cover 
+                     12                       7                       6 
+              Ji-Li-Yin 
+                      6 
+
+share of unresolved in the top 10 families: 0.889 
+entries in formula-bearing families (the ceiling): 6397 of 9007 
+modifier tags among unresolved: fuse 351  postop NCK 380  Arc( 563  T-modifiers 2934 
+(postop NCK entries can only receive a BOUND from a formula, not an exact size)

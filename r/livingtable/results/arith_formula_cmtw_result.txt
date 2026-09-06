@@ -1,0 +1,86 @@
+plain rows: 611  by t: 3 28, 4 583 
+
+== strength 3: 28 rows ==
+                   tier
+route               ARITHMETIC
+  3.4                       23
+  3.4 at v+1, fused          5
+  v     k     N   kk             route N_pred       tier
+  3   588   213  196               3.4    213 ARITHMETIC
+  3  8100   352 2700               3.4    352 ARITHMETIC
+  3  9408   360 3136               3.4    360 ARITHMETIC
+  3 10000   366 3334               3.4    366 ARITHMETIC
+  5   155   529   31               3.4    529 ARITHMETIC
+  7   315  1519   45               3.4   1519 ARITHMETIC
+  7   399  1525   57               3.4   1525 ARITHMETIC
+  8   512  2304   64               3.4   2304 ARITHMETIC
+  8   584  2311   73               3.4   2311 ARITHMETIC
+  9   675  3321   75               3.4   3321 ARITHMETIC
+  9   819  3329   91               3.4   3329 ARITHMETIC
+ 10  1463  6179  147 3.4 at v+1, fused   6179 ARITHMETIC
+ 11  1243  6171  113               3.4   6171 ARITHMETIC
+ 11  1463  6181  133               3.4   6181 ARITHMETIC
+ 13  2067 10309  159               3.4  10309 ARITHMETIC
+ 13  2379 10321  183               3.4  10321 ARITHMETIC
+ 16  3888 19456  243               3.4  19456 ARITHMETIC
+ 16  4368 19471  273               3.4  19471 ARITHMETIC
+ 17  4675 23409  275               3.4  23409 ARITHMETIC
+ 17  5219 23425  307               3.4  23425 ARITHMETIC
+ 18  6555 32849  365 3.4 at v+1, fused  32849 ARITHMETIC
+ 18  7239 32867  403 3.4 at v+1, fused  32867 ARITHMETIC
+ 19  6555 32851  345               3.4  32851 ARITHMETIC
+ 19  7239 32869  381               3.4  32869 ARITHMETIC
+ 22 10000 58717  455 3.4 at v+1, fused  58717 ARITHMETIC
+ 23 10000 58719  435               3.4  58719 ARITHMETIC
+ 24 10000 75623  417 3.4 at v+1, fused  75623 ARITHMETIC
+ 25 10000 75625  400               3.4  75625 ARITHMETIC
+
+== strength 4: 583 rows, all ARITH_OPEN ==
+pure-CAN forms on the 583 rows: 4.7 evaluable 9 exact 0 ; 4.9 evaluable 195 exact 0 record below it 195 ; package strength-4 form evaluable 583 exact 0 
+k divisible by v: 304 ; k = 10000: 13 ; prime power v: 303 
+rows with v | k, per v: rows and distinct residuals N - eCAN(4,k/v,v) - (v-1) eCAN(3,k/v,v):
+  v rows distinct_residuals
+  3    2                  2
+  7   17                  4
+  8    5                  1
+  9   29                  4
+ 10    6                  5
+ 11   23                  4
+ 12   10                 10
+ 13   30                 12
+ 14   18                 18
+ 15    7                  7
+ 16   40                 30
+ 17   41                 32
+ 18    3                  3
+ 19   36                 21
+ 20   18                 13
+ 21    1                  1
+ 23    9                  3
+ 25    9                  3
+example, v = 7, residual by k/v:
+   kk     N resid
+  506 41887 12564
+  590 42139 12672
+  599 43285 13818
+  653 44149 13818
+ 1002 47347 14112
+ 1015 47383 14112
+ 1026 47419 14112
+ 1035 47455 14112
+ 1136 47599 14112
+ 1145 49861 14112
+ 1167 49897 14112
+ 1182 49933 14112
+ 1185 49975 14112
+ 1204 50011 14112
+ 1214 50047 14112
+ 1349 50155 14112
+ 1359 50197 14112
+
+unresolved plain rows: 610 
+
+ARITHMETIC ARITH_OPEN 
+        28        582 
+
+CMTW RUN DONE

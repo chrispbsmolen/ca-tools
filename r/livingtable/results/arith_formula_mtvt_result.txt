@@ -1,0 +1,53 @@
+rows: 372 
+         t
+kind        5   6
+  plain    66 140
+  postop    0   6
+  variant  54 106
+odd k by kind:
+         odd
+kind      FALSE TRUE
+  plain     206    0
+  postop      3    3
+  variant     0  160
+
+== tiers by kind ==
+         tier
+kind      ARITHMETIC ARITH_BOUND_ONLY
+  plain          206                0
+  postop           0                6
+  variant        160                0
+plain rows exact by t:
+   exact
+t   TRUE
+  5   66
+  6  140
+postop rows (bound only): record against the law
+ t v  k      N N_pred
+ 6 6 11 157440 287646
+ 6 6 12 183244 287646
+ 6 6 13 210598 337492
+ 6 6 14 235561 337492
+ 6 6 15 261440 385582
+ 6 6 16 286636 385582
+
+== variant width search (0 = k1, 1 = k2) ==
+t = 5 : 54 rows; assignments common to all rows: 2 
+     Var1 Var2 Var3 Var4 Var5 Var6
+[1,]    0    0    1    1    1    0
+[2,]    0    0    0    1    1    1
+  (columns: e5 e4 e3 e2 | e2 e3 ; the common assignments are one expression in its orderings)
+t = 6 : 106 rows; assignments common to all rows: 4 
+     Var1 Var2 Var3 Var4 Var5 Var6 Var7 Var8
+[1,]    0    0    1    1    1    0    1    0
+[2,]    0    0    0    1    1    1    1    0
+[3,]    0    0    1    1    1    0    0    1
+[4,]    0    0    0    1    1    1    0    1
+  (columns: e6 e5 e4 e2 | e2 e4 | e3 e3 ; the common assignments are one expression in its orderings)
+
+unresolved rows in the family: 372 
+
+      ARITHMETIC ARITH_BOUND_ONLY 
+             366                6 
+
+MARTIROSYAN-TVT RUN DONE

@@ -8,7 +8,7 @@ the repository layout, see README.md). Requirements: R with packages
 CAs (>= 0.24, GitHub version) and caverify (>= 0.2.0) installed.
 Nothing depends on any cloud environment. Stage 1 scripts are not
 shipped, so their outputs are records rather than reproducible
-artifacts; stages 2 to 4 rerun from here.
+artifacts; stages 2 to 5 rerun from here.
 
 ## Stage 1: inventory and measurement of the frozen record
 
@@ -97,6 +97,66 @@ engine produces is verified by caverify before it is stamped
     change-and-restore replay.
 16. engine_coverage.R -> data/engine_coverage.csv
     Coverage accounting of all 13,641 entries.
+
+## Stage 5: the ARITHMETIC tier (size laws over the unresolved entries)
+
+Size laws recovered from the Source tags of the UNRESOLVED entries,
+calibrated on every row of each family in the frozen table (the
+recorded N must equal the law applied to the recorded sizes of the
+named ingredients, eCAN(t, w, v) from the table itself), admitted
+only where exact, and wired as an engine organ. Every size in this
+tier is a claim derived from claims; nothing in it is verified, and
+it is counted apart from the verified tiers. Each script tees its
+log to results/<script>_result.txt; run in this order.
+
+17. arith_measure.R -> results/arith_measure_result.txt
+    The ceiling, the 9,007 UNRESOLVED entries by tag family (6,397
+    in formula-bearing families).
+18. Family calibrations, each -> data/<script>.csv:
+    arith_formula_power.R (Power CT and Power N-CT, also writes
+    data/arith_power_Mtable.csv, the fitted N-CT hash family
+    table); arith_formula_dp.R (the direct product law on the
+    executed DPcat recipes, reads the stage 3 substrate) and
+    arith_formula_dp_table.R (the law on the frozen table);
+    arith_probe_powerCZ.R (Power CZ, size law not recovered);
+    arith_formula_small.R (Derive, Add 1 factor, Chateauneuf-Kreher
+    doubling, perfect hash family); arith_families_probe.R (Add a
+    factor, a recorded blind search with nothing admitted, the
+    terminal families); arith_formula_addn.R (Add n factors for
+    every n, superseding the Add rows of the small and probe csvs);
+    arith_formula_mc.R (Martirosyan-Colbourn); arith_formula_fuse.R
+    (every tag with a trailing fuse suffix, whole table; supersedes
+    the probe's classification on fused rows whose base is in the
+    table); arith_formula_cmtw.R (Colbourn-Martirosyan-TVT-Walker,
+    strength 3 admitted, strength 4 open with the pure-CAN forms
+    tested); arith_formula_mtvt.R (Martirosyan-TVT, even and odd k);
+    arith_families_tail.R (the last 39 rows outside the
+    paper-blocked families, 8 heterogeneous hash family rows
+    admitted, 5 postop bound-only, 26 terminal).
+19. arith_tally.R -> data/arith_tally.csv
+    The arithmetic tier of every UNRESOLVED entry, ARITHMETIC 4,401,
+    ARITH_INFERRED 149, ARITH_ABOVE 10, ARITH_BELOW 0,
+    ARITH_BOUND_ONLY 13, TERMINAL_CLAIMED 700, ARITH_OPEN 2,901,
+    NOT_ATTEMPTED 833.
+20. arith_laws.R (sourced) and arith_engine.R identity ->
+    data/arith_edges.csv, results/arith_engine_identity_result.txt
+    The law evaluators and the engine organ; the identity run
+    requires the frozen record to reproduce itself (4,401 of 4,401)
+    and writes the arithmetic edges (10,328 distinct entry-to-lookup
+    edges, 1,902 answering rows).
+21. arith_engine.R demo -> data/arith_cascade.csv,
+    results/arith_engine_demo_result.txt
+    Propagation of the 17 verified improvements of
+    data/better_verified.csv through the tier, graph and sweep
+    modes iterated to closure and required to agree (closure two
+    entries, both from CA(3, 12, 14)). arith_engine.R propagate
+    file.csv does the same for a user-supplied improvements file ->
+    data/arith_cascade_<file>.csv.
+22. arith_coverage_republish.R -> data/engine_coverage_v2.csv,
+    results/arith_coverage_republish_result.txt
+    The coverage accounting over all 13,641 entries with the
+    arithmetic tier counted apart (entries with a handle 9,035,
+    66.2 percent).
 
 ## Provenance note
 

@@ -1,0 +1,6 @@
+two-ingredient DPcat recipes: 174  strengths: 2 
+column rule  k == k1 * k2      : 174 of 174 
+size rule    N == N1 + N2 - v  : 174 of 174 
+rejected     N == N1 + N2 - c1 : 151 of 174 
+
+DIRECT PRODUCT FORMULA CALIBRATED ON THE RECORD: N = N1 + N2 - v

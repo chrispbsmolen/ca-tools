@@ -1,0 +1,62 @@
+unresolved rows in the tail tags: 39 
+PHF D rows: 8 ; M = 16 on 8 ; na + nb = M on 8 ; tag k equals row k on 8 
+ t  v    k           N                                 Source      N_pred
+ 6 10  578   103716709  perfect hash familyD16,578,34^11 17^5   103716709
+ 6 11  578   103716741  perfect hash familyD16,578,34^11 17^5   103716741
+ 6 20 1250  7731203353 perfect hash familyD16,1250,50^11 25^5  7731203353
+ 6 21 1250  7731203385 perfect hash familyD16,1250,50^11 25^5  7731203385
+ 6 22 1250  7731203417 perfect hash familyD16,1250,50^11 25^5  7731203417
+ 6 23 1250  7731203449 perfect hash familyD16,1250,50^11 25^5  7731203449
+ 6 24 1458 12674992453 perfect hash familyD16,1458,54^11 27^5 12674992453
+ 6 25 1458 12674992485 perfect hash familyD16,1458,54^11 27^5 12674992485
+       tier
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+ ARITHMETIC
+
+CK doubling postop rows: 5 ; record below the doubling bound on 5 
+ t  v  k    N                                 Source N_pred             tier
+ 3  6 14  498 Chateauneuf-Kreher doubling postop NCK    500 ARITH_BOUND_ONLY
+ 3  6 15  506 Chateauneuf-Kreher doubling postop NCK    511 ARITH_BOUND_ONLY
+ 3  6 16  510 Chateauneuf-Kreher doubling postop NCK    511 ARITH_BOUND_ONLY
+ 3 10 21 2334 Chateauneuf-Kreher doubling postop NCK   2336 ARITH_BOUND_ONLY
+ 3 10 22 2335 Chateauneuf-Kreher doubling postop NCK   2336 ARITH_BOUND_ONLY
+
+Cyclic, derived: 5 2 503 N 503 ; floor(eCAN(t+1, k+1, v) / v) = 504 
+
+terminal rows by tag:
+
+                      Brick by Brick (TATA) 
+                                          1 
+                          Cyclic (Colbourn) 
+                                          2 
+            Cyclic, derived (Colbourn-Keri) 
+                                          1 
+                   Holey Transversal Design 
+                                          2 
+              Incomplete Transversal Design 
+                                          2 
+                                     Ji-Yin 
+                                          3 
+                                  Li-Ji-Yin 
+                                          4 
+PGL (Maity-Akhtar-Chandrasekharan-Colbourn) 
+                                          5 
+                Two-stage (Sarkar-Colbourn) 
+                                          2 
+                                 Xu-Ji-Dong 
+                                          3 
+                            double proj (C) 
+                                          1 
+
+== tiers ==
+
+      ARITHMETIC ARITH_BOUND_ONLY TERMINAL_CLAIMED 
+               8                5               26 
+
+TAIL RUN DONE

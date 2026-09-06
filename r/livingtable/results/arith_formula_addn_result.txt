@@ -1,0 +1,84 @@
+== Add n factors + Add a factor: 579 table rows ( 548 tagged Add n factors, 31 tagged Add a factor ) ==
+exact: 396  record above law inside the domain: 6  record below law: 0  outside the domain or inexpressible: 177 
+
+exact by n (all rows):
+   exact
+n   FALSE TRUE
+  1     0  157
+  2     0   83
+  3    13   49
+  4    15   22
+  5    37   10
+  6    19    0
+  7     6    7
+  8     3   12
+  9    90   56
+
+exact by prime power and n <= v:
+, , exact = FALSE
+
+       n_le_v
+pp      FALSE TRUE
+  FALSE    88   80
+  TRUE      9    6
+
+, , exact = TRUE
+
+       n_le_v
+pp      FALSE TRUE
+  FALSE     0  132
+  TRUE      0  264
+
+
+non prime power rows with n = 3, exact by v:
+    exact
+v    FALSE TRUE
+  6      1    0
+  10     2    0
+  12     0    2
+  14     3    0
+  15     0    2
+  18     4    0
+  20     0    3
+  21     0    3
+  22     3    0
+  24     0    3
+
+rows outside the domain that the sum reproduces anyway (a coincidence check on the rule part; should be none): 0 
+
+record above the law inside the domain (kept as leads; difference in units of v(v-1)):
+ t  v   k  n       N         Source  N_pred diff units
+ 5  8 822  8  900936  Add 8 factors  900544  392     7
+ 5  8 826  8  933935  Add 8 factors  933543  392     7
+ 5  8 828  8  958672  Add 8 factors  958280  392     7
+ 5 13 789 13 9396673 Add 13 factors 9394801 1872    12
+ 5 13 790 13 9398545 Add 13 factors 9394801 3744    24
+ 5 13 793 13 9398701 Add 13 factors 9394957 3744    24
+
+Add a factor rows by chain length:
+   n
+t    1  2
+  3 12  0
+  4 12  7
+
+Add a factor rows with n = 2 (the rows the probe had BELOW the one-factor law):
+ t  v    k n      N N_pred       tier
+ 4  3 4714 2   2203   2203 ARITHMETIC
+ 4  7 3495 2  35809  35809 ARITHMETIC
+ 4  8 2814 2  61622  61622 ARITHMETIC
+ 4  9 2635 2  92313  92313 ARITHMETIC
+ 4 10 2597 2 172709 172709 ARITHMETIC
+ 4 11 2597 2 188851 188851 ARITHMETIC
+ 4 12 3114 2 337691 337691 ARITHMETIC
+
+unresolved entries in these tags: 574 
+
+ ARITHMETIC ARITH_ABOVE  ARITH_OPEN 
+        391           6         177 
+unresolved by tag and tier:
+               
+                ARITHMETIC ARITH_ABOVE ARITH_OPEN
+  Add a factor          26           0          0
+  Add n factors        365           6        177
+
+ADD N FACTORS RUN DONE

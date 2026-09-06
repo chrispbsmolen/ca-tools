@@ -1,0 +1,77 @@
+unresolved entries: 9007 
+
+== by tier ==
+
+      ARITHMETIC      ARITH_ABOVE ARITH_BOUND_ONLY   ARITH_INFERRED 
+            4401               10               13              149 
+      ARITH_OPEN    NOT_ATTEMPTED TERMINAL_CLAIMED 
+            2901              833              700 
+
+== by family and tier ==
+                                      
+                                       ARITHMETIC ARITH_ABOVE ARITH_BOUND_ONLY
+  Add a factor                                 26           0                0
+  Add n factors                               365           6                0
+  Chateauneuf-Kreher doubling                  95           3                5
+  Colbourn-Martirosyan-TVT-Walker              28           0                0
+  Derive                                       33           0                0
+  Direct product                              206           0                2
+  Martirosyan-Colbourn                         37           1                0
+  Martirosyan-TVT                             366           0                6
+  Power CT                                    445           0                0
+  Power CZ                                      0           0                0
+  Power N-CT                                 2033           0                0
+  fuse                                        147           0                0
+  perfect hash family                         620           0                0
+  terminal (search or published array)          0           0                0
+  <NA>                                          0           0                0
+                                      
+                                       ARITH_INFERRED ARITH_OPEN NOT_ATTEMPTED
+  Add a factor                                      0          0             0
+  Add n factors                                     0        177             0
+  Chateauneuf-Kreher doubling                       0          0             0
+  Colbourn-Martirosyan-TVT-Walker                   0        582             0
+  Derive                                            0          0             0
+  Direct product                                   32       1861             0
+  Martirosyan-Colbourn                            117          0             0
+  Martirosyan-TVT                                   0          0             0
+  Power CT                                          0          2             0
+  Power CZ                                          0        212             0
+  Power N-CT                                        0         60             0
+  fuse                                              0          7             0
+  perfect hash family                               0          0             0
+  terminal (search or published array)              0          0             0
+  <NA>                                              0          0           833
+                                      
+                                       TERMINAL_CLAIMED
+  Add a factor                                        0
+  Add n factors                                       0
+  Chateauneuf-Kreher doubling                         0
+  Colbourn-Martirosyan-TVT-Walker                     0
+  Derive                                              0
+  Direct product                                      0
+  Martirosyan-Colbourn                                0
+  Martirosyan-TVT                                     0
+  Power CT                                            0
+  Power CZ                                            0
+  Power N-CT                                          0
+  fuse                                                0
+  perfect hash family                                 0
+  terminal (search or published array)              700
+  <NA>                                                0
+
+ARITHMETIC (formula reproduces the record exactly, ingredients from the table): 4401 
+ARITH_INFERRED (exact, but the reading may be coincidental): 149 
+ARITH_ABOVE (record above the law: stale-record leads): 10 
+ARITH_BOUND_ONLY (postop tags; formula gives a bound): 13 
+ARITH_BELOW (record below the law: a better ingredient reading exists): 0 
+TERMINAL_CLAIMED (search results or published arrays, no table ingredient; propagation can never reach them): 700 
+ARITH_OPEN (attempted, law not recovered): 2901 
+NOT_ATTEMPTED: 833 
+
+largest families not yet attempted:
+
+Cohen-Colbourn-Ling            PCAx2PCA             PCAxPCA 
+                318                 294                 221 
+
+TALLY DONE

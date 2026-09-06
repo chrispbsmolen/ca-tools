@@ -1,0 +1,74 @@
+power rows in the table: CT 471  N-CT 2093 
+
+N-CT hash family table: keys 39  calibrated (>= 2 tag shapes agree) 39  single shape 0  conflict 0 
+ t pcls M.37 M.41 M.43 M.47 M.53 M.59 M.61 M.67 M.71 M.73 M.79 M.83 M.89 M.97
+ 5    5   10    9    9    9    9    9    9    9    9    9    9    9    9    9
+ 6    4   NA   NA   NA   NA   NA   NA   NA   13   13   13   13   13   13   13
+ 6    6   15   14   14   14   14   14   14   14   NA   13   13   13   13   13
+ M.101 M.29 M.31
+     9   NA   NA
+    13   NA   NA
+    13   15   15
+N-CT rows exact with M -1 instead of the fitted M: 0 of 2093
+N-CT rows exact with M +1 instead of the fitted M: 0 of 2093
+
+== SIZE LAW ==
+CT    rows  471  with M  471  N exact  469  N wrong 0  law inexpressible 2
+N-CT  rows 2093  with M 2093  N exact 2033  N wrong 0  law inexpressible 60
+
+by tag shape (N-CT):
+                   shape rows exact
+1          Power N-CT#^#   89    89
+2        Power N-CT#^#+#  132   132
+3    Power N-CT#^#Arc(#)  290   290
+4  Power N-CT#^#Arc(#)T#  147   147
+5        Power N-CT#^#T#  680   680
+6      Power N-CT#^#T#S#    7     7
+7      Power N-CT#^#T#T#  435   435
+8 Power N-CT#^#Trin#,#,#  253   253
+
+by tag shape (CT):
+                             shape rows exact
+1                      Power CT#^#   34    34
+2                   Power CT#^# +#    1     1
+3                    Power CT#^#+#   57    57
+4                  Power CT#^#,+#c    1     1
+5                  Power CT#^#,T#c    7     7
+6                    Power CT#^#,c    8     8
+7                  Power CT#^#,cT#    1     1
+8                Power CT#^#,cT#T#    1     1
+9                 Power CT#^#,cT#c   11    11
+10               Power CT#^#Arc(#)   42    42
+11 Power CT#^#Arc(#):# twos,# ones   14    14
+12             Power CT#^#Arc(#)T#    8     8
+13                   Power CT#^#S#   17    17
+14                  Power CT#^#S#c    1     1
+15                   Power CT#^#T#   97    97
+16                 Power CT#^#T#S#   23    23
+17                 Power CT#^#T#T#   83    83
+18               Power CT#^#T#T#T#   55    55
+19                Power CT#^#T#T#c    5     5
+20                Power CT#^#T#cS#    2     2
+21            Power CT#^#T#cT#cT#c    1     1
+
+rows the law cannot express (Arc(a) with a = M, then T r): 62  shapes: Power CT#^#Arc(#)T#, Power N-CT#^#Arc(#)T# 
+
+== COLUMN RULE (where derived) ==
+rows with a rule: 2303  exact: 2275  capped at k=10000: 24  other misses: 4 
+ fam t  v    k            Source k_pred    dk
+  CT 6 24 9351 Power CT31^3T5S30  12116 -2765
+  CT 6 24 9662 Power CT31^3T5S29  12168 -2506
+  CT 6 25 9351 Power CT31^3T5S30  12116 -2765
+  CT 6 25 9662 Power CT31^3T5S29  12168 -2506
+
+== TIERS over all 2564 power rows ==
+      
+       ARITHMETIC ARITH_OPEN
+  CT          469          2
+  N-CT       2033         60
+unresolved power CT/N-CT entries: 2540  matched to a table row: 2540 
+
+ARITHMETIC ARITH_OPEN 
+      2478         62 
+
+POWER FAMILY FORMULA RUN DONE

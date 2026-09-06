@@ -1,0 +1,36 @@
+ARITHMETIC entries: 4401  by family: Add a factor 26; Add n factors 365; Chateauneuf-Kreher doubling 95; Colbourn-Martirosyan-TVT-Walker 28; Derive 33; Direct product 206; Martirosyan-Colbourn 37; Martirosyan-TVT 366; Power CT 445; Power N-CT 2033; fuse 147; perfect hash family 620 
+identity: 4401 of 4401 ARITHMETIC entries reproduce their recorded N from the frozen record (2.8 s)
+
+improvements offered: 17  accepted: 17 
+ t k_offered  v    N nconst note
+ 6        29  2  421      1     
+ 4       173  2  134      1     
+ 4       179  2  136      1     
+ 4       189  2  141      1     
+ 4       192  2  142      1     
+ 4       196  2  143      1     
+ 4       208  2  153      1     
+ 5       128  2  251      1     
+ 4       213  2  153      1     
+ 4       217  2  153      1     
+ 4       222  2  153      1     
+ 5       132  2  259      1     
+ 3        16 10 2215      1     
+ 3        12 14 3381      1     
+ 3        41 10 2615      1     
+ 3        12 20 9330      1     
+ 6        72  2  716      1     
+graph mode round 1: candidates 2, changed 2
+graph mode round 2: candidates 0, changed 0
+graph mode: 2 entries change in 2 rounds (1.7 s)
+sweep mode round 1: changed 2
+sweep mode round 2: changed 0
+sweep mode: 2 entries change, stable after 2 rounds (4.8 s)
+TWO-MODE AGREEMENT ON THE CLOSURE: PASS 
+
+== CLOSURE: 2 ARITHMETIC entries improve (claims propagated from the improvements) ==
+ t  v  k       N   N_new  delta                      Source             via
+ 3 14 24    6279    6202    -77 Chateauneuf-Kreher doubling (3,12,14)->3381
+ 5 14 23 3070224 3053515 -16709     Martirosyan-TVT variant (3,12,14)->3381
+total rows saved across the closure: 16786  written: data/arith_cascade.csv 
+PROPAGATION DONE

@@ -1,0 +1,105 @@
+Direct product rows: 2120  generalized: 1574  with postop: 2 
+
+== record vs best product, by tag ==
+Direct product generalized   rows 1573 | c = v: exact   32, record below 1522, record above  19 | c = 1: exact    0
+Direct product               rows  545 | c = v: exact  212, record below 230, record above 103 | c = 1: exact    0
+
+record above the best generalized product (the product would beat the record; investigate):
+ t  v     k    N         Source N_gen k1  k2 d_gen
+ 2 25   676 1248 Direct product  1225 26  26    23
+ 2 25 17550 1848 Direct product  1825 26 675    23
+ 2 25 17576 1871 Direct product  1848 26 676    23
+ 2 25 18928 1921 Direct product  1898 26 728    23
+ 2 23   576 1056 Direct product  1035 24  24    21
+ 2 23 13800 1562 Direct product  1541 24 575    21
+ 2 23 13824 1582 Direct product  1562 24 576    20
+ 2 23 14976 1628 Direct product  1608 24 624    20
+ 2 19   400  720 Direct product   703 20  20    17
+ 2 19  7980 1062 Direct product  1045 20 399    17
+ 2 19  8000 1079 Direct product  1062 20 400    17
+ 2 19  9600 1153 Direct product  1136 20 480    17
+ 2 17   324  576 Direct product   561 18  18    15
+ 2 17  5814  848 Direct product   833 18 323    15
+ 2 17  5832  863 Direct product   848 18 324    15
+ 2 17  6480  897 Direct product   882 18 360    15
+ 2 16   289  510 Direct product   496 17  17    14
+ 2 16  4896  750 Direct product   736 17 288    14
+ 2 16   612  695 Direct product   682 17  36    13
+ 2 16 10368  935 Direct product   922 36 288    13
+ 2 19   900 1014 Direct product  1002 20  45    12
+ 2 19   920 1027 Direct product  1015 20  46    12
+ 2 19 17955 1356 Direct product  1344 45 399    12
+ 2 19 18354 1369 Direct product  1357 46 399    12
+ 2 13   196  336 Direct product   325 14  14    11
+ 2 13   252  384 Direct product   373 14  18    11
+ 2 13   266  395 Direct product   385 14  19    10
+ 2 13  2744  502 Direct product   492 14 196    10
+ 2 13  3705  551 Direct product   541 14 265    10
+ 2 11   144  240 Direct product   231 12  12     9
+
+record below the best generalized product (another ingredient reading; first 30):
+ t  v   k    N                     Source N_gen N_plain k1 k2 d_gen d_plain
+ 2 22 734 1122 Direct product generalized  1197    1218 25 30   -75     -96
+ 2 22 737 1123 Direct product generalized  1197    1218 25 30   -74     -95
+ 2 22 853 1211 Direct product generalized  1285    1306 25 35   -74     -95
+ 2 22 969 1294 Direct product generalized  1366    1387 25 39   -72     -93
+ 2 18 481  755 Direct product generalized   824     841 21 23   -69     -86
+ 2 18 504  756 Direct product generalized   825     842 21 24   -69     -86
+ 2 24 756 1246             Direct product  1313    1336 27 28   -67     -90
+ 2 24 840 1340             Direct product  1406    1429 27 32   -66     -89
+ 2 24 868 1344             Direct product  1410    1433 26 34   -66     -89
+ 2 19 456  776             Direct product   841     859 19 24   -65     -83
+ 2 22 857 1220 Direct product generalized  1285    1306 25 35   -65     -86
+ 2 23 786 1235 Direct product generalized  1299    1321 24 33   -64     -86
+ 2 20 849 1092 Direct product generalized  1155    1174 25 34   -63     -82
+ 2 21 678 1039 Direct product generalized  1102    1122 24 29   -63     -83
+ 2 23 678 1149 Direct product generalized  1212    1234 24 29   -63     -85
+ 2 24 841 1343 Direct product generalized  1406    1429 27 32   -63     -86
+ 2 23 788 1237 Direct product generalized  1299    1321 24 33   -62     -84
+ 2 23 898 1322 Direct product generalized  1384    1406 24 38   -62     -84
+ 2 22 650 1054             Direct product  1115    1136 25 26   -61     -82
+ 2 22 973 1305 Direct product generalized  1366    1387 25 39   -61     -82
+ 2 22 977 1307 Direct product generalized  1368    1389 25 40   -61     -82
+ 2 23 680 1151 Direct product generalized  1212    1234 24 29   -61     -83
+ 2 21 680 1042 Direct product generalized  1102    1122 24 29   -60     -80
+ 2 22 741 1137 Direct product generalized  1197    1218 25 30   -60     -81
+ 2 22 861 1225 Direct product generalized  1285    1306 25 35   -60     -81
+ 2 23 900 1324 Direct product generalized  1384    1406 24 38   -60     -82
+ 2 24 980 1436             Direct product  1496    1519 27 37   -60     -83
+ 2 20 852 1099 Direct product generalized  1158    1177 25 35   -59     -78
+ 2 21 782 1118 Direct product generalized  1177    1197 24 33   -59     -79
+ 2 22 865 1226 Direct product generalized  1285    1306 25 35   -59     -80
+
+by v (generalized tag, c = v): exact / rows
+    v exact rows
+1   6     4   56
+2   7     3    7
+3   8     0    3
+4  10     1   53
+5  11     1    4
+6  12     2   74
+7  13     1   11
+8  14     1   88
+9  15     0  144
+10 16     1   71
+11 17     1   77
+12 18     1  181
+13 19    11   81
+14 20     0  162
+15 21     0  170
+16 22     1  141
+17 23     3  106
+18 24     0  114
+19 25     1   30
+
+== TIERS over all 2120 direct product rows ==
+       
+        ARITHMETIC ARITH_BOUND_ONLY ARITH_INFERRED ARITH_OPEN
+  FALSE        212                1              0        333
+  TRUE           0                1             32       1541
+unresolved direct product entries: 2101  matched: 2101 
+
+      ARITHMETIC ARITH_BOUND_ONLY   ARITH_INFERRED       ARITH_OPEN 
+             206                2               32             1861 
+
+DIRECT PRODUCT TABLE RUN DONE
