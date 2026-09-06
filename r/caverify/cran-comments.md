@@ -30,7 +30,10 @@ or documentation.
 * local: macOS Tahoe 26.6.1, aarch64-apple-darwin23, R 4.6.1 (2026-06-24),
   checked with `R CMD check --as-cran`, 2026-08-23, on the submitted
   tarball (md5 71b5ed266ed99388b1c4496684ea2a21)
-* win-builder R-devel, 2026-08-23, <<FILL RESULT>>
+* win-builder R-devel (2026-08-22 r90443 ucrt, gcc 14.3.0, Windows Server
+  2022), 2026-08-23, on the submitted tarball: Status 1 NOTE, the
+  days-since-last-update flag only; install, compile, pragmas, compiled
+  code, tests and both manuals all OK.
 
 ## R CMD check results
 
