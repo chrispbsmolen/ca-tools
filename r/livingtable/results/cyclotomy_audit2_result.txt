@@ -1,0 +1,17 @@
+213 rows to audit ( 0 already done )
+progress: 28 of 213  failures so far: 2 
+progress: 56 of 213  failures so far: 3 
+progress: 84 of 213  failures so far: 3 
+progress: 112 of 213  failures so far: 3 
+progress: 140 of 213  failures so far: 3 
+progress: 168 of 213  failures so far: 3 
+progress: 196 of 213  failures so far: 3 
+progress: 213 of 213  failures so far: 3 
+
+DONE. 213 rows; 210 pass; 3 FAIL; 0 construct-err
+full certifications: 16   screens passed: 194 
+ALL FAILING ROWS:
+ t    k  v     N type    q     mode    ok
+ 3  128  6   762   3a  127     FULL FALSE
+ 3 2162 20 43220   3a 2161 SCREEN50 FALSE
+ 3 2312 21 48531   3a 2311 SCREEN50 FALSE

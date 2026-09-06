@@ -1,0 +1,49 @@
+installed CAs 0.24 ; DHHF2CA source lines: 71 
+14 author-diagnosed powerCT rows to re-audit with the fixed code
+ t    k v     N
+ 3 1584 2    64
+ 4  144 2   112
+ 4 1331 2   200
+ 5 9898 2  1394
+ 6  361 3 52614
+ 6  361 3 52614
+ 6  361 3 52614
+ 6  729 3 71204
+ 6  754 3 74399
+ 6  756 3 74402
+ 6  783 3 74528
+ 6  784 3 74553
+ 6  812 3 74679
+ 6  841 3 74805
+14 rows remain
+ t    k v N_snapshot N_built             note mode
+ 4  144 2        112     112 EXECUTED_POSTFIX FULL
+ 3 1584 2         64      64 EXECUTED_POSTFIX FULL
+progress: 2 of 14  elapsed 1.0 min
+ t    k v N_snapshot N_built                 note        mode
+ 4 1331 2        200     200 SCREEN4_PASS_POSTFIX SCREEN4_w40
+ 6  361 3      52614   52614 SCREEN4_PASS_POSTFIX SCREEN4_w25
+progress: 4 of 14  elapsed 2.5 min
+ t   k v N_snapshot N_built                 note        mode
+ 6 361 3      52614   52614 SCREEN4_PASS_POSTFIX SCREEN4_w25
+ 6 361 3      52614   52614 SCREEN4_PASS_POSTFIX SCREEN4_w25
+progress: 6 of 14  elapsed 4.0 min
+ t   k v N_snapshot N_built                 note        mode
+ 6 729 3      71204   71204 SCREEN4_PASS_POSTFIX SCREEN4_w25
+ 6 754 3      74399   74399 SCREEN4_PASS_POSTFIX SCREEN4_w25
+progress: 8 of 14  elapsed 6.2 min
+ t   k v N_snapshot N_built                 note        mode
+ 6 756 3      74402   74402 SCREEN4_PASS_POSTFIX SCREEN4_w25
+ 6 783 3      74528   74528 SCREEN4_PASS_POSTFIX SCREEN4_w25
+progress: 10 of 14  elapsed 8.4 min
+ t   k v N_snapshot N_built                 note        mode
+ 6 784 3      74553   74553 SCREEN4_PASS_POSTFIX SCREEN4_w25
+ 6 812 3      74679   74679 SCREEN4_PASS_POSTFIX SCREEN4_w25
+progress: 12 of 14  elapsed 10.6 min
+ t    k v N_snapshot N_built                 note        mode
+ 6  841 3      74805   74805 SCREEN4_PASS_POSTFIX SCREEN4_w25
+ 5 9898 2       1394    1394 SCREEN4_PASS_POSTFIX SCREEN4_w30
+progress: 14 of 14  elapsed 12.8 min
+
+POWERCT REFIX DONE
+full pass: 2  screen pass: 12  failures: 0  errors: 0 

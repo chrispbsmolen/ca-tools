@@ -1,0 +1,15 @@
+== Job A: multi-window screens on audit2 SCREEN50 passes ==
+progress: 28 of 194  new failures: 0 
+progress: 56 of 194  new failures: 0 
+progress: 84 of 194  new failures: 0 
+progress: 112 of 194  new failures: 0 
+progress: 140 of 194  new failures: 0 
+progress: 168 of 194  new failures: 0 
+progress: 194 of 194  new failures: 0 
+Job A done. 194 rows; 0 NEW failures
+
+== Job B: type-3b repair screens for the giant failures ==
+q=2161 v=20 type 3b: built 43600 x 2162  screen4: ALL WINDOWS PASS
+q=2311 v=21 type 3b: built 48951 x 2312  screen4: ALL WINDOWS PASS
+
+ALL FOLLOW-UP JOBS DONE

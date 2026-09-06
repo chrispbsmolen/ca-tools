@@ -1,0 +1,21 @@
+baseline sweep: 0 min; 0 construct errors
+swap sweep: 0 min; 0 construct errors
+
+baseline vs book:  1531 of 1539 match
+baseline mismatches (investigate):
+        id book swept
+  DPcat 49   68    67
+  DPcat 59   80    79
+  DPcat 62   83    82
+  DPcat 69   92    91
+  DPcat 87   81    80
+  DPcat 98  101   100
+ DPcat 110  121   120
+ DPcat 322  674   672
+
+sweep says changed: 20  graph cascade predicts at most: 41 
+changed entries OUTSIDE the predicted cascade (must be 0): 0 
+cascade members that absorbed the change (allowed): 21 
+
+TWO-MODE AGREEMENT: PASS 
+SWEEP DONE

@@ -1,0 +1,17 @@
+== q = 2161  v = 20  type 4a ==
+built 43240 x 2162 (expected 43240 rows ) in 0 min
+  ... 12 of 48 windows
+  ... 24 of 48 windows
+  ... 36 of 48 windows
+  ... 48 of 48 windows
+windows passed: 48 of 48  ALL PASS
+
+== q = 2311  v = 21  type 4a ==
+built 48552 x 2312 (expected 48552 rows ) in 0 min
+  ... 12 of 48 windows
+  ... 24 of 48 windows
+  ... 36 of 48 windows
+  ... 48 of 48 windows
+windows passed: 48 of 48  ALL PASS
+
+4A CHECK DONE

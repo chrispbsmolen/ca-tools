@@ -1,0 +1,1725 @@
+"family","entries","share"
+"CPHF family",3409,24.99
+"direct product",2120,15.54
+"Martirosyan-TVT family",1234,9.05
+"add factors",550,4.03
+"PCA product",545,4
+"orthogonal array",352,2.58
+"Cohen-Colbourn-Ling",326,2.39
+"cyclotomy",229,1.68
+"simulated annealing",201,1.47
+"projection",144,1.06
+"Chateauneuf-Kreher doubling",122,0.89
+"augment OA",103,0.76
+"IPOG family",92,0.67
+"SBSTT",76,0.56
+"derive/drop",71,0.52
+"Add Factor SO",70,0.51
+"Power N-CT79^2Arc",57,0.42
+"Density Cyclic",56,0.41
+"two-stage SA",51,0.37
+"SIPO",43,0.32
+"Raaphorst-Moura-Stevens",42,0.31
+"Power N-CT101^2Arc",36,0.26
+"Fix 1 symbols",35,0.26
+"Power N-CT97^2Arc",33,0.24
+"Add a factor",31,0.23
+"Power N-CT83^2Arc",29,0.21
+"Power N-CT53^2Arc",28,0.21
+"CA Extender",27,0.2
+"Power N-CT47^2Arc",24,0.18
+"Fix 5 symbols",21,0.15
+"Power N-CT67^2Arc",21,0.15
+"Paley/quadratic residue",19,0.14
+"cover starter",18,0.13
+"Cyclic",17,0.12
+"Torres Jimenez",16,0.12
+"Fix 4 symbols",15,0.11
+"Kleitman and Spencer, or Katona",15,0.11
+"Power N-CT101^2",13,0.1
+"Power N-CT73^2Arc",13,0.1
+"perfect hash family4,3125,625",13,0.1
+"Power N-CT71^2Arc",12,0.09
+"extended OA",12,0.09
+"ordered design",12,0.09
+"Fix 3 symbols (LCDST) TJ-SA",11,0.08
+"Power N-CT31^2",11,0.08
+"Power N-CT41^2",11,0.08
+"Power N-CT89^2Arc",11,0.08
+"Torres-Jimenez",11,0.08
+"Fix 6 symbols",10,0.07
+"Power CT41^2Arc",10,0.07
+"Power CT59^2Arc",10,0.07
+"Power N-CT43^2T2",10,0.07
+"Power N-CT73^2T7",10,0.07
+"composition",10,0.07
+"Fix 2 symbols",9,0.07
+"Fix 7 symbols",9,0.07
+"Power CT27^2+1",9,0.07
+"Power CT27^2T1",9,0.07
+"Power CT27^2T1T1",9,0.07
+"Power N-CT43^2+2",9,0.07
+"Power CT25^2",8,0.06
+"Power N-CT29^2",8,0.06
+"Power N-CT41^2T10",8,0.06
+"Power N-CT41^2T2T2",8,0.06
+"Power N-CT73^2T3",8,0.06
+"Power N-CT89^2T23",8,0.06
+"cross-sum",8,0.06
+"extended OA (Colbourn) special",8,0.06
+"Add a symbol",7,0.05
+"Power N-CT31^2T1",7,0.05
+"Power N-CT41^2T7",7,0.05
+"Power N-CT47^2+2",7,0.05
+"Power N-CT47^2T1",7,0.05
+"Power N-CT47^2T1T1",7,0.05
+"Power N-CT47^2T2",7,0.05
+"Power N-CT47^2T6",7,0.05
+"Power N-CT53^2+1",7,0.05
+"Power N-CT53^2+3",7,0.05
+"Power N-CT61^2",7,0.05
+"Power N-CT61^2T5",7,0.05
+"Power N-CT61^2T8",7,0.05
+"Power N-CT73^2",7,0.05
+"Power N-CT73^2T17",7,0.05
+"Power N-CT79^2+3",7,0.05
+"Power N-CT89^2",7,0.05
+"Power N-CT89^2T7",7,0.05
+"Ji-Li-Yin",6,0.04
+"Power CT19^2+1",6,0.04
+"Power CT25^2+1",6,0.04
+"Power CT53^2Arc",6,0.04
+"Power N-CT29^2Arc",6,0.04
+"Power N-CT29^2T1",6,0.04
+"Power N-CT29^2T2",6,0.04
+"Power N-CT31^2T2",6,0.04
+"Power N-CT41^2T2",6,0.04
+"Power N-CT41^2T4",6,0.04
+"Power N-CT43^2",6,0.04
+"Power N-CT43^2Arc",6,0.04
+"Power N-CT43^2T10",6,0.04
+"Power N-CT53^2T4",6,0.04
+"Power N-CT53^2T4T4",6,0.04
+"Power N-CT53^2T7",6,0.04
+"Power N-CT53^2Trin4,4,4",6,0.04
+"Power N-CT61^2Arc",6,0.04
+"Power N-CT73^2T11",6,0.04
+"Power N-CT73^2T3T3",6,0.04
+"Power N-CT73^2T9",6,0.04
+"Power N-CT73^2Trin3,3,28",6,0.04
+"Power N-CT79^2T1T1",6,0.04
+"Power N-CT89^2T12",6,0.04
+"Power N-CT89^2T25",6,0.04
+"perfect hash family16,625,25,c",6,0.04
+"tabu search",6,0.04
+"Cyclic, derived",5,0.04
+"Fix 2 symbols (LCDST) TJ-SA",5,0.04
+"PGL",5,0.04
+"Power CT25^2T2",5,0.04
+"Power CT27^2Arc",5,0.04
+"Power CT32^2T1",5,0.04
+"Power N-CT101^2Arc(13)T2",5,0.04
+"Power N-CT31^2T1T1",5,0.04
+"Power N-CT31^2T5",5,0.04
+"Power N-CT31^2T6",5,0.04
+"Power N-CT37^2+2",5,0.04
+"Power N-CT37^2T4",5,0.04
+"Power N-CT43^2+3",5,0.04
+"Power N-CT43^2T3",5,0.04
+"Power N-CT43^2T9",5,0.04
+"Power N-CT47^2T2T2",5,0.04
+"Power N-CT47^2T3",5,0.04
+"Power N-CT47^2T8",5,0.04
+"Power N-CT47^2T9",5,0.04
+"Power N-CT67^2",5,0.04
+"Power N-CT67^2T7",5,0.04
+"Power N-CT73^2+1",5,0.04
+"Power N-CT73^2+3",5,0.04
+"Power N-CT73^2T20",5,0.04
+"Power N-CT73^2T6",5,0.04
+"Power N-CT79^2T23",5,0.04
+"Power N-CT83^2+2",5,0.04
+"Power N-CT83^2T5",5,0.04
+"Power N-CT89^2Trin4,4,4",5,0.04
+"Power N-CT97^2+3",5,0.04
+"Power N-CT97^2T8",5,0.04
+"perfect hash family13,5334,78",5,0.04
+"perfect hash family4,3125,625T171",5,0.04
+"perfect hash family4,3125,625T246",5,0.04
+"Density",4,0.03
+"Ji-Yin",4,0.03
+"Li-Ji-Yin",4,0.03
+"Power CT17^2",4,0.03
+"Power CT23^2+1",4,0.03
+"Power CT25^2Arc",4,0.03
+"Power CT25^2T1",4,0.03
+"Power CT25^2T1T1",4,0.03
+"Power CT27^2Arc(2)T2",4,0.03
+"Power CT27^2T2",4,0.03
+"Power CT27^2T2T1",4,0.03
+"Power CT32^2+3",4,0.03
+"Power N-CT101^2T1T1",4,0.03
+"Power N-CT29^2+1",4,0.03
+"Power N-CT29^2T1T1",4,0.03
+"Power N-CT31^2Arc",4,0.03
+"Power N-CT31^2T3",4,0.03
+"Power N-CT31^2T4",4,0.03
+"Power N-CT31^2T7",4,0.03
+"Power N-CT37^2Arc",4,0.03
+"Power N-CT41^2+1",4,0.03
+"Power N-CT41^2T4T4",4,0.03
+"Power N-CT43^2T12",4,0.03
+"Power N-CT43^2T4",4,0.03
+"Power N-CT43^2T7",4,0.03
+"Power N-CT43^2T8",4,0.03
+"Power N-CT47^2+1",4,0.03
+"Power N-CT47^2T11",4,0.03
+"Power N-CT47^2T3T1",4,0.03
+"Power N-CT47^2T4",4,0.03
+"Power N-CT47^2Trin2,2,2",4,0.03
+"Power N-CT53^2T4T1",4,0.03
+"Power N-CT53^2Trin1,4,4",4,0.03
+"Power N-CT53^2Trin2,4,4",4,0.03
+"Power N-CT59^2T5",4,0.03
+"Power N-CT61^2T10",4,0.03
+"Power N-CT67^2+1",4,0.03
+"Power N-CT67^2T16",4,0.03
+"Power N-CT73^2+2",4,0.03
+"Power N-CT73^2T17T17",4,0.03
+"Power N-CT73^2T18",4,0.03
+"Power N-CT73^2T21",4,0.03
+"Power N-CT73^2T21T21",4,0.03
+"Power N-CT73^2T21T3",4,0.03
+"Power N-CT73^2T22",4,0.03
+"Power N-CT73^2T22T21",4,0.03
+"Power N-CT73^2T22T3",4,0.03
+"Power N-CT73^2T6T5",4,0.03
+"Power N-CT73^2T7T7",4,0.03
+"Power N-CT73^2Trin3,21,21",4,0.03
+"Power N-CT73^2Trin3,21,22",4,0.03
+"Power N-CT73^2Trin3,22,22",4,0.03
+"Power N-CT73^2Trin3,3,21",4,0.03
+"Power N-CT73^2Trin3,3,22",4,0.03
+"Power N-CT73^2Trin3,3,3",4,0.03
+"Power N-CT73^2Trin7,7,7",4,0.03
+"Power N-CT79^2Arc(2)T27",4,0.03
+"Power N-CT79^2Arc(3)T27",4,0.03
+"Power N-CT79^2Arc(4)T27",4,0.03
+"Power N-CT79^2Arc(5)T27",4,0.03
+"Power N-CT79^2Arc(6)T27",4,0.03
+"Power N-CT79^2T27T1",4,0.03
+"Power N-CT79^2T2T2",4,0.03
+"Power N-CT83^2",4,0.03
+"Power N-CT83^2T31",4,0.03
+"Power N-CT83^2T32",4,0.03
+"Power N-CT83^2T49",4,0.03
+"Power N-CT83^2T9",4,0.03
+"Power N-CT89^2+3",4,0.03
+"Power N-CT89^2T11",4,0.03
+"Power N-CT89^2T14",4,0.03
+"Power N-CT89^2T21",4,0.03
+"Power N-CT89^2T2T2",4,0.03
+"Power N-CT89^2Trin2,2,2",4,0.03
+"Power N-CT89^2Trin2,2,4",4,0.03
+"Power N-CT89^2Trin2,4,4",4,0.03
+"perfect hash family13,10609,103T16",4,0.03
+"perfect hash family13,10609,103T18",4,0.03
+"perfect hash family13,10609,103T25",4,0.03
+"perfect hash family13,10609,103T5",4,0.03
+"perfect hash family13,12769,113T26",4,0.03
+"perfect hash family13,12769,113T28",4,0.03
+"perfect hash family13,6893,87",4,0.03
+"perfect hash family14,2213,51",4,0.03
+"perfect hash family14,2214,52",4,0.03
+"perfect hash family14,3726,66",4,0.03
+"perfect hash family16,529,23,c",4,0.03
+"perfect hash family20,2116,23,c",4,0.03
+"perfect hash family20,2117,24",4,0.03
+"perfect hash family9,12769,113T40",4,0.03
+"perfect hash familyD16,1250,50^11 25^5",4,0.03
+"Power CT19^2",3,0.02
+"Power CT19^2T1",3,0.02
+"Power CT23^3T3T2",3,0.02
+"Power CT31^2Arc",3,0.02
+"Power N-CT101^2T10",3,0.02
+"Power N-CT101^2T12T3",3,0.02
+"Power N-CT101^2T19T3",3,0.02
+"Power N-CT101^2T3T3",3,0.02
+"Power N-CT101^2T8",3,0.02
+"Power N-CT29^2T3",3,0.02
+"Power N-CT29^2T4",3,0.02
+"Power N-CT29^2T6",3,0.02
+"Power N-CT31^2+3",3,0.02
+"Power N-CT31^2Arc(2)T5",3,0.02
+"Power N-CT31^2T10",3,0.02
+"Power N-CT31^2T11",3,0.02
+"Power N-CT31^2T5T1",3,0.02
+"Power N-CT31^2T8",3,0.02
+"Power N-CT37^2T8",3,0.02
+"Power N-CT41^2Arc(2)T13",3,0.02
+"Power N-CT41^2Arc(2)T2",3,0.02
+"Power N-CT41^2Arc(2)T8",3,0.02
+"Power N-CT41^2T10T4",3,0.02
+"Power N-CT41^2T10T6",3,0.02
+"Power N-CT41^2T12",3,0.02
+"Power N-CT41^2T13T1",3,0.02
+"Power N-CT41^2T13T13",3,0.02
+"Power N-CT41^2T13T2",3,0.02
+"Power N-CT41^2T13T6",3,0.02
+"Power N-CT41^2T13T8",3,0.02
+"Power N-CT41^2T2T1",3,0.02
+"Power N-CT41^2T6",3,0.02
+"Power N-CT41^2T7T7",3,0.02
+"Power N-CT41^2T8T1",3,0.02
+"Power N-CT41^2T8T2",3,0.02
+"Power N-CT41^2Trin1,2,13",3,0.02
+"Power N-CT41^2Trin1,2,8",3,0.02
+"Power N-CT41^2Trin1,6,13",3,0.02
+"Power N-CT41^2Trin1,8,13",3,0.02
+"Power N-CT41^2Trin2,2,13",3,0.02
+"Power N-CT41^2Trin2,2,2",3,0.02
+"Power N-CT41^2Trin2,2,8",3,0.02
+"Power N-CT41^2Trin2,6,13",3,0.02
+"Power N-CT41^2Trin2,7,7",3,0.02
+"Power N-CT41^2Trin2,8,13",3,0.02
+"Power N-CT43^2+1",3,0.02
+"Power N-CT43^2T1",3,0.02
+"Power N-CT43^2T15",3,0.02
+"Power N-CT43^2T1T1",3,0.02
+"Power N-CT43^2T23",3,0.02
+"Power N-CT43^2T24",3,0.02
+"Power N-CT43^2T25",3,0.02
+"Power N-CT43^2T6",3,0.02
+"Power N-CT47^2T16",3,0.02
+"Power N-CT47^2T18",3,0.02
+"Power N-CT47^2T20",3,0.02
+"Power N-CT47^2T5",3,0.02
+"Power N-CT53^2",3,0.02
+"Power N-CT53^2T5",3,0.02
+"Power N-CT53^2T5T5",3,0.02
+"Power N-CT53^2T7T2",3,0.02
+"Power N-CT53^2T8",3,0.02
+"Power N-CT53^2T9",3,0.02
+"Power N-CT53^2Trin2,2,7",3,0.02
+"Power N-CT59^2+1",3,0.02
+"Power N-CT59^2Arc(2)T13",3,0.02
+"Power N-CT59^2Arc(2)T3",3,0.02
+"Power N-CT59^2Arc(3)T13",3,0.02
+"Power N-CT59^2Arc(3)T3",3,0.02
+"Power N-CT59^2T10T4",3,0.02
+"Power N-CT59^2T13T1",3,0.02
+"Power N-CT59^2T13T3",3,0.02
+"Power N-CT59^2T3T1",3,0.02
+"Power N-CT59^2T3T3",3,0.02
+"Power N-CT59^2T8T3",3,0.02
+"Power N-CT59^2Trin1,3,13",3,0.02
+"Power N-CT59^2Trin1,3,3",3,0.02
+"Power N-CT59^2Trin3,3,13",3,0.02
+"Power N-CT59^2Trin3,3,3",3,0.02
+"Power N-CT61^2+1",3,0.02
+"Power N-CT61^2+2",3,0.02
+"Power N-CT61^2+3",3,0.02
+"Power N-CT61^2T1",3,0.02
+"Power N-CT61^2T15",3,0.02
+"Power N-CT61^2T1T1",3,0.02
+"Power N-CT61^2T3",3,0.02
+"Power N-CT61^2T6",3,0.02
+"Power N-CT67^2Arc(2)T14",3,0.02
+"Power N-CT67^2Arc(2)T7",3,0.02
+"Power N-CT67^2Arc(3)T14",3,0.02
+"Power N-CT67^2Arc(3)T7",3,0.02
+"Power N-CT67^2Arc(4)T7",3,0.02
+"Power N-CT67^2Arc(5)T7",3,0.02
+"Power N-CT67^2T1",3,0.02
+"Power N-CT67^2T14T1",3,0.02
+"Power N-CT67^2T14T3",3,0.02
+"Power N-CT67^2T14T5",3,0.02
+"Power N-CT67^2T1T1",3,0.02
+"Power N-CT67^2T3T3",3,0.02
+"Power N-CT67^2T7T1",3,0.02
+"Power N-CT67^2Trin1,3,14",3,0.02
+"Power N-CT67^2Trin3,3,14",3,0.02
+"Power N-CT73^2T10",3,0.02
+"Power N-CT73^2T10T10",3,0.02
+"Power N-CT73^2T10T7",3,0.02
+"Power N-CT73^2T10T9",3,0.02
+"Power N-CT73^2T8",3,0.02
+"Power N-CT73^2T9T7",3,0.02
+"Power N-CT73^2Trin7,7,9",3,0.02
+"Power N-CT79^2T13",3,0.02
+"Power N-CT79^2T15",3,0.02
+"Power N-CT79^2T16",3,0.02
+"Power N-CT79^2T18",3,0.02
+"Power N-CT79^2T2",3,0.02
+"Power N-CT83^2Arc(2)T17",3,0.02
+"Power N-CT83^2T13",3,0.02
+"Power N-CT83^2T17",3,0.02
+"Power N-CT83^2T17T1",3,0.02
+"Power N-CT83^2T1T1",3,0.02
+"Power N-CT83^2T21",3,0.02
+"Power N-CT83^2T6",3,0.02
+"Power N-CT83^2T7",3,0.02
+"Power N-CT89^2+2",3,0.02
+"Power N-CT89^2T10",3,0.02
+"Power N-CT89^2T16",3,0.02
+"Power N-CT89^2T22",3,0.02
+"Power N-CT89^2T26",3,0.02
+"Power N-CT89^2T27",3,0.02
+"Power N-CT89^2T29",3,0.02
+"Power N-CT89^2T6",3,0.02
+"Power N-CT97^2",3,0.02
+"Power N-CT97^2+1",3,0.02
+"Power N-CT97^2Arc(13)T2",3,0.02
+"Power N-CT97^2T15",3,0.02
+"Power N-CT97^2T2",3,0.02
+"Power N-CT97^2T24T5",3,0.02
+"Power N-CT97^2T27",3,0.02
+"Power N-CT97^2T2T2",3,0.02
+"Power N-CT97^2Trin2,2,2",3,0.02
+"Steiner system",3,0.02
+"Xu-Ji-Dong",3,0.02
+"perfect hash family13,10609,103T14",3,0.02
+"perfect hash family13,10609,103T21",3,0.02
+"perfect hash family13,10609,103T37",3,0.02
+"perfect hash family13,10609,103T39",3,0.02
+"perfect hash family14,1107,40S11",3,0.02
+"perfect hash family14,1107,40S13",3,0.02
+"perfect hash family14,1107,40S14",3,0.02
+"perfect hash family21,12167,23,c",3,0.02
+"perfect hash family3,1146,765T109",3,0.02
+"perfect hash family3,1146,765T115",3,0.02
+"perfect hash family3,1146,765T124",3,0.02
+"perfect hash family3,871,582",3,0.02
+"perfect hash family3,960,641",3,0.02
+"perfect hash family3,960,641T59",3,0.02
+"perfect hash family3,972,649T67",3,0.02
+"perfect hash family3,972,649T8",3,0.02
+"perfect hash family3,973,650",3,0.02
+"perfect hash family3,981,655T14",3,0.02
+"perfect hash family3,981,655T5",3,0.02
+"perfect hash family3,981,655T73",3,0.02
+"perfect hash family3,982,656",3,0.02
+"perfect hash family32,512,16,c",3,0.02
+"perfect hash family32,513,17",3,0.02
+"perfect hash family4,3125,625T110",3,0.02
+"perfect hash family4,3125,625T249",3,0.02
+"perfect hash family4,3125,625T265",3,0.02
+"perfect hash family4,3125,625T289",3,0.02
+"perfect hash family4,3125,625T43",3,0.02
+"perfect hash family6,735,249",3,0.02
+"perfect hash family9,10609,103T11",3,0.02
+"perfect hash family9,10609,103T30",3,0.02
+"perfect hash family9,10609,103T37",3,0.02
+"perfect hash family9,11881,109T36",3,0.02
+"perfect hash family9,14986,126T53",3,0.02
+"Density Mult Cyclic",2,0.01
+"Fix 3 symbols",2,0.01
+"Fix 4 symbols (LCDST) TJ-SA",2,0.01
+"Fix 5 symbols (LCDST) TJ-SA",2,0.01
+"Holey Transversal Design",2,0.01
+"Incomplete Transversal Design",2,0.01
+"Power CT17^2+1",2,0.01
+"Power CT19^2+2",2,0.01
+"Power CT19^2Arc",2,0.01
+"Power CT19^2T1T1",2,0.01
+"Power CT19^3",2,0.01
+"Power CT19^3T1",2,0.01
+"Power CT19^3T1T1",2,0.01
+"Power CT23^2",2,0.01
+"Power CT23^2T1",2,0.01
+"Power CT23^2T1T1",2,0.01
+"Power CT23^2T2",2,0.01
+"Power CT23^3",2,0.01
+"Power CT23^3T16",2,0.01
+"Power CT23^3T17",2,0.01
+"Power CT23^3T3T1",2,0.01
+"Power CT23^3T3T1T1",2,0.01
+"Power CT23^3T3T2T1",2,0.01
+"Power CT23^3T3T3",2,0.01
+"Power CT23^3T3T3T1",2,0.01
+"Power CT23^3T3T3T2",2,0.01
+"Power CT23^3T3T3T3",2,0.01
+"Power CT29^2T3",2,0.01
+"Power CT31^2T1T1",2,0.01
+"Power CT31^3T3S30",2,0.01
+"Power CT31^3T5S29",2,0.01
+"Power CT31^3T5S30",2,0.01
+"Power CT32^2+2",2,0.01
+"Power CT37^2+3",2,0.01
+"Power CT37^2Arc(10):5 twos,0 ones",2,0.01
+"Power CT37^2Arc(6):3 twos,0 ones",2,0.01
+"Power CT37^2Arc(8):4 twos,0 ones",2,0.01
+"Power CT37^2T2",2,0.01
+"Power CT37^2T2T2",2,0.01
+"Power CT41^2T1T1",2,0.01
+"Power CT43^2+2",2,0.01
+"Power CT43^2Arc",2,0.01
+"Power CT49^2+1",2,0.01
+"Power CT49^2T4",2,0.01
+"Power CT49^2T9",2,0.01
+"Power CT53^2+2",2,0.01
+"Power N-CT101^2Arc(13)T13",2,0.01
+"Power N-CT101^2Arc(13)T18",2,0.01
+"Power N-CT101^2Arc(13)T4",2,0.01
+"Power N-CT101^2Arc(13)T6",2,0.01
+"Power N-CT101^2Arc(2)T12",2,0.01
+"Power N-CT101^2Arc(2)T25",2,0.01
+"Power N-CT101^2Arc(3)T12",2,0.01
+"Power N-CT101^2Arc(3)T25",2,0.01
+"Power N-CT101^2Arc(4)T12",2,0.01
+"Power N-CT101^2Arc(4)T25",2,0.01
+"Power N-CT101^2Arc(9)T12",2,0.01
+"Power N-CT101^2T12T1",2,0.01
+"Power N-CT101^2T19",2,0.01
+"Power N-CT101^2T20",2,0.01
+"Power N-CT101^2T25T1",2,0.01
+"Power N-CT101^2T6",2,0.01
+"Power N-CT29^2Arc(2)T6",2,0.01
+"Power N-CT29^2Arc(3)T6",2,0.01
+"Power N-CT29^2Arc(4)T6",2,0.01
+"Power N-CT29^2T6T1",2,0.01
+"Power N-CT29^2T9",2,0.01
+"Power N-CT31^2Arc(2)T3",2,0.01
+"Power N-CT31^2Arc(2)T8",2,0.01
+"Power N-CT31^2T3T1",2,0.01
+"Power N-CT31^2T8T1",2,0.01
+"Power N-CT37^2+1",2,0.01
+"Power N-CT37^2Arc(2)T4",2,0.01
+"Power N-CT37^2T1",2,0.01
+"Power N-CT37^2T12",2,0.01
+"Power N-CT37^2T12T3",2,0.01
+"Power N-CT37^2T14",2,0.01
+"Power N-CT37^2T1T1",2,0.01
+"Power N-CT37^2T3",2,0.01
+"Power N-CT37^2T4T1",2,0.01
+"Power N-CT37^2T4T3",2,0.01
+"Power N-CT37^2T7",2,0.01
+"Power N-CT37^2T8T3",2,0.01
+"Power N-CT37^2T8T4",2,0.01
+"Power N-CT41^2Arc(2)T4",2,0.01
+"Power N-CT41^2Arc(3)T4",2,0.01
+"Power N-CT41^2Arc(4)T4",2,0.01
+"Power N-CT41^2T1",2,0.01
+"Power N-CT41^2T11",2,0.01
+"Power N-CT41^2T12T4",2,0.01
+"Power N-CT41^2T1T1",2,0.01
+"Power N-CT41^2T3T3",2,0.01
+"Power N-CT41^2T4T1",2,0.01
+"Power N-CT41^2T6T6",2,0.01
+"Power N-CT41^2T7T3",2,0.01
+"Power N-CT41^2T7T4",2,0.01
+"Power N-CT41^2Trin1,4,4",2,0.01
+"Power N-CT41^2Trin1,7,7",2,0.01
+"Power N-CT41^2Trin3,7,7",2,0.01
+"Power N-CT41^2Trin4,4,10",2,0.01
+"Power N-CT41^2Trin4,4,12",2,0.01
+"Power N-CT41^2Trin6,6,6",2,0.01
+"Power N-CT43^2T5",2,0.01
+"Power N-CT47^2",2,0.01
+"Power N-CT47^2Arc(2)T3",2,0.01
+"Power N-CT47^2Arc(2)T4",2,0.01
+"Power N-CT47^2Arc(2)T5",2,0.01
+"Power N-CT47^2Arc(3)T5",2,0.01
+"Power N-CT47^2T13",2,0.01
+"Power N-CT47^2T14",2,0.01
+"Power N-CT47^2T22",2,0.01
+"Power N-CT47^2T2T1",2,0.01
+"Power N-CT47^2T4T1",2,0.01
+"Power N-CT47^2T4T2",2,0.01
+"Power N-CT47^2T5T1",2,0.01
+"Power N-CT47^2T5T3",2,0.01
+"Power N-CT47^2T6T1",2,0.01
+"Power N-CT47^2T7",2,0.01
+"Power N-CT47^2Trin1,3,5",2,0.01
+"Power N-CT53^2+2",2,0.01
+"Power N-CT53^2Arc(2)T2",2,0.01
+"Power N-CT53^2Arc(2)T4",2,0.01
+"Power N-CT53^2T1",2,0.01
+"Power N-CT53^2T10",2,0.01
+"Power N-CT53^2T17",2,0.01
+"Power N-CT53^2T1T1",2,0.01
+"Power N-CT53^2T2",2,0.01
+"Power N-CT53^2T23",2,0.01
+"Power N-CT53^2T25",2,0.01
+"Power N-CT53^2T2T1",2,0.01
+"Power N-CT53^2T2T2",2,0.01
+"Power N-CT53^2T4T2",2,0.01
+"Power N-CT53^2Trin1,2,4",2,0.01
+"Power N-CT53^2Trin2,2,4",2,0.01
+"Power N-CT59^2T11",2,0.01
+"Power N-CT59^2T5T5",2,0.01
+"Power N-CT61^2T9",2,0.01
+"Power N-CT67^2+3",2,0.01
+"Power N-CT67^2T12",2,0.01
+"Power N-CT67^2T15",2,0.01
+"Power N-CT67^2T18",2,0.01
+"Power N-CT67^2T20",2,0.01
+"Power N-CT67^2T26",2,0.01
+"Power N-CT67^2T28",2,0.01
+"Power N-CT67^2T29",2,0.01
+"Power N-CT67^2T31",2,0.01
+"Power N-CT67^2T5T5",2,0.01
+"Power N-CT67^2T6",2,0.01
+"Power N-CT67^2T6T1",2,0.01
+"Power N-CT71^2T1T1",2,0.01
+"Power N-CT71^2T2T2",2,0.01
+"Power N-CT71^2T3T3",2,0.01
+"Power N-CT71^2Trin2,2,2",2,0.01
+"Power N-CT73^2T1",2,0.01
+"Power N-CT73^2T14",2,0.01
+"Power N-CT73^2T14T14",2,0.01
+"Power N-CT73^2T14T3",2,0.01
+"Power N-CT73^2T14T8",2,0.01
+"Power N-CT73^2T17T14",2,0.01
+"Power N-CT73^2T17T2",2,0.01
+"Power N-CT73^2T17T8",2,0.01
+"Power N-CT73^2T18T17",2,0.01
+"Power N-CT73^2T18T18",2,0.01
+"Power N-CT73^2T19",2,0.01
+"Power N-CT73^2T19T17",2,0.01
+"Power N-CT73^2T19T18",2,0.01
+"Power N-CT73^2T19T19",2,0.01
+"Power N-CT73^2T1T1",2,0.01
+"Power N-CT73^2T24",2,0.01
+"Power N-CT73^2T27",2,0.01
+"Power N-CT73^2T27T14",2,0.01
+"Power N-CT73^2T28",2,0.01
+"Power N-CT73^2T28T14",2,0.01
+"Power N-CT73^2T28T28",2,0.01
+"Power N-CT73^2T28T3",2,0.01
+"Power N-CT73^2T28T8",2,0.01
+"Power N-CT73^2T30",2,0.01
+"Power N-CT73^2T32",2,0.01
+"Power N-CT73^2T32T14",2,0.01
+"Power N-CT73^2T36",2,0.01
+"Power N-CT73^2T42",2,0.01
+"Power N-CT73^2T42T3",2,0.01
+"Power N-CT73^2T42T8",2,0.01
+"Power N-CT73^2T5",2,0.01
+"Power N-CT73^2T5T5",2,0.01
+"Power N-CT73^2T6T3",2,0.01
+"Power N-CT73^2T8T3",2,0.01
+"Power N-CT73^2Trin14,14,27",2,0.01
+"Power N-CT73^2Trin2,17,17",2,0.01
+"Power N-CT73^2Trin2,17,19",2,0.01
+"Power N-CT73^2Trin2,17,20",2,0.01
+"Power N-CT73^2Trin2,17,21",2,0.01
+"Power N-CT73^2Trin2,2,17",2,0.01
+"Power N-CT73^2Trin2,2,19",2,0.01
+"Power N-CT73^2Trin2,2,20",2,0.01
+"Power N-CT73^2Trin2,8,17",2,0.01
+"Power N-CT73^2Trin2,8,19",2,0.01
+"Power N-CT73^2Trin2,8,20",2,0.01
+"Power N-CT73^2Trin3,14,28",2,0.01
+"Power N-CT73^2Trin3,3,14",2,0.01
+"Power N-CT73^2Trin3,3,42",2,0.01
+"Power N-CT73^2Trin3,3,8",2,0.01
+"Power N-CT73^2Trin3,8,14",2,0.01
+"Power N-CT73^2Trin3,8,28",2,0.01
+"Power N-CT73^2Trin3,8,42",2,0.01
+"Power N-CT73^2Trin8,14,27",2,0.01
+"Power N-CT73^2Trin8,14,28",2,0.01
+"Power N-CT73^2Trin8,17,17",2,0.01
+"Power N-CT73^2Trin8,8,17",2,0.01
+"Power N-CT73^2Trin8,8,19",2,0.01
+"Power N-CT79^2+1",2,0.01
+"Power N-CT79^2+2",2,0.01
+"Power N-CT79^2T1",2,0.01
+"Power N-CT79^2T10",2,0.01
+"Power N-CT79^2T12T3",2,0.01
+"Power N-CT79^2T12T4",2,0.01
+"Power N-CT79^2T17T4",2,0.01
+"Power N-CT79^2T19T1",2,0.01
+"Power N-CT79^2T23T2",2,0.01
+"Power N-CT79^2T23T3",2,0.01
+"Power N-CT79^2T24",2,0.01
+"Power N-CT79^2T24T3",2,0.01
+"Power N-CT79^2T25",2,0.01
+"Power N-CT79^2T25T3",2,0.01
+"Power N-CT79^2T28T2",2,0.01
+"Power N-CT79^2T34T4",2,0.01
+"Power N-CT79^2T3T3",2,0.01
+"Power N-CT79^2T5T3",2,0.01
+"Power N-CT79^2Trin1,4,34",2,0.01
+"Power N-CT79^2Trin2,2,2",2,0.01
+"Power N-CT79^2Trin2,2,23",2,0.01
+"Power N-CT79^2Trin2,2,28",2,0.01
+"Power N-CT79^2Trin3,3,23",2,0.01
+"Power N-CT79^2Trin3,3,3",2,0.01
+"Power N-CT79^2Trin3,3,5",2,0.01
+"Power N-CT83^2+1",2,0.01
+"Power N-CT83^2Arc(13)T2",2,0.01
+"Power N-CT83^2Arc(2)T27",2,0.01
+"Power N-CT83^2Arc(3)T27",2,0.01
+"Power N-CT83^2Arc(4)T27",2,0.01
+"Power N-CT83^2T15",2,0.01
+"Power N-CT83^2T16",2,0.01
+"Power N-CT83^2T27T1",2,0.01
+"Power N-CT83^2T3T3",2,0.01
+"Power N-CT89^2Arc(2)T27",2,0.01
+"Power N-CT89^2Arc(3)T27",2,0.01
+"Power N-CT89^2T13",2,0.01
+"Power N-CT89^2T13T2",2,0.01
+"Power N-CT89^2T19",2,0.01
+"Power N-CT89^2T20",2,0.01
+"Power N-CT89^2T28",2,0.01
+"Power N-CT89^2T38",2,0.01
+"Power N-CT89^2T42",2,0.01
+"Power N-CT89^2T43",2,0.01
+"Power N-CT89^2T44",2,0.01
+"Power N-CT89^2T45",2,0.01
+"Power N-CT89^2T47",2,0.01
+"Power N-CT89^2T48",2,0.01
+"Power N-CT89^2T49",2,0.01
+"Power N-CT89^2T52",2,0.01
+"Power N-CT89^2T53",2,0.01
+"Power N-CT89^2T5T5",2,0.01
+"Power N-CT89^2T8",2,0.01
+"Power N-CT89^2Trin1,5,5",2,0.01
+"Power N-CT89^2Trin2,2,13",2,0.01
+"Power N-CT97^2+2",2,0.01
+"Power N-CT97^2Arc(12)T2",2,0.01
+"Power N-CT97^2Arc(13)T15",2,0.01
+"Power N-CT97^2Arc(13)T4",2,0.01
+"Power N-CT97^2Arc(13)T6",2,0.01
+"Power N-CT97^2T21",2,0.01
+"Power N-CT97^2T23",2,0.01
+"Power N-CT97^2T4T2",2,0.01
+"Power N-CT97^2T4T4",2,0.01
+"Power N-CT97^2Trin2,2,4",2,0.01
+"Power N-CT97^2Trin2,4,4",2,0.01
+"Power N-CT97^2Trin4,4,4",2,0.01
+"Two-stage",2,0.01
+"perfect hash family13,10609,103T10",2,0.01
+"perfect hash family13,11881,109T33",2,0.01
+"perfect hash family13,11881,109T35",2,0.01
+"perfect hash family13,11881,109T39",2,0.01
+"perfect hash family13,6894,88",2,0.01
+"perfect hash family13,7925,93",2,0.01
+"perfect hash family15,965,35",2,0.01
+"perfect hash family15,966,36",2,0.01
+"perfect hash family16,361,19,c",2,0.01
+"perfect hash family20,2500,25,c",2,0.01
+"perfect hash family20,2501,26",2,0.01
+"perfect hash family3,1005,671",2,0.01
+"perfect hash family3,1005,671T74",2,0.01
+"perfect hash family3,1083,723",2,0.01
+"perfect hash family3,1083,723T52",2,0.01
+"perfect hash family3,1122,749T226",2,0.01
+"perfect hash family3,1122,749T295",2,0.01
+"perfect hash family3,1122,749T297",2,0.01
+"perfect hash family3,1122,749T299",2,0.01
+"perfect hash family3,1122,749T307",2,0.01
+"perfect hash family3,1122,749T96",2,0.01
+"perfect hash family3,1123,750",2,0.01
+"perfect hash family3,1143,763T110",2,0.01
+"perfect hash family3,1143,763T13",2,0.01
+"perfect hash family3,1143,763T240",2,0.01
+"perfect hash family3,1143,763T309",2,0.01
+"perfect hash family3,1143,763T311",2,0.01
+"perfect hash family3,1143,763T313",2,0.01
+"perfect hash family3,1144,764",2,0.01
+"perfect hash family3,1147,766",2,0.01
+"perfect hash family3,1149,767",2,0.01
+"perfect hash family3,1149,767T114",2,0.01
+"perfect hash family3,1149,767T17",2,0.01
+"perfect hash family3,1149,767T3",2,0.01
+"perfect hash family3,1149,767T313",2,0.01
+"perfect hash family3,1254,837T114",2,0.01
+"perfect hash family3,1254,837T166",2,0.01
+"perfect hash family3,1254,837T364",2,0.01
+"perfect hash family3,1254,837T367",2,0.01
+"perfect hash family3,1254,837T371",2,0.01
+"perfect hash family3,1254,837T376",2,0.01
+"perfect hash family3,1255,838",2,0.01
+"perfect hash family3,1275,851",2,0.01
+"perfect hash family3,1275,851T128",2,0.01
+"perfect hash family3,1275,851T13",2,0.01
+"perfect hash family3,1275,851T180",2,0.01
+"perfect hash family3,1275,851T378",2,0.01
+"perfect hash family3,1275,851T381",2,0.01
+"perfect hash family3,849,567",2,0.01
+"perfect hash family3,978,653",2,0.01
+"perfect hash family3,978,653T86",2,0.01
+"perfect hash family32,515,19,c",2,0.01
+"perfect hash family32,516,20",2,0.01
+"perfect hash family4,305,193",2,0.01
+"perfect hash family4,307,195",2,0.01
+"perfect hash family4,3125,625T101",2,0.01
+"perfect hash family4,3125,625T102",2,0.01
+"perfect hash family4,3125,625T11",2,0.01
+"perfect hash family4,3125,625T120",2,0.01
+"perfect hash family4,3125,625T152",2,0.01
+"perfect hash family4,3125,625T153",2,0.01
+"perfect hash family4,3125,625T155",2,0.01
+"perfect hash family4,3125,625T159",2,0.01
+"perfect hash family4,3125,625T164",2,0.01
+"perfect hash family4,3125,625T173",2,0.01
+"perfect hash family4,3125,625T175",2,0.01
+"perfect hash family4,3125,625T179",2,0.01
+"perfect hash family4,3125,625T183",2,0.01
+"perfect hash family4,3125,625T252",2,0.01
+"perfect hash family4,3125,625T276",2,0.01
+"perfect hash family4,3125,625T28",2,0.01
+"perfect hash family4,3125,625T301",2,0.01
+"perfect hash family4,3125,625T33",2,0.01
+"perfect hash family4,3125,625T341",2,0.01
+"perfect hash family4,3125,625T58",2,0.01
+"perfect hash family4,3125,625T79",2,0.01
+"perfect hash family4,3125,625T92",2,0.01
+"perfect hash family4,3125,625T96",2,0.01
+"perfect hash family4,315,200",2,0.01
+"perfect hash family4,317,202",2,0.01
+"perfect hash family4,328,208",2,0.01
+"perfect hash family4,328,208T58",2,0.01
+"perfect hash family4,328,208T61",2,0.01
+"perfect hash family4,332,210",2,0.01
+"perfect hash family4,388,244",2,0.01
+"perfect hash family4,388,244T49",2,0.01
+"perfect hash family4,388,244T51",2,0.01
+"perfect hash family4,396,250",2,0.01
+"perfect hash family4,7776,1296",2,0.01
+"perfect hash family5,444,200",2,0.01
+"perfect hash family5,450,202",2,0.01
+"perfect hash family5,450,202T2",2,0.01
+"perfect hash family5,476,208",2,0.01
+"perfect hash family5,556,244",2,0.01
+"perfect hash family5,570,246T44",2,0.01
+"perfect hash family5,570,246T46",2,0.01
+"perfect hash family5,574,250",2,0.01
+"perfect hash family6,561,201",2,0.01
+"perfect hash family6,568,208",2,0.01
+"perfect hash family6,730,244",2,0.01
+"perfect hash family6,730,244T42",2,0.01
+"perfect hash family6,730,244T44",2,0.01
+"perfect hash family6,730,244T49",2,0.01
+"perfect hash family6,730,244T51",2,0.01
+"perfect hash family6,736,250",2,0.01
+"perfect hash family9,11881,109T17",2,0.01
+"perfect hash family9,11881,109T20",2,0.01
+"perfect hash family9,11881,109T21",2,0.01
+"perfect hash family9,11881,109T25",2,0.01
+"perfect hash family9,11881,109T34",2,0.01
+"perfect hash family9,11881,109T47",2,0.01
+"perfect hash family9,11881,109T54",2,0.01
+"perfect hash family9,11881,109T56",2,0.01
+"perfect hash family9,11881,109T57",2,0.01
+"perfect hash family9,11881,109T58",2,0.01
+"perfect hash family9,12769,113T24",2,0.01
+"perfect hash family9,2213,51",2,0.01
+"perfect hash familyD16,1458,54^11 27^5",2,0.01
+"perfect hash familyD16,578,34^11 17^5",2,0.01
+"Brick by Brick",1,0.01
+"Hadamard",1,0.01
+"Johnson-Entringer",1,0.01
+"Power CT100^2",1,0.01
+"Power CT100^2,c",1,0.01
+"Power CT101^2,cT3c",1,0.01
+"Power CT11^2",1,0.01
+"Power CT11^2,T3c",1,0.01
+"Power CT11^3",1,0.01
+"Power CT11^3,+1c",1,0.01
+"Power CT11^3,T3c",1,0.01
+"Power CT11^3,T6c",1,0.01
+"Power CT11^3,T7c",1,0.01
+"Power CT11^3T3T3c",1,0.01
+"Power CT11^3T7T3c",1,0.01
+"Power CT11^4,T3c",1,0.01
+"Power CT11^4,T6c",1,0.01
+"Power CT11^4,T7c",1,0.01
+"Power CT11^4,cT9c",1,0.01
+"Power CT11^4T3T3c",1,0.01
+"Power CT11^4T3cT3cT7c",1,0.01
+"Power CT11^4T7T3c",1,0.01
+"Power CT11^4T7T7c",1,0.01
+"Power CT12^2,c",1,0.01
+"Power CT12^3,cT1",1,0.01
+"Power CT12^3,cT1T1",1,0.01
+"Power CT13^3+1",1,0.01
+"Power CT13^4S13c",1,0.01
+"Power CT16^2",1,0.01
+"Power CT17^2T1",1,0.01
+"Power CT19^2+3",1,0.01
+"Power CT19^2T8",1,0.01
+"Power CT19^3+1",1,0.01
+"Power CT19^3T1T1T1",1,0.01
+"Power CT19^3T2",1,0.01
+"Power CT19^3T3cS17",1,0.01
+"Power CT19^3T3cS18",1,0.01
+"Power CT19^3T4S3",1,0.01
+"Power CT19^3T4T1",1,0.01
+"Power CT19^3T4T1T1",1,0.01
+"Power CT19^3T4T2",1,0.01
+"Power CT19^3T4T2T1",1,0.01
+"Power CT19^3T4T3",1,0.01
+"Power CT19^3T5",1,0.01
+"Power CT19^3T5T2",1,0.01
+"Power CT23^2T3",1,0.01
+"Power CT23^2T3T3",1,0.01
+"Power CT23^2T4",1,0.01
+"Power CT23^2T4T3",1,0.01
+"Power CT23^2T5",1,0.01
+"Power CT23^3T10",1,0.01
+"Power CT23^3T10T10",1,0.01
+"Power CT23^3T10T10T10",1,0.01
+"Power CT23^3T10T10T3",1,0.01
+"Power CT23^3T10T10T4",1,0.01
+"Power CT23^3T10T10T9",1,0.01
+"Power CT23^3T10T3",1,0.01
+"Power CT23^3T10T4",1,0.01
+"Power CT23^3T10T5",1,0.01
+"Power CT23^3T10T9",1,0.01
+"Power CT23^3T10T9T3",1,0.01
+"Power CT23^3T10T9T4",1,0.01
+"Power CT23^3T10T9T5",1,0.01
+"Power CT23^3T10T9T9",1,0.01
+"Power CT23^3T11",1,0.01
+"Power CT23^3T11T10T4",1,0.01
+"Power CT23^3T11T4",1,0.01
+"Power CT23^3T14",1,0.01
+"Power CT23^3T15",1,0.01
+"Power CT23^3T2T2",1,0.01
+"Power CT23^3T2T2T1",1,0.01
+"Power CT23^3T2T2T2",1,0.01
+"Power CT23^3T3T2T2",1,0.01
+"Power CT23^3T4",1,0.01
+"Power CT23^3T5",1,0.01
+"Power CT23^3T5T5",1,0.01
+"Power CT23^3T6",1,0.01
+"Power CT23^3T6T4",1,0.01
+"Power CT23^3T6T5",1,0.01
+"Power CT23^3T6T6",1,0.01
+"Power CT23^3T6T6T6",1,0.01
+"Power CT23^3T7",1,0.01
+"Power CT23^3T7T4",1,0.01
+"Power CT23^3T7T5",1,0.01
+"Power CT23^3T7T5T5",1,0.01
+"Power CT23^3T7T6",1,0.01
+"Power CT23^3T7T6T5",1,0.01
+"Power CT23^3T7T7",1,0.01
+"Power CT23^3T7T7T4",1,0.01
+"Power CT23^3T7T7T5",1,0.01
+"Power CT23^3T7T7T7",1,0.01
+"Power CT23^3T8",1,0.01
+"Power CT23^3T8T3",1,0.01
+"Power CT23^3T8T4",1,0.01
+"Power CT23^3T8T5",1,0.01
+"Power CT23^3T8T6",1,0.01
+"Power CT23^3T8T6T4",1,0.01
+"Power CT23^3T8T6T5",1,0.01
+"Power CT23^3T8T7",1,0.01
+"Power CT23^3T8T7T4",1,0.01
+"Power CT23^3T8T7T5",1,0.01
+"Power CT23^3T8T7T6",1,0.01
+"Power CT23^3T8T7T7",1,0.01
+"Power CT23^3T8T8",1,0.01
+"Power CT23^3T8T8T4",1,0.01
+"Power CT23^3T8T8T5",1,0.01
+"Power CT23^3T8T8T6",1,0.01
+"Power CT23^3T8T8T7",1,0.01
+"Power CT23^3T8T8T8",1,0.01
+"Power CT23^3T9",1,0.01
+"Power CT23^3T9T3",1,0.01
+"Power CT23^3T9T4",1,0.01
+"Power CT23^3T9T5",1,0.01
+"Power CT23^3T9T6",1,0.01
+"Power CT23^3T9T6T4",1,0.01
+"Power CT23^3T9T6T5",1,0.01
+"Power CT23^3T9T8",1,0.01
+"Power CT23^3T9T8T3",1,0.01
+"Power CT23^3T9T8T4",1,0.01
+"Power CT23^3T9T8T5",1,0.01
+"Power CT23^3T9T8T6",1,0.01
+"Power CT23^3T9T8T8",1,0.01
+"Power CT23^3T9T9",1,0.01
+"Power CT23^3T9T9T3",1,0.01
+"Power CT23^3T9T9T4",1,0.01
+"Power CT23^3T9T9T5",1,0.01
+"Power CT23^3T9T9T6",1,0.01
+"Power CT23^3T9T9T8",1,0.01
+"Power CT23^3T9T9T9",1,0.01
+"Power CT25^2T14",1,0.01
+"Power CT25^2T3",1,0.01
+"Power CT25^3S11",1,0.01
+"Power CT25^3S12",1,0.01
+"Power CT25^3S13",1,0.01
+"Power CT25^3S14",1,0.01
+"Power CT25^3S15",1,0.01
+"Power CT25^3S16",1,0.01
+"Power CT25^3S17",1,0.01
+"Power CT25^3S18",1,0.01
+"Power CT25^3S19",1,0.01
+"Power CT25^3S20",1,0.01
+"Power CT25^3S21",1,0.01
+"Power CT25^3S22",1,0.01
+"Power CT25^3S23",1,0.01
+"Power CT25^3S24",1,0.01
+"Power CT25^3S25",1,0.01
+"Power CT25^3T10S23",1,0.01
+"Power CT25^3T10S24",1,0.01
+"Power CT25^3T11S24",1,0.01
+"Power CT25^3T12S22",1,0.01
+"Power CT25^3T12S23",1,0.01
+"Power CT25^3T12S24",1,0.01
+"Power CT25^3T16",1,0.01
+"Power CT25^3T17",1,0.01
+"Power CT25^3T18",1,0.01
+"Power CT25^3T19",1,0.01
+"Power CT25^3T2S24",1,0.01
+"Power CT25^3T3S24",1,0.01
+"Power CT25^3T4S24",1,0.01
+"Power CT25^3T5S24",1,0.01
+"Power CT25^3T6S24",1,0.01
+"Power CT25^3T7S24",1,0.01
+"Power CT25^3T8S24",1,0.01
+"Power CT25^3T9S22",1,0.01
+"Power CT25^3T9S23",1,0.01
+"Power CT25^3T9S24",1,0.01
+"Power CT27^2",1,0.01
+"Power CT27^3S20",1,0.01
+"Power CT27^3S21",1,0.01
+"Power CT29^2",1,0.01
+"Power CT29^2+1",1,0.01
+"Power CT29^2T1",1,0.01
+"Power CT29^2T1T1",1,0.01
+"Power CT29^2T2",1,0.01
+"Power CT29^2T2T1",1,0.01
+"Power CT29^2T4",1,0.01
+"Power CT31^2",1,0.01
+"Power CT31^2T1",1,0.01
+"Power CT31^2T2",1,0.01
+"Power CT31^2T2T1",1,0.01
+"Power CT32^2",1,0.01
+"Power CT32^2+1",1,0.01
+"Power CT32^2T2",1,0.01
+"Power CT37^2",1,0.01
+"Power CT37^2+1",1,0.01
+"Power CT37^2+2",1,0.01
+"Power CT37^2Arc(10):3 twos,2 ones",1,0.01
+"Power CT37^2Arc(10):4 twos,1 ones",1,0.01
+"Power CT37^2Arc(12):4 twos,2 ones",1,0.01
+"Power CT37^2Arc(2)T2",1,0.01
+"Power CT37^2Arc(6):2 twos,1 ones",1,0.01
+"Power CT37^2Arc(8):2 twos,2 ones",1,0.01
+"Power CT37^2Arc(8):3 twos,1 ones",1,0.01
+"Power CT37^2T1",1,0.01
+"Power CT37^2T1T1",1,0.01
+"Power CT37^2T2T1",1,0.01
+"Power CT41^2",1,0.01
+"Power CT41^2+1",1,0.01
+"Power CT41^2Arc(2)T3",1,0.01
+"Power CT41^2Arc(2)T4",1,0.01
+"Power CT41^2Arc(3)T3",1,0.01
+"Power CT41^2T1",1,0.01
+"Power CT41^2T3",1,0.01
+"Power CT41^2T3T1",1,0.01
+"Power CT41^2T4",1,0.01
+"Power CT41^2T4T1",1,0.01
+"Power CT41^2T6",1,0.01
+"Power CT41^2T6T1",1,0.01
+"Power CT43^2",1,0.01
+"Power CT43^2+1",1,0.01
+"Power CT43^2+3",1,0.01
+"Power CT43^2T1",1,0.01
+"Power CT43^2T1T1",1,0.01
+"Power CT43^2T3",1,0.01
+"Power CT47^2",1,0.01
+"Power CT47^2Arc(6):3 twos,0 ones",1,0.01
+"Power CT47^2Arc(8):4 twos,0 ones",1,0.01
+"Power CT47^2T2",1,0.01
+"Power CT47^2T2T2",1,0.01
+"Power CT47^2T5T2",1,0.01
+"Power CT47^2T6",1,0.01
+"Power CT49^2+2",1,0.01
+"Power CT49^2+3",1,0.01
+"Power CT49^2T10",1,0.01
+"Power CT49^2T11",1,0.01
+"Power CT49^2T2",1,0.01
+"Power CT49^2T3",1,0.01
+"Power CT49^2T5",1,0.01
+"Power CT49^2T6",1,0.01
+"Power CT49^2T7",1,0.01
+"Power CT49^2T8",1,0.01
+"Power CT53^2 +5",1,0.01
+"Power CT53^2+1",1,0.01
+"Power CT53^2T1",1,0.01
+"Power CT53^2T1T1",1,0.01
+"Power CT53^2T3",1,0.01
+"Power CT53^2T3T3",1,0.01
+"Power CT59^2T1T1",1,0.01
+"Power CT61^2",1,0.01
+"Power CT61^2+1",1,0.01
+"Power CT61^2T3",1,0.01
+"Power CT68^2,c",1,0.01
+"Power CT68^2,cT33c",1,0.01
+"Power CT72^2,c",1,0.01
+"Power CT72^2,cT4c",1,0.01
+"Power CT73^2Arc(7)T2",1,0.01
+"Power CT80^2,c",1,0.01
+"Power CT80^2,cT12c",1,0.01
+"Power CT80^2,cT8c",1,0.01
+"Power CT81^2Arc(7)T2",1,0.01
+"Power CT84^2,c",1,0.01
+"Power CT84^2,cT4c",1,0.01
+"Power CT90^2,c",1,0.01
+"Power CT90^2,cT10c",1,0.01
+"Power CT90^2,cT6c",1,0.01
+"Power CT98^2,c",1,0.01
+"Power CT98^2,cT14c",1,0.01
+"Power CT98^2,cT8c",1,0.01
+"Power CZ2-12.4-10.1",1,0.01
+"Power CZ2-16.5",1,0.01
+"Power CZ2-17.4-16.1",1,0.01
+"Power CZ2-19.13",1,0.01
+"Power CZ2-27.12-26.1",1,0.01
+"Power CZ2-27.13",1,0.01
+"Power CZ3-11.7-10.1-10.1",1,0.01
+"Power CZ3-11.7-8.1-10.1",1,0.01
+"Power CZ3-11.7-8.1-9.1",1,0.01
+"Power CZ3-11.7-9.1-10.1",1,0.01
+"Power CZ3-11.8-10.1",1,0.01
+"Power CZ3-11.8-8.1",1,0.01
+"Power CZ3-13.12-10.1",1,0.01
+"Power CZ3-13.12-11.1",1,0.01
+"Power CZ3-13.3-12.6",1,0.01
+"Power CZ3-13.4-12.5",1,0.01
+"Power CZ3-13.4-6.1-9.1",1,0.01
+"Power CZ3-13.5-10.1",1,0.01
+"Power CZ3-13.5-12.1",1,0.01
+"Power CZ3-13.5-12.4",1,0.01
+"Power CZ3-13.5-6.1",1,0.01
+"Power CZ3-13.5-8.1",1,0.01
+"Power CZ3-13.5-9.1",1,0.01
+"Power CZ3-13.6-12.3",1,0.01
+"Power CZ3-13.7-12.1-12.1",1,0.01
+"Power CZ3-13.8-12.1",1,0.01
+"Power CZ3-14.6",1,0.01
+"Power CZ3-16.3-14.1-14.1-14.1",1,0.01
+"Power CZ3-16.4-14.1-14.1",1,0.01
+"Power CZ3-16.5-14.1",1,0.01
+"Power CZ3-16.6",1,0.01
+"Power CZ3-16.7-12.1-12.1",1,0.01
+"Power CZ3-16.7-12.1-13.1",1,0.01
+"Power CZ3-17.4-16.1-16.1",1,0.01
+"Power CZ3-19.11-18.0-17.8",1,0.01
+"Power CZ3-19.15-15.4",1,0.01
+"Power CZ3-19.16-15.1-15.1-15.1",1,0.01
+"Power CZ3-19.16-15.1-15.1-16.1",1,0.01
+"Power CZ3-19.16-15.1-15.1-18.1",1,0.01
+"Power CZ3-19.16-15.1-16.1-16.1",1,0.01
+"Power CZ3-19.16-15.1-16.1-18.1",1,0.01
+"Power CZ3-19.16-16.1-16.1-16.1",1,0.01
+"Power CZ3-19.16-16.1-16.1-17.1",1,0.01
+"Power CZ3-19.16-16.1-16.1-18.1",1,0.01
+"Power CZ3-19.16-16.1-17.1-17.1",1,0.01
+"Power CZ3-19.16-16.1-17.1-18.1",1,0.01
+"Power CZ3-19.17-15.1-15.1",1,0.01
+"Power CZ3-19.17-15.1-16.1",1,0.01
+"Power CZ3-19.17-15.1-18.1",1,0.01
+"Power CZ3-19.17-16.1-16.1",1,0.01
+"Power CZ3-19.17-16.1-17.1",1,0.01
+"Power CZ3-19.17-16.1-18.1",1,0.01
+"Power CZ3-19.17-17.1-17.1",1,0.01
+"Power CZ3-19.17-17.1-18.1",1,0.01
+"Power CZ3-19.18-15.1",1,0.01
+"Power CZ3-19.18-16.1",1,0.01
+"Power CZ3-19.18-17.1",1,0.01
+"Power CZ3-19.3-16.1-16.1-18.1",1,0.01
+"Power CZ3-19.3-16.1-17.1-18.1",1,0.01
+"Power CZ3-19.4-14.1-18.1",1,0.01
+"Power CZ3-19.4-16.1-16.1",1,0.01
+"Power CZ3-19.4-16.1-18.1",1,0.01
+"Power CZ3-19.4-17.1-18.1",1,0.01
+"Power CZ3-19.5-16.1",1,0.01
+"Power CZ3-19.5-18.1",1,0.01
+"Power CZ3-19.6",1,0.01
+"Power CZ3-20.6",1,0.01
+"Power CZ3-21.19",1,0.01
+"Power CZ3-23.0-22.10-21.11",1,0.01
+"Power CZ3-23.0-22.11-21.10",1,0.01
+"Power CZ3-23.0-22.12-21.9",1,0.01
+"Power CZ3-23.0-22.13-21.8",1,0.01
+"Power CZ3-23.0-22.14-21.7",1,0.01
+"Power CZ3-23.0-22.15-21.6",1,0.01
+"Power CZ3-23.0-22.16-21.5",1,0.01
+"Power CZ3-23.0-22.17-21.4",1,0.01
+"Power CZ3-23.0-22.18-21.3",1,0.01
+"Power CZ3-23.0-22.19-21.2",1,0.01
+"Power CZ3-23.0-22.20-21.1",1,0.01
+"Power CZ3-23.0-22.21",1,0.01
+"Power CZ3-23.0-22.9-21.12",1,0.01
+"Power CZ3-23.1-22.10-21.10",1,0.01
+"Power CZ3-23.1-22.11-21.9",1,0.01
+"Power CZ3-23.1-22.12-21.8",1,0.01
+"Power CZ3-23.1-22.13-21.7",1,0.01
+"Power CZ3-23.1-22.14-21.6",1,0.01
+"Power CZ3-23.1-22.15-21.5",1,0.01
+"Power CZ3-23.1-22.16-21.4",1,0.01
+"Power CZ3-23.1-22.17-21.3",1,0.01
+"Power CZ3-23.1-22.18-21.2",1,0.01
+"Power CZ3-23.1-22.19-21.1",1,0.01
+"Power CZ3-23.1-22.20",1,0.01
+"Power CZ3-23.1-22.4-20.1",1,0.01
+"Power CZ3-23.1-22.5",1,0.01
+"Power CZ3-23.1-22.7-21.13",1,0.01
+"Power CZ3-23.1-22.8-21.12",1,0.01
+"Power CZ3-23.1-22.9-21.11",1,0.01
+"Power CZ3-23.10-22.10-21.1",1,0.01
+"Power CZ3-23.10-22.11",1,0.01
+"Power CZ3-23.10-22.8-21.3",1,0.01
+"Power CZ3-23.10-22.9-21.2",1,0.01
+"Power CZ3-23.11-22.10",1,0.01
+"Power CZ3-23.11-22.7-21.3",1,0.01
+"Power CZ3-23.11-22.8-21.2",1,0.01
+"Power CZ3-23.11-22.9-21.1",1,0.01
+"Power CZ3-23.12-22.5-21.4",1,0.01
+"Power CZ3-23.12-22.6-21.3",1,0.01
+"Power CZ3-23.12-22.7-21.2",1,0.01
+"Power CZ3-23.12-22.8-21.1",1,0.01
+"Power CZ3-23.12-22.9",1,0.01
+"Power CZ3-23.13-22.3-21.5",1,0.01
+"Power CZ3-23.13-22.4-21.4",1,0.01
+"Power CZ3-23.13-22.5-21.3",1,0.01
+"Power CZ3-23.13-22.6-21.2",1,0.01
+"Power CZ3-23.13-22.7-21.1",1,0.01
+"Power CZ3-23.13-22.8",1,0.01
+"Power CZ3-23.14-22.2-21.5",1,0.01
+"Power CZ3-23.14-22.3-21.4",1,0.01
+"Power CZ3-23.14-22.4-21.1",1,0.01
+"Power CZ3-23.14-22.4-21.3",1,0.01
+"Power CZ3-23.14-22.5-21.2",1,0.01
+"Power CZ3-23.14-22.6-18.1",1,0.01
+"Power CZ3-23.14-22.6-21.1",1,0.01
+"Power CZ3-23.14-22.7",1,0.01
+"Power CZ3-23.15-22.0-21.6",1,0.01
+"Power CZ3-23.15-22.1-21.5",1,0.01
+"Power CZ3-23.15-22.2-21.2",1,0.01
+"Power CZ3-23.15-22.2-21.4",1,0.01
+"Power CZ3-23.15-22.3-15.1",1,0.01
+"Power CZ3-23.15-22.3-21.1",1,0.01
+"Power CZ3-23.15-22.3-21.3",1,0.01
+"Power CZ3-23.15-22.4-21.2",1,0.01
+"Power CZ3-23.15-22.5-18.1",1,0.01
+"Power CZ3-23.15-22.5-21.1",1,0.01
+"Power CZ3-23.15-22.6",1,0.01
+"Power CZ3-23.16-15.1-21.1-22.1",1,0.01
+"Power CZ3-23.16-22.0-21.3",1,0.01
+"Power CZ3-23.16-22.0-21.5",1,0.01
+"Power CZ3-23.16-22.1-21.2",1,0.01
+"Power CZ3-23.16-22.1-21.4",1,0.01
+"Power CZ3-23.16-22.2-15.1",1,0.01
+"Power CZ3-23.16-22.2-21.3",1,0.01
+"Power CZ3-23.16-22.3-21.2",1,0.01
+"Power CZ3-23.16-22.4-18.1",1,0.01
+"Power CZ3-23.16-22.4-21.1",1,0.01
+"Power CZ3-23.16-22.5",1,0.01
+"Power CZ3-23.17-15.1-21.1",1,0.01
+"Power CZ3-23.17-15.1-22.1",1,0.01
+"Power CZ3-23.17-16.1-22.1",1,0.01
+"Power CZ3-23.17-17.1-22.1",1,0.01
+"Power CZ3-23.17-21.1-21.1",1,0.01
+"Power CZ3-23.17-22.0-21.4",1,0.01
+"Power CZ3-23.17-22.1-21.3",1,0.01
+"Power CZ3-23.17-22.2-21.2",1,0.01
+"Power CZ3-23.17-22.3-18.1",1,0.01
+"Power CZ3-23.17-22.3-21.1",1,0.01
+"Power CZ3-23.18-15.1",1,0.01
+"Power CZ3-23.18-16.1",1,0.01
+"Power CZ3-23.18-17.1",1,0.01
+"Power CZ3-23.18-18.1",1,0.01
+"Power CZ3-23.18-18.1-21.1-21.1",1,0.01
+"Power CZ3-23.18-18.1-21.1-22.1",1,0.01
+"Power CZ3-23.18-19.1-19.1-21.1",1,0.01
+"Power CZ3-23.18-19.1-20.1-21.1",1,0.01
+"Power CZ3-23.18-19.1-21.1-21.1",1,0.01
+"Power CZ3-23.18-19.1-21.1-22.1",1,0.01
+"Power CZ3-23.18-20.1-20.1-20.1",1,0.01
+"Power CZ3-23.18-20.1-20.1-21.1",1,0.01
+"Power CZ3-23.18-20.1-21.1-21.1",1,0.01
+"Power CZ3-23.18-20.1-21.1-22.1",1,0.01
+"Power CZ3-23.18-22.0-21.3",1,0.01
+"Power CZ3-23.18-22.1-21.2",1,0.01
+"Power CZ3-23.18-22.2-17.1",1,0.01
+"Power CZ3-23.18-22.2-18.1",1,0.01
+"Power CZ3-23.19-17.1-21.1",1,0.01
+"Power CZ3-23.19-17.1-22.1",1,0.01
+"Power CZ3-23.19-18.1-20.1",1,0.01
+"Power CZ3-23.19-18.1-21.1",1,0.01
+"Power CZ3-23.19-18.1-22.1",1,0.01
+"Power CZ3-23.19-19.1-20.1",1,0.01
+"Power CZ3-23.19-19.1-21.1",1,0.01
+"Power CZ3-23.19-19.1-22.1",1,0.01
+"Power CZ3-23.19-20.1-20.1",1,0.01
+"Power CZ3-23.19-20.1-21.1",1,0.01
+"Power CZ3-23.2-22.18-21.1",1,0.01
+"Power CZ3-23.2-22.19",1,0.01
+"Power CZ3-23.20-17.1",1,0.01
+"Power CZ3-23.20-18.1",1,0.01
+"Power CZ3-23.20-19.1",1,0.01
+"Power CZ3-23.3-20.1-20.1-20.1",1,0.01
+"Power CZ3-23.3-20.1-20.1-22.1",1,0.01
+"Power CZ3-23.3-22.18",1,0.01
+"Power CZ3-23.3-22.2-20.1",1,0.01
+"Power CZ3-23.4-22.16-21.1",1,0.01
+"Power CZ3-23.4-22.17",1,0.01
+"Power CZ3-23.5-22.15-21.1",1,0.01
+"Power CZ3-23.5-22.16",1,0.01
+"Power CZ3-23.6-22.14-21.1",1,0.01
+"Power CZ3-23.6-22.15",1,0.01
+"Power CZ3-23.7-22.13-21.1",1,0.01
+"Power CZ3-23.7-22.14",1,0.01
+"Power CZ3-23.8-22.11-21.2",1,0.01
+"Power CZ3-23.8-22.12-21.1",1,0.01
+"Power CZ3-23.8-22.13",1,0.01
+"Power CZ3-23.9-22.10-21.2",1,0.01
+"Power CZ3-23.9-22.11-21.1",1,0.01
+"Power CZ3-23.9-22.12",1,0.01
+"Power CZ3-9.8-5.1",1,0.01
+"Power CZ3-9.8-6.1",1,0.01
+"Power CZ3-9.9",1,0.01
+"Power CZ4-13.0-12.12-10.1",1,0.01
+"Power CZ4-13.0-12.12-4.1",1,0.01
+"Power CZ4-13.0-12.12-5.1",1,0.01
+"Power CZ4-13.0-12.12-8.1",1,0.01
+"Power CZ4-13.0-12.12-9.1",1,0.01
+"Power N-CT101^2Arc(13)T11",1,0.01
+"Power N-CT101^2T13",1,0.01
+"Power N-CT101^2T16",1,0.01
+"Power N-CT101^2T18",1,0.01
+"Power N-CT101^2T24",1,0.01
+"Power N-CT101^2T7",1,0.01
+"Power N-CT101^2Trin2,2,2",1,0.01
+"Power N-CT101^2Trin2,2,6",1,0.01
+"Power N-CT29^2T2T2",1,0.01
+"Power N-CT29^2T4T2",1,0.01
+"Power N-CT29^2T6T2",1,0.01
+"Power N-CT29^2T8T5",1,0.01
+"Power N-CT29^2T8T6",1,0.01
+"Power N-CT31^2T12",1,0.01
+"Power N-CT31^2T13",1,0.01
+"Power N-CT31^2T2T1",1,0.01
+"Power N-CT31^2T9",1,0.01
+"Power N-CT37^2T10",1,0.01
+"Power N-CT37^2T11",1,0.01
+"Power N-CT37^2T5",1,0.01
+"Power N-CT37^2T6",1,0.01
+"Power N-CT41^2T10T3",1,0.01
+"Power N-CT41^2T10T5",1,0.01
+"Power N-CT41^2T10T8",1,0.01
+"Power N-CT41^2T12T3",1,0.01
+"Power N-CT41^2T12T6",1,0.01
+"Power N-CT41^2T14",1,0.01
+"Power N-CT41^2T14T3",1,0.01
+"Power N-CT41^2T3",1,0.01
+"Power N-CT41^2T3T2",1,0.01
+"Power N-CT41^2T4T2",1,0.01
+"Power N-CT41^2T5",1,0.01
+"Power N-CT41^2T7T2",1,0.01
+"Power N-CT41^2T7T5",1,0.01
+"Power N-CT41^2Trin1,5,7",1,0.01
+"Power N-CT41^2Trin2,2,7",1,0.01
+"Power N-CT41^2Trin2,4,7",1,0.01
+"Power N-CT41^2Trin3,3,12",1,0.01
+"Power N-CT41^2Trin3,3,3",1,0.01
+"Power N-CT41^2Trin3,6,12",1,0.01
+"Power N-CT43^2Arc(2)T14",1,0.01
+"Power N-CT43^2Arc(2)T4",1,0.01
+"Power N-CT43^2T13",1,0.01
+"Power N-CT43^2T13T1",1,0.01
+"Power N-CT43^2T14",1,0.01
+"Power N-CT43^2T14T1",1,0.01
+"Power N-CT43^2T26",1,0.01
+"Power N-CT43^2T8T1",1,0.01
+"Power N-CT43^2T9T1",1,0.01
+"Power N-CT47^2+3",1,0.01
+"Power N-CT47^2Arc(2)T17",1,0.01
+"Power N-CT47^2Arc(2)T8",1,0.01
+"Power N-CT47^2T12",1,0.01
+"Power N-CT47^2T14T3",1,0.01
+"Power N-CT47^2T17",1,0.01
+"Power N-CT47^2T17T1",1,0.01
+"Power N-CT47^2T21",1,0.01
+"Power N-CT47^2T27",1,0.01
+"Power N-CT47^2T28",1,0.01
+"Power N-CT47^2T29",1,0.01
+"Power N-CT47^2T3T3",1,0.01
+"Power N-CT47^2T8T1",1,0.01
+"Power N-CT47^2T8T2",1,0.01
+"Power N-CT47^2Trin1,2,8",1,0.01
+"Power N-CT53^2Arc(9)T10",1,0.01
+"Power N-CT53^2Arc(9)T11",1,0.01
+"Power N-CT53^2Arc(9)T2",1,0.01
+"Power N-CT53^2Arc(9)T6",1,0.01
+"Power N-CT53^2Arc(9)T8",1,0.01
+"Power N-CT53^2T11",1,0.01
+"Power N-CT53^2T14",1,0.01
+"Power N-CT53^2T6",1,0.01
+"Power N-CT53^2T9T2",1,0.01
+"Power N-CT59^2",1,0.01
+"Power N-CT59^2T15T4",1,0.01
+"Power N-CT59^2T15T5",1,0.01
+"Power N-CT59^2T2T2",1,0.01
+"Power N-CT59^2T4",1,0.01
+"Power N-CT59^2T6",1,0.01
+"Power N-CT59^2T6T2",1,0.01
+"Power N-CT59^2Trin2,2,2",1,0.01
+"Power N-CT61^2Arc(9)T11",1,0.01
+"Power N-CT61^2Arc(9)T13",1,0.01
+"Power N-CT61^2Arc(9)T16",1,0.01
+"Power N-CT61^2Arc(9)T2",1,0.01
+"Power N-CT61^2Arc(9)T24",1,0.01
+"Power N-CT61^2Arc(9)T25",1,0.01
+"Power N-CT61^2Arc(9)T6",1,0.01
+"Power N-CT61^2Arc(9)T7",1,0.01
+"Power N-CT61^2Arc(9)T8",1,0.01
+"Power N-CT61^2T12",1,0.01
+"Power N-CT61^2T13",1,0.01
+"Power N-CT61^2T17",1,0.01
+"Power N-CT61^2T4",1,0.01
+"Power N-CT61^2T7",1,0.01
+"Power N-CT67^2Arc(6)T7",1,0.01
+"Power N-CT67^2T11",1,0.01
+"Power N-CT67^2T2",1,0.01
+"Power N-CT67^2T2T2",1,0.01
+"Power N-CT67^2T7T2",1,0.01
+"Power N-CT67^2T7T7",1,0.01
+"Power N-CT67^2Trin2,2,2",1,0.01
+"Power N-CT67^2Trin2,2,7",1,0.01
+"Power N-CT67^2Trin2,7,7",1,0.01
+"Power N-CT67^2Trin6,7,7",1,0.01
+"Power N-CT67^2Trin7,7,12",1,0.01
+"Power N-CT67^2Trin7,7,7",1,0.01
+"Power N-CT71^2Arc(2)T15",1,0.01
+"Power N-CT71^2Arc(3)T15",1,0.01
+"Power N-CT71^2Arc(9)T10",1,0.01
+"Power N-CT71^2Arc(9)T11",1,0.01
+"Power N-CT71^2Arc(9)T16",1,0.01
+"Power N-CT71^2Arc(9)T2",1,0.01
+"Power N-CT71^2Arc(9)T20",1,0.01
+"Power N-CT71^2Arc(9)T9",1,0.01
+"Power N-CT71^2T15T1",1,0.01
+"Power N-CT71^2T15T3",1,0.01
+"Power N-CT71^2Trin1,3,15",1,0.01
+"Power N-CT73^2Arc(2)T12",1,0.01
+"Power N-CT73^2Arc(2)T4",1,0.01
+"Power N-CT73^2Arc(2)T9",1,0.01
+"Power N-CT73^2Arc(3)T12",1,0.01
+"Power N-CT73^2Arc(3)T4",1,0.01
+"Power N-CT73^2Arc(4)T12",1,0.01
+"Power N-CT73^2Arc(4)T4",1,0.01
+"Power N-CT73^2T11T7",1,0.01
+"Power N-CT73^2T11T8",1,0.01
+"Power N-CT73^2T12",1,0.01
+"Power N-CT73^2T12S12",1,0.01
+"Power N-CT73^2T12T1",1,0.01
+"Power N-CT73^2T12T4",1,0.01
+"Power N-CT73^2T12T9",1,0.01
+"Power N-CT73^2T15S12",1,0.01
+"Power N-CT73^2T19S11",1,0.01
+"Power N-CT73^2T19S12",1,0.01
+"Power N-CT73^2T26S12",1,0.01
+"Power N-CT73^2T27S12",1,0.01
+"Power N-CT73^2T4",1,0.01
+"Power N-CT73^2T4T1",1,0.01
+"Power N-CT73^2T4T4",1,0.01
+"Power N-CT73^2T8S12",1,0.01
+"Power N-CT73^2T8T7",1,0.01
+"Power N-CT73^2T8T8",1,0.01
+"Power N-CT73^2T9T1",1,0.01
+"Power N-CT73^2Trin1,4,12",1,0.01
+"Power N-CT73^2Trin1,4,4",1,0.01
+"Power N-CT73^2Trin1,9,12",1,0.01
+"Power N-CT73^2Trin4,4,12",1,0.01
+"Power N-CT73^2Trin4,4,4",1,0.01
+"Power N-CT73^2Trin7,7,8",1,0.01
+"Power N-CT73^2Trin7,8,8",1,0.01
+"Power N-CT79^2",1,0.01
+"Power N-CT79^2Arc(9)T10",1,0.01
+"Power N-CT79^2Arc(9)T11",1,0.01
+"Power N-CT79^2Arc(9)T12",1,0.01
+"Power N-CT79^2Arc(9)T18",1,0.01
+"Power N-CT79^2Arc(9)T2",1,0.01
+"Power N-CT79^2Arc(9)T20",1,0.01
+"Power N-CT79^2Arc(9)T25",1,0.01
+"Power N-CT79^2Arc(9)T27",1,0.01
+"Power N-CT79^2T11",1,0.01
+"Power N-CT79^2T13T2",1,0.01
+"Power N-CT79^2T14T2",1,0.01
+"Power N-CT79^2T38",1,0.01
+"Power N-CT79^2T4",1,0.01
+"Power N-CT79^2T4T2",1,0.01
+"Power N-CT79^2T4T4",1,0.01
+"Power N-CT79^2T5T5",1,0.01
+"Power N-CT79^2T7T2",1,0.01
+"Power N-CT79^2T9",1,0.01
+"Power N-CT79^2T9T2",1,0.01
+"Power N-CT79^2Trin2,2,13",1,0.01
+"Power N-CT79^2Trin2,2,14",1,0.01
+"Power N-CT79^2Trin2,2,4",1,0.01
+"Power N-CT79^2Trin2,2,7",1,0.01
+"Power N-CT79^2Trin2,4,4",1,0.01
+"Power N-CT79^2Trin4,4,4",1,0.01
+"Power N-CT83^2+3",1,0.01
+"Power N-CT83^2Arc(2)T5",1,0.01
+"Power N-CT83^2Arc(2)T9",1,0.01
+"Power N-CT83^2Arc(3)T5",1,0.01
+"Power N-CT83^2Arc(4)T5",1,0.01
+"Power N-CT83^2Arc(9)T2",1,0.01
+"Power N-CT83^2Arc(9)T9",1,0.01
+"Power N-CT83^2T1",1,0.01
+"Power N-CT83^2T11",1,0.01
+"Power N-CT83^2T16T1",1,0.01
+"Power N-CT83^2T18",1,0.01
+"Power N-CT83^2T3",1,0.01
+"Power N-CT83^2T4",1,0.01
+"Power N-CT83^2T5T1",1,0.01
+"Power N-CT83^2T9T1",1,0.01
+"Power N-CT89^2+1",1,0.01
+"Power N-CT89^2Arc(2)T19",1,0.01
+"Power N-CT89^2Arc(2)T6",1,0.01
+"Power N-CT89^2Arc(3)T19",1,0.01
+"Power N-CT89^2Arc(3)T6",1,0.01
+"Power N-CT89^2Arc(4)T19",1,0.01
+"Power N-CT89^2Arc(4)T6",1,0.01
+"Power N-CT89^2Arc(5)T19",1,0.01
+"Power N-CT89^2Arc(5)T6",1,0.01
+"Power N-CT89^2Arc(6)T19",1,0.01
+"Power N-CT89^2Arc(6)T6",1,0.01
+"Power N-CT89^2Arc(9)T12",1,0.01
+"Power N-CT89^2Arc(9)T19",1,0.01
+"Power N-CT89^2Arc(9)T2",1,0.01
+"Power N-CT89^2T1",1,0.01
+"Power N-CT89^2T15",1,0.01
+"Power N-CT89^2T1T1",1,0.01
+"Power N-CT89^2T23T3",1,0.01
+"Power N-CT89^2T24",1,0.01
+"Power N-CT89^2T24T3",1,0.01
+"Power N-CT89^2T3",1,0.01
+"Power N-CT89^2T3T3",1,0.01
+"Power N-CT89^2T4",1,0.01
+"Power N-CT89^2T4T4",1,0.01
+"Power N-CT89^2T6T1",1,0.01
+"Power N-CT89^2T9",1,0.01
+"Power N-CT89^2Trin3,3,23",1,0.01
+"Power N-CT89^2Trin3,3,3",1,0.01
+"Power N-CT97^2T17",1,0.01
+"Power N-CT97^2T1T1",1,0.01
+"Power N-CT97^2T29",1,0.01
+"Power N-CT97^2T3T3",1,0.01
+"Power N-CT97^2T5",1,0.01
+"Power N-CT97^2T5T5",1,0.01
+"Power N-CT97^2T7T7",1,0.01
+"Power N-CT97^2Trin3,3,3",1,0.01
+"Power N-CT97^2Trin3,3,6",1,0.01
+"Power N-CT97^2Trin3,3,9",1,0.01
+"Power N-CT97^2Trin3,6,6",1,0.01
+"Power N-CT97^2Trin5,5,5",1,0.01
+"SAT Local Search",1,0.01
+"Sloane",1,0.01
+"Special",1,0.01
+"double proj",1,0.01
+"perfect hash family13,10609,103T4",1,0.01
+"perfect hash family13,10609,103T7",1,0.01
+"perfect hash family13,11449,107T11",1,0.01
+"perfect hash family13,11449,107T15",1,0.01
+"perfect hash family13,11449,107T41",1,0.01
+"perfect hash family13,11449,107T42",1,0.01
+"perfect hash family13,5329,73T14",1,0.01
+"perfect hash family13,5329,73T21",1,0.01
+"perfect hash family13,5329,73T23",1,0.01
+"perfect hash family13,5329,73T9",1,0.01
+"perfect hash family13,5331,75",1,0.01
+"perfect hash family13,5333,77",1,0.01
+"perfect hash family13,6241,79T4",1,0.01
+"perfect hash family13,6244,82",1,0.01
+"perfect hash family13,6889,83S2",1,0.01
+"perfect hash family13,6889,83S3",1,0.01
+"perfect hash family13,6889,83S4",1,0.01
+"perfect hash family13,6889,83S5",1,0.01
+"perfect hash family13,6889,83S6",1,0.01
+"perfect hash family13,6889,83S7",1,0.01
+"perfect hash family13,6889,83S8",1,0.01
+"perfect hash family13,6889,83T1",1,0.01
+"perfect hash family13,6890,84",1,0.01
+"perfect hash family13,7921,89",1,0.01
+"perfect hash family13,7921,89T5",1,0.01
+"perfect hash family13,7921,89T7",1,0.01
+"perfect hash family13,7926,94",1,0.01
+"perfect hash family13,9409,97T13",1,0.01
+"perfect hash family13,9409,97T15",1,0.01
+"perfect hash family13,9409,97T8",1,0.01
+"perfect hash family13,9410,98",1,0.01
+"perfect hash family14,2209,47S2",1,0.01
+"perfect hash family14,2209,47T1",1,0.01
+"perfect hash family14,2212,50",1,0.01
+"perfect hash family14,3481,59",1,0.01
+"perfect hash family14,3481,59T13",1,0.01
+"perfect hash family14,3481,59T7",1,0.01
+"perfect hash family14,3481,59T9",1,0.01
+"perfect hash family14,3725,65",1,0.01
+"perfect hash family16,289,17,c",1,0.01
+"perfect hash family2,34,18T12",1,0.01
+"perfect hash family2,364,183T177",1,0.01
+"perfect hash family2,760,381T361",1,0.01
+"perfect hash family2,760,381T363",1,0.01
+"perfect hash family2,760,381T375",1,0.01
+"perfect hash family2,760,381T376",1,0.01
+"perfect hash family2,760,381T377",1,0.01
+"perfect hash family20,2116,23T10",1,0.01
+"perfect hash family20,2116,23T3",1,0.01
+"perfect hash family20,2116,23T4",1,0.01
+"perfect hash family20,2116,23T5",1,0.01
+"perfect hash family20,2116,23T6",1,0.01
+"perfect hash family20,2116,23T7",1,0.01
+"perfect hash family20,2116,23T8",1,0.01
+"perfect hash family20,2116,23T9",1,0.01
+"perfect hash family3,1017,679T146",1,0.01
+"perfect hash family3,1017,679T150",1,0.01
+"perfect hash family3,1017,679T155",1,0.01
+"perfect hash family3,1017,679T65",1,0.01
+"perfect hash family3,1018,680",1,0.01
+"perfect hash family3,1032,689T121",1,0.01
+"perfect hash family3,1032,689T143",1,0.01
+"perfect hash family3,1032,689T147",1,0.01
+"perfect hash family3,1033,690",1,0.01
+"perfect hash family3,1074,717T54",1,0.01
+"perfect hash family3,1074,717T97",1,0.01
+"perfect hash family3,1075,718",1,0.01
+"perfect hash family3,1080,721",1,0.01
+"perfect hash family3,1080,721T101",1,0.01
+"perfect hash family3,1080,721T3",1,0.01
+"perfect hash family3,1080,721T58",1,0.01
+"perfect hash family3,1092,729T196",1,0.01
+"perfect hash family3,1092,729T200",1,0.01
+"perfect hash family3,1092,729T205",1,0.01
+"perfect hash family3,1092,729T49",1,0.01
+"perfect hash family3,1093,730",1,0.01
+"perfect hash family3,1131,755",1,0.01
+"perfect hash family3,1131,755T187",1,0.01
+"perfect hash family3,1131,755T209",1,0.01
+"perfect hash family3,1131,755T213",1,0.01
+"perfect hash family3,1131,755T65",1,0.01
+"perfect hash family3,1224,817T249",1,0.01
+"perfect hash family3,1224,817T271",1,0.01
+"perfect hash family3,1224,817T275",1,0.01
+"perfect hash family3,1224,817T62",1,0.01
+"perfect hash family3,1225,818",1,0.01
+"perfect hash family3,1239,827",1,0.01
+"perfect hash family3,1239,827T294",1,0.01
+"perfect hash family3,1239,827T298",1,0.01
+"perfect hash family3,1239,827T303",1,0.01
+"perfect hash family3,1239,827T322",1,0.01
+"perfect hash family3,1239,827T97",1,0.01
+"perfect hash family3,1855,104",1,0.01
+"perfect hash family3,2906,122T18",1,0.01
+"perfect hash family3,2978,123S3",1,0.01
+"perfect hash family3,3125,125T21",1,0.01
+"perfect hash family3,850,568",1,0.01
+"perfect hash family3,928,620",1,0.01
+"perfect hash family3,942,629T61",1,0.01
+"perfect hash family3,942,629T83",1,0.01
+"perfect hash family3,942,629T87",1,0.01
+"perfect hash family3,993,663",1,0.01
+"perfect hash family3,993,663T43",1,0.01
+"perfect hash family32,512,16T2",1,0.01
+"perfect hash family32,512,16T3",1,0.01
+"perfect hash family32,512,16T4",1,0.01
+"perfect hash family32,513,17,c",1,0.01
+"perfect hash family32,514,18",1,0.01
+"perfect hash family4,1034,640",1,0.01
+"perfect hash family4,1034,640T90",1,0.01
+"perfect hash family4,1168,720",1,0.01
+"perfect hash family4,1168,720T80",1,0.01
+"perfect hash family4,243,156",1,0.01
+"perfect hash family4,283,180",1,0.01
+"perfect hash family4,285,181",1,0.01
+"perfect hash family4,285,181T1",1,0.01
+"perfect hash family4,3125,625T142",1,0.01
+"perfect hash family4,3125,625T145",1,0.01
+"perfect hash family4,3125,625T180",1,0.01
+"perfect hash family4,3125,625T217",1,0.01
+"perfect hash family4,3125,625T218",1,0.01
+"perfect hash family4,3125,625T220",1,0.01
+"perfect hash family4,3125,625T225",1,0.01
+"perfect hash family4,3125,625T251",1,0.01
+"perfect hash family4,3125,625T267",1,0.01
+"perfect hash family4,3125,625T353",1,0.01
+"perfect hash family4,3125,625T354",1,0.01
+"perfect hash family4,3125,625T364",1,0.01
+"perfect hash family4,3125,625T388",1,0.01
+"perfect hash family4,3125,625T5",1,0.01
+"perfect hash family4,3125,625T57",1,0.01
+"perfect hash family4,3125,625T70",1,0.01
+"perfect hash family4,3125,625T83",1,0.01
+"perfect hash family4,328,208T63",1,0.01
+"perfect hash family4,328,208T67",1,0.01
+"perfect hash family4,332,210T54",1,0.01
+"perfect hash family4,353,224",1,0.01
+"perfect hash family4,353,224T14",1,0.01
+"perfect hash family4,375,237",1,0.01
+"perfect hash family4,375,237T56",1,0.01
+"perfect hash family4,375,237T57",1,0.01
+"perfect hash family4,396,250T48",1,0.01
+"perfect hash family4,396,250T50",1,0.01
+"perfect hash family4,560,350",1,0.01
+"perfect hash family4,7776,1296T296",1,0.01
+"perfect hash family4,7776,1296T382",1,0.01
+"perfect hash family4,884,547T137",1,0.01
+"perfect hash family4,887,550",1,0.01
+"perfect hash family5,1358,550",1,0.01
+"perfect hash family5,1775,639T89",1,0.01
+"perfect hash family5,1776,640",1,0.01
+"perfect hash family5,2000,720",1,0.01
+"perfect hash family5,2000,720T80",1,0.01
+"perfect hash family5,335,156",1,0.01
+"perfect hash family5,345,157S3",1,0.01
+"perfect hash family5,345,157S4",1,0.01
+"perfect hash family5,395,180",1,0.01
+"perfect hash family5,405,181",1,0.01
+"perfect hash family5,405,181S2",1,0.01
+"perfect hash family5,405,181S3",1,0.01
+"perfect hash family5,405,181S4",1,0.01
+"perfect hash family5,405,181T1",1,0.01
+"perfect hash family5,429,193",1,0.01
+"perfect hash family5,431,195",1,0.01
+"perfect hash family5,440,196S2",1,0.01
+"perfect hash family5,440,196S3",1,0.01
+"perfect hash family5,440,196S4",1,0.01
+"perfect hash family5,475,207T51",1,0.01
+"perfect hash family5,475,207T57",1,0.01
+"perfect hash family5,475,207T60",1,0.01
+"perfect hash family5,475,207T62",1,0.01
+"perfect hash family5,475,207T66",1,0.01
+"perfect hash family5,478,210",1,0.01
+"perfect hash family5,515,223T42",1,0.01
+"perfect hash family5,515,223T43",1,0.01
+"perfect hash family5,530,236",1,0.01
+"perfect hash family5,540,237",1,0.01
+"perfect hash family5,550,238S4",1,0.01
+"perfect hash family5,550,238T43",1,0.01
+"perfect hash family5,550,238T45",1,0.01
+"perfect hash family5,620,268",1,0.01
+"perfect hash family5,866,350",1,0.01
+"perfect hash family6,2086,550",1,0.01
+"perfect hash family6,2536,639T89",1,0.01
+"perfect hash family6,2560,640",1,0.01
+"perfect hash family6,541,181",1,0.01
+"perfect hash family9,11449,107T10",1,0.01
+"perfect hash family9,11449,107T12",1,0.01
+"perfect hash family9,11881,109T16",1,0.01
+"perfect hash family9,11881,109T29",1,0.01
+"perfect hash family9,12769,113T22",1,0.01
+"perfect hash family9,12769,113T25",1,0.01
+"perfect hash family9,12769,113T31",1,0.01
+"perfect hash family9,12769,113T35",1,0.01
+"perfect hash family9,12769,113T36",1,0.01
+"perfect hash family9,12769,113T43",1,0.01
+"perfect hash family9,14986,126T46",1,0.01
+"perfect hash family9,5333,77",1,0.01
+"perfect hash family9,7925,93",1,0.01
+"perfect hash family9,7927,95",1,0.01
+"perfect hash family9,8536,96S4",1,0.01
+"perfect hash family9,8536,96S5",1,0.01
+"perfect hash family9,8536,96S6",1,0.01
+"perfect hash family9,8536,96S7",1,0.01
+"tower",1,0.01

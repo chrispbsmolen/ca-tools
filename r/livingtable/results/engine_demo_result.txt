@@ -1,0 +1,60 @@
+ingredient: SCA_LCDST(5, 3)  original 11 x 5  replacement 12 x 5  (+1 rows)
+cascade: 41 entries ( 41 direct )
+baseline pass: 41 entries, 1.4 min, verified 41, errors 0
+replacement pass: 41 entries, 1.4 min, verified 41, errors 0
+restore pass: 41 entries, 1.4 min, verified 41, errors 0
+
+== PROPAGATION TEST: every rebuilt array verified ==
+entries changed by the replacement: 20 of 41  (absorbed unchanged: 21 )
+rebuilt arrays verified covering: 41 of 41  tiers: FULL 41 
+before -> after (recorded, with original, with replacement):
+        id t     k v N_recorded N_baseline N_replacement delta
+  PCAcat 1 2    24 3         19         19            21     2
+ PCAcat 10 2   456 3         33         33            34     1
+ PCAcat 11 2   459 3         34         34            35     1
+ PCAcat 13 2  1080 3         37         37            39     2
+ PCAcat 14 2  1512 3         39         39            40     1
+ PCAcat 15 2  1968 3         41         41            43     2
+ PCAcat 16 2  3672 3         43         43            45     2
+ PCAcat 17 2  4968 3         45         45            46     1
+ PCAcat 18 2  6480 3         47         47            49     2
+ PCAcat 19 2  8448 3         49         49            52     3
+  PCAcat 2 2    40 3         21         21            22     1
+ PCAcat 20 2 11008 3         51         51            55     4
+ PCAcat 21 2 14336 3         53         53            58     5
+ PCAcat 22 2 18432 3         55         55            59     4
+ PCAcat 23 2 22784 3         57         57            60     3
+  PCAcat 3 2    43 3         22         22            23     1
+  PCAcat 5 2    88 3         25         25            27     2
+  PCAcat 6 2   136 3         27         27            28     1
+  PCAcat 7 2   141 3         28         28            29     1
+  PCAcat 9 2   312 3         31         31            33     2
+ replacement_verified
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+                 TRUE
+
+== REPLAY TEST: change, rebuild, restore ==
+baseline rebuilt sizes equal the recorded sizes: 41 of 41 
+after restore, rebuilt sizes equal the recorded sizes: 41 of 41 
+
+VERDICT propagation test: PASS (change propagated, every output verified) 
+VERDICT replay test: PASS (record reproduced after rewind and restore) 
+ENGINE DEMO DONE

@@ -1,0 +1,5 @@
+built 768 x 128 (the CAs author's prediction: 768 x 128; broken 3a was 762; the 3b repair was 792)
+covered: TRUE 
+gaps: 0 of 341376 projections
+elapsed: 0 min
+Q127 4A FULL VERIFICATION PASS
