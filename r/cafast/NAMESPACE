@@ -1,0 +1,4 @@
+useDynLib(cafast, .registration = TRUE)
+export(maxconstant_c, powerCT_any, power_plan, power_build, count_core, postopNCK_c, flexpos_c, markflex_c)
+importFrom(stats, runif)
+importFrom(utils, combn)

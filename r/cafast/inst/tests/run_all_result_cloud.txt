@@ -1,0 +1,219 @@
+=== test_count_core.R
+cases: 529, failures: 0
+COUNT CORE PASS
+
+=== test_nck_faces.R
+flexpos random battery: 300 arrays (mixed levels, half with NAs)
+coverage-convention battery: 100 NA-bearing arrays vs R oracle
+markflex random battery: 120 arrays; identical row order in 120 
+
+ALL NCK FACES TESTS PASS
+
+=== test_maxconstant.R
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=2/v=4/ca.2.4^20.txt.zip'
+Content type 'application/zip' length 542 bytes
+==================================================
+downloaded 542 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=3/v=3/ca.3.3^30.txt.zip'
+Content type 'application/zip' length 1326 bytes
+==================================================
+downloaded 1326 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=2/v=5/ca.2.5^40.txt.zip'
+Content type 'application/zip' length 1482 bytes
+==================================================
+downloaded 1482 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=3/v=4/ca.3.4^20.txt.zip'
+Content type 'application/zip' length 2048 bytes
+==================================================
+downloaded 2048 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=4/v=3/ca.4.3^15.txt.zip'
+Content type 'application/zip' length 1891 bytes
+==================================================
+downloaded 1891 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=3/v=4/ca.3.4^60.txt.zip'
+Content type 'application/zip' length 7560 bytes
+==================================================
+downloaded 7560 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=2/v=6/ca.2.6^60.txt.zip'
+Content type 'application/zip' length 3252 bytes
+==================================================
+downloaded 3252 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=4/v=4/ca.4.4^30.txt.zip'
+Content type 'application/zip' length 17331 bytes (16 KB)
+==================================================
+downloaded 16 KB
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=5/v=3/ca.5.3^20.txt.zip'
+Content type 'application/zip' length 9543 bytes
+==================================================
+downloaded 9543 bytes
+
+trying URL 'https://math.nist.gov/coveringarrays/ipof/cas/t=4/v=5/ca.4.5^20.txt.zip'
+Content type 'application/zip' length 26193 bytes (25 KB)
+==================================================
+downloaded 25 KB
+
+nistCA(2,20,4)      37 x 20  hers 2 front (2 total)   0.01s   ours 2 front (2 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(3,30,3)     106 x 30  hers 1 front (1 total)   0.03s   ours 1 front (1 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(2,40,5)      67 x 40  hers 1 front (1 total)   0.01s   ours 1 front (1 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(3,20,4)     215 x 20  hers 2 front (2 total)   0.11s   ours 2 front (2 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(4,15,3)     302 x 15  hers 2 front (2 total)   0.21s   ours 2 front (2 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(3,60,4)     324 x 60  hers 1 front (1 total)   0.31s   ours 1 front (1 total)   0.01s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(2,60,6)     104 x 60  hers 1 front (1 total)   0.03s   ours 1 front (1 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(4,30,4)    1448 x 30  hers 2 front (2 total)   5.08s   ours 2 front (2 total)   0.05s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(5,20,3)    1342 x 20  hers 2 front (2 total)   4.08s   ours 2 front (2 total)   0.04s   asc TRUE equiv TRUE covers TRUE  OK
+nistCA(4,20,5)    2892 x 20  hers 3 front (3 total)  24.94s   ours 3 front (3 total)   0.26s   asc TRUE equiv TRUE covers TRUE  OK
+random1             51 x  5  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random2             52 x 12  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random3             27 x 12  hers 2 front (3 total)   0.00s   ours 2 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random4             51 x  3  hers 4 front (6 total)   0.01s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random5             54 x  4  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random6             24 x 11  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random7             45 x 12  hers 3 front (3 total)   0.00s   ours 3 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random8             17 x 12  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random9             27 x  8  hers 3 front (3 total)   0.00s   ours 3 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random10            49 x  8  hers 3 front (3 total)   0.00s   ours 3 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random11            12 x  6  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random12            68 x  9  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random13            62 x  3  hers 3 front (12 total)   0.01s   ours 3 front (7 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random14            47 x  5  hers 3 front (3 total)   0.00s   ours 3 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random15            59 x  5  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random16            70 x  5  hers 3 front (4 total)   0.01s   ours 3 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random17            71 x  3  hers 6 front (7 total)   0.03s   ours 6 front (8 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random18            58 x  7  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random19            47 x  5  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random20            17 x  4  hers 2 front (4 total)   0.00s   ours 2 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random21            53 x  8  hers 2 front (2 total)   0.00s   ours 2 front (2 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random22            13 x 10  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random23            19 x  9  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random24            58 x  4  hers 4 front (4 total)   0.01s   ours 4 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random25            27 x  3  hers 4 front (6 total)   0.00s   ours 4 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random26            36 x 12  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random27            21 x  4  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random28            40 x  3  hers 4 front (6 total)   0.01s   ours 4 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random29            22 x  3  hers 2 front (8 total)   0.00s   ours 2 front (8 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random30            52 x  8  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random31            79 x 10  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random32            54 x  6  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random33            77 x  7  hers 2 front (2 total)   0.00s   ours 2 front (2 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random34            58 x  9  hers 4 front (4 total)   0.00s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random35            19 x  8  hers 3 front (3 total)   0.00s   ours 3 front (3 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random36            63 x  7  hers 5 front (5 total)   0.00s   ours 5 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random37            39 x 11  hers 6 front (6 total)   0.00s   ours 6 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random38            56 x  5  hers 4 front (5 total)   0.01s   ours 4 front (5 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random39            71 x  3  hers 2 front (20 total)   0.01s   ours 2 front (20 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+random40            14 x  4  hers 5 front (6 total)   0.00s   ours 5 front (6 total)   0.00s   asc TRUE equiv TRUE covers NA  OK
+bush64              64 x  5  hers 4 front (4 total)   0.01s   ours 4 front (4 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+cyc19               19 x 19  hers 1 front (1 total)   0.00s   ours 1 front (1 total)   0.00s   asc TRUE equiv TRUE covers TRUE  OK
+bush64: remove=TRUE gives 60 rows (was 64); one_is_enough gives 1 constant rows
+cyc19: remove=TRUE gives 18 rows (was 19); one_is_enough gives 1 constant rows
+
+cases 52, mismatches 0, total time hers 34.9 s, ours 0.4 s
+MAXCONSTANT TEST DONE
+
+=== test_powerct.R
+prime powers to 60: 2 3 4 5 7 8 9 11 13 16 17 19 23 25 27 29 31 32 37 41 43 47 49 53 59 
+Turan check: TRUE 
+
+== part 1: catalogue rows (same q, e as hers), compare N and verify where feasible
+t=3 k=121 v=2 q=11 e=2: catalogue N=33, hers 33 rows (0.0 s), ours 33 rows (0.1 s), covers TRUE (full)  OK
+t=3 k=1331 v=2 q=11 e=3: catalogue N=55, hers 55 rows (0.0 s), ours 55 rows (0.0 s), covers TRUE (screen 10x25)  OK
+t=4 k=1331 v=2 q=11 e=3: catalogue N=200, hers 200 rows (0.0 s), ours 200 rows (0.0 s), covers TRUE (screen 10x25)  OK
+t=5 k=2197 v=2 q=13 e=3: catalogue N=819, hers 819 rows (0.5 s), ours 819 rows (0.5 s), covers TRUE (screen 10x25)  OK
+t=6 k=6859 v=2: catalogue N=5396, skipped (too large for this battery)
+t=6 k=361 v=3: catalogue N=52614, skipped (too large for this battery)
+t=6 k=729 v=3: catalogue N=71204, skipped (too large for this battery)
+t=6 k=841 v=3: catalogue N=74805, skipped (too large for this battery)
+t=6 k=961 v=3: catalogue N=83356, skipped (too large for this battery)
+t=6 k=1024 v=3: catalogue N=84942, skipped (too large for this battery)
+t=6 k=1369 v=3: catalogue N=92183, skipped (too large for this battery)
+t=6 k=1681 v=3: catalogue N=97357, skipped (too large for this battery)
+t=6 k=1849 v=3: catalogue N=99723, skipped (too large for this battery)
+t=6 k=2209 v=3: catalogue N=104156, skipped (too large for this battery)
+t=6 k=2401 v=3: catalogue N=106314, skipped (too large for this battery)
+t=6 k=2809 v=3: catalogue N=123032, skipped (too large for this battery)
+t=6 k=3721 v=3: catalogue N=132496, skipped (too large for this battery)
+t=5 k=6859 v=4: catalogue N=77748, skipped (too large for this battery)
+t=6 k=841 v=4: catalogue N=401310, skipped (too large for this battery)
+t=6 k=1024 v=4: catalogue N=401310, skipped (too large for this battery)
+t=6 k=1369 v=4: catalogue N=458640, skipped (too large for this battery)
+t=6 k=1849 v=4: catalogue N=515970, skipped (too large for this battery)
+t=6 k=2401 v=4: catalogue N=515970, skipped (too large for this battery)
+t=6 k=2809 v=4: catalogue N=573300, skipped (too large for this battery)
+
+== part 2: settings outside the catalogue
+CA(3,200,3):
+  e=2 q=16: M=4, ingredient N1=68 rho=3, chi=3 -> N=263 (k=256)
+  e=2 q=17: M=4, ingredient N1=71 rho=3, chi=3 -> N=275 (k=289)
+  e=3 q=7: M=7, ingredient N1=39 rho=3, chi=3 -> N=255 (k=343)
+  e=3 q=8: M=7, ingredient N1=42 rho=3, chi=3 -> N=276 (k=512)
+  e=4 q=9: M=10, ingredient N1=45 rho=3, chi=3 -> N=423 (k=6561)
+  e=4 q=11: M=10, ingredient N1=45 rho=3, chi=3 -> N=423 (k=14641)
+  built 255 rows (q=7 e=3), covers TRUE (full); table/known N: 199 183 192 153
+CA(3,500,2):
+  e=2 q=23: M=3, ingredient N1=20 rho=1, chi=0 -> N=57 (k=529)
+  e=2 q=25: M=3, ingredient N1=21 rho=1, chi=0 -> N=60 (k=625)
+  e=3 q=8: M=5, ingredient N1=12 rho=1, chi=0 -> N=55 (k=512)
+  e=3 q=9: M=5, ingredient N1=12 rho=1, chi=0 -> N=55 (k=729)
+  e=4 q=7: M=7, ingredient N1=12 rho=1, chi=0 -> N=77 (k=2401)
+  e=4 q=8: M=7, ingredient N1=12 rho=1, chi=0 -> N=77 (k=4096)
+  built 55 rows (q=8 e=3), covers TRUE (screen 10x25); table/known N: 58 52 59 66 63 52
+CA(4,300,2):
+  e=2 q=19: M=5, ingredient N1=39 rho=1, chi=0 -> N=190 (k=361)
+  e=2 q=23: M=5, ingredient N1=46 rho=2, chi=2 -> N=222 (k=529)
+  e=3 q=8: M=9, ingredient N1=24 rho=2, chi=2 -> N=200 (k=512)
+  e=3 q=9: M=9, ingredient N1=24 rho=2, chi=2 -> N=200 (k=729)
+  e=4 q=13: M=13, ingredient N1=32 rho=1, chi=0 -> N=403 (k=28561)
+  e=4 q=16: M=13, ingredient N1=35 rho=2, chi=2 -> N=431 (k=65536)
+  built 190 rows (q=19 e=2), covers TRUE (screen 10x25); table/known N: 307 297 200 168 174 168
+CA(3,100,4):
+Registered S3 method overwritten by 'DoE.base':
+  method           from       
+  factorize.factor conf.design
+  e=2 q=11: M=4, ingredient N1=121 rho=4, chi=4 -> N=472 (k=121)
+  e=2 q=13: M=4, ingredient N1=124 rho=4, chi=4 -> N=484 (k=169)
+  e=3 q=7: M=7, ingredient N1=88 rho=4, chi=4 -> N=592 (k=343)
+  e=3 q=8: M=7, ingredient N1=88 rho=4, chi=4 -> N=592 (k=512)
+  e=4 q=9: M=10, ingredient N1=112 rho=4, chi=4 -> N=1084 (k=6561)
+  e=4 q=11: M=10, ingredient N1=121 rho=4, chi=4 -> N=1174 (k=14641)
+  built 472 rows (q=11 e=2), covers TRUE (full); table/known N: 332 1089 304 316 378 272
+CA(4,200,3):
+  e=2 q=16: M=6, ingredient N1=237 rho=3, chi=3 -> N=1407 (k=256)
+  e=2 q=17: M=6, ingredient N1=300 rho=3, chi=3 -> N=1785 (k=289)
+  e=3 q=11: M=11, ingredient N1=183 rho=3, chi=3 -> N=1983 (k=1331)
+  e=3 q=13: M=11, ingredient N1=219 rho=3, chi=3 -> N=2379 (k=2197)
+  e=4 q=16: M=16, ingredient N1=237 rho=3, chi=3 -> N=3747 (k=65536)
+  e=4 q=17: M=16, ingredient N1=300 rho=3, chi=3 -> N=4755 (k=83521)
+  built 1407 rows (q=16 e=2), covers TRUE (screen 10x25); table/known N: 669 1041 867 669
+CA(5,400,2):
+  e=2 q=23: M=7, ingredient N1=114 rho=1, chi=0 -> N=791 (k=529)
+  e=2 q=25: M=7, ingredient N1=118 rho=1, chi=0 -> N=819 (k=625)
+  e=3 q=13: M=13, ingredient N1=64 rho=1, chi=0 -> N=819 (k=2197)
+  e=3 q=16: M=13, ingredient N1=98 rho=2, chi=2 -> N=1250 (k=4096)
+  e=4 q=19: M=19, ingredient N1=99 rho=2, chi=2 -> N=1845 (k=130321)
+  e=4 q=23: M=19, ingredient N1=114 rho=1, chi=0 -> N=2147 (k=279841)
+  built 791 rows (q=23 e=2), covers TRUE (screen 10x25); table/known N: 431 430 434 819 430
+
+failures 0
+POWERCT TEST DONE
+
+=== test_nck_driver.R
+manual example: achieved sizes over 10 seeds: 12 12 12 12 12 12 12 12 12 12 (optimum by eCAN is 12)
+smoke calibration, CA from cyc(19,2)+4 dup rows, t=3, tiny budget:
+  CAs: sizes 19 19 19 19  in 102.4 s (4 seeds)
+  ours: sizes 19 19 19 19 19 19 19 19  in 0.1 s (8 seeds)
+  (note: this instance reduces at the first removal check only; the inner search is exercised in 2b)
+inner-loop instance: k=7 v=3 t=2, N0 = 44  trivial strip = 18 
+  CAs: sizes 12 14 13 13  mean 13  in 35.3 s (4 seeds)
+  ours: sizes 13 14 14 13 14 13 14 13 13 13 14 13  mean 13.42  in 0.5 s (12 seeds)
+
+ALL NCK DRIVER TESTS PASS
+
+ALL CAFAST TESTS DONE

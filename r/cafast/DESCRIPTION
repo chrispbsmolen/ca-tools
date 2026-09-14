@@ -1,0 +1,20 @@
+Package: cafast
+Type: Package
+Title: Fast Engineering Companions to the CAs Package for Covering Arrays
+Version: 0.1.0
+Author: Christopher Smolen
+Maintainer: Christopher Smolen <chrispbsmolen@gmail.com>
+Description: Fast replacements and generalisations of selected routines of
+    the CAs package by Ulrike Groemping: a C implementation of maxconstant
+    (largest set of rows that can be made constant), a power construction
+    of Colbourn and Torres-Jimenez for any strength, number of columns and
+    number of levels (not only the catalogued settings), the counting
+    kernel of ca-tools, and postopNCK_c, a fast Nayeri-Colbourn-Konjevod
+    post-optimizer calibrated against CAs::postopNCK. Every function is
+    tested against its CAs counterpart; the batteries are in inst/tests.
+License: GPL (>= 2)
+Encoding: UTF-8
+Depends: R (>= 4.0)
+Imports: CAs
+Suggests: caverify, lhs
+NeedsCompilation: yes
