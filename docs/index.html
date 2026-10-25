@@ -34,13 +34,13 @@ a { color: inherit; }
 <p>A covering array CA(N; t, k, v) is an N by k array over v symbols in which every choice of t columns shows every one of the v<sup>t</sup> value combinations in some row. This table records, for each strength t and alphabet size v, the smallest known N for each number of columns k, and says where every entry comes from. The baseline is the November 2024 status of Charles J. Colbourn's covering array tables as preserved by Ulrike Groemping in the CAs R package (tier CITED). Sizes published in papers and not in the snapshot are also tier CITED, each naming its paper (source S7, marked published), until an array is in hand. Entries with an explicit array in hand were checked exhaustively by a verifier and carry the array's SHA-256 and a stamp (tier VERIFIED). Arrays too large to check in full on the public runner were screened on random column windows (tier SCREENED); they are listed but do not count as best known. Where Colbourn's construction for an entry, as checked here, did not give a covering array at the recorded size, the entry stays as recorded and its rung is marked disputed (tier DISPUTED). Improvements are not yet propagated through recursive constructions: the propagation engine in <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/r/livingtable">r/livingtable</a> is run by hand and is not connected to submissions, so no entry here is derived by it.</p>
 <p>Rows are stair-steps: an entry (t, v, k, N) means N runs suffice for up to k columns, so the best known N at k is the smallest N among entries with at least k columns. The construction column names the construction or search that produced each entry, where it is known. For every array on file, constant rows is the largest number of its rows that can be made constant by permuting symbols within columns, a property that matters when the array is an ingredient of another construction. Anyone can add an array by pull request; see <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/submissions/README.md">how to submit</a>. The data is <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/table">table/ in the repository</a>; the raw file <a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv">table/ca_table.csv</a> is the machine-readable form (see the README for the stair-step rule and an R snippet).</p>
 <ul class="stats">
-<li>table rows <b>14,375</b></li>
-<li>verified rows <b>573</b></li>
+<li>table rows <b>14,376</b></li>
+<li>verified rows <b>574</b></li>
 <li>rows cited from papers <b>152</b></li>
 <li>screened rows, not yet verified in full <b>0</b></li>
 <li>disputed entries <b>3</b></li>
-<li>arrays on file <b>301</b></li>
-<li>verified arrays <b>301</b></li>
+<li>arrays on file <b>302</b></li>
+<li>verified arrays <b>302</b></li>
 <li>screened arrays <b>0</b></li>
 <li>community submissions <b>1</b></li>
 <li>arrays from submissions <b>23</b></li>
@@ -6075,7 +6075,7 @@ a { color: inherit; }
 <tr><td class=n>8137 to 9153</td><td class=n>243389</td><td class=ev>Colbourn-Martirosyan-TVT-Walker</td></tr>
 <tr><td class=n>9154 to 10000</td><td class=n>244049</td><td class=ev>Colbourn-Martirosyan-TVT-Walker fuse</td></tr>
 </tbody></table></details>
-<details><summary>t = 4, v = 11: 74 rungs, 1 verified</summary>
+<details><summary>t = 4, v = 11: 74 rungs, 2 verified</summary>
 <table><thead><tr><th class=n>k</th><th class=n>N</th><th>evidence</th></tr></thead><tbody>
 <tr><td class=n>4 to 12</td><td class=n>14641</td><td class=ev>orthogonal array</td></tr>
 <tr><td class=n>13</td><td class=n>27482</td><td class=ev>orthogonal array fuse fuse postop NCK</td></tr>
@@ -6094,8 +6094,8 @@ a { color: inherit; }
 <tr><td class=n>96</td><td class=n>58421</td><td class=ev>2-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>97 to 99</td><td class=n>58531</td><td class=ev>SCPHF Random Extension (CLS)</td></tr>
 <tr><td class=n>100 to 114</td><td class=n>58561</td><td class=ev>CPHF IPO 4 (WCS)</td></tr>
-<tr><td class=n>115 to 121</td><td class=n>69091</td><td class=ev>Colbourn-Martirosyan-TVT-Walker</td></tr>
-<tr><td class=n>122 to 141</td><td class=n>70521</td><td class=ev>3,3-Restricted SCPHF RE (CL)</td></tr>
+<tr><td class=n>115 to 122</td><td class=n>67782</td><td class=ev><span class="tag ver">verified</span>K. Shokri, L. Moura and B. Stevens 2025 (the construction and the size, arXiv:2510.13122, Theorem 6.2 and Corollary 6.5 with Tables 4 and 5 of v2 (Tables 5 and 6 of v3), an arXiv preprint with no journal reference as of 2026-10-25); <i>strength-4 recursive construction of Shokri, Moura and Stevens 2025 (Theorem 6.2): over F_(q^4), all F_q-linear combinations of the rows of G^(q+1) on q^2+1 columns, two such arrays from G^(2(q+1)) and G^(4(q+1)) on (q^2+1)/2 columns written twice side by side (the second with e_0 added on the right half), and q - 2 blocks R | R + e_r (e_0, ..., e_(q-2) the nonzero elements of F_q) with R a CA(2q^3 - q; 3, (q^2+1)/2, q) from a pair of orthogoval planes over F_(q^3); N = 3q^4 + (q - 2)(2q^3 - q), q = 11</i>; tools/sms_theorem62.py 11 (Theorem 6.2 of Shokri, Moura and Stevens, arXiv:2510.13122v2, with the ingredient CA(2651; 3, 61, 11) built by the same script; primitive polynomials x^4 + 4x^3 + 2 and x^3 + x^2 + 3)<span class="stamp"><a href="https://cran.r-project.org/package=caverify">caverify 0.2.0</a> 2026-10-25 Darwin-arm64 (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/CA_67782_4_122_11.txt">array</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 3da7bbb0a970, constant rows 11 of 11</span></td></tr>
+<tr><td class=n>123 to 141</td><td class=n>70521</td><td class=ev>3,3-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>142 to 160</td><td class=n>71731</td><td class=ev>3,2-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>161 to 170</td><td class=n>71841</td><td class=ev>3-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>171 to 193</td><td class=n>72941</td><td class=ev>2,2-Restricted SCPHF RE (CL)</td></tr>

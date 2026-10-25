@@ -251,3 +251,38 @@ text, and the recipe rebuilds it byte for byte. The notes of these rows
 and of four earlier rows name their sources and ingredients. The
 improvements belong to the CAs implementation and the published
 constructions.
+
+## A strength-4 array from Theorem 6.2 of Shokri, Moura and Stevens, 2026-10-25
+
+Theorem 6.2 of Shokri, Moura and Stevens (arXiv:2510.13122) builds a
+CA(3q^4 + N(q - 2); 4, q^2 + 1, q) for an odd prime power q from any
+CA(N; 3, (q^2+1)/2, q), and their Corollary 6.5 and Table 5 (Table 6
+in v3) use N = 2q^3 - q, which gives CA(67782; 4, 122, 11) against the
+snapshot's 70,521. The paper gives no array files. It was built here
+with `../tools/sms_theorem62.py` (odd primes q). The strength-3
+ingredient CA(2651; 3, 61, 11) has the size of their Theorem 3.4
+(Torres-Jimenez and Izquierdo-Marquez 2018) but is not that array: the
+script takes the two blocks of their Theorem 3.3, from a pair of
+orthogoval planes over F_(q^3), keeps the first 61 points whose
+coordinate vectors in both planes have a nonzero first entry, scales
+each column within its block so that entry is 1 (the row given by c
+e_0 is then the constant row c in both blocks), and removes the second
+block's q constant rows. Scaling a column within a block does not
+change which column sets that block covers, and every 3 of the points
+are independent in one of the two planes, so the ingredient is a
+strength-3 covering array; it was also verified directly.
+
+| (t, k, v) | N | snapshot best | constant rows |
+|---|---|---|---|
+| (4, 122, 11) | 67,782 | 70,521 | 11 |
+
+The array was verified in full twice: by caverify 0.2.0 on the Mac
+(2026-10-25, 977 s, after rebuilding it there with the same script and
+getting the same SHA-256) and by `ca_verify.c` on a second machine
+(all 8,783,390 column 4-sets). The script's arrays for q = 3, 5 and 7
+(294, 2610 and 10598 rows, the values of their Table 5) were verified
+in full as well. An independent reimplementation, written without the
+script, with other primitive polynomials, another linear functional
+and a random choice of columns, gave verified arrays of the same sizes
+for q = 3, 5 and 7 and a verified CA(2651; 3, 61, 11) (not stored).
+Constant rows were counted by cafast::maxconstant_c.
