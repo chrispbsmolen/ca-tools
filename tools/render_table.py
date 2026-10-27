@@ -221,7 +221,8 @@ LEGEND = [
      "row stays as recorded and is still counted, and the rung is marked disputed"),
     ("source_id", "the source class. <b>S1</b> Colbourn's tables (the CAs snapshot), "
      "<b>S4</b> NIST covering array library, <b>S5</b> Dwyer CA_Database, <b>S6</b> data "
-     "and constructions of the CAs package, <b>S7</b> literature and community submissions"),
+     "and constructions of the CAs package, <b>S7</b> literature and community submissions, <b>S8</b> arrays "
+     "built by this project with its own scripts (tools/own_arrays), verified in full"),
     ("source_detail", "the exact retrieval or generation recipe (URL and commit, or the "
      "generating call and package version)"),
     ("snapshot_id", "the dated source: <code>colbourn-2024-11-ug</code> for the baseline, "
@@ -279,7 +280,8 @@ def evidence_html(rs):
     reader does not take the verified array to come from Colbourn's
     construction."""
     ver, seen = [], set()
-    for r in rs:
+    # when several rows carry the same array, show the one built here (S8) first
+    for r in sorted(rs, key=lambda x: x.get("source_id") != "S8"):
         if r["tier"] == "VERIFIED" and r["array_sha256"] not in seen:
             seen.add(r["array_sha256"]); ver.append(r)
     cited = [r for r in rs if r["tier"] == "CITED" and r["source_id"] == "S1"]

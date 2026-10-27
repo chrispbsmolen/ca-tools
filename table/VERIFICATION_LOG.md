@@ -286,3 +286,38 @@ script, with other primitive polynomials, another linear functional
 and a random choice of columns, gave verified arrays of the same sizes
 for q = 3, 5 and 7 and a verified CA(2651; 3, 61, 11) (not stored).
 Constant rows were counted by cafast::maxconstant_c.
+
+## Arrays withdrawn and arrays built here, 2026-10-27
+
+The table stored 162 arrays of Torres-Jimenez's group that it had taken
+from the data objects TJ2level_CAs (138 files) and CAEX_CAs (24 files)
+of the CAs package on 2026-08-23. Their author objected to their
+redistribution. Of the 162, 25 are also published in Aaron Dwyer's
+CA_Database, whose rows (S5) keep them. The other 137 had no public
+source other than the CAs package, and their files were withdrawn from
+`arrays/`. They are listed in `withdrawn_files.csv` with their hashes,
+stamps and constant rows. Their rows stay, with the size, the hash and
+the verification stamp of 2026-08-23, and their notes say that the file
+is no longer stored. The repository history is unchanged.
+
+At 24 of those 137 points the table now holds an array built here at
+the same size, with no array of Torres-Jimenez's group in it, entered
+as an S8 row (`../tools/own_arrays/`, README there): weight-class and
+even-weight arrays at k = t + 1 and t + 2 (CA(10; 3, 5, 2), CA(16; 4,
+5, 2), CA(21; 4, 6, 2), CA(32; 5, 6, 2), CA(42; 5, 7, 2), CA(64; 6, 7,
+2), CA(85; 6, 8, 2)), simulated annealing (CA(15; 3, 12, 2), CA(16; 3,
+14, 2)), SAT (CA(17; 3, 16, 2) and the ternary CA(11; 2, 5, 3),
+CA(12; 2, 7, 3), CA(13; 2, 9, 3), CA(14; 2, 10, 3)), the 32 rows with
+0 in the first column of the CA(64; 5, 14, 2) of Colbourn, Keri, Rivas
+Soriano and Schlage-Puchta 2010 (CAs::ckrsCA(5, 14, 2)), that column
+dropped (CA(32; 4, 13, 2)),
+and Paley arrays of the CAs package (paleyCA) followed by row
+elimination written here (CA(39; 4, 20, 2), CA(87; 4, 89, 2),
+CA(107; 4, 113, 2), CA(159; 5, 80, 2), CA(225; 5, 114, 2),
+CA(251; 5, 128, 2), CA(258; 5, 130, 2), CA(259; 5, 132, 2),
+CA(271; 5, 138, 2)). Each was verified in full with `ca_verify.c` at
+commit 441203c (stamps in the rows); constant rows were counted with
+`../tools/constant_rows.c`. None is smaller than the array it stands
+beside. One of them, CA(16; 4, 5, 2), is the even-weight orthogonal
+array, and the array built here is byte-identical to the withdrawn
+file, so that array stays stored, now as this project's construction.

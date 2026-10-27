@@ -1,0 +1,117 @@
+Runs behind the 24 arrays of this folder (2026-10-27)
+
+All runs were made in a Linux x86_64 cloud workspace on 2026-10-27, with the
+scripts of this folder (compiled with gcc -O2). File names are those of the
+working folder; the stored arrays are in ../../table/arrays/ under
+CA_N_t_k_v_<first 8 hex digits of the sha256>.txt.
+
+Programs named in the commands:
+  nck       nck_early.c, the first version of nck.c (used for the runs
+            without SHAKE=); nck.c replaced its enumeration code and added
+            the SHAKE random walk, so the two do not give the same runs
+  nck2      nck.c (SHAKE=10 is its default)
+  nck_lite  nck_lite.c
+  casa      casa.c
+  casat.py  casat.py (python-sat 1.9.dev17, CaDiCaL 1.5.3)
+Starting arrays paley_t_k.txt were written in R from CAs::paleyCA(t, k)
+(CAs 0.24.4), 0-based, one row per line (README.md).
+
+"Repeated" below means the command was run again on 2026-10-27 after the
+array was stored, and gave the stored file byte for byte. The row-elimination
+runs have a time limit, so the number of iterations they reach depends on the
+machine and its load; those not repeated are listed with the command that
+produced the stored file.
+
+A. The command that produced each stored array
+
+Deterministic constructions (no seed):
+  python3 weight_arrays.py outdir      CA(10;3,5,2) CA(16;4,5,2) CA(21;4,6,2)
+                                       CA(32;5,6,2) CA(42;5,7,2) CA(64;6,7,2)
+                                       CA(85;6,8,2)                    repeated (all 7)
+  R: A <- CAs::ckrsCA(5, 14, 2); A[A[, 1] == 0, -1]
+                                       CA(32;4,13,2)                   repeated
+
+SAT (CaDiCaL is deterministic for a given formula):
+  python3 casat.py 11 2 5 3 sat_11_2_5_3.txt cadical153 240        CA(11;2,5,3)   repeated
+  python3 casat.py 12 2 7 3 sat_12_2_7_3.txt cadical153 240        CA(12;2,7,3)   repeated
+  python3 casat.py 13 2 9 3 sat_13_2_9_3.txt cadical153 240        CA(13;2,9,3)   repeated
+  python3 casat.py 14 2 10 3 sat_14_2_10_3.txt cadical153 240      CA(14;2,10,3)  repeated
+  python3 casat.py 17 3 16 2 sat_17_3_16_2.txt cadical153 1200     CA(17;3,16,2)  repeated
+
+Simulated annealing (seed, then time limit in seconds):
+  ./casa 15 3 12 2 1 60 1.0 0.999 out_15_3_12_2.txt               CA(15;3,12,2)  repeated
+  ./casa 16 3 14 2 7 60 1.0 0.999 out_16_3_14_2.txt               CA(16;3,14,2)  repeated
+
+Row elimination from a Paley array (the output file is prefix_N.txt):
+  ./nck 40 4 20 2 paley_4_20.txt nck_4_20 1 60                    CA(39;4,20,2)  repeated, with nck and nck2
+  ./nck 88 4 89 2 paley_4_89.txt nck_4_89 11 420 89               CA(87;4,89,2)  repeated with nck (nck2 stops at 88 rows)
+  ./nck 112 4 113 2 paley_4_113.txt nck_4_113 22 1200 113         CA(107;4,113,2) repeated
+  SHAKE=10 ./nck2 160 5 80 2 paley_5_80.txt nck2_5_80 61 1500 80  CA(159;5,80,2)  repeated
+  ./nck_lite 226 5 114 paley_5_114.txt lite_5_114 1 1500          CA(225;5,114,2)
+  ./nck_lite 252 5 128 paley_5_128.txt lite_5_128 1 1500          CA(251;5,128,2)
+  ./nck_lite 260 5 132 paley_5_132.txt lite_5_132 1 1500          CA(259;5,132,2)
+  ./nck_lite 259 5 132 lite_5_132_259.txt lite_5_130 2 1500 130   CA(258;5,130,2)
+        (input: the CA(259;5,132,2) above; kkeep 130 keeps its first 130 columns)
+  ./nck_lite 272 5 138 paley_5_138.txt lite_5_138 1 1700          CA(271;5,138,2)
+
+B. Exploratory runs (no stored array came from these)
+
+These tried other targets and other starting arrays. None produced an array
+that is stored; they are kept so that what was tried is on record. Inputs not
+described above:
+  nck_t_k_N.txt, lite_*   outputs of earlier runs in this list, fed back in
+  cs_ck_4_k.txt           Colbourn-Keri starter arrays (CAs::CS_CK)
+  cyc_4_k.txt             cyclotomy arrays (CAs::cyclotomyCA)
+  ckrs_t_k.txt            CKRS arrays (CAs::ckrsCA)
+  ckd_N_3_k_2.txt         Chateauneuf-Kreher doubling (CAs::CK_doubling) of the
+                          annealing arrays CA(15;3,12,2) and CA(16;3,14,2) above
+                          with CAs::KSK(k)
+  powerCT_4_144.txt       CAs::powerCA output for a row of powerCTcat whose
+                          ingredients name no Torres-Jimenez array (k = 144)
+
+  ./nck 95 4 97 2 nck_4_97_95.txt nck_4_97 21 1200 97
+  ./nck 104 4 103 2 paley_4_103.txt nck_4_103 21 1200 103
+  ./nck 108 4 109 2 paley_4_109.txt nck_4_109 21 1200 109
+  ./nck 112 4 144 2 powerCT_4_144.txt nck_4_121 21 1200 121
+  ./nck_lite 276 5 140 paley_5_140.txt lite_5_140 2 1700
+  ./nck 99 4 101 2 nck_4_101_99.txt nck_4_101 22 1200 101
+  ./nck 106 4 107 2 paley_4_107.txt nck_4_107 22 1200 107
+  ./nck 83 4 83 2 paley_4_83.txt nck_4_72 22 900 72
+  ./nck 52 4 26 2 cs_ck_4_26.txt nck_4_26 31 240 26
+  ./nck 54 4 28 2 cs_ck_4_28.txt nck_4_28 31 240 28
+  ./nck 58 4 30 2 paley_4_30.txt nck_4_30 31 240 30
+  ./nck 60 4 32 2 paley_4_32.txt nck_4_32 31 240 32
+  ./nck 64 4 33 2 cs_ck_4_33.txt nck_4_33 31 240 33
+  ./nck 66 4 34 2 cs_ck_4_34.txt nck_4_34 31 240 34
+  ./nck 67 4 67 2 paley_4_67.txt nck_4_38p 31 300 38
+  ./nck 67 4 67 2 cyc_4_67.txt nck_4_38c 31 300 38
+  ./nck 67 4 67 2 paley_4_67.txt nck_4_35p 31 300 35
+  ./nck 40 4 20 2 paley_4_20.txt nck_4_18 31 240 18
+  ./nck 60 5 10 2 ckrs_5_10.txt nck_5_10 31 300 10
+  ./nck 56 5 9 2 ckrs_5_9.txt nck_5_9 31 300 9
+  ./nck 111 6 9 2 ckrs_6_9.txt nck_6_9 31 300 9
+  ./nck 88 5 15 2 ckrs_5_15.txt nck_5_15 31 300 15
+  ./nck 23 3 23 2 paley_3_23.txt nck_3_23 31 200 23
+  SHAKE=10 ./nck2 23 3 28 2 ckd_23_3_28_2.txt nck_3_28 31 300 28
+  SHAKE=10 ./nck2 25 3 32 2 ckd_25_3_32_2.txt nck_3_32 31 300 32
+  SHAKE=10 ./nck2 22 3 24 2 ckd_22_3_24_2.txt nck_3_24 31 300 24
+  SHAKE=10 ./nck2 106 4 109 2 nck_4_109_106.txt nck2_4_109 41 1000 109
+  SHAKE=10 ./nck2 103 4 107 2 nck_4_107_103.txt nck2_4_107 41 900 107
+  SHAKE=10 ./nck2 107 4 113 2 nck_4_113_107.txt nck2_4_111 41 900 111
+  SHAKE=10 ./nck2 103 4 107 2 nck_4_107_103.txt nck2_4_103 41 600 103
+  SHAKE=10 ./nck2 103 4 107 2 nck_4_107_103.txt nck2_4_101 41 600 101
+  SHAKE=10 ./nck2 100 4 101 2 paley_4_101.txt nck2_4_97 41 600 97
+  SHAKE=10 ./nck2 88 4 89 2 paley_4_89.txt nck2_4_72 41 600 72
+  SHAKE=10 ./nck2 83 4 83 2 cyc_4_83.txt nck2_4_72c 41 300 72
+  SHAKE=10 ./nck2 136 5 68 2 paley_5_68.txt nck2_5_35 51 600 35
+  SHAKE=10 ./nck2 136 5 68 2 paley_5_68.txt nck2_5_26 51 600 26
+  timeout 1600 python3 -I casat.py 20 3 23 2 sat_20_3_23_2.txt cadical153 1500
+  timeout 1300 python3 -I casat.py 54 5 9 2 sat_54_5_9_2.txt cadical153 1200
+  SHAKE=10 ./nck2 21 3 24 2 nck_3_24_21.txt nck2_3_23 61 300 23
+  timeout 1300 python3 -I casat.py 21 3 25 2 sat_21_3_25_2.txt cadical153 1200
+  timeout 1300 python3 -I casat.py 15 2 20 3 sat_15_2_20_3.txt cadical153 1200
+  SHAKE=10 ./nck2 23 3 28 2 ckd_23_3_28_2.txt nck2_3_26 71 300 26
+  SHAKE=10 ./nck2 23 3 28 2 ckd_23_3_28_2.txt nck2_3_25 71 300 25
+  SHAKE=10 ./nck2 25 3 32 2 ckd_25_3_32_2.txt nck2_3_30 71 400 30
+  SHAKE=10 ./nck2 23 3 28 2 ckd_23_3_28_2.txt nck2_3_27 71 200 27
+  SHAKE=20 ./nck2 21 3 24 2 nck_3_24_21.txt nck2_3_24b 72 300 24
