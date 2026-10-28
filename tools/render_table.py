@@ -93,6 +93,8 @@ def constant_rows_of(r):
 
 
 SHA2FILE = {}
+SHA2CERT = {}
+CERT_URL = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/"
 LOG_URL = REPO_URL + "/blob/main/table/VERIFICATION_LOG.md"
 ARRAY_URL = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/"
 
@@ -104,18 +106,25 @@ def stamp_html(r):
     st = r.get("verify_stamp") or ""
     m = re.match(r"^(caverify) (\S+)(.*)$", st)
     m2 = re.match(r"^(ca_verify) ([0-9a-f]{7,40})(.*)$", st)
+    m3 = re.match(r"^(repcheck) ([0-9a-f]{12})(.*)$", st)
     if m:
         head = '<a href="https://cran.r-project.org/package=caverify">%s %s</a>%s' % (
             m.group(1), html.escape(m.group(2)), html.escape(m.group(3)))
     elif m2:
         head = '<a href="%s/blob/%s/ca_verify.c">%s %s</a>%s' % (
             REPO_URL, m2.group(2), m2.group(1), m2.group(2), html.escape(m2.group(3)))
+    elif m3:
+        head = '<a href="%s/blob/main/tools/cphf/repcheck.c">%s %s</a>%s' % (
+            REPO_URL, m3.group(1), m3.group(2), html.escape(m3.group(3)))
     else:
         head = html.escape(st)
     links = []
     f = SHA2FILE.get(r.get("array_sha256") or "")
     if f:
         links.append('<a href="%s%s">%s</a>' % (ARRAY_URL, html.escape(f), "array, gzip" if f.endswith(".gz") else "array"))
+    c = SHA2CERT.get(r.get("array_sha256") or "")
+    if c:
+        links.append('<a href="%s%s">certificate</a>' % (CERT_URL, html.escape(c)))
     links.append('<a href="%s">verification log</a>' % LOG_URL)
     return head + " (" + ", ".join(links) + ")"
 
@@ -195,7 +204,9 @@ def submissions_html(subs):
                            for name, f in shared_fields
                            if name in common and f(r) != common[name])
             af = SHA2FILE.get(r.get("array_sha256") or "")
+            cf = SHA2CERT.get(r.get("array_sha256") or "")
             tag = tag + note + ('<span class=stamp><a href="%s%s">array</a></span>' % (ARRAY_URL, html.escape(af)) if af else "")
+            tag = tag + ('<span class=stamp><a href="%s%s">certificate</a></span>' % (CERT_URL, html.escape(cf)) if cf else "")
             out.append("<tr><td class=n>%d</td><td class=n>%d</td><td class=n>%d</td>"
                        "<td class=n>%d</td><td class=n>%s</td><td class=n>%s</td><td>%s</td>%s</tr>"
                        % (r["t"], r["v"], r["k"], r["N"], prev.group(1) if prev else "",
@@ -222,7 +233,8 @@ LEGEND = [
     ("source_id", "the source class. <b>S1</b> Colbourn's tables (the CAs snapshot), "
      "<b>S4</b> NIST covering array library, <b>S5</b> Dwyer CA_Database, <b>S6</b> data "
      "and constructions of the CAs package, <b>S7</b> literature and community submissions, <b>S8</b> arrays "
-     "built by this project with its own scripts (tools/own_arrays), verified in full"),
+     "built by this project with its own scripts (tools/own_arrays, tools/cphf), verified in full, an array too "
+     "large to store through its checked certificate (table/certificates)"),
     ("source_detail", "the exact retrieval or generation recipe (URL and commit, or the "
      "generating call and package version)"),
     ("snapshot_id", "the dated source: <code>colbourn-2024-11-ug</code> for the baseline, "
@@ -234,7 +246,7 @@ LEGEND = [
      "line), for rows with an array"),
     ("verify_stamp", "the verifier, its version or commit, the date and the machine; on this page "
      "each stamp links to that verifier (caverify on CRAN, or the ca_verify source at that commit), "
-     "to the array file where one is stored, and to the verification log"),
+     "to the array file or certificate where one is stored, and to the verification log"),
     ("entered", "the date the row was added"),
     ("notes", "comparison with the previous best as of entry, credit, submission, and supersession "
      "notes; every construction belongs to the sources the row names, and a row whose construction "
@@ -477,6 +489,11 @@ def main():
     a = ap.parse_args()
     date = a.date or datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     rows, manifest = load(a.table_dir)
+    cp = os.path.join(a.table_dir, "certificates", "CERTIFICATES.csv")
+    if os.path.exists(cp):
+        with open(cp, newline="", encoding="utf-8") as f:
+            for c in csv.DictReader(f):
+                SHA2CERT[c["array_sha256"]] = c["file"]
     page = render(rows, manifest, date)
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:

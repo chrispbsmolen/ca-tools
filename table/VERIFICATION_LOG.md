@@ -321,3 +321,58 @@ commit 441203c (stamps in the rows); constant rows were counted with
 beside. One of them, CA(16; 4, 5, 2), is the even-weight orthogonal
 array, and the array built here is byte-identical to the withdrawn
 file, so that array stays stored, now as this project's construction.
+Two more, CA(10; 3, 5, 2) (all binary 5-vectors of weight 1 or 4) and
+CA(32; 5, 6, 2) (all binary 6-vectors of even weight), contain exactly
+the rows of the withdrawn files in another order: these constructions
+leave no choice, and the arrays here come from
+`../tools/own_arrays/weight_arrays.py`, which reproduces them byte for
+byte.
+
+## Three arrays from cyclic covering perfect hash families, 2026-10-28
+
+A search written here (`../tools/cphf/symcphf.c`) looks for covering
+perfect hash families CPHF(n; k, q, 5) whose columns are a cyclic group
+of order k = (q^5 - 1)/(q - 1): in every row the vector of column c + 1
+is a fixed matrix times the vector of column c. It found CPHF(11; 121,
+3, 5), CPHF(13; 781, 5, 5) and CPHF(13; 2801, 7, 5), which give, by the
+construction of Sherwood, Martirosyan and Colbourn (2006),
+CA(2663; 5, 121, 3), CA(40613; 5, 781, 5) and CA(218479; 5, 2801, 7).
+All three are smaller than the snapshot's best at their points: 3140,
+46861 and 803022 (the rungs at k = 148, 914 and 2960). They improve the
+table at k = 102 to 121, 501 to 781 and 1601 to 2801. The size 40613
+is already in the snapshot at k = 500 (Torres-Jimenez and
+Izquierdo-Marquez, restricted CPHF by simulated annealing), and the size
+218479 at k = 1600 (CITED S7, Torres-Jimenez and Izquierdo-Marquez
+2024); the new rows reach 281 and 1201 more columns at those sizes.
+
+Checks:
+
+- CA(2663; 5, 121, 3) is stored (`arrays/`, S8) and was verified in full
+  with `ca_verify.c` (commit 441203c, 2026-10-27, Linux x86_64, about
+  40 minutes on 2 threads: all 198,792,594 column sets cover all 243
+  tuples). Its family was also checked by brute force over all 5-sets
+  (`cphf_tools.c check`) and by `repcheck.c`.
+- CA(40613; 5, 781, 5) and CA(218479; 5, 2801, 7) are 63 MB and about
+  1.2 GB as text and are not stored. A full check of the arrays with
+  `ca_verify.c` grows with C(k, 5) times N: from the 80 core-minutes of
+  CA(2663; 5, 121, 3) it would be on the order of 10,000 core-days for
+  the first and far more for the second. Their families are stored
+  in `certificates/` and were checked exactly by `../tools/cphf/repcheck.c`,
+  a program written for this check that shares no code with the search:
+  it verifies for every row that one invertible matrix carries each
+  column's vector to the next one (and the last to a nonzero multiple
+  of the first), so that a set of columns and its cyclic shift are
+  covered together, and then checks every one of the C(k - 1, 4) sets
+  of 5 columns that contain column 0: 15,304,580,655 sets for k = 781
+  (55 s, Linux x86_64) and 2,555,582,259,300 for k = 2801 (385 s on 14
+  threads of an Apple Silicon MacBook Pro), all covered. A second,
+  different CPHF(13; 2801, 7, 5) from another search run passed the same
+  check (383 s) and is recorded in `../tools/cphf/RUNS.txt`, not stored.
+- Before use, `repcheck.c` was tested against the brute force of
+  `cphf_tools.c`: on a 9-row family with k = 121 that is not a CPHF,
+  both find the same failures (875 representative sets, 21,175 sets in
+  all), and a family with one entry changed fails the symmetry check.
+- The rows' `array_sha256` is the hash of the array as
+  `cphf_tools.c expand` writes it (0-based symbols, one run per line,
+  the table's canonical form); `../tools/cphf/README.md` gives the
+  commands to rebuild each array and compare.

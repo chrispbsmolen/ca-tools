@@ -1,0 +1,39 @@
+Runs behind the three cyclic CPHFs of this folder
+
+symcphf.c here is the version with the -psample option (prefix sample size, default 200000);
+the two earlier runs below used the version before that option, which is the same program
+with the default.
+
+CPHF(11; 121, 3, 5), CA(2663; 5, 121, 3)   2026-10-26, cloud workspace, Linux x86_64, 1 thread
+  ./symcphf 5 3 121 1 -seed 1 -rounds 60 -moves 1500 -T0 0.5 -T1 0.1 -patience 3 -time 1500 \
+      -threads 1 -nmax 30 -sastart 3000 -cand 60 -optmoves 200 -out runs/S_t5q3k121
+  (found in 193 s; file header seed=1 time=193s; certificate sha256 7297e49f45f8b0d7...)
+  ./cphf_tools expand CPHF_11_121_3_5.txt 5 3 CA_2663_5_121_3.txt     sha256 c96f14b7f38f34d7...
+  ../../ca_verify.c on the array, 2 threads, about 40 min:
+      VERIFIED: CA(N=2663; t=5, k=121, v=3) - all 198792594 column sets fully cover all 243 tuples
+  ./cphf_tools check (all 198,792,594 5-sets by determinant): covered
+  ./repcheck CPHF_11_121_3_5.txt 5 3 2 (2026-10-27): all 8,214,570 representatives covered
+
+CPHF(13; 781, 5, 5), CA(40613; 5, 781, 5)   2026-10-26, cloud workspace, Linux x86_64, 1 thread
+  ./symcphf 5 5 781 1 -light -n0 10 -seed 1 -cand 140 -optmoves 600 -threads 1 -out runs/L_t5q5k781
+  (found in 3324 s; certificate sha256 ff27efd7bde0d03a...)
+  ./cphf_tools expand CPHF_13_781_5_5.txt 5 5 CA_40613_5_781_5.txt    sha256 c55b201233c7acef... (63,437,506 bytes)
+  ./cphf_tools sample: 2 x 10^7 random 5-sets covered
+  ./repcheck CPHF_13_781_5_5.txt 5 5 2 (2026-10-27, Linux x86_64, 55 s):
+      symmetry certificate passed; checked 15304580655 representative sets, uncovered 0
+      RESULT: CPHF VERIFIED
+
+CPHF(13; 2801, 7, 5), CA(218479; 5, 2801, 7)   2026-10-27, MacBook Pro (Apple Silicon), 14 threads
+  run_2801 pass 1:  ./symcphf 5 7 2801 1 -light -n0 10 -seed 1 -threads 14 -ucap 5000000 \
+      -psample 2000000 -out found/p1 -v
+  prefix rows 1-10 chosen on a sample of 2,000,000 representatives; exact pass after 13,600 s:
+      28,325 representatives uncovered by the 10 rows; greedy rows 11, 12, 13 leave 3,750, 300, 0
+  (certificate sha256 10033e89143cb9fb5b0e4f0498e7a4351b41918ae76b8fa7fe2b51a6311560f6, the stored one)
+  run_2801 pass 2:  same with -n0 11 -seed 2: exact pass after 12,703 s, 4,625 uncovered by 11 rows;
+      rows 12, 13 leave 375, 0 (a second, different family, sha256 ae9ff1bf763869a8..., not stored)
+  ./cphf_tools sample, 2 x 10^7 random 5-sets: covered (both families)
+  ./repcheck p1 5 7 14 (Mac, 385 s): symmetry certificate passed;
+      checked 2555582259300 representative sets, uncovered 0; RESULT: CPHF VERIFIED
+  ./repcheck p2 5 7 14 (Mac, 383 s): the same result for the second family
+  ./cphf_tools expand CPHF_13_2801_7_5.txt 5 7 (piped to sha256): sha256 432d81f32d1f3ba0637748e35c1c65848abdc0e021052a95d0695f9b48f7e982
+      (second family: 79f80d3540613a48...)

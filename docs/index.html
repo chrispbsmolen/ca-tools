@@ -34,27 +34,27 @@ a { color: inherit; }
 <p>A covering array CA(N; t, k, v) is an N by k array over v symbols in which every choice of t columns shows every one of the v<sup>t</sup> value combinations in some row. This table records, for each strength t and alphabet size v, the smallest known N for each number of columns k, and says where every entry comes from. The baseline is the November 2024 status of Charles J. Colbourn's covering array tables as preserved by Ulrike Groemping in the CAs R package (tier CITED). Sizes published in papers and not in the snapshot are also tier CITED, each naming its paper (source S7, marked published), until an array is in hand. Entries with an explicit array in hand were checked exhaustively by a verifier and carry the array's SHA-256 and a stamp (tier VERIFIED). Arrays too large to check in full on the public runner were screened on random column windows (tier SCREENED); they are listed but do not count as best known. Where Colbourn's construction for an entry, as checked here, did not give a covering array at the recorded size, the entry stays as recorded and its rung is marked disputed (tier DISPUTED). Improvements are not yet propagated through recursive constructions: the propagation engine in <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/r/livingtable">r/livingtable</a> is run by hand and is not connected to submissions, so no entry here is derived by it.</p>
 <p>Rows are stair-steps: an entry (t, v, k, N) means N runs suffice for up to k columns, so the best known N at k is the smallest N among entries with at least k columns. The construction column names the construction or search that produced each entry, where it is known. For every array on file, constant rows is the largest number of its rows that can be made constant by permuting symbols within columns, a property that matters when the array is an ingredient of another construction. Anyone can add an array by pull request; see <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/submissions/README.md">how to submit</a>. The data is <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/table">table/ in the repository</a>; the raw file <a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv">table/ca_table.csv</a> is the machine-readable form (see the README for the stair-step rule and an R snippet).</p>
 <ul class="stats">
-<li>table rows <b>14,400</b></li>
-<li>verified rows <b>598</b></li>
+<li>table rows <b>14,403</b></li>
+<li>verified rows <b>601</b></li>
 <li>rows cited from papers <b>152</b></li>
 <li>screened rows, not yet verified in full <b>0</b></li>
 <li>disputed entries <b>3</b></li>
-<li>arrays on file <b>189</b></li>
-<li>verified arrays <b>189</b></li>
+<li>arrays on file <b>190</b></li>
+<li>verified arrays <b>190</b></li>
 <li>screened arrays <b>0</b></li>
 <li>community submissions <b>1</b></li>
 <li>arrays from submissions <b>23</b></li>
 </ul>
-<p class="mute">Generated 2026-10-27 from table/ca_table.csv and table/MANIFEST.csv.</p>
+<p class="mute">Generated 2026-10-28 from table/ca_table.csv and table/MANIFEST.csv.</p>
 <details><summary>What the columns of ca_table.csv mean</summary>
 <table><thead><tr><th>column</th><th>meaning</th></tr></thead><tbody>
 <tr><td><code>t, v, k, N</code></td><td class=ev>the claim: N runs suffice for a covering array of strength t on up to k columns of v symbols (stair-step: the best known N at k is the smallest N among entries with at least k columns)</td></tr>
 <tr><td><code>tier</code></td><td class=ev>the evidence class. <b>CITED</b>: traceable to a dated snapshot or publication, no array in hand (the 13,641 baseline rows are Colbourn's tables of November 2024). <b>VERIFIED</b>: an explicit array was checked exhaustively at strength t. <b>SCREENED</b>: an array too large for the public check, screened on random column windows, listed but not counted as best known. <b>FAILED_PENDING_RECHECK</b>: a verification attempt that failed its dimension check, kept and superseded by a later row. <b>DISPUTED</b> (since 2026-10-23): an added row beside a CITED entry whose cited construction, as implemented and checked here, did not give a covering array at the recorded size; the CITED row stays as recorded and is still counted, and the rung is marked disputed</td></tr>
-<tr><td><code>source_id</code></td><td class=ev>the source class. <b>S1</b> Colbourn's tables (the CAs snapshot), <b>S4</b> NIST covering array library, <b>S5</b> Dwyer CA_Database, <b>S6</b> data and constructions of the CAs package, <b>S7</b> literature and community submissions, <b>S8</b> arrays built by this project with its own scripts (tools/own_arrays), verified in full</td></tr>
+<tr><td><code>source_id</code></td><td class=ev>the source class. <b>S1</b> Colbourn's tables (the CAs snapshot), <b>S4</b> NIST covering array library, <b>S5</b> Dwyer CA_Database, <b>S6</b> data and constructions of the CAs package, <b>S7</b> literature and community submissions, <b>S8</b> arrays built by this project with its own scripts (tools/own_arrays, tools/cphf), verified in full, an array too large to store through its checked certificate (table/certificates)</td></tr>
 <tr><td><code>source_detail</code></td><td class=ev>the exact retrieval or generation recipe (URL and commit, or the generating call and package version)</td></tr>
 <tr><td><code>snapshot_id</code></td><td class=ev>the dated source: <code>colbourn-2024-11-ug</code> for the baseline, <code>pr-N</code> (or the submission folder name) for a submission, the DOI or the arXiv id with version (for example <code>doi:10.3390/math12121908</code>, <code>arXiv:2510.13122v2</code>) for a paper, empty where <code>source_detail</code> already carries a dated recipe</td></tr>
 <tr><td><code>array_sha256</code></td><td class=ev>SHA-256 of the array in canonical form (0-based symbols, one run per line), for rows with an array</td></tr>
-<tr><td><code>verify_stamp</code></td><td class=ev>the verifier, its version or commit, the date and the machine; on this page each stamp links to that verifier (caverify on CRAN, or the ca_verify source at that commit), to the array file where one is stored, and to the verification log</td></tr>
+<tr><td><code>verify_stamp</code></td><td class=ev>the verifier, its version or commit, the date and the machine; on this page each stamp links to that verifier (caverify on CRAN, or the ca_verify source at that commit), to the array file or certificate where one is stored, and to the verification log</td></tr>
 <tr><td><code>entered</code></td><td class=ev>the date the row was added</td></tr>
 <tr><td><code>notes</code></td><td class=ev>comparison with the previous best as of entry, credit, submission, and supersession notes; every construction belongs to the sources the row names, and a row whose construction is this project's own says so</td></tr>
 <tr><td><code>lb, lb_evidence</code></td><td class=ev>reserved for lower-bound evidence, empty in every row so far</td></tr>
@@ -7457,7 +7457,7 @@ a { color: inherit; }
 <tr><td class=n>9605 to 9898</td><td class=n>1394</td><td class=ev>Power CT101^2,cT3c</td></tr>
 <tr><td class=n>9899 to 10000</td><td class=n>1402</td><td class=ev>Power CT100^2,c</td></tr>
 </tbody></table></details>
-<details><summary>t = 5, v = 3: 147 rungs, 4 verified</summary>
+<details><summary>t = 5, v = 3: 139 rungs, 5 verified</summary>
 <table><thead><tr><th class=n>k</th><th class=n>N</th><th>evidence</th></tr></thead><tbody>
 <tr><td class=n>5 to 6</td><td class=n>243</td><td class=ev><span class=lbl>Colbourn's table</span> orthogonal array<br><span class="tag ver">verified</span><i>Dwyer CA_Database source code &quot;DeMu+&quot;</i>; aadwyer/CA_Database CA_243_5_6_3.txt via CAs::dwyerCA, CAs 0.24<span class="stamp"><a href="https://cran.r-project.org/package=caverify">caverify 0.2.0</a> 2026-08-23 Darwin-arm64 (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/CA_243_5_6_3.txt">array</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 1501733fe3d0, constant rows 3 of 3</span></td></tr>
 <tr><td class=n>7</td><td class=n>351</td><td class=ev><span class=lbl>Colbourn's table</span> cross-sum (CKRS)<br><span class="tag ver">verified</span><i>Dwyer CA_Database source code &quot;CrossSum&quot;</i>; aadwyer/CA_Database CA_351_5_7_3.txt via CAs::dwyerCA, CAs 0.24<span class="stamp"><a href="https://cran.r-project.org/package=caverify">caverify 0.2.0</a> 2026-08-23 Darwin-arm64 (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/CA_351_5_7_3.txt">array</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 c63cef407119, constant rows 3 of 3</span></td></tr>
@@ -7543,16 +7543,8 @@ a { color: inherit; }
 <tr><td class=n>99</td><td class=n>2646</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
 <tr><td class=n>100</td><td class=n>2649</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
 <tr><td class=n>101</td><td class=n>2660</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>102</td><td class=n>2675</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>103</td><td class=n>2681</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>104</td><td class=n>2690</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>105</td><td class=n>2699</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>106 to 108</td><td class=n>2880</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>109 to 110</td><td class=n>2907</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>111 to 114</td><td class=n>2942</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
-<tr><td class=n>115</td><td class=n>3005</td><td class=ev>IPOGF postop MPO (TJ-RC)</td></tr>
-<tr><td class=n>116</td><td class=n>3019</td><td class=ev>IPOGF postop MPO (TJ-RC)</td></tr>
-<tr><td class=n>117 to 148</td><td class=n>3140</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
+<tr><td class=n>102 to 121</td><td class=n>2663</td><td class=ev><span class="tag ver">verified</span>Christopher Smolen; <i>cyclic covering perfect hash family CPHF(11; 121, 3, 5) found here (tools/cphf/symcphf.c, seed 1), every row&#x27;s matrix a Singer cycle of PGL(5, 3); CA(11(3^5 - 1) + 1; 5, 121, 3) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006</i>; tools/cphf, array file CA_2663_5_121_3_c96f14b7.txt: CA from the cyclic CPHF(11; 121, 3, 5) of table/certificates/CPHF_11_121_3_5.txt<span class="stamp"><a href="https://github.com/chrispbsmolen/ca-tools/blob/441203c/ca_verify.c">ca_verify 441203c</a> 2026-10-27 Linux-x86_64 (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/CA_2663_5_121_3_c96f14b7.txt">array</a>, <a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/CPHF_11_121_3_5.txt">certificate</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 c96f14b7f38f, constant rows 1 of 3</span></td></tr>
+<tr><td class=n>122 to 148</td><td class=n>3140</td><td class=ev>CPHF 3-stage (TJ-IM)</td></tr>
 <tr><td class=n>149 to 1051</td><td class=n>3156</td><td class=ev>Cyclotomy (Colbourn)</td></tr>
 <tr><td class=n>1052 to 1069</td><td class=n>3210</td><td class=ev>Cyclotomy (Colbourn)</td></tr>
 <tr><td class=n>1070 to 1087</td><td class=n>3264</td><td class=ev>Cyclotomy (Colbourn)</td></tr>
@@ -7757,7 +7749,7 @@ a { color: inherit; }
 <tr><td class=n>9661 to 9702</td><td class=n>86364</td><td class=ev>Power CT23^3T2T2T1</td></tr>
 <tr><td class=n>9703 to 10000</td><td class=n>86367</td><td class=ev>Power CT23^3T2T2</td></tr>
 </tbody></table></details>
-<details><summary>t = 5, v = 5: 71 rungs, 1 verified</summary>
+<details><summary>t = 5, v = 5: 71 rungs, 2 verified</summary>
 <table><thead><tr><th class=n>k</th><th class=n>N</th><th>evidence</th></tr></thead><tbody>
 <tr><td class=n>5 to 6</td><td class=n>3125</td><td class=ev><span class=lbl>Colbourn's table</span> orthogonal array<br><span class="tag ver">verified</span><i>Dwyer CA_Database source code &quot;OA&quot;</i>; aadwyer/CA_Database CA_3125_5_6_5.txt via CAs::dwyerCA, CAs 0.24<span class="stamp"><a href="https://cran.r-project.org/package=caverify">caverify 0.2.0</a> 2026-08-23 Darwin-arm64 (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/CA_3125_5_6_5.txt">array</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 095020610385, constant rows 5 of 5</span></td></tr>
 <tr><td class=n>7</td><td class=n>4375</td><td class=ev>Ji-Li-Yin</td></tr>
@@ -7795,8 +7787,8 @@ a { color: inherit; }
 <tr><td class=n>351 to 359</td><td class=n>40325</td><td class=ev>3,3-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>360 to 364</td><td class=n>40525</td><td class=ev>2,2-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>365 to 500</td><td class=n>40613</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
-<tr><td class=n>501 to 700</td><td class=n>43737</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
-<tr><td class=n>701 to 914</td><td class=n>46861</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
+<tr><td class=n>501 to 781</td><td class=n>40613</td><td class=ev><span class="tag ver">verified</span>Christopher Smolen; <i>cyclic covering perfect hash family CPHF(13; 781, 5, 5) found here (tools/cphf/symcphf.c, seed 1), every row&#x27;s matrix a Singer cycle of PGL(5, 5); CA(13(5^5 - 1) + 1; 5, 781, 5) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006</i>; tools/cphf, certificate table/certificates/CPHF_13_781_5_5.txt (cyclic CPHF(13; 781, 5, 5)); no array file<span class="stamp"><a href="https://github.com/chrispbsmolen/ca-tools/blob/main/tools/cphf/repcheck.c">repcheck 1aaaf64c0e47</a> 2026-10-27 Linux-x86_64 (CPHF certificate, exact) (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/CPHF_13_781_5_5.txt">certificate</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 c55b201233c7</span></td></tr>
+<tr><td class=n>782 to 914</td><td class=n>46861</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
 <tr><td class=n>915 to 1377</td><td class=n>49985</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
 <tr><td class=n>1378 to 1800</td><td class=n>53109</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
 <tr><td class=n>1801 to 2400</td><td class=n>56233</td><td class=ev>Restricted CPHF Sim Annealing (TJ-IM)</td></tr>
@@ -8084,7 +8076,7 @@ a { color: inherit; }
 <tr><td class=n>9724 to 9746</td><td class=n>889115</td><td class=ev>Power CZ3-23.16-22.5</td></tr>
 <tr><td class=n>9747 to 10000</td><td class=n>890255</td><td class=ev>Power CZ3-23.20-19.1</td></tr>
 </tbody></table></details>
-<details><summary>t = 5, v = 7: 89 rungs, 0 verified</summary>
+<details><summary>t = 5, v = 7: 81 rungs, 1 verified</summary>
 <table><thead><tr><th class=n>k</th><th class=n>N</th><th>evidence</th></tr></thead><tbody>
 <tr><td class=n>5 to 8</td><td class=n>16807</td><td class=ev>orthogonal array</td></tr>
 <tr><td class=n>9</td><td class=n>27639</td><td class=ev>orthogonal array fuse postop NCK</td></tr>
@@ -8132,16 +8124,8 @@ a { color: inherit; }
 <tr><td class=n>659 to 694</td><td class=n>199273</td><td class=ev><span class="tag lit">published</span>J. Torres-Jimenez and I. Izquierdo-Marquez 2024 (the CPHF and the size, doi:10.3390/math12121908, Table 6); <i>covering perfect hash family CPHF(12; 694, 7, 5) found by the authors&#x27; greedy column extension algorithm (Torres-Jimenez and Izquierdo-Marquez 2024), converted to a covering array of 12 * 7^5 rows less repeated rows</i>; Torres-Jimenez and Izquierdo-Marquez 2024, Mathematics 12(12) 1908, Table 6, CPHF(12; 694, 7, 5)<br></td></tr>
 <tr><td class=n>695 to 1000</td><td class=n>201673</td><td class=ev><span class="tag lit">published</span>J. Torres-Jimenez and I. Izquierdo-Marquez 2024 (the CPHF and the size, doi:10.3390/math12121908, Table 6); <i>covering perfect hash family CPHF(12; 1000, 7, 5) found by the authors&#x27; greedy column extension algorithm (Torres-Jimenez and Izquierdo-Marquez 2024), converted to a covering array of 12 * 7^5 rows less repeated rows</i>; Torres-Jimenez and Izquierdo-Marquez 2024, Mathematics 12(12) 1908, Table 6, CPHF(12; 1000, 7, 5)<br></td></tr>
 <tr><td class=n>1001 to 1600</td><td class=n>218479</td><td class=ev><span class="tag lit">published</span>J. Torres-Jimenez and I. Izquierdo-Marquez 2024 (the CPHF and the size, doi:10.3390/math12121908, Table 6); <i>covering perfect hash family CPHF(13; 1600, 7, 5) found by the authors&#x27; greedy column extension algorithm (Torres-Jimenez and Izquierdo-Marquez 2024), converted to a covering array of 13 * 7^5 rows less repeated rows</i>; Torres-Jimenez and Izquierdo-Marquez 2024, Mathematics 12(12) 1908, Table 6, CPHF(13; 1600, 7, 5)<br></td></tr>
-<tr><td class=n>1601 to 1999</td><td class=n>235285</td><td class=ev><span class="tag lit">published</span>J. Torres-Jimenez and I. Izquierdo-Marquez 2024 (the CPHF and the size, doi:10.3390/math12121908, Table 6); <i>covering perfect hash family CPHF(14; 1999, 7, 5) found by the authors&#x27; greedy column extension algorithm (Torres-Jimenez and Izquierdo-Marquez 2024), converted to a covering array of 14 * 7^5 rows less repeated rows</i>; Torres-Jimenez and Izquierdo-Marquez 2024, Mathematics 12(12) 1908, Table 6, CPHF(14; 1999, 7, 5)<br></td></tr>
-<tr><td class=n>2000 to 2016</td><td class=n>743922</td><td class=ev>Power N-CT53^2Arc(9)T8</td></tr>
-<tr><td class=n>2017 to 2104</td><td class=n>744216</td><td class=ev>Power N-CT53^2Arc(9)T6</td></tr>
-<tr><td class=n>2105 to 2280</td><td class=n>744618</td><td class=ev>Power N-CT53^2Arc(9)T2</td></tr>
-<tr><td class=n>2281 to 2368</td><td class=n>756270</td><td class=ev>Power N-CT53^2Arc(9)</td></tr>
-<tr><td class=n>2369 to 2413</td><td class=n>767922</td><td class=ev>Power N-CT53^2Arc(8)</td></tr>
-<tr><td class=n>2414 to 2459</td><td class=n>779574</td><td class=ev>Power N-CT53^2Arc(7)</td></tr>
-<tr><td class=n>2460 to 2506</td><td class=n>791226</td><td class=ev>Power N-CT53^2Arc(6)</td></tr>
-<tr><td class=n>2507 to 2730</td><td class=n>800628</td><td class=ev>perfect hash family4,3125,625T79</td></tr>
-<tr><td class=n>2731 to 2960</td><td class=n>803022</td><td class=ev>perfect hash family4,3125,625T33</td></tr>
+<tr><td class=n>1601 to 2801</td><td class=n>218479</td><td class=ev><span class="tag ver">verified</span>Christopher Smolen; <i>cyclic covering perfect hash family CPHF(13; 2801, 7, 5) found here (tools/cphf/symcphf.c, seed 1), every row&#x27;s matrix a Singer cycle of PGL(5, 7); CA(13(7^5 - 1) + 1; 5, 2801, 7) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006</i>; tools/cphf, certificate table/certificates/CPHF_13_2801_7_5.txt (cyclic CPHF(13; 2801, 7, 5)); no array file<span class="stamp"><a href="https://github.com/chrispbsmolen/ca-tools/blob/main/tools/cphf/repcheck.c">repcheck 1aaaf64c0e47</a> 2026-10-27 Darwin-arm64 (CPHF certificate, exact) (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/CPHF_13_2801_7_5.txt">certificate</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 432d81f32d1f</span></td></tr>
+<tr><td class=n>2802 to 2960</td><td class=n>803022</td><td class=ev>perfect hash family4,3125,625T33</td></tr>
 <tr><td class=n>2961 to 3125</td><td class=n>805080</td><td class=ev>perfect hash family4,3125,625</td></tr>
 <tr><td class=n>3126 to 3186</td><td class=n>863826</td><td class=ev>Power N-CT59^2T5</td></tr>
 <tr><td class=n>3187 to 3481</td><td class=n>864162</td><td class=ev>Power N-CT59^2</td></tr>

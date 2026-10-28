@@ -26,6 +26,9 @@ import sys
 TABLE = "table/ca_table.csv"
 MANIFEST = "table/MANIFEST.csv"
 ARRAYS = "table/arrays"
+CERTS = "table/certificates"
+CERT_LIST = "table/certificates/CERTIFICATES.csv"
+CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "check"]
 README = "table/README.md"
 HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id",
           "array_sha256", "verify_stamp", "entered", "notes", "lb", "lb_evidence",
@@ -255,6 +258,53 @@ def check_disputed(rows, man):
                     "not a disputed row smaller than it" % (MANIFEST, m["file"]))
 
 
+def check_certificates(rows):
+    """A certificate (since 2026-10-28) stands for an array too large to store: a
+    covering perfect hash family, listed in CERTIFICATES.csv with its own SHA-256 and the
+    SHA-256 of the array it expands to, checked exactly by tools/cphf/repcheck.c. Every
+    file of the folder is listed, every listed file is there with that hash, and each
+    certificate belongs to a VERIFIED row with the same t, v, k, N and array_sha256."""
+    import hashlib
+    if not os.path.isdir(CERTS):
+        return
+    if not os.path.exists(CERT_LIST):
+        problem("%s/ has no CERTIFICATES.csv" % CERTS)
+        return
+    certs = list(csv.DictReader(open(CERT_LIST, newline="", encoding="utf-8")))
+    if certs and list(certs[0].keys()) != CERT_HEADER:
+        problem("%s: header differs from %s" % (CERT_LIST, ",".join(CERT_HEADER)))
+        return
+    files = set(os.listdir(CERTS)) - {"CERTIFICATES.csv"}
+    listed = collections.Counter(c["file"] for c in certs)
+    for f in sorted(files - set(listed)):
+        problem("%s/%s is not listed in %s" % (CERTS, f, CERT_LIST))
+    for c in certs:
+        if listed[c["file"]] > 1:
+            problem("%s: %s listed more than once" % (CERT_LIST, c["file"]))
+        path = os.path.join(CERTS, c["file"])
+        if not os.path.exists(path):
+            problem("%s: %s is listed but not in %s/" % (CERT_LIST, c["file"], CERTS))
+            continue
+        if hashlib.sha256(open(path, "rb").read()).hexdigest() != c["sha256"]:
+            problem("%s: %s does not have the listed sha256" % (CERT_LIST, c["file"]))
+        match = [r for r in rows if r["tier"] == "VERIFIED" and r["array_sha256"] == c["array_sha256"]
+                 and (r["t"], r["v"], r["k"], r["N"]) == (c["t"], c["v"], c["k"], c["N"])]
+        if not match:
+            problem("%s: %s has no VERIFIED row with the same t, v, k, N and array_sha256"
+                    % (CERT_LIST, c["file"]))
+        elif (match[0]["verify_stamp"].startswith("repcheck ")
+              and not c["check"].startswith(match[0]["verify_stamp"].split(" (")[0])):
+            problem("%s: %s: the check %r does not start with the row's stamp %r"
+                    % (CERT_LIST, c["file"], c["check"][:40], match[0]["verify_stamp"]))
+    # the other way: a row checked through a certificate has its certificate listed
+    csha = {(c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) for c in certs}
+    for r in rows:
+        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith("repcheck "):
+            if (r["t"], r["v"], r["k"], r["N"], r["array_sha256"]) not in csha:
+                problem("%s: VERIFIED row %s,%s,%s,%s is stamped by repcheck but has no certificate in %s"
+                        % (TABLE, r["t"], r["v"], r["k"], r["N"], CERT_LIST))
+
+
 def check_arrays(rows, man):
     files = set(os.listdir(ARRAYS)) if os.path.isdir(ARRAYS) else set()
     mfiles = collections.Counter(m["file"] for m in man)
@@ -361,6 +411,7 @@ def main():
         return 2
     check_structure(raw, rows, man)
     check_arrays(rows, man)
+    check_certificates(rows)
     check_disputed(rows, man)
     check_links()
     if c["worse"]:
