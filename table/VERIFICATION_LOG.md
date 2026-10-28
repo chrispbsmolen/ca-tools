@@ -376,3 +376,25 @@ Checks:
   `cphf_tools.c expand` writes it (0-based symbols, one run per line,
   the table's canonical form); `../tools/cphf/README.md` gives the
   commands to rebuild each array and compare.
+
+## A strength 6 array from a cyclic covering perfect hash family, 2026-10-28
+
+`../tools/cphf/symcphf_pp.c` found a CPHF(15; 121, 3, 6) whose rows are
+of type 5 + 1 (multiplication by an element of GF(3^5) of projective
+order 121 on five coordinates, by 1 or 2 on the sixth). It gives
+CA(10921; 6, 121, 3). The snapshot's best at k = 121 is 12297 (the rung
+at k = 136); at k = 91 to 120 its rows give 10927 to 10974, so the new
+row improves the table at k = 91 to 121, by 6 to 53 runs below k = 121
+and by 1376 runs at k = 121.
+
+The array is 2.6 MB as text but a full check with `ca_verify.c` would
+take about 90 core-hours, so it is entered through its certificate
+(`certificates/CPHF_15_121_3_6.txt`), checked exactly by
+`../tools/cphf/repcheck_pp.c`: the symmetry of every row and all
+190,578,024 representative 6-sets, uncovered 0 (13 s, Linux x86_64).
+A brute force over every set of 6 columns with `cphf_tools.c check`,
+which shares no code with `repcheck_pp.c`, was started on 2026-10-28
+and will be recorded here when it ends; the row rests on the
+`repcheck_pp.c` check.
+`cphf_tools.c expand` and `cphf_tools_pp.c expand` write the same array
+(sha256 ae9eea3e...), the row's `array_sha256`.

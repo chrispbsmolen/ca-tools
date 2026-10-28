@@ -106,7 +106,7 @@ def stamp_html(r):
     st = r.get("verify_stamp") or ""
     m = re.match(r"^(caverify) (\S+)(.*)$", st)
     m2 = re.match(r"^(ca_verify) ([0-9a-f]{7,40})(.*)$", st)
-    m3 = re.match(r"^(repcheck) ([0-9a-f]{12})(.*)$", st)
+    m3 = re.match(r"^(repcheck|repcheck_pp) ([0-9a-f]{12})(.*)$", st)
     if m:
         head = '<a href="https://cran.r-project.org/package=caverify">%s %s</a>%s' % (
             m.group(1), html.escape(m.group(2)), html.escape(m.group(3)))
@@ -114,8 +114,8 @@ def stamp_html(r):
         head = '<a href="%s/blob/%s/ca_verify.c">%s %s</a>%s' % (
             REPO_URL, m2.group(2), m2.group(1), m2.group(2), html.escape(m2.group(3)))
     elif m3:
-        head = '<a href="%s/blob/main/tools/cphf/repcheck.c">%s %s</a>%s' % (
-            REPO_URL, m3.group(1), m3.group(2), html.escape(m3.group(3)))
+        head = '<a href="%s/blob/main/tools/cphf/%s.c">%s %s</a>%s' % (
+            REPO_URL, m3.group(1), m3.group(1), m3.group(2), html.escape(m3.group(3)))
     else:
         head = html.escape(st)
     links = []

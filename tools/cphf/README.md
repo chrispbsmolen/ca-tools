@@ -10,6 +10,7 @@ here by a separate program. Credit: Christopher Smolen (search and checks,
 | CA(2663; 5, 121, 3) | CPHF(11; 121, 3, 5) | `../../table/certificates/CPHF_11_121_3_5.txt` | `ca_verify.c` on the array (stored), `repcheck.c` on the family |
 | CA(40613; 5, 781, 5) | CPHF(13; 781, 5, 5) | `../../table/certificates/CPHF_13_781_5_5.txt` | `repcheck.c` on the family |
 | CA(218479; 5, 2801, 7) | CPHF(13; 2801, 7, 5) | `../../table/certificates/CPHF_13_2801_7_5.txt` | `repcheck.c` on the family |
+| CA(10921; 6, 121, 3) | CPHF(15; 121, 3, 6) | `../../table/certificates/CPHF_15_121_3_6.txt` | `repcheck_pp.c` on the family |
 
 ## What a CPHF is, and how it gives the array
 
@@ -82,6 +83,42 @@ certificate.
 `cphf_tools.c` rows of at most 70,000 entries; both are used here well
 inside those limits, unchanged from the runs recorded (the stamps name
 `repcheck.c` by its SHA-256, 1aaaf64c0e47...).
+
+## The general versions (since 2026-10-28)
+
+`symcphf_pp.c`, `repcheck_pp.c` and `cphf_tools_pp.c` extend the three
+programs to q a prime power up to 16 (GF(q) by tables from the Conway
+polynomial), to t up to 8, and to several column orbits (k = m s, the
+shift col -> col + s). For prime q, `symcphf_pp.c` behaves exactly as
+`symcphf.c` (it is built from it by
+`python3 mk_symcphf_pp.py symcphf.c symcphf_pp.c`, and it reproduces the
+rows of the stored CPHF(13; 781, 5, 5), all but the first comment line,
+which records the run's time); its exact pass
+is incremental and about fifteen times faster. `repcheck_pp.c` is
+written separately from the search, like `repcheck.c`, and checks the
+symmetry and every representative t-set with exterior products. It was
+tested against brute force on families with q = 4, 8, 9 and 16, t = 3
+to 6 and s = 1 to 4, with rows dropped and entries changed.
+
+The strength 6 family has rows of type 5 + 1: multiplication by an
+element of GF(3^5) of projective order 121 on five coordinates, and by 1
+or 2 on the sixth. It was found by
+
+    ./symcphf_pp 6 3 121 1 -light -n0 10 -seed 2 -cand 200 -optmoves 1500 -psample 400000 -threads 1
+
+in 21 s; 116 runs with other seeds and prefixes never gave fewer than 15 rows.
+
+One limit found on the way, for one shape of family only: at t = 5 with
+one column orbit (s = 1, k = (q^5 - 1)/(q - 1)), rows that are Singer
+cycles leave some sets of columns uncovered for q = 2, 4 and 8,
+whatever rows are chosen. Those sets sit inside a subfield (they lift
+from the 225 uncovered representatives at q = 2, k = 31) and are
+dependent in every such row. The t = 6 searches of the same kind (rows
+of type 5 + 1) found similar uncovered sets for q = 2 and q = 9. This
+is a limit of that shape, not of covering arrays at those sizes, and it
+does not rule out other layouts: several column orbits with different
+rows, or a family that adds a few rows of another kind to cover those
+sets, are the next things to try.
 
 ## Credits and bounds
 

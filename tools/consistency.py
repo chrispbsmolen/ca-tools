@@ -292,14 +292,14 @@ def check_certificates(rows):
         if not match:
             problem("%s: %s has no VERIFIED row with the same t, v, k, N and array_sha256"
                     % (CERT_LIST, c["file"]))
-        elif (match[0]["verify_stamp"].startswith("repcheck ")
+        elif (match[0]["verify_stamp"].startswith(("repcheck ", "repcheck_pp "))
               and not c["check"].startswith(match[0]["verify_stamp"].split(" (")[0])):
             problem("%s: %s: the check %r does not start with the row's stamp %r"
                     % (CERT_LIST, c["file"], c["check"][:40], match[0]["verify_stamp"]))
     # the other way: a row checked through a certificate has its certificate listed
     csha = {(c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) for c in certs}
     for r in rows:
-        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith("repcheck "):
+        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith(("repcheck ", "repcheck_pp ")):
             if (r["t"], r["v"], r["k"], r["N"], r["array_sha256"]) not in csha:
                 problem("%s: VERIFIED row %s,%s,%s,%s is stamped by repcheck but has no certificate in %s"
                         % (TABLE, r["t"], r["v"], r["k"], r["N"], CERT_LIST))
