@@ -37,3 +37,46 @@ CPHF(13; 2801, 7, 5), CA(218479; 5, 2801, 7)   2026-10-27, MacBook Pro (Apple Si
   ./repcheck p2 5 7 14 (Mac, 383 s): the same result for the second family
   ./cphf_tools expand CPHF_13_2801_7_5.txt 5 7 (piped to sha256): sha256 432d81f32d1f3ba0637748e35c1c65848abdc0e021052a95d0695f9b48f7e982
       (second family: 79f80d3540613a48...)
+
+CPHF(15; 121, 3, 6), CA(10921; 6, 121, 3)   2026-10-28, cloud workspace, Linux x86_64
+  symcphf_pp 6 3 121 1 in light mode, seed 2, found in 21 s (the options are in the file's first
+  comment line; the full command line was not logged)
+  ./repcheck_pp CPHF_15_121_3_6.txt 6 3 2: 190,578,024 representatives, uncovered 0
+
+Batch on the MacBook Pro (Apple M4 Max, 14 threads), 2026-10-28 to 2026-10-29
+(living_table/item62_goal2/mac_batch.sh; every pass runs
+  ./symcphf_pp t q m s -light -n0 N0 -seed S -threads 14 -ucap 20000000 -psample 2000000 -cand 140 -optmoves 600
+ then repcheck_pp on the family found and cphf_tools_pp sample with 2 x 10^7 random t-sets)
+
+CPHF(16; 781, 5, 6), CA(249985; 6, 781, 5)   stage A, t=6 q=5 m=781 s=1, n0=12, seed 1
+  found in 1771 s (12 prefix rows, exact pass, greedy completion); certificate sha256 eb841639ccba6676...
+  ./repcheck_pp (1377 s): 2,375,270,917,656 representatives, uncovered 0; sample: 2 x 10^7 covered
+  seeds 2, 3, 4 (n0 = 11, 12, 13) gave families with 17, 16 and 16 rows (not stored)
+  ./cphf_tools_pp expand ... 6 5 (piped to sha256): 346d7a6cdf20884bc46e87dae6b1eb27489d9bb68963f59650eb9491ffbcf939
+CPHF(16; 1562, 5, 5), CA(49985; 5, 1562, 5)   stage D, t=5 q=5 m=781 s=2, n0=11, seed 1
+  found in 183 s; certificate sha256 1512ec6c470f9115...
+  ./repcheck_pp (178 s): 492,269,621,740 representatives, uncovered 0; sample: 2 x 10^7 covered
+  seed 2 (n0 = 12) gave another 16-row family (not stored)
+  ./cphf_tools_pp expand ... 5 5 (piped to sha256): 707f2163753ac4fdd6d770292068ebbcbc6b76e6ec7f67e8566a6ccc685c5233
+CPHF(13; 1210, 9, 5), CA(767625; 5, 1210, 9)   stage E, t=5 q=9 m=121 s=10, n0=10, seed 1
+  found in 476 s; certificate sha256 64624c5b20f6a4fc...
+  ./repcheck_pp (449 s): 872,700,795,252 representatives, uncovered 0; sample: 2 x 10^7 covered
+  seed 2 (n0 = 11) gave a 15-row family (not stored)
+  ./cphf_tools_pp expand ... 5 9 (piped to sha256): cb2bb17087239ee2889b65d82e471e3e5bcf6df0ce3347c35b1378383cd52932
+
+CPHF(16; 5602, 7, 5), CA(268897; 5, 5602, 7)   stage B, t=5 q=7 m=2801 s=2, n0=11, seed 1
+  found in 21,842 s (11 prefix rows: exact pass left 160,656 representatives; greedy completion to 16 rows);
+  certificate sha256 dbc78185a50535e5...
+  ./repcheck_pp (24,132 s, 2026-10-29): 81,895,607,732,400 representatives, uncovered 0; sample: 2 x 10^7 covered
+  ./cphf_tools_pp expand ... 5 7 (piped to sha256, cloud): d54ad9a913d1ca32d61af683b5ae947be8d23dcd1bea8cf86b73952bf8e68d92
+
+Second check of every stored family on the GPU (cphfcheck_metal.m, gpu/; sha256 of the source
+7861393cebb5...; Apple M4 Max, 2026-10-28), after gpu/gpu_cphf_test.sh passed:
+  CPHF_11_121_3_5    8,214,570 representatives, uncovered 0, 0.1 s
+  CPHF_13_781_5_5    15,304,580,655, uncovered 0, 1.8 s
+  CPHF_13_2801_7_5   2,555,582,259,300, uncovered 0, 155.6 s
+  CPHF_15_121_3_6    190,578,024, uncovered 0, 4.3 s
+  CPHF_16_781_5_6    2,375,270,917,656, uncovered 0, 593.1 s
+  CPHF_16_1562_5_5   492,269,621,740, uncovered 0, 44.3 s
+  CPHF_13_1210_9_5   872,700,795,252, uncovered 0, 67.3 s
+  CPHF_16_5602_7_5   81,895,607,732,400, uncovered 0, 4567.2 s (2026-10-29)

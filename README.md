@@ -1,5 +1,9 @@
 # ca-tools
 
+The maintained version of this repository is at
+https://github.com/chrispbsmolen/ca-tools. Forks and other copies may be
+out of date.
+
 Small, dependency-light tools for working with covering arrays: a fast
 verifier (the certificate check) and a records lookup for the Colbourn
 tables catalogue.
@@ -124,6 +128,15 @@ strength but explodes combinatorially (C(k,t) column sets times v^t tuples);
 at strength 5 and 6, where current research activity is, an R-level checker
 becomes the bottleneck. This one is fast enough to re-verify entire
 repositories routinely, e.g. in CI on every submission.
+
+## How to cite
+
+Cite the repository, https://github.com/chrispbsmolen/ca-tools, with the
+commit you used, and for the arrays from cyclic covering perfect hash
+families the report: C. Smolen, Cyclic covering perfect hash families: new
+covering arrays of strength five and six with exact certificates, Zenodo,
+doi:10.5281/zenodo.23751688. Each row of the table names its own source,
+and results of other authors should be cited to them.
 
 ## Status and license
 

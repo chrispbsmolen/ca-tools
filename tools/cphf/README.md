@@ -1,16 +1,20 @@
 # Cyclic covering perfect hash families (source S8, since 2026-10-28)
 
-Three arrays of the table come from covering perfect hash families (CPHFs)
+Eight arrays of the table come from covering perfect hash families (CPHFs)
 found here by a search over families with a cyclic symmetry, and checked
-here by a separate program. Credit: Christopher Smolen (search and checks,
-2026-10-26 to 2026-10-27).
+here by two separate programs. Credit: Christopher Smolen (search and checks,
+2026-10-26 to 2026-10-29). Report: doi:10.5281/zenodo.23751688.
 
 | array | family | certificate | checked by |
 |---|---|---|---|
-| CA(2663; 5, 121, 3) | CPHF(11; 121, 3, 5) | `../../table/certificates/CPHF_11_121_3_5.txt` | `ca_verify.c` on the array (stored), `repcheck.c` on the family |
-| CA(40613; 5, 781, 5) | CPHF(13; 781, 5, 5) | `../../table/certificates/CPHF_13_781_5_5.txt` | `repcheck.c` on the family |
-| CA(218479; 5, 2801, 7) | CPHF(13; 2801, 7, 5) | `../../table/certificates/CPHF_13_2801_7_5.txt` | `repcheck.c` on the family |
-| CA(10921; 6, 121, 3) | CPHF(15; 121, 3, 6) | `../../table/certificates/CPHF_15_121_3_6.txt` | `repcheck_pp.c` on the family |
+| CA(2663; 5, 121, 3) | CPHF(11; 121, 3, 5) | `../../table/certificates/CPHF_11_121_3_5.txt` | `ca_verify.c` on the array (stored), `repcheck.c` and `gpu/cphfcheck_metal.m` on the family |
+| CA(40613; 5, 781, 5) | CPHF(13; 781, 5, 5) | `../../table/certificates/CPHF_13_781_5_5.txt` | `repcheck.c`, `gpu/cphfcheck_metal.m` |
+| CA(218479; 5, 2801, 7) | CPHF(13; 2801, 7, 5) | `../../table/certificates/CPHF_13_2801_7_5.txt` | `repcheck.c`, `gpu/cphfcheck_metal.m` |
+| CA(10921; 6, 121, 3) | CPHF(15; 121, 3, 6) | `../../table/certificates/CPHF_15_121_3_6.txt` | `repcheck_pp.c`, `gpu/cphfcheck_metal.m` |
+| CA(249985; 6, 781, 5) | CPHF(16; 781, 5, 6) | `../../table/certificates/CPHF_16_781_5_6.txt` | `repcheck_pp.c`, `gpu/cphfcheck_metal.m` |
+| CA(49985; 5, 1562, 5) | CPHF(16; 1562, 5, 5), two orbits | `../../table/certificates/CPHF_16_1562_5_5.txt` | `repcheck_pp.c`, `gpu/cphfcheck_metal.m` |
+| CA(767625; 5, 1210, 9) | CPHF(13; 1210, 9, 5), ten orbits | `../../table/certificates/CPHF_13_1210_9_5.txt` | `repcheck_pp.c`, `gpu/cphfcheck_metal.m` |
+| CA(268897; 5, 5602, 7) | CPHF(16; 5602, 7, 5), two orbits | `../../table/certificates/CPHF_16_5602_7_5.txt` | `repcheck_pp.c`, `gpu/cphfcheck_metal.m` |
 
 ## What a CPHF is, and how it gives the array
 
@@ -119,6 +123,24 @@ is a limit of that shape, not of covering arrays at those sizes, and it
 does not rule out other layouts: several column orbits with different
 rows, or a family that adds a few rows of another kind to cover those
 sets, are the next things to try.
+
+## The second check (gpu/cphfcheck_metal.m, since 2026-10-29)
+
+`gpu/cphfcheck_metal.m` checks a family on an Apple GPU and shares no code with `repcheck.c`,
+`repcheck_pp.c` or the search. It builds GF(q) by polynomial multiplication (`gpu/gfield.h`, checked
+against the field axioms), certifies the shift symmetry of every row by solving for A from t
+independent columns and testing it at every column and the wrap (`gpu/common.h`), and then checks
+every representative t-set (smallest column < s): each GPU thread fixes all but the last column,
+computes for every row a normal vector of the first t - 1 vectors by Gaussian elimination, and tests
+the last column by one dot product per row. `gpu/gcheck_ref.c` and `gpu/emu_kernel.c` are plain-C
+versions of the same method. On nine incomplete test families (t = 4, 5, 6; q = 3, 4, 5, 9; one, two
+and three column orbits; `gpu/t/`, made by `gpu/gen.py` and `gpu/genpp.py`) all three give exactly the
+counts of uncovered representatives that `repcheck_pp.c` gives (`gpu/expected.txt`), and a family with
+one changed entry fails the certificate. `gpu/gpu_cphf_test.sh` repeats these tests on a Mac. Every
+stored family passed it; the results are at the end of RUNS.txt.
+
+    clang -O2 -fobjc-arc -framework Metal -framework Foundation -o cphfcheck_metal cphfcheck_metal.m
+    ./cphfcheck_metal ../../../table/certificates/CPHF_13_2801_7_5.txt 5 7 1     # FILE t q s
 
 ## Credits and bounds
 

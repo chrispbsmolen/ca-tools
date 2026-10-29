@@ -486,3 +486,31 @@ for CA(54; 5, 9, 2), CA(56; 5, 10, 2), CA(134; 5, 35, 2) and CA(716; 6, 91, 2)).
 A caution: there is an announced, unsubmitted CA(146; 4, 200, 2) (private
 correspondence, 2026-10-19), two rows below the CA(148; 4, 200, 2) entered here. It is
 not in the table, since nothing that can be checked has been submitted.
+
+## Four arrays from cyclic CPHFs, and a second checker, 2026-10-29
+
+Four S8 rows, each given by a certificate in `certificates/` (no array file), found by a batch of
+`../tools/cphf/symcphf_pp.c` on the maintainer's MacBook Pro (Apple M4 Max, 14 threads) on 2026-10-28
+and 2026-10-29 (`../tools/cphf/RUNS.txt`):
+
+- CA(249985; 6, 781, 5) from CPHF(16; 781, 5, 6). The snapshot has 249985 at k = 410 (Torres-Jimenez and
+  Izquierdo-Marquez, restricted CPHF); at k = 411 to 781 it had 265609 to 1062432. Archived first with
+  the report doi:10.5281/zenodo.23751688 (version 1).
+- CA(49985; 5, 1562, 5) from CPHF(16; 1562, 5, 5), two column orbits; the snapshot has 49985 at k = 1377
+  and 53109 at k = 1378 to 1800.
+- CA(767625; 5, 1210, 9) from CPHF(13; 1210, 9, 5), ten column orbits; the snapshot had 888417 to 1946184
+  at k = 819 to 1210.
+- CA(268897; 5, 5602, 7) from CPHF(16; 5602, 7, 5), two column orbits; the snapshot had 803022 to 919506
+  at k = 2802 to 5602.
+
+Each family was checked exactly by `../tools/cphf/repcheck_pp.c` (symmetry certificate and every
+representative t-set: 2.38e12, 4.92e11, 8.73e11 and 8.19e13 sets, uncovered 0) and its expanded array
+sampled on 2 x 10^7 random t-sets (uncovered 0). Each was checked again by the new second checker
+`../tools/cphf/gpu/cphfcheck_metal.m`, written separately with another method (Gaussian-elimination normal
+vectors, polynomial-arithmetic GF(q), its own certificate), on the Mac's GPU: uncovered 0 for all four.
+Before use it reproduced, together with its plain-C versions, the exact counts of uncovered representatives
+that `repcheck_pp.c` gives on nine incomplete test families (t = 4 to 6, q = 3, 4, 5, 9, one to three
+orbits) and rejected a family with one changed entry (`gpu/gpu_cphf_test.sh`, all passed on the Mac). The
+four older certificates were checked again by it too, with the same result (RUNS.txt). `array_sha256` of
+each row is the hash of the array that `cphf_tools_pp.c expand` writes from the family (computed in the
+cloud workspace, 2026-10-29).

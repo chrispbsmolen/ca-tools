@@ -1,0 +1,9 @@
+t/a_9rows.txt 5 3 1 875
+t/s2_t5q3.txt 5 3 2 185598
+t/t4q5.txt 4 5 1 3122
+t/s3_t4q3.txt 4 3 3 12257
+t/b_12rows.txt 6 3 1 2640
+t/t4q4.txt 4 4 1 1220
+t/t4q9.txt 4 9 1 46324
+t/s2_t4q4.txt 4 4 2 15478
+t/t5q4.txt 5 4 1 296250
