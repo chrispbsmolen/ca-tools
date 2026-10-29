@@ -134,4 +134,8 @@ Groemping) closely and are under GPL (>= 3), with her agreement to the
 "or later" terms. The table data in table/ is not original
 to this repository. Each row names its source, the sources are listed
 under Attribution in table/README.md, and the data remains subject to
-those sources' terms.
+those sources' terms. The arrays and certificates built by this project
+(source S8, made by tools/own_arrays and tools/cphf and stored in
+table/arrays and table/certificates) are by Christopher Smolen and are
+released under the Creative Commons Attribution 4.0 International
+license (CC BY 4.0).

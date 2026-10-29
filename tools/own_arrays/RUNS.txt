@@ -1,8 +1,9 @@
-Runs behind the 24 arrays of this folder (2026-10-27)
+Runs behind the arrays of this folder: the 24 of 2026-10-27 (sections A and B) and the
+40 of 2026-10-28 (section C)
 
-All runs were made in a Linux x86_64 cloud workspace on 2026-10-27, with the
-scripts of this folder (compiled with gcc -O2). File names are those of the
-working folder; the stored arrays are in ../../table/arrays/ under
+The runs of sections A and B were made in a Linux x86_64 cloud workspace on
+2026-10-27, with the scripts of this folder (compiled with gcc -O2). File names
+are those of the working folder; the stored arrays are in ../../table/arrays/ under
 CA_N_t_k_v_<first 8 hex digits of the sha256>.txt.
 
 Programs named in the commands:
@@ -57,7 +58,9 @@ Row elimination from a Paley array (the output file is prefix_N.txt):
 B. Exploratory runs (no stored array came from these)
 
 These tried other targets and other starting arrays. None produced an array
-that is stored; they are kept so that what was tried is on record. Inputs not
+that was stored on 2026-10-27; they are kept so that what was tried is on record.
+Two of their outputs were later inputs of arrays stored on 2026-10-28 (section C):
+nck_4_107_103.txt of "./nck 106 4 107 2 paley_4_107.txt ..." and nck_4_101_99.txt. Inputs not
 described above:
   nck_t_k_N.txt, lite_*   outputs of earlier runs in this list, fed back in
   cs_ck_4_k.txt           Colbourn-Keri starter arrays (CAs::CS_CK)
@@ -115,3 +118,173 @@ described above:
   SHAKE=10 ./nck2 25 3 32 2 ckd_25_3_32_2.txt nck2_3_30 71 400 30
   SHAKE=10 ./nck2 23 3 28 2 ckd_23_3_28_2.txt nck2_3_27 71 200 27
   SHAKE=20 ./nck2 21 3 24 2 nck_3_24_21.txt nck2_3_24b 72 300 24
+
+C. The 42 arrays added on 2026-10-28 and 2026-10-29
+
+These were built on 2026-10-27 and 2026-10-28 in a campaign at the 112 points where
+the table's best size was an array of Torres-Jimenez's group: in the Linux x86_64 cloud
+workspace (2 shared cores, every job under nice -n 10) and in a batch on the
+maintainer's Apple Silicon MacBook Pro (14 to 15 jobs at a time). Each array below is
+the smallest one built at its point with at most his number of rows. No array of
+Torres-Jimenez's group was read by any of these runs; the inputs are named below.
+
+Programs (this folder):
+  catabu2/3/4/5  catabu.c (version 2), built with -DW=w (w 64-bit words per column);
+                 cloud: gcc -O3 -march=native -DW=w -o catabuw catabu.c -lm
+                 Mac:   clang -O3 -mcpu=native -DW=w -o catabuw catabu.c -lm
+                 arguments: t k infile N_in target outprefix seed maxsec tenure
+                 noise colsel attemptsec temp restore
+  catabu2 (cloud runs of CA(94;4,97,2), CA(98;4,101,2), CA(102;4,107,2) only)
+                 catabu_v1.c, gcc -O3 -march=native -DW=2 -o catabu2 catabu_v1.c -lm
+  nck            nck_early.c (as in section A)
+  ext2           ext2.c, gcc -O3 -march=native -o ext2 ext2.c -lm (Mac: clang -O3);
+                 ext2.c gained options during the session; runs that do not set an
+                 option follow the same trajectory with the final file
+  prod2.py       python3 prod2.py A B out (OA9 = the Bose OA(9;2,4,3), built in)
+  cycsa, binsa, ccsel, pal5   gcc -O3 -march=native -o x x.c -lm
+  pal6           gcc -O3 -march=native -fopenmp -o pal6 pal6.c -lm
+Starting arrays, written in R with CAs 0.24.4, 0-based, one row per line:
+  paley_4_q.txt   CAs::paleyCA(4, q)
+  CA_179_4_358_2.txt  the 179 rows of CAs:::paley_mat(359) with 1 in column 1, that
+                  column dropped (a CA(179;4,358,2), verified at strength 4); it has
+                  exactly the 179 rows of Torres-Jimenez's TJ2level ca179.4.2.358 in
+                  another order, since both are this Paley construction; it was
+                  computed from paley_mat(359), not read from his file
+  paley359.txt    CAs:::paley_mat(359)
+  ckrs_5_15.txt   CAs::ckrsCA(5, 15, 2)
+  wks_6_30.txt    CAs::WKS_CAs[["30"]]
+Each of these was written again on 2026-10-28 from CAs 0.24.4 and has the same SHA-256
+as the file the runs read. The time limit is the run's maxsec; a run that stops on a
+time limit can stop at another size on another machine. Mac runs are marked (Mac).
+The ternary runs on the Mac were chains of sub-runs: sub-run i used seed + 1000 i and
+started from the widest covering array the chain had reached (files *_start.txt).
+
+Repeated: CA(54;5,9,2), CA(56;5,10,2), CA(79;5,15,2), CA(134;5,35,2), CA(15;2,20,3),
+CA(94;4,97,2), the catabu steps of CA(98;4,101,2) and CA(102;4,107,2), and the Mac
+runs of CA(123;4,148,2), CA(148;4,200,2) and CA(165;4,324,2) (with gcc and the final
+size as target, which only stops the run earlier) were run again in the cloud on
+2026-10-28 with the commands below and gave the stored files byte for byte. Seven Mac arrays are byte-identical to the
+cloud run of the same start, seed and options (marked below).
+
+Note on CA(98;4,101,2): its input CA(99;4,101,2) (nck_4_101_99.txt, SHA-256
+cb4e0b55...) was written on 2026-10-27 at about 01:56 UTC by nck_early.c from
+CAs::paleyCA(4,101) in a run whose command line was not logged. Every one of its 99
+rows is a row of CAs::paleyCA(4,101) with at most two cells changed (75 unchanged),
+as row elimination leaves them; the later logged run "./nck 99 4 101 2
+nck_4_101_99.txt nck_4_101 22 1200 101" did not change it.
+
+  CA(94;4,97,2)  CA_94_4_97_2_c56b39a1.txt  [cloud; seed 1; time limit 150 s]
+      catabu2 4 97 paley_4_97.txt 96 93 t4_097p_plain 1 150 2 0 0 150   -> t4_097p_plain_94.txt
+  CA(98;4,101,2)  CA_98_4_101_2_cb41c6c9.txt  [cloud; seed 1 (catabu); time limit 90 s (catabu)]
+      nck_early.c on paley_4_101.txt (CAs::paleyCA(4,101)), 2026-10-27 about 01:50 UTC -> nck_4_101_99.txt = CA(99;4,101,2); the command line of this run was not logged (see the note below)
+      catabu2 4 101 CA_99_4_101_2.txt 99 98 t4_101_speed 1 90 2 0 0   -> t4_101_speed_98.txt
+  CA(101;4,103,2)  CA_101_4_103_2_33c47b4c.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu2 4 103 paley_4_107.txt 106 100 t4_0103_paley_4_107_c1_s1 1 1800 2 0 1 600 2 20000
+  CA(102;4,107,2)  CA_102_4_107_2_d5d3d93a.txt  [cloud; seed 22 (nck), 1 (catabu); time limit 1200 s (nck), 180 s (catabu)]
+      ./nck 106 4 107 2 paley_4_107.txt nck_4_107 22 1200 107   (nck = nck_early.c) -> nck_4_107_103.txt
+      catabu2 4 107 CA_103_4_107_2.txt 103 100 t4_107 1 180 2 0 0 180   -> t4_107_102.txt
+  CA(105;4,109,2)  CA_105_4_109_2_c8c336ef.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu2 4 109 paley_4_113.txt 112 104 t4_0109_paley_4_113_c1_s1 1 1800 2 0 1 600 2 20000
+  CA(106;4,111,2)  CA_106_4_111_2_ab57be97.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu2 4 111 paley_4_113.txt 112 105 t4_0111_paley_4_113_c1_s1 1 1800 2 0 1 600 2 20000
+  CA(123;4,148,2)  CA_123_4_148_2_e4f0ce46.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 148 paley_4_149.txt 146 120 t4_0148_paley_4_149_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_148p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(123;4,150,2)  CA_123_4_150_2_6f2e57eb.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 150 paley_4_151.txt 148 121 t4_0150_paley_4_151_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(126;4,154,2)  CA_126_4_154_2_28ea8203.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 154 paley_4_157.txt 154 122 t4_0154_paley_4_157_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(126;4,156,2)  CA_126_4_156_2_c3f519f9.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 156 paley_4_157.txt 154 123 t4_0156_paley_4_157_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_156p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(128;4,159,2)  CA_128_4_159_2_6d057349.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 159 paley_4_163.txt 160 124 t4_0159_paley_4_163_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_159p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(128;4,162,2)  CA_128_4_162_2_7d2d5bb8.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 162 paley_4_163.txt 160 125 t4_0162_paley_4_163_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(133;4,173,2)  CA_133_4_173_2_a3eb43aa.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 173 paley_4_179.txt 175 130 t4_0173_paley_4_179_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_173p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(135;4,179,2)  CA_135_4_179_2_820ac3aa.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 179 paley_4_181.txt 180 132 t4_0179_paley_4_181_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(137;4,187,2)  CA_137_4_187_2_b45adf93.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 187 paley_4_191.txt 186 136 t4_0187_paley_4_191_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_187p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(138;4,191,2)  CA_138_4_191_2_9077ad9f.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 191 paley_4_193.txt 188 137 t4_0191_paley_4_193_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_191p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(138;4,192,2)  CA_138_4_192_2_f439a937.txt  [Mac (Apple Silicon); seed 2; time limit 1800 s]
+      (Mac) catabu3 4 192 paley_4_193.txt 188 138 t4_0192_paley_4_193_c7_s2 2 1800 2 0 7 600 2 20000
+  CA(141;4,199,2)  CA_141_4_199_2_444a29b5.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu4 4 199 paley_4_211.txt 206 139 t4_0199_paley_4_211_c0_s1 1 1800 2 0 0 600 2 20000
+      the cloud run t4_199p (same start, seed and options, time limit 240 s) wrote the same file byte for byte
+  CA(148;4,200,2)  CA_148_4_200_2_45d0f5a8.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu4 4 200 paley_4_211.txt 206 148 t4_0200_paley_4_211_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(149;4,222,2)  CA_149_4_222_2_bb64fc3e.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu4 4 222 paley_4_223.txt 217 149 t4_0222_paley_4_223_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(154;4,225,2)  CA_154_4_225_2_e2d909a0.txt  [Mac (Apple Silicon); seed 2; time limit 1800 s]
+      (Mac) catabu3 4 225 CA_179_4_358_2.txt 179 154 t4_0225_CA_179_4_358_2_c5_s2 2 1800 2 0 5 600 2 20000
+  CA(156;4,257,2)  CA_156_4_257_2_e997a1db.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu4 4 257 paley_4_263.txt 256 156 t4_0257_paley_4_263_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(157;4,268,2)  CA_157_4_268_2_4ece58f8.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu5 4 268 paley_4_269.txt 261 157 t4_0268_paley_4_269_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(158;4,272,2)  CA_158_4_272_2_df7a02a7.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu5 4 272 paley_4_277.txt 269 158 t4_0272_paley_4_277_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(160;4,281,2)  CA_160_4_281_2_0499181a.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 281 CA_179_4_358_2.txt 179 160 t4_0281_CA_179_4_358_2_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(161;4,289,2)  CA_161_4_289_2_d5bbb7eb.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 289 CA_179_4_358_2.txt 179 161 t4_0289_CA_179_4_358_2_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(163;4,297,2)  CA_163_4_297_2_b48c5089.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 297 CA_179_4_358_2.txt 179 163 t4_0297_CA_179_4_358_2_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(165;4,324,2)  CA_165_4_324_2_8dddc82c.txt  [Mac (Apple Silicon); seed 1; time limit 1800 s]
+      (Mac) catabu3 4 324 CA_179_4_358_2.txt 179 164 t4_0324_CA_179_4_358_2_c0_s1 1 1800 2 0 0 600 2 20000
+  CA(15;2,20,3)  CA_15_2_20_3_fd13075b.txt  [cloud; seed 1; time limit 120 s]
+      env TENURE=3 ext2 15 20 3 1 120 g15   -> g15_15_20.txt
+  CA(16;2,21,3)  CA_16_2_21_3_81545e9f.txt  [cloud; seed 1; time limit 300 s]
+      env SAT=0.35 NEWCOLTRY=10 SAVEK=21 ext2 16 22 3 1 300 g16 - 10   -> g16_16_21.txt
+  CA(17;2,29,3)  CA_17_2_29_3_72088afb.txt  [Mac (Apple Silicon); seed 102, then 3102; time limit 1800 s each]
+      (Mac) env SAT=0.35 NEWCOLTRY=10 SAVEK=29 ext2 17 40 3 102 1800 r1_17b_r0 - 20   -> reached k = 29, r1_17b_r0_start.txt
+      (Mac) env SAT=0.35 NEWCOLTRY=10 SAVEK=29 ext2 17 40 3 3102 1800 r1_17b_r3 r1_17b_r0_start.txt 29   -> r1_17b_r3_17_last.txt (29 columns)
+  CA(22;2,107,3)  CA_22_2_107_3_eed6545c.txt  [cloud, then Mac; seed 1, 2, 602, 4602, 5602, 6602; time limit 300, 600, then 1800 s each]
+      python3 prod2.py g15_15_20.txt OA9 p_22_80.txt
+      env SAT=0.35 NEWCOLTRY=10 SAVEK=93 ext2 22 107 3 1 300 g22 p_22_80.txt 80   -> 99 columns (c22_99.txt)
+      env SAT=0.35 NEWCOLTRY=10 RESTART=20000000 SAVEK=107 ext2 22 107 3 2 600 g22b c22_99.txt 99   -> 102 columns (s_22_102.txt)
+      (Mac) env SAT=0.35 NEWCOLTRY=10 SAVEK=107 ext2 22 150 3 602 1800 r1_22b_r0 s_22_102.txt 102   -> 105 columns
+      (Mac) same with seed 4602 from the 105-column array (r1_22b_r4)   -> 106 columns
+      (Mac) same with seed 5602 from the 106-column array (r1_22b_r5)   -> 107 columns
+      (Mac) env SAT=0.35 NEWCOLTRY=10 SAVEK=107 ext2 22 150 3 6602 1800 r1_22b_r6 r1_22b_r5_start.txt 107   -> r1_22b_r6_22_107.txt
+      The sub-runs r1_22b_r1 to r1_22b_r3 (seeds 1602, 2602, 3602, from the 105-column
+      array) gave no gain. The Mac intermediates (the 105-, 106- and 107-column files of
+      r0, r4 and r5) were not returned from the Mac; only the final array and the run
+      logs exist.
+  CA(28;2,449,3)  CA_28_2_449_3_4123e4fb.txt  [cloud; seed 1, then 2; time limit 600 s, then 900 s]
+      python3 prod2.py g15_15_20.txt g15_15_20.txt p_28_400.txt
+      env SAT=0.35 NEWCOLTRY=10 SASTAG=100000000 SAKICK=3 SAVEK=435,449 ext2 28 449 3 1 600 g28 p_28_400.txt 400   -> 446 columns (c28_446.txt)
+      env SAT=0.35 NEWCOLTRY=10 COLRESAMPLE=150000000 SAVEK=449 ext2 28 449 3 2 900 g28b c28_446.txt 446   -> g28b_28_449.txt
+  CA(54;5,9,2)  CA_54_5_9_2_85ad6ce2.txt  [cloud; seed 1; time limit 10 s]
+      cycsa 5 9 1 54 0 1 10 r59T1.5 -T 1.5 -E 1.5 -p 0.0   -> r59T1.5_54.txt
+  CA(56;5,10,2)  CA_56_5_10_2_23dea590.txt  [cloud; seed 12; time limit 6 s]
+      cycsa 5 10 1 56 0 12 6 dbg -T 2 -E 2 -p 0.0   -> dbg_56.txt (repeated with 20 s: byte-identical)
+  CA(79;5,15,2)  CA_79_5_15_2_c8a509b8.txt  [cloud; seed 1; time limit 40 s]
+      binsa 87 5 15 1 40 pk515 -T 0.7 -E 0.7 -i ckrs_5_15.txt -d 70   -> pk515_79.txt
+  CA(134;5,35,2)  CA_134_5_35_2_450f7454.txt  [cloud; seed 1; time limit 40 s]
+      ccsel 67 5 34 1 1 40 cc_67_35_d1.txt -x
+  CA(357;5,194,2)  CA_357_5_194_2_b7d90229.txt  [cloud; seed 1; time limit 300 s]
+      pal5 paley359.txt 194 0 1 300 pal5_194_out.txt
+  CA(401;6,27,2)  CA_401_6_27_2_dd3983eb.txt  [cloud, then Mac; seed 1, 1; time limits 300 s, 14400 s]
+      binsa 440 6 27 1 300 wk627 -T 0.25 -E 0.25 -p 0.2 -i wks_6_30.txt -d 395   -> wk627_406.txt
+      (Mac) binsa 406 6 27 1 14400 d6_27_a -T 0.25 -E 0.25 -p 0.2 -R 20000 -i wk627_406.txt -d 399
+            -> CA(401;6,27,2) at the time limit (14406 s)
+  CA(411;6,28,2)  CA_411_6_28_2_f3c907eb.txt  [cloud, then Mac; seed 1, 1, 7; time limits 400 s, 400 s, 5400 s]
+      binsa 440 6 28 1 400 wk628 -T 0.25 -E 0.25 -i wks_6_30.txt -d 405   -> wk628_421.txt (stopped by hand at about 210 s)
+      binsa 421 6 28 1 400 wk628p -T 0.25 -E 0.25 -p 0.2 -i wk628_421.txt -d 405   -> wk628p_414.txt
+      (Mac) binsa 414 6 28 7 5400 beat_6_28 -T 0.3 -E 0.3 -p 0.2 -R 20000 -i wk628p_414.txt -d 411
+            -> CA(411;6,28,2), the target, after 965 s
+      (the CA(414;6,28,2) of this chain was in an earlier draft of this entry, not pushed)
+  CA(420;6,29,2)  CA_420_6_29_2_5ce5395c.txt  [cloud, then Mac; seed 1, 1, 1; time limits 600 s, 1500 s, 14400 s]
+      binsa 440 6 29 1 600 wk629 -T 0.8 -E 0.8 -i wks_6_30.txt -d 415   -> wk629_429.txt
+      binsa 429 6 29 1 1500 wk629p -T 0.25 -E 0.25 -p 0.2 -i wk629_429.txt -d 410   -> wk629p_424.txt
+      (Mac) binsa 424 6 29 1 14400 d6_29_a -T 0.25 -E 0.25 -p 0.2 -R 20000 -i wk629p_424.txt -d 416
+            -> CA(420;6,29,2) at the time limit (14406 s)
+  CA(716;6,91,2)  CA_716_6_91_2_1c95a9e7.txt  [cloud; seed 1; time limit 1650 s]
+      OMP_NUM_THREADS=1 pal6 paley359.txt 91 0 1 1650 pal6_91_out.txt

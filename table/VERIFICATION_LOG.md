@@ -398,3 +398,91 @@ and will be recorded here when it ends; the row rests on the
 `repcheck_pp.c` check.
 `cphf_tools.c expand` and `cphf_tools_pp.c expand` write the same array
 (sha256 ae9eea3e...), the row's `array_sha256`.
+
+## Forty-two arrays built here at points of the withdrawn files, 2026-10-28 and 2026-10-29
+
+A campaign of 2026-10-27 and 2026-10-28 (cloud workspace, then a batch on the
+maintainer's Apple Silicon MacBook Pro) looked for arrays at the 112 points where the
+table's best size is an array of Torres-Jimenez's group from the withdrawn files: binary
+strength 3 and 4 (group A), ternary strength 2 (group B), binary strength 5 and 6
+(group C). At 42 of those points it reached his size or less, and the smallest array
+built at each of them is entered as an S8 row and stored (`../tools/own_arrays/`,
+RUNS.txt section C): 28 binary strength-4 arrays with 97 to 324 columns, five ternary
+strength-2 arrays (CA(15; 2, 20, 3), CA(16; 2, 21, 3), CA(17; 2, 29, 3), CA(22; 2, 107, 3),
+CA(28; 2, 449, 3)), CA(54; 5, 9, 2), CA(56; 5, 10, 2), CA(79; 5, 15, 2), CA(134; 5, 35, 2),
+CA(357; 5, 194, 2), CA(401; 6, 27, 2), CA(411; 6, 28, 2), CA(420; 6, 29, 2) and
+CA(716; 6, 91, 2). Group C ended on 2026-10-28 at 19:48 CDT; at its other points it got
+closer to his size without reaching it.
+
+- 19 equal his size and 23 are smaller: CA(N; 4, k, 2) for k = 148, 150, 156, 162, 173,
+  179, 187, 191, 192, 199, 200, 222, 225, 257, 268, 272, 281, 289, 297 and 324, by 1 to 4
+  rows (59 rows in all), and CA(401; 6, 27, 2), CA(411; 6, 28, 2) and CA(420; 6, 29, 2),
+  3, 4 and 1 rows below his 404, 415 and 421. Each of these 23 rows says "exceeds
+  table: previous best ..." in its notes. Compared with the November 2024 snapshot, 27
+  are smaller (MANIFEST status `exceeds_snapshot`) and 15 equal its rung (`equals_best`).
+- Four rows of this entry are dominated by another of its rows (same N, more
+  columns): CA(123; 4, 148, 2) by CA(123; 4, 150, 2), CA(126; 4, 154, 2) by
+  CA(126; 4, 156, 2), CA(128; 4, 159, 2) by CA(128; 4, 162, 2) and CA(138; 4, 191, 2) by
+  CA(138; 4, 192, 2). Each is a different array, kept as built at its target point; the
+  comparisons in the notes are with the table as it was before this entry.
+- Methods: row elimination after Nayeri, Colbourn and Konjevod (2013) with the tabu
+  search of Nurmela (2004) (`catabu.c`), from Paley arrays (`CAs::paleyCA(4, q)`) or
+  from the CA(179; 4, 358, 2) cut from the Paley matrix of order 359 (group A); tabu
+  search and simulated annealing with column extension after the idea of
+  Torres-Jimenez, Acevedo-Juarez and Avila-George (2021), and the generalized direct
+  product of Colbourn and Torres-Jimenez (2013, Cor. 4.3) (`ext2.c`, `prod2.py`; group B,
+  all from random starts and the Bose OA(9; 2, 4, 3)); simulated annealing as in
+  Torres-Jimenez and Rodriguez-Tello (2012) from random starts (`cycsa.c`), from the
+  CKRS CA(88; 5, 15, 2) and from the CA(440; 6, 30, 2) of Wagner, Kampel and Simos
+  (2021) (`binsa.c`), and column choice in Paley arrays of orders 67 and 359
+  (`ccsel.c`, `pal5.c`, `pal6.c`). No array of Torres-Jimenez's group was an input at
+  any step. One starting array has his rows, by construction: the CA(179; 4, 358, 2)
+  taken from `paley_mat(359)` (the 179 rows with 1 in the first column, that column
+  dropped), the start of CA(154; 4, 225, 2), CA(160; 4, 281, 2), CA(161; 4, 289, 2),
+  CA(163; 4, 297, 2) and CA(165; 4, 324, 2), holds exactly the 179 rows of his
+  TJ2level array ca179.4.2.358 (row 13652 of the table, VERIFIED S6, no file stored), in
+  another order. Both are this Paley construction, which leaves no choice, as for
+  CA(10; 3, 5, 2) on 2026-10-27; the start here was computed from `paley_mat(359)`,
+  not taken from his file. The provenance of every array was traced back to its start, and the
+  starting files (`paleyCA(4, q)` for the 16 values of q used, `paley_mat(359)`, the
+  CA(179; 4, 358, 2), `ckrsCA(5, 15, 2)`, `WKS_CAs[["30"]]`) were written again from
+  CAs 0.24.4 and have the SHA-256 of the files the runs read. The one gap: the
+  intermediate CA(99; 4, 101, 2) behind CA(98; 4, 101, 2) was written by
+  `nck_early.c` from `paleyCA(4, 101)` in a run whose command line was not logged;
+  each of its rows is a row of `paleyCA(4, 101)` with at most two cells changed
+  (RUNS.txt).
+- Each array was compared row by row with the withdrawn file at its point (`git show
+  356d0fe^:table/arrays/...`). 36 share no row with it. CA(716; 6, 91, 2) shares two,
+  the all-zero and the all-one row. CA(54; 5, 9, 2) and CA(56; 5, 10, 2) share 3 and 6,
+  at chance level (two sets of 54 random rows of 9 columns share about 5.7, two sets of
+  56 rows of 10 columns about 3.1). CA(94; 4, 97, 2), CA(98; 4, 101, 2) and
+  CA(102; 4, 107, 2) share 16, 17 and 8 rows; all of these are in the Paley family:
+  at k = 97, 9 are rows of `paleyCA(4, 97)` and 7 are such rows with one cell changed;
+  at k = 101 and 107 all 17 and 8 are rows of `paleyCA(4, q)`. There is no shared row
+  outside the Paley family. His arrays at these three points are themselves close to the
+  same Paley arrays (86 of 94, 91 of 98 and 92 of 102 of his rows are Paley rows with at
+  most two cells changed), which explains the overlap. The other group-A arrays have
+  no row within distance 27 of one of his.
+- Reproduction: CA(94; 4, 97, 2), CA(123; 4, 148, 2), CA(148; 4, 200, 2),
+  CA(165; 4, 324, 2), CA(15; 2, 20, 3), CA(54; 5, 9, 2), CA(56; 5, 10, 2), CA(79; 5, 15, 2)
+  and CA(134; 5, 35, 2), and the last step of CA(98; 4, 101, 2) and CA(102; 4, 107, 2)
+  (from their stored intermediates), were run again in the cloud on 2026-10-28 from
+  their commands (the three Mac runs with the final size as target, which only stops
+  them earlier) and gave the stored files byte for byte. Seven of the Mac arrays (k = 148, 156, 159, 173, 187, 191, 199) are
+  byte-identical to the cloud runs of the same start, seed and options.
+
+Checks: 37 arrays were verified in full with `ca_verify.c` at commit 772d2ce
+(`gcc -O2 -pthread`, 2 threads, Linux x86_64, 2026-10-28; from under a second to 115 s
+each, all column sets covered), and CA(401; 6, 27, 2), CA(411; 6, 28, 2) and
+CA(420; 6, 29, 2), found on the Mac and verified there in full by the batch, were
+verified in full again the same way on 2026-10-29 (about a second each). CA(357; 5, 194, 2) and CA(716; 6, 91, 2) were verified
+in full on the maintainer's Mac on 2026-10-27 at 18:41 and 18:43 CDT with `ca_verify.c` at commit 441203c, which is
+unchanged at 772d2ce ("all 2,174,032,288 column sets fully cover all 32 tuples" and
+"all 666,563,898 column sets fully cover all 64 tuples"), and their rows carry that
+stamp. The independent review of this push verified both again in full on Linux x86_64
+(`gcc -O3 -march=native -pthread`, 2 threads, about 25 and 17 minutes). Constant rows were counted with `../tools/constant_rows.c` (1 for 38 arrays, 2
+for CA(54; 5, 9, 2), CA(56; 5, 10, 2), CA(134; 5, 35, 2) and CA(716; 6, 91, 2)).
+
+A caution: there is an announced, unsubmitted CA(146; 4, 200, 2) (private
+correspondence, 2026-10-19), two rows below the CA(148; 4, 200, 2) entered here. It is
+not in the table, since nothing that can be checked has been submitted.
