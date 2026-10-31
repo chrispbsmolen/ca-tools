@@ -21,7 +21,7 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "table"))
-from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
+from ca_table import counted, check_method  # noqa: E402  (the one definition of the counted rows)
 REPO_URL = "https://github.com/chrispbsmolen/ca-tools"
 RAW_CSV = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv"
 
@@ -129,7 +129,9 @@ def stamp_html(r):
     if c:
         links.append('<a href="%s%s">certificate</a>' % (CERT_URL, html.escape(c)))
     links.append('<a href="%s">verification log</a>' % LOG_URL)
-    return head + " (" + ", ".join(links) + ")"
+    m = check_method(r) if r.get("tier") == "VERIFIED" else None
+    label = '<b class=method>%s</b>: ' % m if m else ""
+    return label + head + " (" + ", ".join(links) + ")"
 
 
 def construction_of(r):

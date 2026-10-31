@@ -38,21 +38,44 @@ def _key(r):
     return (str(r["t"]), str(r["v"]), str(r["k"]), str(r["N"]), r["array_sha256"])
 
 
-def counted(rows):
+METHODS = ("direct", "certificate", "certificate + fusing")
+
+
+def check_method(r):
+    """How a VERIFIED row was checked, from its stamp: "direct" (the array
+    itself checked exhaustively), "certificate" (a covering perfect hash
+    family checked exactly, expanded by the theorem of Sherwood, Martirosyan
+    and Colbourn 2006), or "certificate + fusing" (that array with symbols
+    fused, Lemma 3.1 of Colbourn, Keri, Rivas Soriano and Schlage-Puchta
+    2010). None for rows of other tiers."""
+    if r["tier"] != "VERIFIED":
+        return None
+    st = r.get("verify_stamp") or ""
+    if st.startswith(("repcheck ", "repcheck_pp ")):
+        return "certificate + fusing" if "fused" in st else "certificate"
+    return "direct"
+
+
+def counted(rows, methods=None):
     """The rows that count as best known: tier CITED or VERIFIED, less every
     VERIFIED row that a RETRACTED row names (same t, v, k, N and array_sha256).
-    This is the one definition; tools/consistency.py, tools/check_submission.py
-    and tools/render_table.py import it, and ca_table.R mirrors it."""
+    With methods (a subset of METHODS), only VERIFIED rows checked by one of
+    those methods count; for example methods=("direct",) counts only arrays
+    checked directly. The default counts them all. This is the one
+    definition; tools/consistency.py, tools/check_submission.py and
+    tools/render_table.py import it, and ca_table.R mirrors it."""
     gone = {_key(r) for r in rows if r["tier"] == "RETRACTED"}
     return [r for r in rows if r["tier"] in COUNTED_TIERS
-            and not (r["tier"] == "VERIFIED" and _key(r) in gone)]
+            and not (r["tier"] == "VERIFIED" and _key(r) in gone)
+            and not (methods is not None and r["tier"] == "VERIFIED"
+                     and check_method(r) not in methods)]
 
 
 def evidence(rows):
     return counted(rows)
 
-def best(rows, t, v, k):
-    cand = [int(float(r["N"])) for r in evidence(rows)
+def best(rows, t, v, k, methods=None):
+    cand = [int(float(r["N"])) for r in counted(rows, methods)
             if int(r["t"]) == t and int(r["v"]) == v and int(r["k"]) >= k]
     return min(cand) if cand else None
 

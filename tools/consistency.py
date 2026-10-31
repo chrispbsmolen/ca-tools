@@ -28,7 +28,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "table"))
-from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
+from ca_table import counted, check_method, METHODS  # noqa: E402  (the one definition of the counted rows)
 
 TABLE = "table/ca_table.csv"
 MANIFEST = "table/MANIFEST.csv"
@@ -122,7 +122,8 @@ def counts(rows, man):
         elif kb < ka:
             worse += 1
     latest = max(r["entered"] for r in rows if DATE.match(r["entered"]))
-    return dict(rows=len(rows), tiers=tiers, arrays=len(man), status=status,
+    methods = collections.Counter(check_method(r) for r in rows if r["tier"] == "VERIFIED")
+    return dict(methods=methods, rows=len(rows), tiers=tiers, arrays=len(man), status=status,
                 nofile=len(nofile), nofile_src=nofile_src, nofile_above=nofile_above,
                 points=sum(1 for r in rows if r["source_id"] == "S1"), smaller_n=smaller_n, more_k=more_k, worse=worse,
                 latest=latest)
@@ -152,6 +153,8 @@ def block(c):
                                                    "through the submission check"),
                                     ("screened", "screened, not verified in full"))
                    if c["status"][st])),
+        "- VERIFIED rows by how they were checked: %s" % ", ".join(
+            "%s %s" % (m, fmt(c["methods"][m])) for m in METHODS if c["methods"][m]),
         "- VERIFIED rows without a stored array: %s (%s), %s of them above the best "
         "known size" % (fmt(c["nofile"]), src, fmt(c["nofile_above"])),
         "- against the frozen tables at their %s points, the lookups over CITED and "
@@ -367,9 +370,13 @@ def check_certificates(rows):
     listed = collections.Counter(c["file"] for c in certs)
     for f in sorted(files - set(listed)):
         problem("%s/%s is not listed in %s" % (CERTS, f, CERT_LIST))
+    plain = collections.Counter(c["file"] for c in certs if "fused" not in c["family"])
     for c in certs:
-        if listed[c["file"]] > 1:
-            problem("%s: %s listed more than once" % (CERT_LIST, c["file"]))
+        # a certificate may be listed again for an array derived from it by
+        # fusing symbols (family "... fused ..."), never twice as itself
+        if plain[c["file"]] > 1 or ("fused" in c["family"] and plain[c["file"]] != 1):
+            problem("%s: %s listed more than once as itself, or a fused listing without its own"
+                    % (CERT_LIST, c["file"]))
         path = os.path.join(CERTS, c["file"])
         if not os.path.exists(path):
             problem("%s: %s is listed but not in %s/" % (CERT_LIST, c["file"], CERTS))

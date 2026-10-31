@@ -88,3 +88,10 @@ CPHF(15; 7381, 9, 5), CA(885721; 5, 7381, 9)   stage C, t=5 q=9 m=7381 s=1, n0=1
     (the first run, started with the batch, was stopped after 6016 s once the GPU check had passed, and rerun after round 1)
   sample: 2 x 10^7 covered
   ./cphf_tools_pp expand ... 5 9 (to a fifo, sha256, cloud): a09b7c1287e0ede9c0b103fe0724e9b97c80c8a2634ca829674418ab26703a5b
+
+CA(249985; 6, 781, 4) from CPHF_16_781_5_6 by fusing symbol 4 into 0   2026-10-31, cloud workspace
+  ./cphf_tools_pp expand CPHF_16_781_5_6.txt 6 5 fifo, piped through sed 's/4/0/g' (expand alone
+  gives sha256 346d7a6c..., the stage A row): fused array 249985 rows x 781 columns, 390,476,570 bytes,
+  sha256 1dac7c073b3160fdc47260eb8e824278f266bbdf81daf37db7208542b90e5d62
+  samplecheck (living_table/item73_fused/samplecheck.c) 300,000 random 6-sets, seed 7: uncovered 0, 126 s
+

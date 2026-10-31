@@ -15,17 +15,31 @@ load_ca_table <- function(path = "ca_table.csv") {
 ## the rows that count as best known: tier CITED or VERIFIED, less every
 ## VERIFIED row that a RETRACTED row names (same t, v, k, N and
 ## array_sha256). Mirrors counted() in ca_table.py, the one definition.
-counted_rows <- function(tab) {
+## how a VERIFIED row was checked, from its stamp: "direct",
+## "certificate" or "certificate + fusing" (NA for other tiers); mirrors
+## check_method() in ca_table.py
+check_method <- function(tab) {
+    cert <- grepl("^repcheck(_pp)? ", tab$verify_stamp)
+    ifelse(tab$tier != "VERIFIED", NA_character_,
+           ifelse(cert & grepl("fused", tab$verify_stamp), "certificate + fusing",
+                  ifelse(cert, "certificate", "direct")))
+}
+## methods = NULL counts every VERIFIED row; for example
+## methods = "direct" counts only arrays checked directly
+counted_rows <- function(tab, methods = NULL) {
     key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256)
     r <- tab[tab$tier == "RETRACTED", ]
-    tab[tab$tier %in% c("CITED", "VERIFIED") &
-        !(tab$tier == "VERIFIED" & key(tab) %in% key(r)), ]
+    keep <- tab$tier %in% c("CITED", "VERIFIED") &
+        !(tab$tier == "VERIFIED" & key(tab) %in% key(r))
+    if (!is.null(methods))
+        keep <- keep & !(tab$tier == "VERIFIED" & !(check_method(tab) %in% methods))
+    tab[keep, ]
 }
 
 ## stair-step best known N: smallest N among the counted rows whose k
 ## reaches at least the requested k
-best_known <- function(tab, t, v, k) {
-    s <- counted_rows(tab)
+best_known <- function(tab, t, v, k, methods = NULL) {
+    s <- counted_rows(tab, methods)
     s <- s[s$t == t & s$v == v & s$k >= k, ]
     if (nrow(s) == 0) return(NA_real_)
     min(s$N)

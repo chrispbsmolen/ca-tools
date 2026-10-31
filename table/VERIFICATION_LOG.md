@@ -526,3 +526,18 @@ GPU (symmetry certificate and all 123,498,324,283,005 representative 5-sets, unc
 exactly by `../tools/cphf/repcheck_pp.c` (uncovered 0, 63,866 s, 12 threads), and its expanded array was
 sampled on 2 x 10^7 random 5-sets (uncovered 0). `array_sha256` is the hash of the 13.1 GB array that
 `cphf_tools_pp.c expand` writes from the family (computed in the cloud workspace, 2026-10-30).
+
+## CA(249985; 6, 781, 4) by fusing the CA(249985; 6, 781, 5) of a certificate, 2026-10-31
+
+One S8 row, check method "certificate + fusing" (README.md, tier VERIFIED). The family
+`certificates/CPHF_16_781_5_6.txt`, checked exactly on 2026-10-28 by `../tools/cphf/repcheck_pp.c`
+and again by `../tools/cphf/gpu/cphfcheck_metal.m` (2,375,270,917,656 representative 6-sets,
+uncovered 0, both), expands to a CA(249985; 6, 781, 5). Writing symbol 4 as 0 in every column gives
+a CA(249985; 6, 781, 4): every 6-tuple over 0..3 is the image of one over 0..4, which the array
+covers (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1). The fused array was
+built in the cloud workspace (`cphf_tools_pp expand` piped through the substitution, 390,476,570
+bytes, sha256 1dac7c07..., which is the row's `array_sha256`) and spot-checked directly on 300,000
+random sets of 6 columns, seed 7: every one of the 4096 tuples was present in every set; as a
+control, the first 50,000 rows alone missed tuples in one of 200 sets. The table had 265607 to
+381360 at k = 411 to 781 (`CERTIFICATES.csv` lists the family a second time for this row).
+
