@@ -143,7 +143,9 @@ and results of other authors should be cited to them.
 ## Status and license
 
 Early version, offered to the community; suggestions and corrections
-welcome. The code is under the MIT license (LICENSE), except r/cafast
+welcome, as a GitHub issue or by email to the maintainer, Christopher
+Smolen (independent researcher, ORCID 0009-0002-9537-7961),
+chrispbsmolen@gmail.com. The code is under the MIT license (LICENSE), except r/cafast
 and r/countkernel, which follow code of the CAs package (GPL-3, by Ulrike
 Groemping) closely and are under GPL (>= 3), with her agreement to the
 "or later" terms. The table data in table/ is not original

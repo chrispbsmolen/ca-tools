@@ -245,6 +245,16 @@ write access to your fork.
    built by this project are. An array derived from someone else's
    published array must name that array in `source_detail`, and it is
    stored only if its source allows redistribution.
+5. Real names. Credit goes to real people by their real names, as it
+   did in the tables this one continues. Every submission names the
+   person or people responsible, each with an email address where the
+   maintainer can reach them and an affiliation ("Independent
+   researcher" is an affiliation), in the pull request text or sent to
+   the maintainer at chrispbsmolen@gmail.com. An ORCID iD is welcome
+   and is listed when given. An organization or an AI system may be
+   named alongside a person, never instead of one. Pseudonymous credit
+   arranged before 2026-10-31 stays as it was; it is not available for
+   new submissions.
 
 ## Checking locally before you submit
 

@@ -22,6 +22,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Consistency (and append-only against the target branch)
-        run: python3 tools/consistency.py --check --pr --base "origin/${{ github.base_ref || 'main' }}"
+        # compare with the base the pull request was tested against (its base
+        # commit), not with the newest main, which may have moved on since
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base="$PR_BASE"
+          [ -n "$base" ] || base=$(git merge-base HEAD origin/main)
+          python3 tools/consistency.py --check --pr --base "$base"
       - name: Self-test
         run: python3 tools/check_submission.py --selftest --table-dir table > /dev/null
