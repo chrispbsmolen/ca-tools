@@ -136,7 +136,8 @@ Cite the repository, https://github.com/chrispbsmolen/ca-tools, with the
 commit you used, and for the arrays from cyclic covering perfect hash
 families the report: C. Smolen, Cyclic covering perfect hash families: new
 covering arrays of strength five and six with exact certificates, Zenodo,
-doi:10.5281/zenodo.23751688. Each row of the table names its own source,
+doi:10.5281/zenodo.23751687 (all versions; the latest version also lists
+arrays added after it was first published). Each row of the table names its own source,
 and results of other authors should be cited to them.
 
 ## Status and license

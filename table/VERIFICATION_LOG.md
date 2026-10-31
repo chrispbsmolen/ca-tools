@@ -514,3 +514,15 @@ orbits) and rejected a family with one changed entry (`gpu/gpu_cphf_test.sh`, al
 four older certificates were checked again by it too, with the same result (RUNS.txt). `array_sha256` of
 each row is the hash of the array that `cphf_tools_pp.c expand` writes from the family (computed in the
 cloud workspace, 2026-10-29).
+
+## CA(885721; 5, 7381, 9) from a cyclic CPHF, 2026-10-31
+
+One S8 row, given by the certificate `certificates/CPHF_15_7381_9_5.txt` (no array file), found by stage C
+of the same batch of `../tools/cphf/symcphf_pp.c` on the maintainer's MacBook Pro (Apple M4 Max, 14
+threads), 2026-10-29 to 2026-10-30 (`../tools/cphf/RUNS.txt`): CPHF(15; 7381, 9, 5), one column orbit of
+length 7381, every row a Singer cycle of PGL(5, 9). The snapshot had 3129544 at k = 7381 and 2060042 to
+3129544 at k = 1211 to 7380. The family was checked first by `../tools/cphf/gpu/cphfcheck_metal.m` on the
+GPU (symmetry certificate and all 123,498,324,283,005 representative 5-sets, uncovered 0, 5952.4 s), then
+exactly by `../tools/cphf/repcheck_pp.c` (uncovered 0, 63,866 s, 12 threads), and its expanded array was
+sampled on 2 x 10^7 random 5-sets (uncovered 0). `array_sha256` is the hash of the 13.1 GB array that
+`cphf_tools_pp.c expand` writes from the family (computed in the cloud workspace, 2026-10-30).
