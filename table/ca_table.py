@@ -10,7 +10,11 @@ superseded by a later resolution row), SCREENED (an array screened on
 column windows, not counted), DISPUTED (since 2026-10-23: an added row
 beside a CITED row whose cited construction, as implemented and checked,
 did not give a covering array at the recorded size; not counted, and the CITED row it
-disputes is still counted). Stair-step semantics: a row (t, v, k, N) means N runs
+disputes is still counted), RETRACTED (since 2026-10-31: an added row beside a
+VERIFIED or SCREENED row, same t, v, k, N and array_sha256, saying that row was
+found wrong; not counted, and the row it retracts is no longer counted either).
+Which rows count is defined once, in counted() below; the other tools import it.
+Stair-step semantics: a row (t, v, k, N) means N runs
 suffice for up to k columns.
 
 Usage:
@@ -27,8 +31,25 @@ def load():
     with open(DATA, newline="", encoding="utf-8") as f:
         return [r for r in csv.DictReader(f)]
 
+COUNTED_TIERS = ("CITED", "VERIFIED")
+
+
+def _key(r):
+    return (str(r["t"]), str(r["v"]), str(r["k"]), str(r["N"]), r["array_sha256"])
+
+
+def counted(rows):
+    """The rows that count as best known: tier CITED or VERIFIED, less every
+    VERIFIED row that a RETRACTED row names (same t, v, k, N and array_sha256).
+    This is the one definition; tools/consistency.py, tools/check_submission.py
+    and tools/render_table.py import it, and ca_table.R mirrors it."""
+    gone = {_key(r) for r in rows if r["tier"] == "RETRACTED"}
+    return [r for r in rows if r["tier"] in COUNTED_TIERS
+            and not (r["tier"] == "VERIFIED" and _key(r) in gone)]
+
+
 def evidence(rows):
-    return [r for r in rows if r["tier"] in ("CITED", "VERIFIED")]
+    return counted(rows)
 
 def best(rows, t, v, k):
     cand = [int(float(r["N"])) for r in evidence(rows)

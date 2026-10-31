@@ -92,7 +92,11 @@ jobs:
         run: python3 tools/render_table.py --table-dir table --out docs/index.html --date "$(date -u +%F)"
       - name: Check (consistency and self-test)
         run: |
-          python3 tools/consistency.py --check
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            python3 tools/consistency.py --check --base "$BEFORE"
+          else
+            python3 tools/consistency.py --check
+          fi
           python3 tools/check_submission.py --selftest --table-dir table > /dev/null
       - name: Commit what changed
         run: |

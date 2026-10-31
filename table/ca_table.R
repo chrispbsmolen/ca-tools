@@ -12,11 +12,21 @@ load_ca_table <- function(path = "ca_table.csv") {
     tab
 }
 
-## stair-step best known N: smallest N among evidence rows (CITED or
-## VERIFIED) whose k reaches at least the requested k
+## the rows that count as best known: tier CITED or VERIFIED, less every
+## VERIFIED row that a RETRACTED row names (same t, v, k, N and
+## array_sha256). Mirrors counted() in ca_table.py, the one definition.
+counted_rows <- function(tab) {
+    key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256)
+    r <- tab[tab$tier == "RETRACTED", ]
+    tab[tab$tier %in% c("CITED", "VERIFIED") &
+        !(tab$tier == "VERIFIED" & key(tab) %in% key(r)), ]
+}
+
+## stair-step best known N: smallest N among the counted rows whose k
+## reaches at least the requested k
 best_known <- function(tab, t, v, k) {
-    s <- tab[tab$tier %in% c("CITED", "VERIFIED") &
-             tab$t == t & tab$v == v & tab$k >= k, ]
+    s <- counted_rows(tab)
+    s <- s[s$t == t & s$v == v & s$k >= k, ]
     if (nrow(s) == 0) return(NA_real_)
     min(s$N)
 }

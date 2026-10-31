@@ -82,10 +82,11 @@ the array files and these documents agree.
   lists each file with its SHA-256, the SHA-256 of the array it expands
   to (the `array_sha256` of its table row) and the exact check that
   `../tools/cphf/repcheck.c` or `../tools/cphf/repcheck_pp.c` made of
-  it. The first are CA(40613; 5, 781,
-  5) and CA(218479; 5, 2801, 7), 63 MB and about 1.2 GB as text, whose
-  families are 49 KB and 196 KB; `../tools/cphf/README.md` says how to
-  rebuild and recheck them.
+  it. The first two were CA(40613; 5, 781, 5) and
+  CA(218479; 5, 2801, 7), 63 MB and about 1.2 GB as text, whose
+  families are 49 KB and 196 KB; `certificates/CERTIFICATES.csv` lists
+  them all, and `../tools/cphf/README.md` says how to rebuild and
+  recheck them.
 - `MANIFEST.csv` - one row per array file: parameters, status,
   SHA-256 of the canonical file content, retrieval recipe,
   verification stamp, and `constant_rows` (added 2026-10-20): the
@@ -196,6 +197,16 @@ v symbols". `tier` is the evidence class:
   reached. The first three, entered 2026-10-23, are the cyclotomy
   entries CAN(3, 128, 6), CAN(3, 2162, 20) and CAN(3, 2312, 21)
   (VERIFICATION_LOG.md).
+- `RETRACTED` (defined 2026-10-31) - a VERIFIED or SCREENED row found
+  wrong after it was entered, for example an array a later check shows
+  is not covering, or a stamp from a faulty verifier build. It is
+  recorded as an added row with the same t, v, k, N and `array_sha256`
+  as the row it retracts, and notes saying what was found and how. The
+  retracted row stays in the file, unchanged, but no longer counts as
+  best known, so the lookups below drop it at once. Anyone can raise a
+  suspected error by opening an issue with a check that fails;
+  `../tools/consistency.py` requires that a RETRACTED row matches
+  exactly one VERIFIED or SCREENED row and has notes.
 
 `source_id` names the source class (S1 Colbourn snapshot, S4 NIST
 covering array library, S5 Dwyer CA_Database, S6 the CAs package's
@@ -245,17 +256,27 @@ that to this paragraph.
 The CSV at
 https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv
 is the whole table, always current, and the only interface. There is
-no separate API. The stair-step rule gives the best known N at
-(t, v, k) as the smallest N among rows with tier CITED or VERIFIED,
-the same t and v, and k at least the requested k. In R, with no
-packages:
+no separate API. The rows that count as best known are the rows of
+tier CITED or VERIFIED, less any VERIFIED row that a RETRACTED row
+names (same t, v, k, N and `array_sha256`). This is defined once, by
+`counted()` in `ca_table.py`, which the tools in `../tools/` import,
+and mirrored by `counted_rows()` in `ca_table.R`. The stair-step rule
+gives the best known N at (t, v, k) as the smallest N among the
+counted rows with the same t and v and k at least the requested k. In
+R, with no packages:
 
     tab <- read.csv("https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv",
                     stringsAsFactors = FALSE)
     tab$N <- as.numeric(tab$N)
+    counted_rows <- function(tab) {
+        key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256)
+        r <- tab[tab$tier == "RETRACTED", ]
+        tab[tab$tier %in% c("CITED", "VERIFIED") &
+            !(tab$tier == "VERIFIED" & key(tab) %in% key(r)), ]
+    }
     best_known <- function(tab, t, v, k) {
-        s <- tab[tab$tier %in% c("CITED", "VERIFIED") &
-                 tab$t == t & tab$v == v & tab$k >= k, ]
+        s <- counted_rows(tab)
+        s <- s[s$t == t & s$v == v & s$k >= k, ]
         if (nrow(s) == 0) NA_real_ else min(s$N)
     }
     best_known(tab, 3, 13, 197)   # 6422 as of 2026-10-18 (Bergeron)
@@ -266,8 +287,8 @@ SCREENED rows are listed but excluded from best known on purpose. When
 a screened array is later verified in full, it gets a new VERIFIED row
 with that machine's stamp, the SCREENED row stays in the file, and the
 page no longer shows it. Bergeron's three v = 19 arrays went this way
-on 2026-10-21, from full checks run on 2026-10-18. The file is about
-1.7 MB and grows by one row per accepted claim.
+on 2026-10-21, from full checks run on 2026-10-18. The file grows by
+one row per accepted claim.
 
 DISPUTED rows (since 2026-10-23) are listed and not counted, and the
 CITED row a DISPUTED row disputes is still counted, so the lookups
@@ -300,23 +321,23 @@ the same way. In R,
 with `tab` read as above:
 
     eCAN_table <- function(tab, t, k, v) {
-        s <- tab[tab$tier %in% c("CITED", "VERIFIED") &
-                 tab$t == t & tab$v == v & tab$k >= k, ]
+        s <- counted_rows(tab)
+        s <- s[s$t == t & s$v == v & s$k >= k, ]
         if (nrow(s) == 0) return(data.frame(CAN = NA, Source = ""))
         i <- which.min(s$N)
         data.frame(CAN = s$N[i], Source = s$construction[i])
     }
     eCAK_table <- function(tab, t, N, v) {
-        s <- tab[tab$tier %in% c("CITED", "VERIFIED") &
-                 tab$t == t & tab$v == v & tab$N <= N, ]
+        s <- counted_rows(tab)
+        s <- s[s$t == t & s$v == v & s$N <= N, ]
         if (nrow(s) == 0) return(data.frame(CAK = NA, Source = ""))
         i <- which.max(s$k)
         data.frame(CAK = s$k[i], Source = s$construction[i])
     }
 
-The functions name the tiers they count. If another tier is added to
-the table later, it is documented here, and these lookups keep their
-meaning until a caller chooses to count it.
+The functions count exactly the rows `counted_rows()` returns. If
+another tier is added to the table later, it is documented here, and
+these lookups keep their meaning until a caller chooses to count it.
 
 The address above always serves the newest table, so the same call
 can return a smaller N next month. For a result that can be repeated,
@@ -329,7 +350,7 @@ its claims, so a fixed commit always reads the same. The newest
 commit is listed at
 https://api.github.com/repos/chrispbsmolen/ca-tools/commits/main
 (field `sha`). For use without a network, `ca_table.rda` holds the
-same table as an R data frame in about 80 KB and can travel inside a
+same table as an R data frame, small enough to travel inside a
 package, refreshed at each release.
 
 ## Querying
@@ -348,8 +369,11 @@ caverify package.
 The table is append-only in its claims: a row's t, v, k, N, tier,
 source_id, source_detail, snapshot_id, array_sha256, verify_stamp and
 entered are never changed, and a better N
-or a correction is a new row. Nine things have been written into
-existing rows since publication, all recorded here (dates as in the
+or a correction is a new row. Since 2026-10-31
+`../tools/consistency.py --base` enforces this on every pull request
+and every push to main (the free-text columns notes, lb, lb_evidence
+and construction may still be corrected in place). The things written
+into existing rows since publication are all recorded here (dates as in the
 commits, US Central time): on 2026-10-19 the new `construction` column
 was filled for rows that predate it (above; commits a1ad327 and
 597a5f7), and the notes of the 23 Bergeron rows lost a fragment that
@@ -418,7 +442,12 @@ derived again. The source classes are:
 - S5, the Dwyer CA_Database, explicit arrays cited by commit and path.
 - S6, data and constructions of the CAs package, cited by package
   version and generating call.
-- S7, the literature, cited by DOI or arXiv id (CITED, or VERIFIED
+- S7, the literature, cited by DOI or arXiv id: a peer-reviewed
+  paper, a preprint with a stable identifier such as an arXiv id, or a
+  thesis. A self-published deposit (for example a personal Zenodo
+  record) is not citable by itself: sizes from it enter only as arrays
+  through the submission check. When a later version of a paper
+  changes a value, a new row cites it and the old row stays (CITED, or VERIFIED
   when the paper or its supplement provides the array or, since
   2026-10-25, when the array is built here from the paper's
   construction by a script in `../tools/`), and community submissions,

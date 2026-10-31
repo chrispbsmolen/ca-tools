@@ -208,6 +208,32 @@ exactly as above: the check fetches your branch as data, reports on
 the pull request, and the rows are added after merge. Nothing needs
 write access to your fork.
 
+## Rules (since 2026-10-31)
+
+1. Say how the work was done. In the pull request text, name the tools
+   that found the arrays and wrote the claims and text, AI systems
+   included, and who takes responsibility for the submission. The
+   check decides whether an array is accepted, not the tools used, but
+   readers deserve to know.
+2. Arrays, not assertions. A claim is accepted only with an array the
+   check can verify, or a certificate the table can check with its own
+   tool. A proof, size or bound supported only by a description, or by
+   a model's statement, is not entered. Sizes from a self-published
+   deposit (for example a personal Zenodo record) enter only as arrays
+   through this check, not as cited rows (`../table/README.md`,
+   "Admissible sources").
+3. Certificates. A claim given by a certificate instead of a written
+   array is accepted only for a certificate type that the table can
+   check with its own independent tool. Today that is the cyclic
+   covering perfect hash families of `../tools/cphf/`. The pull
+   request check does not run those tools, so open an issue first;
+   other certificate types are declined until such a tool exists.
+4. Licence. By opening a pull request you confirm that you may release
+   the arrays and that you license them under CC BY 4.0, as the arrays
+   built by this project are. An array derived from someone else's
+   published array must name that array in `source_detail`, and it is
+   stored only if its source allows redistribution.
+
 ## Checking locally before you submit
 
 You can run the same check on your own machine with Python 3 and a C

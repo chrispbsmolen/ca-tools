@@ -10,6 +10,7 @@ suppressMessages(library(CAs))
 cat("CAs", as.character(packageVersion("CAs")), "\n")
 tab <- read.csv("table/ca_table.csv", stringsAsFactors = FALSE)
 tab$N <- as.numeric(tab$N)
+source("table/ca_table.R")   ## counted_rows(): the rows that count as best known
 cb <- colbournBigFrame
 cit <- tab[tab$tier == "CITED" & tab$source_id == "S1", ]
 cat("table rows", nrow(tab), " baseline (CITED, S1)", nrow(cit), " colbournBigFrame", nrow(cb), "\n")
@@ -17,12 +18,12 @@ same <- nrow(cit) == nrow(cb) && all(cit$t == cb$t & cit$v == cb$v & cit$k == cb
                                      cit$N == cb$N & cit$construction == cb$Source)
 cat("baseline rows equal colbournBigFrame row for row (Source = construction):", same, "\n")
 best_N <- function(tab, t, k, v) {
-    s <- tab[tab$tier %in% c("CITED", "VERIFIED") & tab$t == t & tab$v == v & tab$k >= k, ]
+    s <- counted_rows(tab); s <- s[s$t == t & s$v == v & s$k >= k, ]
     if (nrow(s) == 0) return(data.frame(CAN = NA, Source = ""))
     i <- which.min(s$N); data.frame(CAN = s$N[i], Source = s$construction[i])
 }
 best_k <- function(tab, t, N, v) {
-    s <- tab[tab$tier %in% c("CITED", "VERIFIED") & tab$t == t & tab$v == v & tab$N <= N, ]
+    s <- counted_rows(tab); s <- s[s$t == t & s$v == v & s$N <= N, ]
     if (nrow(s) == 0) return(data.frame(CAK = NA, Source = ""))
     i <- which.max(s$k); data.frame(CAK = s$k[i], Source = s$construction[i])
 }

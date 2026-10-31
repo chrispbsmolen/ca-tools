@@ -8,6 +8,10 @@
                                                   are not compared there)
     python3 tools/consistency.py --write          rewrite the generated counts block in
                                                   table/README.md from the data
+    --base REF (with --check)                     also check that the table is append-only
+                                                  against the git revision REF: every row
+                                                  there is still present, in the same
+                                                  place, with its claim unchanged
 
 Run from the repository root. Standard library only. The array files are
 re-hashed by `tools/check_submission.py --selftest`, which the workflows run
@@ -23,6 +27,9 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "table"))
+from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
+
 TABLE = "table/ca_table.csv"
 MANIFEST = "table/MANIFEST.csv"
 ARRAYS = "table/arrays"
@@ -35,7 +42,13 @@ HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id
           "construction"]
 MANIFEST_HEADER = ["file", "t", "v", "k", "N", "status", "sha256", "source_id",
                    "source_detail", "verify_stamp", "constant_rows"]
-TIERS = {"CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED"}
+TIERS = {"CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED", "RETRACTED"}
+# columns that state the claim and its evidence; once a row is in the table these
+# never change (append-only). The free-text columns may be corrected in place.
+FROZEN = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id", "array_sha256",
+          "verify_stamp", "entered"]
+MAX_FILE_BYTES = 50 * 1024 * 1024        # one array or certificate file
+MAX_STORE_BYTES = 800 * 1000 * 1000      # table/arrays and table/certificates together
 SOURCES = {"S1", "S4", "S5", "S6", "S7", "S8"}
 BASELINE_ROWS = 13641
 BASELINE_SNAPSHOT = "colbourn-2024-11-ug"
@@ -83,8 +96,8 @@ def counts(rows, man):
         key = (r["t"], r["v"])
         if r["tier"] == "CITED" and r["source_id"] == "S1":
             cited[key].append((int(r["k"]), num(r["N"])))
-        if r["tier"] in ("CITED", "VERIFIED"):
-            full[key].append((int(r["k"]), num(r["N"])))
+    for r in counted(rows):
+        full[(r["t"], r["v"])].append((int(r["k"]), num(r["N"])))
     nofile = [r for r in rows if r["tier"] == "VERIFIED" and r["array_sha256"] not in msha]
     nofile_src = collections.Counter(r["source_id"] for r in nofile)
     nofile_above = sum(1 for r in nofile
@@ -122,7 +135,8 @@ def fmt(n):
 def block(c):
     t = c["tiers"]
     tier_txt = ", ".join("%s %s" % (k, fmt(t[k])) for k in
-                         ("CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED") if t[k])
+                         ("CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED",
+                          "RETRACTED") if t[k])
     src = ", ".join("%s %s" % (k, fmt(v)) for k, v in sorted(c["nofile_src"].items()))
     lines = [
         BEGIN,
@@ -256,6 +270,81 @@ def check_disputed(rows, man):
         if not ok:
             problem("%s: %s is above_snapshot, but the snapshot's stair-step value at its t, v, k is "
                     "not a disputed row smaller than it" % (MANIFEST, m["file"]))
+
+
+def check_retracted(rows):
+    """A RETRACTED row names exactly one VERIFIED or SCREENED row by t, v, k, N and
+    array_sha256, is not from the baseline, and says in its notes what was found."""
+    targets = collections.Counter((r["t"], r["v"], r["k"], r["N"], r["array_sha256"])
+                                  for r in rows if r["tier"] in ("VERIFIED", "SCREENED"))
+    seen = collections.Counter()
+    for r in rows:
+        if r["tier"] != "RETRACTED":
+            continue
+        key = (r["t"], r["v"], r["k"], r["N"], r["array_sha256"])
+        seen[key] += 1
+        name = ",".join(key[:4])
+        if not HEX64.match(r["array_sha256"]):
+            problem("%s: RETRACTED row %s must give the array_sha256 of the row it retracts" % (TABLE, name))
+        elif targets[key] != 1:
+            problem("%s: RETRACTED row %s matches %d VERIFIED or SCREENED rows; it must match exactly one"
+                    % (TABLE, name, targets[key]))
+        if r["source_id"] == "S1":
+            problem("%s: RETRACTED row %s has source S1" % (TABLE, name))
+        if not r["notes"].strip():
+            problem("%s: RETRACTED row %s needs notes saying what was found and how" % (TABLE, name))
+    for key, n in seen.items():
+        if n > 1:
+            problem("%s: %d RETRACTED rows for %s; one is enough" % (TABLE, n, ",".join(key[:4])))
+
+
+def check_sizes():
+    """No stored array or certificate file above MAX_FILE_BYTES, and the store as a
+    whole under MAX_STORE_BYTES (GitHub refuses files over 100 MB and slows down
+    well before 1 GB; larger arrays go to the Zenodo release archive)."""
+    total = 0
+    for d in (ARRAYS, CERTS):
+        for name in sorted(os.listdir(d)):
+            path = os.path.join(d, name)
+            if not os.path.isfile(path):
+                continue
+            size = os.path.getsize(path)
+            total += size
+            if size > MAX_FILE_BYTES:
+                problem("%s is %.1f MiB; files above %d MiB go to the release archive, not the repository"
+                        % (path, size / 1048576, MAX_FILE_BYTES // 1048576))
+    if total > MAX_STORE_BYTES:
+        problem("%s and %s hold %.0f MB together, above the limit of %d MB; move the largest arrays "
+                "to the release archive" % (ARRAYS, CERTS, total / 1e6, MAX_STORE_BYTES // 1000000))
+    return total
+
+
+def check_append_only(base):
+    """Every row of the table at git revision `base` is still there, in the same
+    position, with the same FROZEN columns; new rows are only appended."""
+    try:
+        old = subprocess.run(["git", "show", "%s:%s" % (base, TABLE)], stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, check=True).stdout.decode("utf-8")
+    except (subprocess.CalledProcessError, OSError) as e:
+        problem("append-only check: cannot read %s at %s (%s)" % (TABLE, base,
+                getattr(e, "stderr", b"").decode("utf-8", "replace").strip() or e))
+        return 0
+    old_rows = list(csv.DictReader(old.splitlines()))
+    new_rows = list(csv.DictReader(open(TABLE, newline="", encoding="utf-8")))
+    if len(new_rows) < len(old_rows):
+        problem("%s has %d rows, fewer than the %d at %s; rows are never removed"
+                % (TABLE, len(new_rows), len(old_rows), base))
+    changed = 0
+    for i, (a, b) in enumerate(zip(old_rows, new_rows), 2):
+        diff = [c for c in FROZEN if a.get(c) != b.get(c)]
+        if diff:
+            changed += 1
+            if changed <= 20:
+                problem("%s line %d: %s changed since %s; rows are append-only (a correction is a new row)"
+                        % (TABLE, i, ", ".join(diff), base))
+    if changed > 20:
+        problem("%s: %d existing rows changed since %s in all" % (TABLE, changed, base))
+    return len(new_rows) - len(old_rows)
 
 
 def check_certificates(rows):
@@ -413,7 +502,16 @@ def main():
     check_arrays(rows, man)
     check_certificates(rows)
     check_disputed(rows, man)
+    check_retracted(rows)
+    store = check_sizes()
     check_links()
+    if "--base" in args:
+        i = args.index("--base")
+        if i + 1 >= len(args) or not args[i + 1]:
+            problem("--base needs a git revision")
+        else:
+            added = check_append_only(args[i + 1])
+            print("append-only against %s: %d rows added" % (args[i + 1], added))
     if c["worse"]:
         problem("the CITED and VERIFIED lookups are worse than the frozen tables at %d points" % c["worse"])
     if "--pr" not in args:
@@ -424,7 +522,8 @@ def main():
                     % README)
     for p in problems:
         print("PROBLEM  " + p)
-    print("consistency: %d rows, %d arrays, %d problems" % (c["rows"], c["arrays"], len(problems)))
+    print("consistency: %d rows, %d arrays, %.0f MB stored, %d problems"
+          % (c["rows"], c["arrays"], store / 1e6, len(problems)))
     return 1 if problems else 0
 
 

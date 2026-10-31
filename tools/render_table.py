@@ -17,8 +17,11 @@ import datetime
 import html
 import os
 import re
+import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, "table"))
+from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
 REPO_URL = "https://github.com/chrispbsmolen/ca-tools"
 RAW_CSV = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv"
 
@@ -261,8 +264,9 @@ LEGEND = [
 
 
 def stair(rows_tv):
-    """Rungs (N, k_from, k_to, evidence rows) from CITED and VERIFIED rows."""
-    ev = [r for r in rows_tv if r["tier"] in ("CITED", "VERIFIED")]
+    """Rungs (N, k_from, k_to, evidence rows) from the counted rows (CITED and
+    VERIFIED, less retracted rows; table/ca_table.py counted())."""
+    ev = counted(rows_tv)
     pairs = sorted({(r["N"], r["k"]) for r in ev})
     rungs, bestk = [], (rows_tv[0]["t"] - 1 if rows_tv else 0)
     for n, k in pairs:

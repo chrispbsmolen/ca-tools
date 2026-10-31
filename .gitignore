@@ -10,3 +10,4 @@ r/cafast/src/*.so
 workflows_to_install/
 /ca_verify
 tools/constant_rows
+__pycache__/

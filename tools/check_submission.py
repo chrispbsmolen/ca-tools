@@ -43,6 +43,8 @@ import tempfile
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, "table"))
+from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
 
 CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "construction",
                  "credit", "notes"]
@@ -182,12 +184,11 @@ def load_table(table_dir):
 
 
 def best_known(rows, t, v, k):
-    """Stair-step lookup over CITED and VERIFIED rows: the minimum N over
-    rows with the same t and v and k' >= k. Returns (N, row) or (None, None)."""
+    """Stair-step lookup over the counted rows (table/ca_table.py counted():
+    CITED and VERIFIED, less retracted rows): the minimum N over rows with the
+    same t and v and k' >= k. Returns (N, row) or (None, None)."""
     best, best_row = None, None
-    for r in rows:
-        if r["tier"] not in ("CITED", "VERIFIED"):
-            continue
+    for r in counted(rows):
         if int(r["t"]) != t or int(r["v"]) != v or int(r["k"]) < k:
             continue
         n = int(float(r["N"]))
