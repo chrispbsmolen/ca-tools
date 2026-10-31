@@ -1,9 +1,15 @@
-# After every push to main: regenerate the R data file and the generated
-# counts in table/README.md from table/ca_table.csv, rebuild the page
-# docs/index.html (served by GitHub Pages from docs/ on main), run the
-# consistency checks and the self-test, and commit what changed. If a check
-# fails the run turns red, GitHub emails the person who pushed, and nothing
-# is committed.
+# After every push to main: add the table rows of any submission merged in
+# this push (submissions/<slug>/claims.csv added since the previous commit),
+# checking each submission again against the table at that moment;
+# regenerate the R data file and the generated counts in table/README.md
+# from table/ca_table.csv, rebuild the page docs/index.html (served by
+# GitHub Pages from docs/ on main), run the consistency checks and the
+# self-test, and commit what changed. Runs never overlap (concurrency
+# group), and each starts from the newest main, so submissions are added
+# one at a time and their rows never collide. A submission that no longer
+# passes is not added; its pull request gets the report as a comment. If a
+# check fails the run turns red, GitHub emails the person who pushed, and
+# nothing is committed.
 
 name: Table page
 
@@ -14,16 +20,66 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: table-page
   cancel-in-progress: false
 
+env:
+  # GitHub-hosted runner: 2 cores, 6 hour job limit.
+  THREADS: "2"
+  BUDGET_MINUTES: "15"          # per array
+  TOTAL_BUDGET_MINUTES: "300"   # all submissions in this push
+  SCREEN_THRESHOLD: "1e10"
+  GH_TOKEN: ${{ github.token }}
+  BEFORE: ${{ github.event.before }}
+
 jobs:
   render:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Add the rows of submissions merged in this push
+        run: |
+          : > applied.txt
+          if [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "No previous commit to compare with (manual run or new branch): no submission is added."
+            exit 0
+          fi
+          slugs=$(git diff --name-only --diff-filter=A "$BEFORE" "$GITHUB_SHA" -- 'submissions/*/claims.csv' |
+                  sed -n 's#^submissions/\([A-Za-z0-9._-]*\)/claims\.csv$#\1#p' | grep -v '^example$' | sort -u)
+          [ -n "$slugs" ] || { echo "No new submission in this push."; exit 0; }
+          cc -O3 -pthread -o ca_verify ca_verify.c
+          cc -O2 -o tools/constant_rows tools/constant_rows.c
+          pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" --jq '.[0].number' 2>/dev/null || true)
+          case "$pr" in ''|*[!0-9]*) pr="" ;; esac
+          stamp=$(git rev-parse --short HEAD)
+          start=$(date +%s)
+          for slug in $slugs; do
+            left=$(( TOTAL_BUDGET_MINUTES - ($(date +%s) - start) / 60 ))
+            if python3 tools/check_submission.py "submissions/$slug" \
+                 --table-dir table --ca-verify ./ca_verify --threads "$THREADS" \
+                 --budget-minutes "$BUDGET_MINUTES" --total-budget-minutes "$left" \
+                 --screen-threshold "$SCREEN_THRESHOLD" --pr "${pr:-main}" --stamp-version "$stamp" \
+                 --out "out/$slug" --apply > /dev/null; then
+              echo "$slug" >> applied.txt
+              msg="Merged and added to the table: \`$slug\` (checked again on main at $stamp)."
+            else
+              echo "::warning::submission $slug did not pass on main and was not added; see the run summary"
+              msg="Merged, but \`$slug\` did not pass when checked again on main at $stamp, so nothing was added to the table. Report below."
+            fi
+            cat "out/$slug/report.md" >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$pr" ]; then
+              { echo "$msg"; echo; head -c 55000 "out/$slug/report.md"; } > c.md
+              gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body-file c.md || true
+            fi
+          done
+          rm -f ca_verify tools/constant_rows c.md
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: release
@@ -40,14 +96,18 @@ jobs:
           python3 tools/check_submission.py --selftest --table-dir table > /dev/null
       - name: Commit what changed
         run: |
-          git add docs/index.html table/README.md table/ca_table.rda
+          git add docs/index.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays
           if git diff --cached --quiet; then
             echo "Nothing changed."
             exit 0
           fi
           git config user.name "ca-table-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -q -m "Regenerate table page, counts and R data file"
+          if [ -s applied.txt ]; then
+            git commit -q -m "Add submissions $(tr '\n' ' ' < applied.txt)to the table (checked again on main); regenerate table page, counts and R data file"
+          else
+            git commit -q -m "Regenerate table page, counts and R data file"
+          fi
           for i in 1 2 3; do
             git pull --rebase -q && git push && exit 0
             sleep 10

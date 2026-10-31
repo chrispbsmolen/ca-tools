@@ -2,9 +2,9 @@
 
 This directory is how anyone adds an explicit covering array to the
 provenance table in `table/`. You open a pull request, the repository
-checks your arrays itself, and if they pass, the pull request gains
-the table rows that record them, with your credit. No maintainer has
-to look at the arrays for that to happen. The current table is
+checks your arrays itself and reports on the pull request, and when
+it is merged the table gains the rows that record them, with your
+credit. No maintainer has to look at the arrays for that to happen. The current table is
 published as a web page from `docs/index.html` (GitHub Pages, served
 from the `docs/` folder of `main` and regenerated on every push to
 `main`).
@@ -99,14 +99,22 @@ report gives a verdict for every claim, the reasons for any failure,
 the exact uncovered combination (columns and values) if the array is
 not covering, and timings.
 
-There are two outcomes. If every claim passes, the check appends one
-row per array to `table/ca_table.csv` and to `table/MANIFEST.csv`,
-adds the canonical array files to `table/arrays/`, and commits these
-changes to your pull request branch. A green check therefore means
-the pull request already contains its own table rows, and merging it
-needs nothing else. If any claim fails, the check fails, the comment
-says why, and nothing is added to the table. Fix the problem and push
-again; every push is checked afresh.
+There are two outcomes. If every claim passes, the check passes and
+the comment says so. Nothing is written to your branch. When the pull
+request is merged, the workflow `.github/workflows/table-page.yml` on
+the main branch runs the same check on your submission again, against
+the table as it is at that moment, and if every claim still passes it
+appends one row per array to `table/ca_table.csv` and to
+`table/MANIFEST.csv` and adds the canonical array files to
+`table/arrays/`. Merged submissions are added one at a time, each
+against the newest table, so two submissions can never overwrite or
+conflict with each other. The result is posted on the pull request.
+If a claim no longer passes at that point (for example because
+someone else's array with the same hash was added first), nothing of
+that submission is added and the comment says why. If any claim fails
+the check on the pull request, the check fails, the comment says why,
+and nothing is added. Fix the problem and push again; every push is
+checked afresh.
 
 A passing claim is classified against the table. `exceeds_table`
 means N is smaller than the current best known value, a new record.
@@ -195,15 +203,10 @@ hex digits of the hash are appended, as in `CA_9_2_4_3_9133df95.txt`.
 
 ## Pull requests from forks
 
-Most submitters will open the pull request from a fork. The check
-runs, comments and passes or fails exactly as above, but the
-workflow's token cannot push to a fork, so the table rows cannot be
-committed to your branch. In that case the comment says so and the
-rows, the canonical arrays and the updated table are attached to the
-workflow run as an artifact named `table-rows-pr-<number>`. The
-maintainer merges using that artifact. If you will submit often, ask
-for write access to a branch of this repository and open the pull
-request from there; then the rows are committed for you.
+Most submitters will open the pull request from a fork. That works
+exactly as above: the check fetches your branch as data, reports on
+the pull request, and the rows are added after merge. Nothing needs
+write access to your fork.
 
 ## Checking locally before you submit
 

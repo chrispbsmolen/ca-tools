@@ -2,12 +2,16 @@
 #
 # Runs on pull requests that touch submissions/**. It uses the
 # pull_request_target event so that it can comment on pull requests
-# from forks too. That event runs with a write token, so this workflow
-# never executes anything from the pull request: the tools, the
-# verifier and the table come from the base branch (checkout "base"),
-# and the pull request (checkout "pr") is only read as data. A pull request
-# from a fork is fetched with plain git (actions/checkout refuses fork code
-# under pull_request_target), still only read as data.
+# from forks too. This workflow never executes anything from the pull
+# request: the tools, the verifier and the table come from the base
+# branch (checkout "base"), and the pull request is fetched with plain
+# git from refs/pull/<n>/head into "pr" and only read as data
+# (actions/checkout refuses fork code under pull_request_target).
+#
+# The check only reports. It writes nothing to any branch, so it needs no
+# write access to the repository. The table rows are added after merge, by
+# table-page.yml on main, which checks the submission again against the
+# table at that moment (one submission at a time, so rows never collide).
 
 name: Verify submission
 
@@ -17,7 +21,7 @@ on:
     paths: ["submissions/**"]
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 concurrency:
@@ -32,7 +36,6 @@ env:
   SCREEN_THRESHOLD: "1e10"      # C(k,t) * v^t above this: screen instead
   PR: ${{ github.event.pull_request.number }}
   HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-  SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
   GH_TOKEN: ${{ github.token }}
 
 jobs:
@@ -46,21 +49,9 @@ jobs:
           path: base
           persist-credentials: false
 
-      - name: Check out the pull request branch (same repository only)
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        uses: actions/checkout@v4
-        with:
-          path: pr
-          ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.TABLE_BOT_TOKEN || github.token }}
-          persist-credentials: true
-
-      - name: Fetch the pull request from a fork (read as data only)
-        # actions/checkout refuses fork code under pull_request_target. This
-        # workflow never runs anything from the pull request, so the fork's
-        # files are fetched with plain git, from this repository's
-        # refs/pull/<n>/head, without credentials, and only read as data.
-        if: github.event.pull_request.head.repo.full_name != github.repository
+      - name: Fetch the pull request (read as data only)
+        # Plain git, from this repository's refs/pull/<n>/head, without
+        # credentials. The same for branches of this repository and forks.
         run: |
           git init -q pr
           git -C pr fetch -q --depth=1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "refs/pull/$PR/head"
@@ -83,18 +74,11 @@ jobs:
           gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --jq '.[].filename' > changed.txt
           : > comment.md
           # A submission may only add files under submissions/<slug>/. The
-          # table/ paths are allowed only on a branch of this repository,
-          # where the check's own commit of the rows lives on the branch
-          # (changed.txt is the pull request's diff against the base, so a
-          # fork that is merely behind main does not show table/ here); a
-          # fork cannot receive that commit, so a fork touching table/ is a
-          # change nobody checked. submissions/README.md and the example
-          # are documentation, not a submission.
-          if [ "$SAME_REPO" = "true" ]; then
-            bad=$(grep -v -E '^(submissions/[^/]+/|table/)' changed.txt || true)
-          else
-            bad=$(grep -v -E '^submissions/[^/]+/' changed.txt || true)
-          fi
+          # table rows are added after merge (table-page.yml), so a pull
+          # request that changes table/ or anything else is a change nobody
+          # checked. submissions/README.md and the example are
+          # documentation, not a submission.
+          bad=$(grep -v -E '^submissions/[^/]+/' changed.txt || true)
           bad=$(echo "$bad" | sed '/^$/d')
           if grep -q -E '^submissions/(README\.md|example/)' changed.txt; then
             bad="$bad"$'\n'"$(grep -E '^submissions/(README\.md|example/)' changed.txt)"
@@ -116,7 +100,6 @@ jobs:
 
       - name: Check each submission
         run: |
-          cp -r base/table work-table
           stamp=$(git -C base rev-parse --short HEAD)
           start=$(date +%s)
           status=0
@@ -125,41 +108,19 @@ jobs:
           for slug in $SLUGS; do
             left=$(( TOTAL_BUDGET_MINUTES - ($(date +%s) - start) / 60 ))
             python3 base/tools/check_submission.py "pr/submissions/$slug" \
-              --table-dir work-table --ca-verify base/ca_verify --threads "$THREADS" \
+              --table-dir base/table --ca-verify base/ca_verify --threads "$THREADS" \
               --budget-minutes "$BUDGET_MINUTES" --total-budget-minutes "$left" \
               --screen-threshold "$SCREEN_THRESHOLD" --pr "$PR" --stamp-version "$stamp" \
-              --out "out/$slug" --apply || status=1
+              --out "out/$slug" || status=1
             cat "out/$slug/report.md" >> comment.md
           done
           echo "STATUS=$status" >> "$GITHUB_ENV"
 
-      - name: Put the table rows on the pull request
+      - name: Say what happens on merge
         if: env.STATUS == '0' && env.SLUGS != ''
         run: |
-          rm -rf pr/table && cp -r work-table pr/table
-          cd pr
-          git add -A table
-          if git diff --cached --quiet; then
-            echo "The pull request already contains exactly these table rows." >> ../comment.md
-          elif [ "$SAME_REPO" = "true" ]; then
-            git config user.name "ca-table-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -q -m "Record submission $SLUGS in the table (verified by ca_verify)"
-            git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
-            echo "The table rows and canonical arrays were committed to this branch as $(git rev-parse --short HEAD). Merging needs nothing else." >> ../comment.md
-          else
-            echo "FORK=1" >> "$GITHUB_ENV"
-            echo "This pull request comes from a fork, so the check cannot push to it. The rows and canonical arrays are attached to this workflow run as the artifact **table-rows-pr-$PR** ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). A maintainer merges with that artifact, or the submitter can resubmit from a branch of this repository." >> ../comment.md
-          fi
-
-      - name: Upload the rows (pull requests from forks)
-        if: env.FORK == '1'
-        uses: actions/upload-artifact@v4
-        with:
-          name: table-rows-pr-${{ github.event.pull_request.number }}
-          path: |
-            out/
-            work-table/
+          { echo
+            echo "Every claim passed. When this pull request is merged, the table workflow on main checks the submission again against the table at that moment and adds its rows, with the credit given in claims.csv. Nothing else is needed from you."; } >> comment.md
 
       - name: Comment on the pull request
         if: always()
