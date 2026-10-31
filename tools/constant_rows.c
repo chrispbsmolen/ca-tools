@@ -113,7 +113,8 @@ int main(int argc, char **argv) {
     deg = calloc(N, sizeof(int));
     size_t pcap = 1 << 16, np = 0; int *pairs = malloc(pcap * 2 * sizeof(int));
     for (int i = 0; i < N; i++) for (int j = i + 1; j < N; j++) if (disjoint(i, j)) {
-        if (np == pcap) { pcap *= 2; pairs = realloc(pairs, pcap * 2 * sizeof(int)); }
+        if (np == pcap) { pcap *= 2; pairs = realloc(pairs, pcap * 2 * sizeof(int));
+            if (!pairs) { fprintf(stderr, "constant_rows: out of memory (%zu disjoint pairs)\n", np); return 3; } }
         pairs[2 * np] = i; pairs[2 * np + 1] = j; np++; deg[i]++; deg[j]++; }
     adj = malloc(N * sizeof(int *));
     int *pool = malloc((np > 0 ? 2 * np : 1) * sizeof(int)); long long off = 0;

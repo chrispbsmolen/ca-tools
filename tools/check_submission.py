@@ -559,7 +559,7 @@ def check_claim(cl, ctx, deadline):
                                                      cr_budget) if cr_budget > 1 else None)
             cl["constant_rows_why"] = ("no constant_rows program (no C compiler?)"
                                        if ctx["constant_rows"] is None else
-                                       "over the time budget" if cl["constant_rows"] is None
+                                       "over the time or memory budget" if cl["constant_rows"] is None
                                        else "")
             cl["seconds"]["constant_rows"] = time.monotonic() - cr_start
         cl["passed"] = True
@@ -594,15 +594,30 @@ def constant_rows_binary():
     return exe if os.access(exe, os.X_OK) else None
 
 
+CONSTANT_ROWS_MAX_BYTES = 2 * 1024 ** 3   # memory limit of the constant_rows program
+
+
+def _limit_memory():
+    """Run in the child before exec: cap its address space, so that a large
+    array makes constant_rows fail cleanly instead of exhausting the
+    machine's memory (on the GitHub runner that kills the whole job)."""
+    try:
+        import resource
+        resource.setrlimit(resource.RLIMIT_AS, (CONSTANT_ROWS_MAX_BYTES, CONSTANT_ROWS_MAX_BYTES))
+    except (ImportError, ValueError, OSError):
+        pass
+
+
 def run_constant_rows(exe, path, v, timeout):
     """Returns the number of rows that can be made constant, or None when
-    the program is unavailable, fails, or runs out of its time budget."""
+    the program is unavailable, fails (for example at its memory limit,
+    CONSTANT_ROWS_MAX_BYTES), or runs out of its time budget."""
     if exe is None:
         return None
     try:
         p = subprocess.run([exe, path, str(v)], stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE, universal_newlines=True,
-                           timeout=max(1.0, timeout))
+                           timeout=max(1.0, timeout), preexec_fn=_limit_memory)
     except subprocess.TimeoutExpired:
         return None
     m = re.match(r"constant_rows (\d+) of", p.stdout)
