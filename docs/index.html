@@ -34,8 +34,8 @@ a { color: inherit; }
 <p>A covering array CA(N; t, k, v) is an N by k array over v symbols in which every choice of t columns shows every one of the v<sup>t</sup> value combinations in some row. This table records, for each strength t and alphabet size v, the smallest known N for each number of columns k, and says where every entry comes from. The baseline is the November 2024 status of Charles J. Colbourn's covering array tables as preserved by Ulrike Groemping in the CAs R package (tier CITED). Sizes published in papers and not in the snapshot are also tier CITED, each naming its paper (source S7, marked published), until an array is in hand. Entries with an explicit array in hand were checked exhaustively by a verifier and carry the array's SHA-256 and a stamp (tier VERIFIED). Arrays too large to check in full on the public runner were screened on random column windows (tier SCREENED); they are listed but do not count as best known. Where Colbourn's construction for an entry, as checked here, did not give a covering array at the recorded size, the entry stays as recorded and its rung is marked disputed (tier DISPUTED). Improvements are not yet propagated through recursive constructions: the propagation engine in <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/r/livingtable">r/livingtable</a> is run by hand and is not connected to submissions, so no entry here is derived by it.</p>
 <p>Rows are stair-steps: an entry (t, v, k, N) means N runs suffice for up to k columns, so the best known N at k is the smallest N among entries with at least k columns. The construction column names the construction or search that produced each entry, where it is known. For every array on file, constant rows is the largest number of its rows that can be made constant by permuting symbols within columns, a property that matters when the array is an ingredient of another construction. Anyone can add an array by pull request; see <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/submissions/README.md">how to submit</a>. The data is <a href="https://github.com/chrispbsmolen/ca-tools/tree/main/table">table/ in the repository</a>; the raw file <a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv">table/ca_table.csv</a> is the machine-readable form (see the README for the stair-step rule and an R snippet).</p>
 <ul class="stats">
-<li>table rows <b>14,450</b></li>
-<li>verified rows <b>648</b></li>
+<li>table rows <b>14,451</b></li>
+<li>verified rows <b>649</b></li>
 <li>rows cited from papers <b>152</b></li>
 <li>screened rows, not yet verified in full <b>0</b></li>
 <li>disputed entries <b>3</b></li>
@@ -8302,7 +8302,7 @@ a { color: inherit; }
 <tr><td class=n>9220 to 9411</td><td class=n>1990359</td><td class=ev>Power N-CT97^2+2</td></tr>
 <tr><td class=n>9412 to 10000</td><td class=n>1998514</td><td class=ev>perfect hash family9,11449,107T12</td></tr>
 </tbody></table></details>
-<details><summary>t = 5, v = 9: 103 rungs, 1 verified</summary>
+<details><summary>t = 5, v = 9: 59 rungs, 2 verified</summary>
 <table><thead><tr><th class=n>k</th><th class=n>N</th><th>evidence</th></tr></thead><tbody>
 <tr><td class=n>5 to 10</td><td class=n>59049</td><td class=ev>orthogonal array</td></tr>
 <tr><td class=n>11</td><td class=n>110808</td><td class=ev>extended OA (Colbourn)</td></tr>
@@ -8357,52 +8357,8 @@ a { color: inherit; }
 <tr><td class=n>691 to 755</td><td class=n>642897</td><td class=ev>4-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>756 to 818</td><td class=n>648729</td><td class=ev>3-Restricted SCPHF RE (CL)</td></tr>
 <tr><td class=n>819 to 1210</td><td class=n>767625</td><td class=ev><span class="tag ver">verified</span>Christopher Smolen; <i>cyclic covering perfect hash family CPHF(13; 1210, 9, 5) with ten column orbits of length 121 found here (tools/cphf/symcphf_pp.c, seed 1), every row&#x27;s matrix an element of GF(9^5) of projective order 121 (the Singer group of PG(4, 3) inside PG(4, 9)); CA(13(9^5 - 1) + 1; 5, 1210, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006</i>; tools/cphf, certificate table/certificates/CPHF_13_1210_9_5.txt (cyclic CPHF(13; 1210, 9, 5)); no array file<span class="stamp"><a href="https://github.com/chrispbsmolen/ca-tools/blob/main/tools/cphf/repcheck_pp.c">repcheck_pp 70c9baa00eea</a> 2026-10-28 Darwin-arm64 (CPHF certificate, exact) (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/CPHF_13_1210_9_5.txt">certificate</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 cb2bb1708723</span></td></tr>
-<tr><td class=n>1211 to 1225</td><td class=n>1946184</td><td class=ev>perfect hash family3,1225,818</td></tr>
-<tr><td class=n>1226 to 1258</td><td class=n>2060042</td><td class=ev>Martirosyan-Colbourn</td></tr>
-<tr><td class=n>1259 to 1344</td><td class=n>2066594</td><td class=ev>Martirosyan-Colbourn</td></tr>
-<tr><td class=n>1345 to 1380</td><td class=n>2112290</td><td class=ev>Martirosyan-Colbourn</td></tr>
-<tr><td class=n>1381 to 1419</td><td class=n>2112600</td><td class=ev>Power N-CT43^2T10</td></tr>
-<tr><td class=n>1420 to 1548</td><td class=n>2118432</td><td class=ev>Power N-CT43^2T7</td></tr>
-<tr><td class=n>1549 to 1634</td><td class=n>2124264</td><td class=ev>Power N-CT43^2T5</td></tr>
-<tr><td class=n>1635 to 1677</td><td class=n>2124912</td><td class=ev>Power N-CT43^2T4</td></tr>
-<tr><td class=n>1678 to 1849</td><td class=n>2125728</td><td class=ev>Power N-CT43^2</td></tr>
-<tr><td class=n>1850 to 1870</td><td class=n>2420744</td><td class=ev>perfect hash family4,3125,625T251</td></tr>
-<tr><td class=n>1871 to 2025</td><td class=n>2460128</td><td class=ev>perfect hash family4,3125,625T220</td></tr>
-<tr><td class=n>2026 to 2225</td><td class=n>2466680</td><td class=ev>perfect hash family4,3125,625T180</td></tr>
-<tr><td class=n>2226 to 2415</td><td class=n>2473232</td><td class=ev>perfect hash family4,3125,625T142</td></tr>
-<tr><td class=n>2416 to 2710</td><td class=n>2479064</td><td class=ev>perfect hash family4,3125,625T83</td></tr>
-<tr><td class=n>2711 to 2730</td><td class=n>2479712</td><td class=ev>perfect hash family4,3125,625T79</td></tr>
-<tr><td class=n>2731 to 2840</td><td class=n>2479784</td><td class=ev>perfect hash family4,3125,625T57</td></tr>
-<tr><td class=n>2841 to 3125</td><td class=n>2519168</td><td class=ev>perfect hash family4,3125,625</td></tr>
-<tr><td class=n>3126 to 3198</td><td class=n>2604672</td><td class=ev>Power N-CT71^2Arc(9)T20</td></tr>
-<tr><td class=n>3199 to 3446</td><td class=n>2611224</td><td class=ev>Power N-CT71^2Arc(9)T16</td></tr>
-<tr><td class=n>3447 to 3756</td><td class=n>2617056</td><td class=ev>Power N-CT71^2Arc(9)T11</td></tr>
-<tr><td class=n>3757 to 3818</td><td class=n>2617704</td><td class=ev>Power N-CT71^2Arc(9)T10</td></tr>
-<tr><td class=n>3819 to 3880</td><td class=n>2617776</td><td class=ev>Power N-CT71^2Arc(9)T9</td></tr>
-<tr><td class=n>3881 to 4314</td><td class=n>2617808</td><td class=ev>Power N-CT71^2Arc(9)T2</td></tr>
-<tr><td class=n>4315 to 4492</td><td class=n>2657160</td><td class=ev>Power N-CT67^2+3</td></tr>
-<tr><td class=n>4493 to 4501</td><td class=n>2696512</td><td class=ev>Power N-CT71^2Arc(8)</td></tr>
-<tr><td class=n>4502 to 4565</td><td class=n>2735864</td><td class=ev>Power N-CT71^2Arc(7)</td></tr>
-<tr><td class=n>4566 to 4630</td><td class=n>2775216</td><td class=ev>Power N-CT71^2Arc(6)</td></tr>
-<tr><td class=n>4631 to 4696</td><td class=n>2814568</td><td class=ev>Power N-CT71^2Arc(5)</td></tr>
-<tr><td class=n>4697 to 4763</td><td class=n>2853920</td><td class=ev>Power N-CT71^2Arc(4)</td></tr>
-<tr><td class=n>4764 to 4831</td><td class=n>2893272</td><td class=ev>Power N-CT71^2Arc(3)</td></tr>
-<tr><td class=n>4832 to 4900</td><td class=n>2932624</td><td class=ev>Power N-CT71^2T1T1</td></tr>
-<tr><td class=n>4901 to 5110</td><td class=n>2971976</td><td class=ev>Power N-CT73^2T3</td></tr>
-<tr><td class=n>5111 to 5329</td><td class=n>3011328</td><td class=ev>Power N-CT73^2</td></tr>
-<tr><td class=n>5330 to 5390</td><td class=n>3070256</td><td class=ev>Power N-CT79^2T9T2</td></tr>
-<tr><td class=n>5391 to 5636</td><td class=n>3070976</td><td class=ev>Power N-CT89^2Arc(9)T19</td></tr>
-<tr><td class=n>5637 to 5810</td><td class=n>3076808</td><td class=ev>Power N-CT83^2T13</td></tr>
-<tr><td class=n>5811 to 5825</td><td class=n>3088472</td><td class=ev>Power N-CT89^2Arc(6)T19</td></tr>
-<tr><td class=n>5826 to 5890</td><td class=n>3094304</td><td class=ev>Power N-CT89^2Arc(5)T19</td></tr>
-<tr><td class=n>5891 to 5956</td><td class=n>3100136</td><td class=ev>Power N-CT89^2Arc(4)T19</td></tr>
-<tr><td class=n>5957 to 6023</td><td class=n>3105968</td><td class=ev>Power N-CT89^2Arc(3)T19</td></tr>
-<tr><td class=n>6024 to 6091</td><td class=n>3111800</td><td class=ev>Power N-CT89^2Arc(2)T19</td></tr>
-<tr><td class=n>6092 to 6196</td><td class=n>3116880</td><td class=ev>Power N-CT89^2Arc(9)T12</td></tr>
-<tr><td class=n>6197 to 6391</td><td class=n>3122712</td><td class=ev>Power N-CT83^2T6</td></tr>
-<tr><td class=n>6392 to 6996</td><td class=n>3123432</td><td class=ev>Power N-CT89^2Arc(9)T2</td></tr>
-<tr><td class=n>6997 to 7156</td><td class=n>3129264</td><td class=ev>Power N-CT89^2Arc(9)</td></tr>
-<tr><td class=n>7157 to 7910</td><td class=n>3129544</td><td class=ev>perfect hash family9,12769,113T43</td></tr>
+<tr><td class=n>1211 to 7381</td><td class=n>885721</td><td class=ev><span class="tag ver">verified</span>Christopher Smolen; <i>cyclic covering perfect hash family CPHF(15; 7381, 9, 5) found here (tools/cphf/symcphf_pp.c, seed 1), every row&#x27;s matrix a Singer cycle of PGL(5, 9) (an element of GF(9^5) of projective order 7381); CA(15(9^5 - 1) + 1; 5, 7381, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006</i>; tools/cphf, certificate table/certificates/CPHF_15_7381_9_5.txt (cyclic CPHF(15; 7381, 9, 5)); no array file<span class="stamp"><a href="https://github.com/chrispbsmolen/ca-tools/blob/main/tools/cphf/repcheck_pp.c">repcheck_pp 70c9baa00eea</a> 2026-10-31 Darwin-arm64 (CPHF certificate, exact) (<a href="https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/CPHF_15_7381_9_5.txt">certificate</a>, <a href="https://github.com/chrispbsmolen/ca-tools/blob/main/table/VERIFICATION_LOG.md">verification log</a>), sha256 a09b7c1287e0</span></td></tr>
+<tr><td class=n>7382 to 7910</td><td class=n>3129544</td><td class=ev>perfect hash family9,12769,113T43</td></tr>
 <tr><td class=n>7911 to 8249</td><td class=n>3168896</td><td class=ev>perfect hash family9,12769,113T40</td></tr>
 <tr><td class=n>8250 to 8701</td><td class=n>3175448</td><td class=ev>perfect hash family9,12769,113T36</td></tr>
 <tr><td class=n>8702 to 9944</td><td class=n>3182000</td><td class=ev>perfect hash family9,12769,113T25</td></tr>
