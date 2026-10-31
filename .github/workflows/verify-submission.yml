@@ -5,7 +5,9 @@
 # from forks too. That event runs with a write token, so this workflow
 # never executes anything from the pull request: the tools, the
 # verifier and the table come from the base branch (checkout "base"),
-# and the pull request (checkout "pr") is only read as data.
+# and the pull request (checkout "pr") is only read as data. A pull request
+# from a fork is fetched with plain git (actions/checkout refuses fork code
+# under pull_request_target), still only read as data.
 
 name: Verify submission
 
@@ -44,14 +46,25 @@ jobs:
           path: base
           persist-credentials: false
 
-      - name: Check out the pull request branch (read as data only)
+      - name: Check out the pull request branch (same repository only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/checkout@v4
         with:
           path: pr
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.TABLE_BOT_TOKEN || github.token }}
-          persist-credentials: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+          persist-credentials: true
+
+      - name: Fetch the pull request from a fork (read as data only)
+        # actions/checkout refuses fork code under pull_request_target. This
+        # workflow never runs anything from the pull request, so the fork's
+        # files are fetched with plain git, from this repository's
+        # refs/pull/<n>/head, without credentials, and only read as data.
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          git init -q pr
+          git -C pr fetch -q --depth=1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "refs/pull/$PR/head"
+          git -C pr -c advice.detachedHead=false checkout -q --detach FETCH_HEAD
 
       - name: Build ca_verify and constant_rows
         run: |
