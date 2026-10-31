@@ -87,6 +87,17 @@ the array files and these documents agree.
   families are 49 KB and 196 KB; `certificates/CERTIFICATES.csv` lists
   them all, and `../tools/cphf/README.md` says how to rebuild and
   recheck them.
+- `withdrawn_fingerprints.csv` (since 2026-10-31) - for each of the
+  137 array files withdrawn on 2026-10-27, its parameters and a
+  fingerprint that does not change when rows or columns are reordered
+  or symbols renamed (written by `../tools/withdrawn_fingerprints.py`
+  from the repository history). The arrays themselves are not stored.
+  The submission check uses it to flag a submission that is one of
+  those arrays in disguise.
+- `references.csv` (since 2026-10-31) - patterns and the references
+  they point to, used by the submission check for its "prior work to
+  cite" line. It lists only references checked by hand, and grows as
+  more are checked.
 - `MANIFEST.csv` - one row per array file: parameters, status,
   SHA-256 of the canonical file content, retrieval recipe,
   verification stamp, and `constant_rows` (added 2026-10-20): the

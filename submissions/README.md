@@ -116,6 +116,18 @@ the check on the pull request, the check fails, the comment says why,
 and nothing is added. Fix the problem and push again; every push is
 checked afresh.
 
+Two more lines in the report are for you and for the maintainer.
+"Similarity" compares the array with every known array of the same
+N, k and v, including the arrays withdrawn on 2026-10-27, by a
+fingerprint that does not change when rows or columns are reordered
+or symbols renamed. A match does not fail the claim, since small
+optimal arrays are often unique and can be found independently, but
+it is flagged and the maintainer decides. "Prior work to cite" names
+the source of the entry your array is compared with and any
+reference in `../table/references.csv` that matches it or
+your construction, so that a paper built on the result can cite the
+work it improves on.
+
 A passing claim is classified against the table. `exceeds_table`
 means N is smaller than the current best known value, a new record.
 `equals_best` means N equals it. `above_table` means N is larger: the

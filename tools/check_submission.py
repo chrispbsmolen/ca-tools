@@ -25,6 +25,7 @@ Usage:
   check_submission.py --selftest [--table-dir DIR]
 """
 import argparse
+import collections
 import csv
 import datetime
 import gzip
@@ -183,6 +184,134 @@ def load_table(table_dir):
     return rows, manifest
 
 
+# ---------------------------------------------------------------------------
+# Similarity (disguised copies) and prior work to cite
+# ---------------------------------------------------------------------------
+
+FP_MAX_WORK = 4 * 10**7     # entries examined by the fingerprint, at most
+
+
+def fingerprint(rows):
+    """A fingerprint of an array that does not change when its rows are
+    reordered, its columns are reordered, or the symbols of any column are
+    renamed: the sorted symbol counts of every column, the sorted cell counts
+    of every pair of columns, and the distribution of Hamming distances
+    between rows. Equal fingerprints mean the arrays are very likely the same
+    array relabelled; it is a flag for the maintainer, not a proof. Returns
+    None when the array is too large to fingerprint within FP_MAX_WORK."""
+    n, k = len(rows), len(rows[0])
+    pair_work = k * (k - 1) // 2 * n
+    dist_work = n * (n - 1) // 2 * k
+    if pair_work > FP_MAX_WORK:
+        return None
+    cols = [tuple(-1 if x is None else x for x in c) for c in zip(*rows)]
+    colprof = sorted(tuple(sorted(collections.Counter(c).values())) for c in cols)
+    pairprof = []
+    for i in range(k):
+        ci = cols[i]
+        for j in range(i + 1, k):
+            pairprof.append(tuple(sorted(collections.Counter(zip(ci, cols[j])).values())))
+    pairprof.sort()
+    parts = [str(n), str(k), repr(colprof), repr(pairprof)]
+    if dist_work <= FP_MAX_WORK:
+        rr = [tuple(-1 if x is None else x for x in r) for r in rows]
+        dist = collections.Counter()
+        for a in range(n):
+            ra = rr[a]
+            for b in range(a + 1, n):
+                dist[sum(1 for x, y in zip(ra, rr[b]) if x != y)] += 1
+        parts.append(repr(sorted(dist.items())))
+    return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:32]
+
+
+def read_table_array(table_dir, name, v):
+    path = os.path.join(table_dir, "arrays", name)
+    if name.endswith(".gz"):
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            return [[None if x == "NA" else int(x) for x in line.split()] for line in f if line.strip()]
+    return parse_array(path, v)[0]
+
+
+def similar_known(rows, v, ctx):
+    """Known arrays with the same N, k and v whose fingerprint equals this
+    array's: arrays on file in the table, and the arrays withdrawn on
+    2026-10-27 (table/withdrawn_fingerprints.csv). Returns a list of texts."""
+    n, k = len(rows), len(rows[0])
+    cand_table = [m for m in ctx["manifest"] if int(m["v"]) == v and int(m["k"]) == k and int(m["N"]) == n]
+    cand_wd = [w for w in ctx["withdrawn_fp"] if int(w["v"]) == v and int(w["k"]) == k and int(w["N"]) == n]
+    if not cand_table and not cand_wd:
+        return [], "no known array with the same N, k and v"
+    fp = fingerprint(rows)
+    if fp is None:
+        return [], ("%d known arrays have the same N, k and v, but the array is too large "
+                    "for the fingerprint" % (len(cand_table) + len(cand_wd)))
+    found = []
+    for m in cand_table:
+        try:
+            other = fingerprint(read_table_array(ctx["table_dir"], m["file"], v))
+        except (OSError, ClaimError, ValueError):
+            continue
+        if other == fp:
+            found.append("table/arrays/%s (%s)" % (m["file"], m["source_detail"]))
+    for w in cand_wd:
+        if w["fingerprint"] == fp:
+            found.append("withdrawn array %s (%s)" % (w["file"], w["source_detail"]))
+    checked = "compared by fingerprint with %d known arrays of the same N, k and v" % (
+        len(cand_table) + len(cand_wd))
+    return found, checked
+
+
+def load_withdrawn_fp(table_dir):
+    path = os.path.join(table_dir, "withdrawn_fingerprints.csv")
+    if not os.path.isfile(path):
+        return []
+    with open(path, newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def load_references(table_dir):
+    path = os.path.join(table_dir, "references.csv")
+    if not os.path.isfile(path):
+        return []
+    with open(path, newline="", encoding="utf-8") as f:
+        out = []
+        for r in csv.DictReader(f):
+            try:
+                out.append((re.compile(r["pattern"], re.I), r["reference"]))
+            except re.error:
+                continue
+        return out
+
+
+def cite_text(cl, ctx):
+    """Prior work to cite for this claim: the source of the entry it is
+    compared with, any reference whose pattern matches that entry or the
+    claim's own construction and source, and the table itself."""
+    out = []
+    r = cl.get("previous_row")
+    texts = []
+    if r is not None:
+        if r["source_id"] == "S1":
+            out.append("the previous best is an entry of the Colbourn tables (November 2024 "
+                       "status, preserved in the CAs package as colbournBigFrame), labelled "
+                       "\"%s\"" % r["construction"])
+        elif r.get("snapshot_id", "").startswith(("doi:", "arXiv:")):
+            out.append("the previous best is from %s" % r["snapshot_id"])
+        else:
+            out.append("the previous best is a %s row of this table (%s, entered %s)"
+                       % (r["tier"], r["source_detail"], r["entered"]))
+        texts.append(r.get("construction", "") + " " + r.get("source_detail", "") + " " + r.get("notes", ""))
+    texts.append((cl["raw"].get("construction") or "") + " " + (cl["raw"].get("source_detail") or ""))
+    seen = []
+    for pat, ref in ctx["references"]:
+        if any(pat.search(t) for t in texts) and ref not in seen:
+            seen.append(ref)
+    out.extend(seen)
+    out.append("this table: C. Smolen, ca-tools, https://github.com/chrispbsmolen/ca-tools, "
+               "with the commit used")
+    return out
+
+
 def best_known(rows, t, v, k):
     """Stair-step lookup over the counted rows (table/ca_table.py counted():
     CITED and VERIFIED, less retracted rows): the minimum N over rows with the
@@ -321,6 +450,11 @@ def check_claim(cl, ctx, deadline):
             raise ClaimError("duplicate: same array as %s in this submission"
                              % ctx["seen_sha"][sha])
         ctx["seen_sha"][sha] = fname
+
+        # disguised copies: same array with rows, columns or symbols permuted
+        found, checked = similar_known(rows, v, ctx)
+        cl["similar"] = found
+        cl["similar_checked"] = checked
 
         # table comparison (done before verification so the report has it
         # even when verification fails)
@@ -653,6 +787,16 @@ def render_report(claims, ctx, all_pass, elapsed):
             L.append("- table: %s; %s" % (c["comparison"] or "not compared",
                                           md_cell(previous_text(c)) if "previous_best" in c
                                           else "not looked up"))
+        if c.get("similar_checked"):
+            if c.get("similar"):
+                L.append("- **similarity: flagged for the maintainer.** Same structure, up to "
+                         "reordering rows and columns and renaming symbols, as %s. This may be "
+                         "an independent rediscovery (small optimal arrays are often unique); "
+                         "the maintainer decides." % md_cell("; ".join(c["similar"])))
+            else:
+                L.append("- similarity: no match (%s)" % c["similar_checked"])
+        if c.get("comparison"):
+            L.append("- prior work to cite: %s" % md_cell("; ".join(cite_text(c, ctx))))
         for n in c["notes_out"]:
             L.append("- note: %s" % md_cell(n))
         if c.get("canonical_name"):
@@ -780,7 +924,10 @@ def main(argv=None):
                seen_sha={}, taken_names=taken, date=date, stamp=stamp,
                snapshot_id=("pr-%s" % a.pr) if a.pr else slug,
                constant_rows=constant_rows_binary(),
-               constant_rows_budget=a.constant_rows_minutes * 60.0)
+               constant_rows_budget=a.constant_rows_minutes * 60.0,
+               table_dir=a.table_dir, manifest=manifest,
+               withdrawn_fp=load_withdrawn_fp(a.table_dir),
+               references=load_references(a.table_dir))
 
     start = time.monotonic()
     total = (max(0.0, a.total_budget_minutes) * 60.0

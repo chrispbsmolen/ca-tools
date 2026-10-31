@@ -1,0 +1,8 @@
+pattern,reference
+cyclotom,"C. J. Colbourn, Covering arrays from cyclotomy, Des. Codes Cryptogr. 55 (2010) 201-219, doi:10.1007/s10623-009-9333-8"
+CPHF|perfect hash famil,"G. B. Sherwood, S. S. Martirosyan and C. J. Colbourn, Covering arrays of higher strength from permutation vectors, J. Combin. Des. 14 (2006) 202-213, doi:10.1002/jcd.20067"
+Raaphorst|RMS|LFSR|feedback shift register,"S. Raaphorst, L. Moura and B. Stevens, A construction for strength-3 covering arrays from linear feedback shift register sequences, Des. Codes Cryptogr. 73 (2014) 949-968, doi:10.1007/s10623-013-9835-2"
+Tzanakis,"G. Tzanakis, L. Moura, D. Panario and B. Stevens, Constructing new covering arrays from LFSR sequences over finite fields, Discrete Math. 339 (2016) 1158-1171, doi:10.1016/j.disc.2015.10.040"
+Shokri|2510\.13122,"K. Shokri, L. Moura and B. Stevens, Existence of 3 anti-cocircular truncated Moebius planes and constructions of strength-4 covering arrays, arXiv:2510.13122"
+order seven|math12121908,"J. Torres-Jimenez and I. Izquierdo-Marquez, New upper bounds for covering arrays of order seven, Mathematics 12(12) (2024) 1908, doi:10.3390/math12121908"
+Colbourn.Lanus.Sarkar|10\.1007/s10623-017-0369-x,"C. J. Colbourn, E. Lanus and K. Sarkar, Asymptotic and constructive methods for covering perfect hash families and covering arrays, Des. Codes Cryptogr. 86 (2018) 907-937, doi:10.1007/s10623-017-0369-x"
