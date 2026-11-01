@@ -49,7 +49,10 @@ Actions workflow verifies every array with ca_verify and posts a report
 on the pull request; when a passing pull request is merged, the table
 workflow on main checks it again against the current table and adds
 its rows. The report usually appears within a few minutes. A
-maintainer then reviews and merges, usually within a few days. The
+maintainer then reviews and merges, usually within a few days.
+Every row records the published work its construction builds on, so
+the table credits earlier authors and records new methods under the
+names of the people who found them. The
 format and the rules are in
 submissions/README.md. tools/check_submission.py is the check (also
 runnable locally), tools/render_table.py builds the table page

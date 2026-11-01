@@ -97,10 +97,14 @@ the array files and these documents agree.
   from the repository history). The arrays themselves are not stored.
   The submission check uses it to flag a submission that is one of
   those arrays in disguise.
-- `references.csv` (since 2026-10-31) - patterns and the references
-  they point to, used by the submission check for its "prior work to
-  cite" line. It lists only references checked by hand, and grows as
-  more are checked.
+- `references.csv` (since 2026-10-31; ids since 2026-11-01) - the
+  bibliography of construction methods: an `id` (for example
+  `cphf-smc2006`), `keywords` (a case-insensitive regular expression
+  for the usual names of the method, used to suggest ids), the full
+  `reference` and its `doi` (or arXiv id). The `builds_on` column of
+  the table lists these ids. Every DOI was checked against Crossref
+  when it was added; the file grows as methods are added, never by
+  guessing.
 - `MANIFEST.csv` - one row per array file: parameters, status,
   SHA-256 of the canonical file content, retrieval recipe,
   verification stamp, and `constant_rows` (added 2026-10-20): the
@@ -270,7 +274,21 @@ itself), by `tools/backfill_construction.R` and
 `tools/apply_construction_backfill.py`; the mapping with its basis
 per row is `construction_backfill.csv`. Nothing was inferred: a value
 names the catalogue entry it was read from, and the Torres-Jimenez
-arrays say that the method is not recorded per array. The notes of a submission row
+arrays say that the method is not recorded per array.
+`builds_on` (added 2026-11-01) lists the published work the entry's
+construction rests on, as ids of `references.csv` separated by
+semicolons, and `new` followed by a link for a method of the
+submitter's own (see `../submissions/README.md`). A submission must
+give it, and the check validates it. For the rows that predate it,
+it was filled by `../tools/backfill_builds_on.py` from the ids whose
+keywords match the row's `construction` (for the baseline, Colbourn's
+label), with the Dwyer method codes and Bai XunDi's deposited
+construction mapped by hand as that script lists. A row whose
+construction names no traceable source is left empty rather than
+guessed: on 2026-11-01 that was 1,525 of the 13,641 baseline rows
+(mostly "Add factors", the bare perfect hash family labels and the
+Torres-Jimenez simulated annealing entries) and 305 others. The
+table page lists every cited work at its foot. The notes of a submission row
 say "exceeds table: previous best N (row k=..., source)" (or "equals
 table: ...") once; that is the comparison the check made at entry, and
 it is not repeated. Comparisons in notes hold as of entry: "equals
@@ -414,7 +432,7 @@ entered are never changed, and a better N
 or a correction is a new row. Since 2026-10-31
 `../tools/consistency.py --base` enforces this on every pull request
 and every push to main (the free-text columns notes, lb, lb_evidence
-and construction may still be corrected in place). The things written
+construction and builds_on may still be corrected in place). The things written
 into existing rows since publication are all recorded here (dates as in the
 commits, US Central time): on 2026-10-19 the new `construction` column
 was filled for rows that predate it (above; commits a1ad327 and
@@ -440,7 +458,8 @@ is the one Nurmela printed in 2004 with the two symbols exchanged and
 two rows moved); on 2026-10-27 the notes of the 137 rows whose array
 files were withdrawn (`withdrawn_files.csv`) were extended by a
 sentence saying so (for CA(16; 4, 5, 2), that the identical array is
-stored as built here). To add a claim with evidence:
+stored as built here); on 2026-11-01 the new `builds_on` column was
+filled for every row that predates it (above). To add a claim with evidence:
 
 1. Get the array (download, construct, or receive it) and note the
    exact recipe: URL and date, or the generating call and package

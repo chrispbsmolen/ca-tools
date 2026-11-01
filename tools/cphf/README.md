@@ -172,6 +172,126 @@ is verified by `ca_verify` and has no repeated run.
     ./cphfcheck FAMILY t q cyclic s 14
     ./cphfcheck FAMILY t q expand CA.txt [affine]
 
+## Progression and fullfast modes (cphfcheck.c, since 2026-11-01)
+
+Two more exact modes, added for families too large for `full` (issue #18):
+
+    cphfcheck FILE t q progression [threads] [P=r1,r2,...]
+    cphfcheck FILE t q fullfast [threads]
+
+Exit codes as before (0 none uncovered, 1 some, 2 usage, 3 a row named in `P=` is not a
+progression row), plus 4 when an internal completeness count does not match its binomial (a
+bug, never a verdict; never seen in testing). With the environment variable `CPHFCHECK_LIST`
+set, full, progression and fullfast print every uncovered t-set as `U c1 ... ct` (for testing).
+`tests/test_progression.py` builds the checker and the version first published
+(`tests/cphfcheck_a5ad0b7.c.ref`) and runs the whole suite below; the old modes give
+byte-identical output to that version. The method was reviewed by two independent design
+studies before it was written; the one point the submitter's description left out, columns in
+the span of the prefix ("WILD"), is handled and tested by mutation.
+
+### Mode progression
+
+1. Row classification, from the data only. A row is dead if its k vectors do not span GF(q)^t
+   (it covers nothing, so it is dropped). Otherwise t independent vectors are taken among
+   columns 0..k-2, A is solved from A u_sel = u_(sel+1), A must be invertible (rank t), and
+   u_c == A u_(c-1) is then checked exactly for every c = 1..k-1. A row passing all of this is a
+   progression (P) row and its A is printed; every other row is an other (O) row, with the
+   reason printed. `P=...` names rows that must certify.
+2. Translation: in a P row u_c = A^c u_0, so a t-set S fails (is dependent) iff S - min(S)
+   fails (factor det(A)^min(S), nonzero). Only representatives D with 0 in D are enumerated.
+3. Projection hashing. For t >= 3 the representatives are prefix + {x < y}, prefix = {0} plus
+   t-3 further columns, x, y after the prefix. Per prefix and P row: if the prefix vectors have
+   rank < t-2 the row is a wildcard row (every completion fails) and is skipped. Otherwise h1, h2
+   span the annihilator of the prefix span and column c gets the class [h1.u_c : h2.u_c] in
+   PG(1,q), or WILD when both are 0. {x, y} fails in the row iff x or y is WILD or the classes
+   are equal. The pairs failing in every non-wildcard P row are found by refining row by row: a
+   subproblem (A, B) means the pairs inside A plus the pairs between A and B. Classifying by one
+   row into A_z, B_z (classes) and A_w, B_w (WILD), the failing pairs split exactly into the
+   subproblems (A_z, A_w + B_z + B_w) for each class z and (A_w, B), with no pair twice; the pairs
+   with two different non-WILD classes are counted as ruled out. Subproblems with at most 12
+   pairs are finished pair by pair with the same rule. t = 2 is handled directly ({0, y}).
+4. Every representative is rechecked by rank in every P row, then every shift D + a,
+   a = 0..k-1-max(D), is tested by rank in the O rows (stop at the first covering row). A shift
+   failing in every O row is an uncovered t-set. With no O rows every shift is uncovered; with no
+   P rows every t-set containing 0 is a representative (correct, but slower than full).
+5. Output: the classification, then
+   `enumeration: prefixes X (expected C(k-1,t-3)), candidate columns Y (expected C(k-1,t-2)), wildcard (prefix,row) ..., WILD classifications ...`,
+   `completeness: pairs failing every progression row F + pairs ruled out R = F+R (expected C(k-1,t-1))`,
+   `representatives ..., shifts tested in other rows ...`, then the usual lines.
+   If any of the three totals differs from its binomial, or a reported set fails the rank
+   recheck, the run prints `INTERNAL CHECK FAILED` and exits 4.
+
+Parallelism: OpenMP over the second prefix column (t >= 4); for t = 3 (a single prefix) the
+shift tests run in parallel. Thread count is the optional numeric argument.
+
+### Mode fullfast
+
+The same projection hashing over all non-dead rows, with prefixes of any t-2 columns and
+completions after the last prefix column. Every reported t-set is rechecked by rank in every row.
+Expected totals: prefixes C(k,t-2), candidate columns C(k,t-1), pairs C(k,t). Parallel over the
+first prefix column. Output as in full, plus the two count lines.
+
+### Test results (`tests/test_progression.py`, 1056 tests, 0 failed, 421 s on 2 cores, 2026-11-01)
+
+| section | tests | what |
+|---|---|---|
+| legacy | 63 | full, cyclic, sample, expand (also affine), usage errors: stdout, stderr, exit code and expanded file identical to the original build; header and `checked` line of the new modes match what check_certificates.py parses |
+| diff | 700 | random families, t = 2..6 (mostly 3..6), q in {3,4,5,7,8,9}, k up to 90 (t=3), 60 (t=4), 55 (t=5), 26 (t=6); 0..4 progression-built rows (generic A, shared A, monomial and conjugated monomial A, affine x -> Mx+b, -I, I, eigenvector start, translations, invariant subspace starts) and 0..3 other rows (random, affine, few repeated vectors, corrupted progression, singular A). 127 cases have k > q^(t-1). Row classes over all cases: 1021 P, 1290 O, 707 dead. Compared with full (1 thread): exit code, uncovered count, first uncovered set, the complete sorted list whenever there are at most 20000, and the row classification against an independent Python classifier (solves all k-1 equations for A). 15% of runs use the build without OpenMP; thread counts 1 to 3. |
+| planted | 120 | a set failing in every P row (from the full listing of the P rows) is made dependent in every O row; 20 each of shift a = 0, middle, a = k-1-max(D), each with and without WILD columns or wildcard rows; the set must be in all three lists and the lists identical |
+| negative | 146 | corrupted P row at the first, middle and last column, singular A with spanning row, non-spanning row, constant row: `P=` exits 3 naming the row, the class is right ("singular" reported), the good row alone certifies, and results still equal full; bad `P=` exits 2 |
+| real | 4 | four families from the canli submission (t=3,4; q=8,9,13): 0 uncovered in all three modes (none of their rows is a progression in the given column order) |
+| medium | 1 | t=4, q=7, k=300, n=9: 476 uncovered, identical lists and first set in full, progression, fullfast; full 2.4 s, fullfast 0.28 s, progression 0.02 s |
+| mutation | 7 | each mutant built from a patched copy and run on 236 tests; all caught |
+
+Mutations (tests failing out of 236):
+
+- WILD disabled (zero image treated as an ordinary class): 182, in both new modes
+- invertibility check of A removed: 34
+- shift range off by one (last shift skipped): 184
+- shift a = 0 skipped: 183
+- extra, WILD-with-WILD subproblem dropped: 180
+- extra, B_w left out of the class subproblems: 105
+- extra, progression check stops before the last column: 12
+
+### Timing (one thread, q = 23, 6 progression rows + 2 random rows)
+
+Unit cost = time / (number of units): full per t-set, fullfast per C(k,t-1), progression per
+C(k-1,t-2).
+
+| mode | t | k | time | ns per unit |
+|---|---|---|---|---|
+| full | 4 | 240 | 2.16 s | 16 |
+| full | 5 | 100 | 3.89 s | 52 |
+| fullfast | 4 | 240 | 0.21 s | 92 |
+| fullfast | 5 | 200 | 4.83 s | 75 |
+| progression | 5 | 1200 | 18.2 s | 64 (includes 1.25 M shift tests) |
+| progression | 6 | 240 | 8.4 s | 63 |
+
+Extrapolation to q = 23, k = 10000 (one thread; divide by the thread count):
+
+- progression t = 5: C(9999,3) x 64 ns, about 1.1e4 s (3 hours) for the hashing; the shift
+  tests scale like C(k,t) f^nP (f about 1/21 per P row here): about 5e10 tests, 1 to 3 hours with
+  6 P rows. Total roughly half a day on one core.
+- progression t = 6: C(9999,4) x 63 ns, about 2.6e7 s (300 days), plus about 1.5e13 shift tests
+  (about 25 days) with 6 P rows; fewer with more P rows.
+- fullfast t = 5: C(10000,4) x 75 ns, about 3e7 s (360 days); t = 6: about 6e10 s (2000 years).
+- full t = 5: C(10000,5) x 5 to 50 ns, 4e9 to 4e10 s (over a century); t = 6 is 1660 times more.
+
+The unit costs fall slightly as k grows (fixed per-prefix cost spread over more columns), so
+these are upper-side estimates for the hashing; the shift-test term depends on the number of P
+rows and how often they fail together.
+
+### Limits and doubts
+
+- Sets proven covered by a P row are never rechecked one by one (that is the whole saving); the
+  guarantees are the exact certification of every P row, the binomial totals, the rank recheck
+  of everything reported, and the tests above.
+- With no P rows, progression costs about C(k,t) rank tests, more than full; use full or
+  fullfast then. The four real families tried have no progression rows in their column order.
+- In mode full with more than one thread, "first uncovered" depends on scheduling (unchanged
+  behaviour); the new modes always report the lexicographic minimum.
+- The `checked` count is printed exactly (128-bit), also past 2^63.
+
 ## Credits and bounds
 
 The CPHF method and the CPHF-to-CA construction are those of Sherwood,

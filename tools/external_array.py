@@ -5,7 +5,7 @@ An array above the 50 MiB per-file limit stays in a public deposit (a Zenodo
 record or a release of this repository). The submission names it in
 submissions/<slug>/external.csv:
 
-    t,v,k,N,location,sha256,source_detail,construction,credit,notes
+    t,v,k,N,location,sha256,source_detail,construction,builds_on,credit,notes
 
 location is an https URL of the file, or of a zip archive followed by
 "::" and the member name (https://zenodo.org/records/1/files/a.zip::x/CA.txt).
@@ -47,11 +47,16 @@ import zipfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import check_submission as cs  # noqa: E402
+import builds_on as bo  # noqa: E402
 
 EXTERNAL_HEADER = ["sha256", "t", "v", "k", "N", "bytes", "location", "status",
                    "source_detail", "verify_stamp"]
 EXT_CLAIMS_HEADER = ["t", "v", "k", "N", "location", "sha256", "source_detail",
-                     "construction", "credit", "notes"]
+                     "construction", "builds_on", "credit", "notes"]
+# the header before builds_on (2026-11): read only for the slugs in
+# submissions/BUILDS_ON_EXEMPT.txt, which get the ids their construction matches
+PREV_EXT_CLAIMS_HEADER = ["t", "v", "k", "N", "location", "sha256", "source_detail",
+                          "construction", "credit", "notes"]
 ALLOWED_HOSTS = ("zenodo.org", "github.com", "objects.githubusercontent.com")
 LOCATION_RE = re.compile(r"^https://([A-Za-z0-9.-]+)/[^\s]+$")
 
@@ -288,9 +293,22 @@ def main(argv=None):
     with open(path, newline="", encoding="utf-8") as f:
         rd = csv.reader(f)
         hdr = next(rd)
-        if [h.strip() for h in hdr] != EXT_CLAIMS_HEADER:
+        hdr = [h.strip() for h in hdr]
+        if not (hdr == EXT_CLAIMS_HEADER or (hdr == PREV_EXT_CLAIMS_HEADER
+                                             and slug in cs.exempt_slugs())):
             raise SystemExit("external.csv header must be %s" % ",".join(EXT_CLAIMS_HEADER))
-        claims = [dict(zip(EXT_CLAIMS_HEADER, rec)) for rec in rd if any(x.strip() for x in rec)]
+        claims = [dict(zip(hdr, rec)) for rec in rd if any(x.strip() for x in rec)]
+    refs = bo.load(a.table_dir)
+    for raw in claims:
+        if "builds_on" in raw:
+            norm, errs, warns, _ = bo.check(raw["builds_on"], raw["construction"], refs)
+            if errs:
+                raise SystemExit("builds_on of %s: %s" % (raw.get("location", "")[:80], "; ".join(errs)))
+            for w in warns:
+                print("note: builds_on: " + w, file=sys.stderr)
+            raw["builds_on_value"] = norm
+        else:
+            raw["builds_on_value"] = ";".join(bo.suggest(raw["construction"], refs))
     table_path = os.path.join(a.table_dir, "ca_table.csv")
     table_rows = list(csv.DictReader(open(table_path, newline="", encoding="utf-8")))
     ext_path = os.path.join(a.table_dir, "EXTERNAL.csv")
@@ -327,7 +345,8 @@ def main(argv=None):
             raw = r["raw"]
             tier = "VERIFIED" if r["status"] == "verified" else "SCREENED"
             # not "submission <slug>": table-page.yml reads that as "claims.csv applied"
-            notes = ["external array: %s" % raw["location"].strip(),
+            notes = ["credit: " + raw["credit"].strip(),
+                     "external array: %s" % raw["location"].strip(),
                      "from submissions/%s/external.csv" % slug]
             if r["status"] == "screened":
                 s = r["screen"]
@@ -339,7 +358,8 @@ def main(argv=None):
                 notes.append(raw["notes"].strip())
             trows.append([r["t"], r["v"], r["k"], r["N"], tier, cs.SOURCE_ID,
                           raw["source_detail"].strip(), snap, r["sha256"], stamp, today,
-                          "; ".join(notes), "", "", raw["construction"].strip()])
+                          "; ".join(notes), "", "", raw["construction"].strip(),
+                          raw["builds_on_value"]])
             erows.append([r["sha256"], r["t"], r["v"], r["k"], r["N"], r["bytes"],
                           raw["location"].strip(), r["status"], raw["source_detail"].strip(), stamp])
         eol = "\r\n" if b"\r\n" in open(table_path, "rb").read(4096) else "\n"

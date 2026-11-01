@@ -1,0 +1,4 @@
+# Submissions opened before the builds_on field existed (2026-11-01).
+# Their claims are accepted without it and the maintainer fills it in.
+canli-2026-11-cphf-full
+xor-linear-t2-v8-2026-10

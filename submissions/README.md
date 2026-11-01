@@ -19,7 +19,7 @@ Nothing else in the repository should change in your pull request.
 
 `claims.csv` has exactly this header and one row per array:
 
-    t,v,k,N,file,source_detail,construction,credit,notes
+    t,v,k,N,file,source_detail,construction,builds_on,credit,notes
 
 `t` is the strength, `v` the number of symbols, `k` the number of
 columns and `N` the number of runs (rows) of the array. `file` is the
@@ -35,7 +35,19 @@ CA(136; 4, 179, 2) with one column added"), or an algebraic source.
 It is required, because the construction is what another researcher
 needs in order to know how the array can be used as an ingredient
 (constant rows, how it splits). Write `unknown` only if you cannot
-say. `credit` is the person, group or paper to be credited. `notes`
+say. `builds_on` names the published work the array rests on. List
+the id of every method used, from `../table/references.csv`, separated
+by semicolons (for example `cphf-smc2006;fuse-ckrs2010`). If a method
+you used is not there, name it in your pull request and it will be
+added. If the construction is your own, write `new` followed by a link
+to where it is described, such as a paper, preprint or code repository
+(`new https://arxiv.org/abs/...`, `new doi:...`). A new method can be
+combined with known ones (`new https://...;fuse-ckrs2010`). The check
+suggests ids from your `construction` text, and every `new` entry is
+confirmed by the maintainer before the merge. This field is how the
+table gives credit. Each row lists the work it builds on, so anyone
+who uses an array also sees, and can cite, the papers behind it.
+`credit` is the person, group or paper to be credited. `notes`
 is free text and may be empty; the check already records the
 previous best, so there is no need to repeat it here. Fields that contain
 commas must be enclosed in double quotes, as in any CSV file, and no
@@ -125,11 +137,10 @@ N, k and v, including the arrays withdrawn on 2026-10-27, by a
 fingerprint that does not change when rows or columns are reordered
 or symbols renamed. A match does not fail the claim, since small
 optimal arrays are often unique and can be found independently, but
-it is flagged and the maintainer decides. "Prior work to cite" names
-the source of the entry your array is compared with and any
-reference in `../table/references.csv` that matches it or
-your construction, so that a paper built on the result can cite the
-work it improves on.
+it is flagged and the maintainer decides. "Prior work to cite" gives the full
+references for your `builds_on` and for the entry your array is
+compared with, so that a paper built on the result can cite the work
+it rests on and the work it improves on.
 
 A passing claim is classified against the table. `exceeds_table`
 means N is smaller than the current best known value, a new record.
@@ -169,7 +180,7 @@ in a public deposit (a Zenodo record, or a release of this repository),
 and the submission names it in `submissions/<slug>/external.csv`
 instead of adding the file:
 
-    t,v,k,N,location,sha256,source_detail,construction,credit,notes
+    t,v,k,N,location,sha256,source_detail,construction,builds_on,credit,notes
 
 `location` is the https URL of the file, or of a zip archive followed by
 `::` and the member name, for example
@@ -197,16 +208,23 @@ A covering array given by a covering perfect hash family (CPHF) can be
 submitted as the family instead of the array. The submission holds
 `submissions/<slug>/certificates.csv`
 
-    t,v,k,N,file,mode,source_detail,construction,credit,notes
+    t,v,k,N,file,mode,source_detail,construction,builds_on,credit,notes
 
 and the family files it names, each at most 50 MiB: n lines of k
 integers, each integer a vector of GF(v)^t written in base v, most
 significant digit first (for v = p^e the digits are field elements
 coded as in `../tools/cphf/cphfcheck.c`, Conway polynomials; v up to 32,
 t up to 8). `mode` says how the family is checked: `full` (every set of
-t columns), or `cyclic s` (the shift of columns by s is a symmetry of
-every row, certified by the checker before it relies on it, and then
-every t-set whose smallest column is below s is checked). Either may end
+t columns), `fullfast` (the same exact answer found faster by projection
+hashing), `progression` (for families whose rows are mostly affine
+progressions, column c+1 = A times column c for an invertible matrix A:
+the checker finds and certifies A for each such row from the data, checks
+every set of columns that starts at column 0 and fails in all of those
+rows, and tests every translate of each such set in the remaining rows;
+see `../tools/cphf/README.md`), or `cyclic s` (the shift of columns by s
+is a symmetry of every row, certified by the checker before it relies on
+it, and then every t-set whose smallest column is below s is checked).
+Any of these may end
 in ` affine` when every vector has first coordinate 1 (points of an
 affine space); the array then has n(v^t - v) + v runs instead of
 n(v^t - 1) + 1. N must be the size the family gives.
@@ -256,7 +274,8 @@ be the full check, so they get the full check.
 Your `credit` field goes into the notes of the table row exactly as
 you wrote it, after `credit: `. Your `source_detail` becomes the
 row's `source_detail` and your `construction` the row's
-`construction`, both exactly as written. Each new `ca_table.csv` row
+`construction`, both exactly as written, and your `builds_on` the
+row's `builds_on`. Each new `ca_table.csv` row
 has source class `S7`, the pull request number as `snapshot_id`, the
 array's SHA-256, a stamp of the form `ca_verify <commit> <date>
 github-actions`, the entry date, and notes that state the credit, the

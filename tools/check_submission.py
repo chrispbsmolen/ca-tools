@@ -46,13 +46,20 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "table"))
 from ca_table import counted  # noqa: E402  (the one definition of the counted rows)
+sys.path.insert(0, os.path.join(REPO, "tools"))
+import builds_on  # noqa: E402  (references.csv and the builds_on field)
 
 CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "construction",
-                 "credit", "notes"]
+                 "builds_on", "credit", "notes"]
+# the header before builds_on (2026-11); accepted only for the submissions in
+# submissions/BUILDS_ON_EXEMPT.txt, opened before the field existed, whose
+# builds_on the maintainer fills in
+PREV_CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "construction",
+                      "credit", "notes"]
 OLD_CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "credit", "notes"]
 TABLE_HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail",
                 "snapshot_id", "array_sha256", "verify_stamp", "entered",
-                "notes", "lb", "lb_evidence", "construction"]
+                "notes", "lb", "lb_evidence", "construction", "builds_on"]
 MANIFEST_HEADER = ["file", "t", "v", "k", "N", "status", "sha256",
                    "source_id", "source_detail", "verify_stamp", "constant_rows"]
 SOURCE_ID = "S7"
@@ -273,17 +280,15 @@ def load_withdrawn_fp(table_dir):
 
 
 def load_references(table_dir):
-    path = os.path.join(table_dir, "references.csv")
+    return builds_on.load(table_dir)
+
+
+def exempt_slugs():
+    path = os.path.join(REPO, "submissions", "BUILDS_ON_EXEMPT.txt")
     if not os.path.isfile(path):
-        return []
-    with open(path, newline="", encoding="utf-8") as f:
-        out = []
-        for r in csv.DictReader(f):
-            try:
-                out.append((re.compile(r["pattern"], re.I), r["reference"]))
-            except re.error:
-                continue
-        return out
+        return set()
+    with open(path, encoding="utf-8") as f:
+        return {ln.strip() for ln in f if ln.strip() and not ln.startswith("#")}
 
 
 def cite_text(cl, ctx):
@@ -304,12 +309,16 @@ def cite_text(cl, ctx):
             out.append("the previous best is a %s row of this table (%s, entered %s)"
                        % (r["tier"], r["source_detail"], r["entered"]))
         texts.append(r.get("construction", "") + " " + r.get("source_detail", "") + " " + r.get("notes", ""))
-    texts.append((cl["raw"].get("construction") or "") + " " + (cl["raw"].get("source_detail") or ""))
-    seen = []
-    for pat, ref in ctx["references"]:
-        if any(pat.search(t) for t in texts) and ref not in seen:
-            seen.append(ref)
-    out.extend(seen)
+    refs = ctx["references"]
+    ids = list(cl.get("builds_on_ids") or [])
+    if r is not None:
+        for rid in (r.get("builds_on") or "").split(";"):
+            if rid in refs and rid not in ids:
+                ids.append(rid)
+    for rid in ids:
+        out.append(builds_on.citation(rid, refs))
+    for link in cl.get("builds_on_new") or []:
+        out.append("the method of this submission, described at %s" % link)
     out.append("this table: C. Smolen, ca-tools, https://github.com/chrispbsmolen/ca-tools, "
                "with the commit used")
     return out
@@ -404,6 +413,29 @@ def check_claim(cl, ctx, deadline):
         for fld in CLAIMS_HEADER:
             if any(ch in (raw.get(fld) or "") for ch in "\r\n"):
                 raise ClaimError("claims.csv field %s contains a line break" % fld)
+        if "builds_on" in raw:
+            norm, errs, warns, links = builds_on.check(raw["builds_on"], raw["construction"],
+                                                       ctx["references"])
+            if errs:
+                sug = builds_on.suggest(raw["construction"], ctx["references"])
+                raise ClaimError("builds_on: %s%s" % ("; ".join(errs),
+                                 (" (suggested from the construction text: %s)" % ";".join(sug))
+                                 if sug else ""))
+            cl["builds_on"] = norm
+            cl["builds_on_ids"] = [x for x in norm.split(";") if x in ctx["references"]]
+            cl["builds_on_new"] = links
+            for w in warns:
+                cl["notes_out"].append("builds_on: " + w)
+            if links:
+                cl["notes_out"].append("builds_on names a new method (%s); the maintainer "
+                                       "confirms it before the merge" % ", ".join(links))
+        else:
+            cl["builds_on"] = ""
+            cl["notes_out"].append("builds_on: not given (submission opened before the field "
+                                   "existed); the maintainer fills it in; suggested from the "
+                                   "construction text: %s"
+                                   % (";".join(builds_on.suggest(raw["construction"],
+                                                                 ctx["references"])) or "none"))
         t = int_field(raw, "t", 1, 31)
         v = int_field(raw, "v", 2, CA_VERIFY_MAX_V)
         k = int_field(raw, "k", 1)
@@ -699,7 +731,7 @@ def build_rows(claims, ctx):
                            cl["raw"]["source_detail"].strip(), ctx["snapshot_id"],
                            cl["sha256"], ctx["stamp"], ctx["date"],
                            table_notes(cl, ctx), "", "",
-                           cl["raw"]["construction"].strip()])
+                           cl["raw"]["construction"].strip(), cl.get("builds_on", "")])
         if cl["status"] == "screened":
             mstatus = "screened"
         else:
@@ -793,6 +825,8 @@ def render_report(claims, ctx, all_pass, elapsed):
             L.append("- sha256 (canonical form): `%s`" % c["sha256"])
         if (c["raw"].get("construction") or "").strip():
             L.append("- construction: %s" % md_cell(c["raw"]["construction"].strip()))
+        if c.get("builds_on"):
+            L.append("- builds on: %s" % md_cell(c["builds_on"]))
         for r in c["reasons"]:
             L.append("- **%s**" % md_cell(r))
         if c["uncovered"]:
@@ -1007,22 +1041,25 @@ def main(argv=None):
             reader = csv.reader(f)
             header = next(reader, [])
             hdr = [h.strip() for h in header]
-            if hdr == OLD_CLAIMS_HEADER:
+            if hdr == PREV_CLAIMS_HEADER and slug not in exempt_slugs():
+                problems.append("claims.csv needs the builds_on column after construction "
+                                "(%s); see submissions/README.md" % ",".join(CLAIMS_HEADER))
+            elif hdr == OLD_CLAIMS_HEADER:
                 problems.append("claims.csv uses the header without the "
                                 "construction column; add it (%s)"
                                 % ",".join(CLAIMS_HEADER))
-            elif hdr != CLAIMS_HEADER:
+            elif hdr not in (CLAIMS_HEADER, PREV_CLAIMS_HEADER):
                 problems.append("claims.csv header must be exactly %s (found %s)"
                                 % (",".join(CLAIMS_HEADER), ",".join(header)))
             else:
                 for n, rec in enumerate(reader, 2):
                     if not any(x.strip() for x in rec):
                         continue
-                    if len(rec) != len(CLAIMS_HEADER):
+                    if len(rec) != len(hdr):
                         problems.append("claims.csv line %d has %d fields, "
-                                        "expected %d" % (n, len(rec), len(CLAIMS_HEADER)))
+                                        "expected %d" % (n, len(rec), len(hdr)))
                         continue
-                    claims.append(dict(raw=dict(zip(CLAIMS_HEADER, rec)), line=n))
+                    claims.append(dict(raw=dict(zip(hdr, rec)), line=n))
         if not claims and not problems:
             problems.append("claims.csv has no claims")
 

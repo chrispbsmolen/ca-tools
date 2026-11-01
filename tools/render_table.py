@@ -53,6 +53,7 @@ summary { cursor:pointer; }
 .stamp { color:var(--mute); font-size:.8rem; display:block; }
 .subhead { font-size:.9rem; margin:.4rem 0; overflow-wrap:anywhere; }
 .lbl { color:var(--mute); font-size:.8rem; margin-right:.3rem; }
+.bo { display:block; color:var(--mute); font-size:.8rem; }
 details.sub > summary { padding:.15rem 0; }
 a { color: inherit; }
 @media (max-width: 480px) { body { font-size:15px; } table { font-size:.82rem; } th, td { padding:.25rem .2rem; } }
@@ -139,6 +140,57 @@ def stamp_html(r):
     return label + head + " (" + ", ".join(links) + ")"
 
 
+REFS = {}       # id -> reference (tools/builds_on.py), filled by main()
+REFS_USED = set()
+
+
+def short_ref(rid):
+    """Author-year label for a reference: 'Paley 1933', 'Colbourn and Zhou
+    2012', 'Sherwood et al. 2006'; the id when the reference cannot be read."""
+    ref = REFS[rid]["reference"]
+    m = re.search(r"\((\d{4})\)", ref) or re.search(r"\b(1[89]\d\d|20\d\d)\b", ref)
+    year = m.group(1) if m else ""
+    head = ref.split(", ")
+    names = []
+    for part in head:
+        for a in part.split(" and "):
+            a = a.strip()
+            if re.fullmatch(r"(?:[A-Z][a-z]?\.(?:-[A-Z]\.)? ?)+[A-Z][\w'-]+(?: [A-Z][\w'-]+)*", a) \
+                    or re.fullmatch(r"Tran Van Trung", a):
+                names.append(a)
+            else:
+                break
+        else:
+            continue
+        break
+    sur = [re.sub(r"^(?:[A-Z][a-z]?\.(?:-[A-Z]\.)? ?)+", "", n) for n in names]
+    if not sur:
+        return rid
+    who = sur[0] if len(sur) == 1 else ("%s and %s" % tuple(sur) if len(sur) == 2
+                                        else sur[0] + " et al.")
+    return (who + " " + year).strip()
+
+
+def builds_on_html(r):
+    """The works a row builds on, as author-year links to the list at the
+    foot of the page, and 'new method' links for a submitter's own method."""
+    out = []
+    for part in (r.get("builds_on") or "").split(";"):
+        part = part.strip()
+        if part in REFS:
+            REFS_USED.add(part)
+            out.append('<a href=#r%d>%s</a>' % (list(REFS).index(part) + 1,
+                                                html.escape(short_ref(part))))
+        elif part.startswith("new "):
+            link = part[4:].strip()
+            url = link if link.startswith("http") else (
+                "https://doi.org/" + link[4:] if link.startswith("doi:") else
+                "https://arxiv.org/abs/" + link[6:] if link.startswith("arXiv:") else "")
+            out.append('<a href="%s">new method</a>' % html.escape(url) if url
+                       else "new method (%s)" % html.escape(link))
+    return ", ".join(out)
+
+
 def construction_of(r):
     """The construction column; for rows that predate it, the source_detail
     of a CITED row is Colbourn's construction label."""
@@ -163,6 +215,7 @@ def submissions_html(subs):
                     reverse=True):
         groups.setdefault(slug_of(r), []).append(r)
     shared_fields = (("credit", credit_of), ("construction", construction_of),
+                     ("builds on", lambda r: r.get("builds_on", "")),
                      ("stamp", lambda r: r["verify_stamp"]), ("entered", lambda r: r["entered"]))
     for slug, rs in groups.items():
         rs = sorted(rs, key=lambda r: (r["t"], r["v"], r["k"]))
@@ -188,7 +241,9 @@ def submissions_html(subs):
                        span(ts), span(vs), html.escape(min(r["entered"] for r in rs))))
         lines = []
         for name, f in shared_fields:
-            show = (lambda r0: stamp_html(r0)) if name == "stamp" else (lambda r0: html.escape(f(r0)))
+            show = ((lambda r0: stamp_html(r0)) if name == "stamp" else
+                    (lambda r0: builds_on_html(r0)) if name == "builds on" else
+                    (lambda r0, f=f: html.escape(f(r0))))
             if uniform[name] and f(rs[0]):
                 lines.append("<span class=lbl>%s</span> %s" % (name, show(rs[0])))
             elif name in common:
@@ -263,6 +318,11 @@ LEGEND = [
     ("notes", "comparison with the previous best as of entry, credit, submission, and supersession "
      "notes; every construction belongs to the sources the row names, and a row whose construction "
      "is this project's own says so"),
+    ("builds_on", "the published work the entry's construction rests on: ids of "
+     "<a href=\"%s/blob/main/table/references.csv\">table/references.csv</a>, shown on this page "
+     "as author-year links to the list at the foot of the page, and 'new' with a link for a "
+     "method of the submitter's own. Empty where the source of a construction is not known; "
+     "never guessed" % REPO_URL),
     ("lb, lb_evidence", "reserved for lower-bound evidence, empty in every row so far"),
     ("construction", "the construction or search that produced the entry, in a researcher's "
      "words; for the baseline it is Colbourn's own label. Where Colbourn's table and a verified "
@@ -313,32 +373,39 @@ def evidence_html(rs):
     lit = [r for r in rs if r["tier"] == "CITED" and r["source_id"] != "S1"]
     parts = []
     if cited and (ver or lit):
-        parts.append('<span class=lbl>Colbourn\'s table</span> %s<br>' %
-                     html.escape(construction_of(cited[0]) or cited[0]["source_detail"]))
+        bo = builds_on_html(cited[0])
+        parts.append('<span class=lbl>Colbourn\'s table</span> %s%s<br>' %
+                     (html.escape(construction_of(cited[0]) or cited[0]["source_detail"]),
+                      '<span class=bo>builds on %s</span>' % bo if bo else ""))
     for r in lit:
         # a size published in a paper, no array in hand (tier CITED, source S7)
         cr = credit_of(r)
         con = construction_of(r)
-        parts.append('<span class="tag lit">published</span>%s%s%s<br>' % (
+        bo = builds_on_html(r)
+        parts.append('<span class="tag lit">published</span>%s%s%s%s<br>' % (
             html.escape(cr + "; ") if cr else "",
             ("<i>%s</i>; " % html.escape(con)) if con else "",
-            html.escape(r["source_detail"])))
+            html.escape(r["source_detail"]),
+            '<span class=bo>builds on %s</span>' % bo if bo else ""))
     vparts = []
     for r in ver:
         cr = credit_of(r)
         con = page_text(construction_of(r))
         crs = constant_rows_of(r)
         vparts.append('<span class="tag ver">verified</span>%s%s%s'
-                     '<span class="stamp">%s, sha256 %s%s</span>' % (
+                     '<span class="stamp">%s%s, sha256 %s%s</span>' % (
                          html.escape(cr + "; ") if cr else "",
                          ("<i>%s</i>; " % html.escape(con)) if con else "",
                          html.escape(r["source_detail"]),
+                         ("builds on %s; " % builds_on_html(r)) if builds_on_html(r) else "",
                          stamp_html(r), html.escape(r["array_sha256"][:12]),
                          (", " + crs) if crs else ""))
     parts.append("".join(vparts))
     if not ver and not lit:
         r = rs[0]
-        parts.append(html.escape(construction_of(r) or r["source_detail"] or r["source_id"]))
+        bo = builds_on_html(r)
+        parts.append(html.escape(construction_of(r) or r["source_detail"] or r["source_id"]) +
+                     ('<span class=bo>builds on %s</span>' % bo if bo else ""))
     return "".join(parts)
 
 
@@ -492,6 +559,19 @@ def render(rows, manifest, date):
                         + html.escape(r["source_detail"]), stamp_html(r),
                         (", " + constant_rows_of(r)) if constant_rows_of(r) else ""))
         H.append("</tbody></table></details>")
+    if REFS_USED:
+        H.append("<h2 id=references>Works the table builds on</h2>")
+        H.append("<p class=\"mute\">Every construction named above, with the paper it comes "
+                 "from. Cite these with the table.</p><ol>")
+        for rid in REFS:                 # file order, which groups related work
+            if rid in REFS_USED:
+                d = REFS[rid]["doi"]
+                link = ("" if not d else ' <a href="%s">%s</a>' % (
+                    "https://arxiv.org/abs/" + d[6:] if d.startswith("arXiv:") else "https://doi.org/" + d,
+                    html.escape(d if d.startswith("arXiv:") else "doi:" + d)))
+                H.append('<li id=r%d>%s%s <span class=mute>(%s)</span></li>'
+                         % (list(REFS).index(rid) + 1, html.escape(REFS[rid]["reference"]), link, rid))
+        H.append("</ol>")
     H.append("</main></body></html>")
     return "\n".join(H) + "\n"
 
@@ -504,6 +584,9 @@ def main():
     a = ap.parse_args()
     date = a.date or datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     rows, manifest = load(a.table_dir)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import builds_on
+    REFS.update(builds_on.load(a.table_dir))
     cp = os.path.join(a.table_dir, "certificates", "CERTIFICATES.csv")
     if os.path.exists(cp):
         with open(cp, newline="", encoding="utf-8") as f:

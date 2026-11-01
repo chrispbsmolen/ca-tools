@@ -48,7 +48,8 @@ CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "
 README = "table/README.md"
 HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id",
           "array_sha256", "verify_stamp", "entered", "notes", "lb", "lb_evidence",
-          "construction"]
+          "construction", "builds_on"]
+REFERENCES = "table/references.csv"
 MANIFEST_HEADER = ["file", "t", "v", "k", "N", "status", "sha256", "source_id",
                    "source_detail", "verify_stamp", "constant_rows"]
 TIERS = {"CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED", "RETRACTED"}
@@ -242,6 +243,47 @@ def check_structure(raw, rows, man):
             if "credit: " not in r["notes"] or not r["construction"].strip() or not r["source_detail"].strip():
                 problem("%s: CITED row %s needs a credit in its notes, a source_detail and a construction"
                         % (TABLE, key))
+
+
+def check_builds_on(rows):
+    """table/references.csv is well formed (header, unique ids, keywords that
+    compile, a reference for every id), and every builds_on in the table lists
+    only its ids and 'new' followed by a link (tools/builds_on.py)."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
+    import builds_on
+    try:
+        with open(REFERENCES, newline="", encoding="utf-8") as f:
+            rd = csv.DictReader(f)
+            if rd.fieldnames != builds_on.HEADER:
+                problem("%s: header is %s, expected %s" % (REFERENCES, rd.fieldnames, builds_on.HEADER))
+                return
+            ids = collections.Counter()
+            for i, r in enumerate(rd, start=2):
+                ids[r["id"]] += 1
+                if not builds_on.ID_RE.match(r["id"]):
+                    problem("%s line %d: id %r is not lowercase words joined by hyphens"
+                            % (REFERENCES, i, r["id"]))
+                if not r["reference"].strip():
+                    problem("%s line %d: id %s has no reference" % (REFERENCES, i, r["id"]))
+                try:
+                    re.compile(r["keywords"])
+                except re.error as e:
+                    problem("%s line %d: keywords do not compile (%s)" % (REFERENCES, i, e))
+            for rid, n in ids.items():
+                if n > 1:
+                    problem("%s: id %s appears %d times" % (REFERENCES, rid, n))
+    except OSError as e:
+        problem("%s: cannot read (%s)" % (REFERENCES, e))
+        return
+    refs = builds_on.load(os.path.dirname(REFERENCES))
+    bad = collections.Counter()
+    for r in rows:
+        if r["builds_on"]:
+            _, _, errs = builds_on.parse(r["builds_on"], refs)
+            for e in errs:
+                bad[e] += 1
+    for e, n in bad.items():
+        problem("%s: builds_on in %d row%s: %s" % (TABLE, n, "" if n == 1 else "s", e))
 
 
 def check_disputed(rows, man):
@@ -647,6 +689,7 @@ def main():
     check_external(rows, man)
     nder = check_derived(rows)
     check_certificates(rows)
+    check_builds_on(rows)
     check_disputed(rows, man)
     check_retracted(rows)
     store = check_sizes()

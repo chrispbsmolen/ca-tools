@@ -3,10 +3,15 @@
 
 A certificate submission is a directory submissions/<slug>/ holding certificates.csv
 
-    t,v,k,N,file,mode,source_detail,construction,credit,notes
+    t,v,k,N,file,mode,source_detail,construction,builds_on,credit,notes
+
+(builds_on as in submissions/README.md; files without that column are still read,
+and get cphf-smc2006 plus the ids their construction text matches)
 
 and the family files it names (the format of tools/cphf/cphfcheck.c: n lines of k integers,
-each a vector of GF(v)^t in base v). mode is "full" (every t-set of columns checked), "cyclic s"
+each a vector of GF(v)^t in base v). mode is "full" (every t-set of columns checked), "fullfast" (the same answer, found by
+projection hashing), "progression" (rows that are affine progressions are certified and the
+check reduced by translation, see tools/cphf/README.md), "cyclic s"
 (the symmetry col -> col + s is certified first, then every t-set with smallest column < s), and
 may end in " affine" (every vector has first coordinate 1; the array then has n (v^t - v) + v
 runs instead of n (v^t - 1) + 1). N must be the size the family gives.
@@ -19,7 +24,7 @@ table/certificates/, lists it in table/certificates/CERTIFICATES.csv and appends
 row (source S7) stamped "cphfcheck <tool hash> <date> <machine> (CPHF certificate, exact)".
 
 Run by the maintainer (exact checks can take hours), not by the pull request check.
-Usage: check_certificates.py SUBMISSION_DIR [--threads N] [--apply]
+Usage: check_certificates.py SUBMISSION_DIR [--threads N] [--apply] [--builds-on VALUE]
 """
 import argparse
 import csv
@@ -38,10 +43,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import check_submission as cs  # noqa: E402
+import builds_on as bo  # noqa: E402
 
-HEADER = ["t", "v", "k", "N", "file", "mode", "source_detail", "construction", "credit", "notes"]
+HEADER = ["t", "v", "k", "N", "file", "mode", "source_detail", "construction", "builds_on", "credit",
+          "notes"]
+# the header before builds_on (2026-11), still read; such claims get
+# builds_on = cphf-smc2006 plus the ids their construction text matches
+PREV_HEADER = ["t", "v", "k", "N", "file", "mode", "source_detail", "construction", "credit", "notes"]
 SRC = os.path.join(HERE, "cphf", "cphfcheck.c")
-MODE_RE = re.compile(r"^(full|cyclic (\d+))( affine)?$")
+MODE_RE = re.compile(r"^(full|fullfast|progression|cyclic (\d+))( affine)?$")
 
 
 class CertError(Exception):
@@ -87,14 +97,38 @@ def stream_hash(exe, fam, t, v, affine, tmp):
     return res["rows"], res["sha"]
 
 
+def claim_builds_on(raw, refs):
+    """builds_on for a certificate claim: as given (checked), or, for the
+    header without the field, the CPHF origin plus the ids the construction
+    text matches. Every array here is a CPHF expansion, so cphf-smc2006 is
+    always included."""
+    if "builds_on" in raw:
+        given = raw["builds_on"]
+        if "cphf-smc2006" not in given.split(";"):
+            given = "cphf-smc2006;" + given if given.strip() else given
+        norm, errs, warns, links = bo.check(given, raw["construction"], refs)
+        if errs:
+            raise CertError("builds_on: " + "; ".join(errs))
+    else:
+        norm, warns = "", []
+    ids = [x for x in norm.split(";") if x]
+    if "cphf-smc2006" not in ids:
+        ids.insert(0, "cphf-smc2006")
+    if "builds_on" not in raw:
+        ids += [x for x in bo.suggest(raw["construction"], refs) if x not in ids]
+    return ";".join(ids), warns
+
+
 def check_claim(raw, sub, exe, threads, ctx, tmp):
+    raw["builds_on_value"], raw["builds_on_warnings"] = claim_builds_on(raw, ctx["refs"])
     for fld in ("file", "mode", "source_detail", "construction", "credit"):
         if not (raw.get(fld) or "").strip():
             raise CertError("certificates.csv field %s is empty" % fld)
     t, v, k, N = (int(raw[x]) for x in ("t", "v", "k", "N"))
     m = MODE_RE.match(raw["mode"].strip())
     if not m:
-        raise CertError("mode %r is not 'full' or 'cyclic s', optionally followed by ' affine'" % raw["mode"])
+        raise CertError("mode %r is not 'full', 'fullfast', 'progression' or 'cyclic s', optionally "
+                        "followed by ' affine'" % raw["mode"])
     affine = bool(m.group(3))
     fname = raw["file"].strip()
     parts = fname.split("/")
@@ -108,12 +142,16 @@ def check_claim(raw, sub, exe, threads, ctx, tmp):
         raise CertError("family file %s is missing" % fname)
     if os.path.getsize(fam) > cs.MAX_FILE_BYTES:
         raise CertError("family file is over the 50 MiB limit")
-    args = [exe, fam, str(t), str(v)] + (["full", str(threads)] if m.group(1) == "full"
-                                          else ["cyclic", m.group(2), str(threads)])
+    mode = m.group(1).split()[0]
+    args = [exe, fam, str(t), str(v)] + ([mode, str(threads)] if mode != "cyclic"
+                                         else ["cyclic", m.group(2), str(threads)])
     p = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
     out = p.stdout.strip().splitlines()
     if p.returncode == 3:
         raise CertError("symmetry not certified: %s" % p.stderr.strip()[:300])
+    if p.returncode == 4:
+        raise CertError("checker internal consistency check failed (a bug, not a verdict): %s"
+                        % " | ".join(out[-3:]))
     if p.returncode != 0:
         raise CertError("not a CPHF: %s" % " | ".join(out[-2:]))
     head = out[0]
@@ -145,17 +183,26 @@ def main(argv=None):
     ap.add_argument("--table-dir", default=os.path.join(REPO, "table"))
     ap.add_argument("--threads", type=int, default=max(1, (os.cpu_count() or 2) - 2))
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--builds-on", default=None,
+                    help="builds_on for every claim of a submission whose certificates.csv "
+                         "has no builds_on column (the maintainer's value, checked like a "
+                         "submitter's)")
     a = ap.parse_args(argv)
     sub = a.submission.rstrip("/"); slug = os.path.basename(sub)
     path = os.path.join(sub, "certificates.csv")
     with open(path, newline="", encoding="utf-8") as f:
         rd = csv.reader(f); hdr = [h.strip() for h in next(rd)]
-        if hdr != HEADER:
+        if hdr not in (HEADER, PREV_HEADER):
             raise SystemExit("certificates.csv header must be %s" % ",".join(HEADER))
-        claims = [dict(zip(HEADER, r)) for r in rd if any(x.strip() for x in r)]
+        claims = [dict(zip(hdr, r)) for r in rd if any(x.strip() for x in r)]
+    if a.builds_on is not None:
+        if hdr != PREV_HEADER:
+            raise SystemExit("--builds-on is only for a certificates.csv without the builds_on column")
+        for c in claims:
+            c["builds_on"] = a.builds_on
     table_path = os.path.join(a.table_dir, "ca_table.csv")
     table_rows = list(csv.DictReader(open(table_path, newline="", encoding="utf-8")))
-    ctx = dict(table_rows=table_rows, known_sha={r["array_sha256"] for r in table_rows if r["array_sha256"]})
+    ctx = dict(refs=bo.load(a.table_dir), table_rows=table_rows, known_sha={r["array_sha256"] for r in table_rows if r["array_sha256"]})
     stamp = "cphfcheck %s %s %s-%s" % (tool_hash(), datetime.date.today().isoformat(), platform.system(),
                                        platform.machine())
     results, ok = [], True
@@ -166,8 +213,11 @@ def main(argv=None):
             try:
                 r = check_claim(raw, sub, exe, a.threads, ctx, tmp); r["passed"] = True
                 ctx["known_sha"].add(r["sha"])
-                print("  PASS %s: %s; array sha256 %s; %s (previous best %s)"
-                      % (raw["file"], r["checked"], r["sha"][:12], r["comparison"], r["prev"]), flush=True)
+                print("  PASS %s: %s; array sha256 %s; %s (previous best %s); builds on %s"
+                      % (raw["file"], r["checked"], r["sha"][:12], r["comparison"], r["prev"],
+                         raw["builds_on_value"]), flush=True)
+                for w in raw["builds_on_warnings"]:
+                    print("    note: builds_on: %s" % w, flush=True)
             except (CertError, ValueError, OSError) as e:
                 r = dict(passed=False, raw=raw); ok = False
                 print("  FAIL %s: %s" % (raw.get("file"), e), flush=True)
@@ -187,12 +237,14 @@ def main(argv=None):
         shutil.copyfile(r["fam"], os.path.join(cdir, name))
         family = "CPHF(%d; %d, %d, %d)%s" % (r["n"], r["k"], r["v"], r["t"], ", affine" if r["mode"].endswith("affine") else "")
         rstamp = stamp + " (CPHF certificate, exact)"
-        notes = ["certificate table/certificates/%s, %s, %s" % (name, family, r["mode"]),
+        notes = ["credit: " + raw["credit"].strip(),
+                 "certificate table/certificates/%s, %s, %s" % (name, family, r["mode"]),
                  "from submissions/%s/certificates.csv" % slug]
         if raw.get("notes", "").strip():
             notes.append(raw["notes"].strip())
         trows.append([r["t"], r["v"], r["k"], r["N"], "VERIFIED", cs.SOURCE_ID, raw["source_detail"].strip(),
-                      slug, r["sha"], rstamp, today, "; ".join(notes), "", "", raw["construction"].strip()])
+                      slug, r["sha"], rstamp, today, "; ".join(notes), "", "", raw["construction"].strip(),
+                      raw["builds_on_value"]])
         crows.append([name, r["t"], r["v"], r["k"], r["N"], family, r["fam_sha"], r["sha"],
                       "%s: %s" % (stamp, r["checked"])])
     eol = "\r\n" if b"\r\n" in open(table_path, "rb").read(4096) else "\n"

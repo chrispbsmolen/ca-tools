@@ -1,2 +1,2 @@
-t,v,k,N,file,source_detail,construction,credit,notes
-2,3,4,9,CA_9_2_4_3.txt,"Textbook orthogonal array OA(9;2,4,3) over GF(3): rows (a, b, a+b, a+2b mod 3) for a, b in 0..2","Orthogonal array OA(9; 2, 4, 3) from the affine plane of order 3","Worked example, ca-tools submissions README",Equals the best known size; shows the format only
+t,v,k,N,file,source_detail,construction,builds_on,credit,notes
+2,3,4,9,CA_9_2_4_3.txt,"Textbook orthogonal array OA(9;2,4,3) over GF(3): rows (a, b, a+b, a+2b mod 3) for a, b in 0..2","Orthogonal array OA(9; 2, 4, 3) from the affine plane of order 3",oa-bose1938,"Worked example, ca-tools submissions README",Equals the best known size; shows the format only
