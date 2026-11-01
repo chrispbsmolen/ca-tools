@@ -541,3 +541,22 @@ random sets of 6 columns, seed 7: every one of the 4096 tuples was present in ev
 control, the first 50,000 rows alone missed tuples in one of 200 sets. The table had 265607 to
 381360 at k = 411 to 781 (`CERTIFICATES.csv` lists the family a second time for this row).
 
+
+## CA(249983; 6, 781, 4) by fusing with two rows removed, 2026-11-01
+
+One S8 row, check method "certificate + fusing". The same certificate as the row above
+(`certificates/CPHF_16_781_5_6.txt`, checked exactly by `../tools/cphf/repcheck_pp.c` and
+`../tools/cphf/gpu/cphfcheck_metal.m`), expanded by `../tools/cphf/cphfcheck.c` (its expansion has
+sha256 346d7a6c..., the hash listed for the CA(249985; 6, 781, 5)), then reduced to 4 symbols with two
+rows removed by `../tools/cphf/fuse2.c`, the full form of Lemma 3.1 of Colbourn, Keri, Rivas Soriano and
+Schlage-Puchta (2010): the first run (all 0) becomes all 4 under the transposition 0 <-> 4 in every
+column and is removed; every remaining 4 in column c is replaced by the entry of the next run in column c
+(0 if that entry is 4), and that run is removed. A tuple over 0..3 covered only by the removed run is
+covered after the replacement by the run that showed it with a 4 in one position. The result has sha256
+c5b9452e... (the row's `array_sha256`) and was spot-checked on 300,000 random sets of 6 columns, seed 7:
+every one of the 4096 tuples in every set. Controls: on CPHF(3; 31, 5, 3) and CPHF(3; 91, 9, 3) the same
+program gives CA(371; 3, 31, 4) and CA(2183; 3, 91, 8), both verified in full by `../ca_verify.c`, and the
+second with its first row removed misses tuples. The table had 249985 at k = 411 to 781 (the fused row of
+2026-10-31) and 249983 at k = 354 to 410 (Torres-Jimenez and Izquierdo-Marquez, CITED).
+
+Rebuild: `cphfcheck certificates/CPHF_16_781_5_6.txt 6 5 expand FIFO` with `fuse2 4 6 0 1 OUT < FIFO`.

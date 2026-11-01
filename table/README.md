@@ -44,10 +44,12 @@ the array files and these documents agree.
   best known size at entry is stored with status `above_best`, and one
   that was screened rather than verified in full with status
   `screened`. File names are `CA_N_t_k_v.txt`, with a hash suffix
-  where two distinct arrays share parameters. A file larger than 50
-  MiB is stored compressed with gzip (`CA_N_t_k_v.txt.gz`, readable by
-  R's `read.table` and Python's `gzip` with nothing extra) when the
-  compressed file is at most 50 MiB; its MANIFEST hash is the hash of
+  where two distinct arrays share parameters. An array that came
+  through the submission check and is larger than 1 MiB as text (since
+  2026-11-01; before that, larger than 50 MiB) is stored compressed with
+  gzip (`CA_N_t_k_v.txt.gz`, gzip header time 0 so the file is
+  reproducible, readable by R's `read.table` and Python's `gzip` with
+  nothing extra) when the compressed file is at most 50 MiB; its MANIFEST hash is the hash of
   the uncompressed canonical text, and the self-test checks the
   decompressed bytes against it. A larger one goes by the archive
   route of `../submissions/README.md` ("Size limits"). The recipe and

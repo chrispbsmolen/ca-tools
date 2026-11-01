@@ -63,6 +63,9 @@ SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,200}$")
 # Larger arrays go by arrangement (submissions/README.md, "Size limits").
 MAX_FILE_BYTES = 50 * 1024 * 1024
 MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
+# Arrays above this size (canonical text) are stored in table/arrays gzip-compressed (CA_N_t_k_v.txt.gz,
+# gzip header time 0, so the file is reproducible); the MANIFEST hash stays the hash of the text.
+GZIP_ABOVE = int(os.environ.get("CA_GZIP_ABOVE", 1024 * 1024))
 CA_VERIFY_MAX_LINE = 65000   # ca_verify reads lines into a 64 KiB buffer
 CA_VERIFY_MAX_V = 127        # ca_verify stores symbols as int8
 
@@ -633,9 +636,23 @@ def canonical_name(cl, taken):
     already used by a different array (table/README.md convention)."""
     base = "CA_%d_%d_%d_%d" % (cl["N"], cl["t"], cl["k"], cl["v"])
     name = base + ".txt"
-    if name in taken and taken[name] != cl["sha256"]:
-        name = "%s_%s.txt" % (base, cl["sha256"][:8])
+    for n in (name, name + ".gz"):
+        if n in taken and taken[n] != cl["sha256"]:
+            name = "%s_%s.txt" % (base, cl["sha256"][:8])
+    if len(cl["canon_text"].encode("utf-8")) > GZIP_ABOVE:
+        name += ".gz"
     return name
+
+
+def write_array(path, text):
+    """plain text, or gzip (header time 0) for a .gz name"""
+    if path.endswith(".gz"):
+        with open(path, "wb") as raw:
+            with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0, compresslevel=9) as g:
+                g.write(text.encode("utf-8"))
+    else:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
 
 
 def previous_text(cl):
@@ -1027,9 +1044,7 @@ def main(argv=None):
             f.write(manifest_csv_text(mrows))
         os.makedirs(os.path.join(out, "arrays"))
         for name, text in files:
-            with open(os.path.join(out, "arrays", name), "w", encoding="utf-8",
-                      newline="\n") as f:
-                f.write(text)
+            write_array(os.path.join(out, "arrays", name), text)
     summary = dict(
         slug=slug, passed=all_pass, date=date, stamp=stamp,
         threads=ctx["threads"], budget_seconds=ctx["budget"],
@@ -1057,9 +1072,7 @@ def main(argv=None):
         append_text(os.path.join(a.table_dir, "MANIFEST.csv"),
                     manifest_csv_text(mrows), "\n")
         for name, text in files:
-            with open(os.path.join(adir, name), "w", encoding="utf-8",
-                      newline="\n") as f:
-                f.write(text)
+            write_array(os.path.join(adir, name), text)
         summary["applied"] = True
         report += ("\nApplied: %d rows appended to `table/ca_table.csv`, %d to "
                    "`table/MANIFEST.csv`, %d files added to `table/arrays/`.\n"
