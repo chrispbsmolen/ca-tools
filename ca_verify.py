@@ -50,7 +50,7 @@ def verify(rows, t, v, max_report=10):
         seen = set()
         for r in rows:
             vals = [r[c] for c in cols]
-            if WILD in vals:
+            if WILD in vals or any(not 0 <= x < v for x in vals):
                 continue
             seen.add(tuple(vals))
         miss = vt - len(seen)
@@ -71,6 +71,12 @@ def main():
     path, t, v = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
     rows = read_array(path)
     n, k = len(rows), len(rows[0])
+    # reject symbols outside 0..v-1, as ca_verify.c does (issue #2): an out-of-range
+    # tuple must not stand in for a missing one
+    bad = [x for r in rows for x in r if x != WILD and not 0 <= x < v]
+    if bad:
+        print(f"symbols out of range for v={v} (saw {min(bad)}..{max(bad)})", file=sys.stderr)
+        return 2
     gaps, mt, ex = verify(rows, t, v)
     if gaps == 0:
         print(f"VERIFIED: CA(N={n}; t={t}, k={k}, v={v})")
