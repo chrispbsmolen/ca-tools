@@ -97,7 +97,10 @@ known N.
 The check posts its report as a comment on the pull request. The
 report gives a verdict for every claim, the reasons for any failure,
 the exact uncovered combination (columns and values) if the array is
-not covering, and timings.
+not covering, and timings. The report usually appears within a few
+minutes of opening the pull request. A maintainer then reviews and
+merges, usually within a few days, and the table updates on its own
+after the merge.
 
 There are two outcomes. If every claim passes, the check passes and
 the comment says so. Nothing is written to your branch. When the pull
