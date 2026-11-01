@@ -1,0 +1,76 @@
+# Post the report of verify-submission.yml on its pull request.
+#
+# verify-submission.yml runs with read-only access (pull_request event), so it
+# saves its report as the artifact "submission-report" instead of commenting.
+# This workflow runs from the base branch (workflow_run) with permission to
+# comment. It never checks out or runs anything from the pull request: it reads
+# the report only as text. The pull request is identified from the API by the
+# head commit of the run, not from the artifact, and its changed paths are
+# checked here again, because a pull request can change verify-submission.yml
+# and so the report itself. A pull request that changes anything outside
+# submissions/<slug>/ gets a FAIL comment and its report is marked untrusted.
+
+name: Verify report
+
+on:
+  workflow_run:
+    workflows: ["Verify submission"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  RUN_ID: ${{ github.event.workflow_run.id }}
+  HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+  CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+  RUN_URL: ${{ github.event.workflow_run.html_url }}
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion != 'cancelled' && github.event.workflow_run.conclusion != 'skipped'
+    steps:
+      - name: Find the pull request of this run (from the API, not the artifact)
+        run: |
+          pr=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
+                 --jq ".[] | select(.head.sha == \"$HEAD_SHA\") | .number" | head -n 1)
+          case "$pr" in ''|*[!0-9]*) echo "No open pull request has head $HEAD_SHA (closed, or pushed again); nothing to post."; exit 0 ;; esac
+          echo "PR=$pr" >> "$GITHUB_ENV"
+
+      - name: Check the changed paths again
+        if: env.PR != ''
+        run: |
+          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --jq '.[].filename' > changed.txt
+          bad=$(grep -v -E '^submissions/[^/]+/' changed.txt || true)
+          bad="$bad"$'\n'"$(grep -E '^submissions/(README\.md|example/)' changed.txt || true)"
+          bad=$(echo "$bad" | sed '/^$/d' | sort -u)
+          : > head.md
+          if [ -n "$bad" ]; then
+            { echo "## Covering array submission check"; echo
+              echo "**FAIL.** A submission pull request may only add files under \`submissions/<slug>/\`. These paths are outside it:"
+              echo; echo "$bad" | sed 's/^/- `/; s/$/`/'
+              echo; echo "Because of that, the report below came from a workflow this pull request could change, and it is not trusted."
+              echo; } > head.md
+          fi
+
+      - name: Get the report (text only)
+        if: env.PR != ''
+        run: |
+          mkdir -p report
+          if gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" -n submission-report -D report 2>/dev/null \
+             && [ -f report/comment.md ] && [ "$(cat report/head_sha.txt 2>/dev/null)" = "$HEAD_SHA" ]; then
+            head -c 60000 report/comment.md > body.md
+          else
+            echo "The check stopped before producing a report ($CONCLUSION); see $RUN_URL" > body.md
+          fi
+
+      - name: Comment on the pull request
+        if: env.PR != ''
+        run: |
+          cat head.md body.md > comment.md
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md

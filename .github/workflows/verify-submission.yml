@@ -1,28 +1,33 @@
 # Verify covering array submissions (see submissions/README.md).
 #
-# Runs on pull requests that touch submissions/**. It uses the
-# pull_request_target event so that it can comment on pull requests
-# from forks too. This workflow never executes anything from the pull
-# request: the tools, the verifier and the table come from the base
-# branch (checkout "base"), and the pull request is fetched with plain
-# git from refs/pull/<n>/head into "pr" and only read as data
-# (actions/checkout refuses fork code under pull_request_target).
+# Runs on pull requests that touch submissions/**, with the pull_request
+# event and read-only access (GitHub disables pull_request_target on public
+# repositories from 2 December 2026). The tools, the verifier and the table
+# come from the base commit of the pull request (checkout "base"); the pull
+# request is fetched with plain git from refs/pull/<n>/head into "pr" and
+# only read as data. Pull requests from first-time contributors wait for a
+# maintainer to approve the run.
 #
-# The check only reports. It writes nothing to any branch, so it needs no
-# write access to the repository. The table rows are added after merge, by
-# table-page.yml on main, which checks the submission again against the
-# table at that moment (one submission at a time, so rows never collide).
+# This workflow cannot comment (read-only). It saves the report as the
+# artifact "submission-report"; verify-report.yml (workflow_run, base
+# branch, write access) posts it. Because a pull request can change this
+# file, verify-report.yml checks the changed paths itself from the API and
+# marks the report untrusted if anything outside submissions/<slug>/ changed.
+#
+# The check only reports. The table rows are added after merge, by
+# table-page.yml on main, which checks the submission again with the
+# trusted tools against the table at that moment.
 
 name: Verify submission
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened]
     paths: ["submissions/**"]
 
 permissions:
   contents: read
-  pull-requests: write
+  pull-requests: read
 
 concurrency:
   group: submission-${{ github.event.pull_request.number }}
@@ -36,6 +41,7 @@ env:
   SCREEN_THRESHOLD: "1e10"      # C(k,t) * v^t above this: screen instead
   PR: ${{ github.event.pull_request.number }}
   HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+  BASE_SHA: ${{ github.event.pull_request.base.sha }}
   GH_TOKEN: ${{ github.token }}
 
 jobs:
@@ -43,9 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 340
     steps:
-      - name: Check out the trusted tools and table (base branch)
+      - name: Check out the tools and table (base commit of the pull request)
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.base.sha }}
           path: base
           persist-credentials: false
 
@@ -122,16 +129,26 @@ jobs:
           { echo
             echo "Every claim passed. When this pull request is merged, the table workflow on main checks the submission again against the table at that moment and adds its rows, with the credit given in claims.csv. Nothing else is needed from you."; } >> comment.md
 
-      - name: Comment on the pull request
+      - name: Save the report for verify-report.yml
         if: always()
         run: |
+          mkdir -p report
           [ -s comment.md ] || echo "The check stopped before producing a report; see $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" > comment.md
           if [ "$(wc -c < comment.md)" -gt 60000 ]; then
-            head -c 60000 comment.md > c.md
-            printf '\n\n(report truncated; the full report is in the run log)\n' >> c.md
-            mv c.md comment.md
+            head -c 60000 comment.md > report/comment.md
+            printf '\n\n(report truncated; the full report is in the run log)\n' >> report/comment.md
+          else
+            cp comment.md report/comment.md
           fi
-          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+          printf '%s\n' "$PR" > report/pr.txt
+          printf '%s\n' "$HEAD_SHA" > report/head_sha.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: submission-report
+          path: report/
+          retention-days: 7
 
       - name: Fail unless every claim passed
         run: '[ "$STATUS" = "0" ]'
