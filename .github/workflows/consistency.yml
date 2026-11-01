@@ -22,13 +22,18 @@ jobs:
         with:
           fetch-depth: 0
       - name: Consistency (and append-only against the target branch)
-        # compare with the base the pull request was tested against (its base
-        # commit), not with the newest main, which may have moved on since
+        # compare with the commit the pull request branched from (the merge base of
+        # the checked-out commit and the base branch), never with a newer main: rows
+        # that main gained after the branch was cut are not rows the PR removed
         env:
           PR_BASE: ${{ github.event.pull_request.base.sha }}
         run: |
-          base="$PR_BASE"
-          [ -n "$base" ] || base=$(git merge-base HEAD origin/main)
+          if [ -n "$PR_BASE" ]; then
+            base=$(git merge-base HEAD "$PR_BASE" 2>/dev/null || echo "$PR_BASE")
+          else
+            base=$(git merge-base HEAD origin/main)
+          fi
+          echo "comparing with $base"
           python3 tools/consistency.py --check --pr --base "$base"
       - name: Self-test
         run: python3 tools/check_submission.py --selftest --table-dir table > /dev/null
