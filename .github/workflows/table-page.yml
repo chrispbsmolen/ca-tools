@@ -1,15 +1,20 @@
-# After every push to main: add the table rows of any submission merged in
-# this push (submissions/<slug>/claims.csv added since the previous commit),
-# checking each submission again against the table at that moment;
-# regenerate the R data file and the generated counts in table/README.md
-# from table/ca_table.csv, rebuild the page docs/index.html (served by
-# GitHub Pages from docs/ on main), run the consistency checks and the
-# self-test, and commit what changed. Runs never overlap (concurrency
-# group), and each starts from the newest main, so submissions are added
-# one at a time and their rows never collide. A submission that no longer
-# passes is not added; its pull request gets the report as a comment. If a
-# check fails the run turns red, GitHub emails the person who pushed, and
-# nothing is committed.
+# After every push to main (and on a manual run): add the table rows of
+# every merged submission that is not in the table yet, i.e. every
+# submissions/<slug>/claims.csv whose slug no table row names ("submission
+# <slug>" in the notes) and that has no NOT_APPLIED.md. Each is checked
+# again against the table at that moment. This does not depend on which
+# push started the run, so a run that GitHub cancels while it waits (the
+# concurrency group keeps one pending run) loses nothing: the next run
+# picks the submission up. Then regenerate the R data file and the
+# generated counts in table/README.md from table/ca_table.csv, rebuild the
+# page docs/index.html (served by GitHub Pages from docs/ on main), run the
+# consistency checks and the self-test, and commit what changed. Runs never
+# overlap, and each starts from the newest main, so submissions are added
+# one at a time and their rows never collide. A submission that does not
+# pass on main is not added: its report is committed as
+# submissions/<slug>/NOT_APPLIED.md (delete that file to try again) and its
+# pull request gets the report as a comment. If a check fails the run turns
+# red, GitHub emails the person who pushed, and nothing is committed.
 
 name: Table page
 
@@ -30,7 +35,7 @@ env:
   # GitHub-hosted runner: 2 cores, 6 hour job limit.
   THREADS: "2"
   BUDGET_MINUTES: "15"          # per array
-  TOTAL_BUDGET_MINUTES: "300"   # all submissions in this push
+  TOTAL_BUDGET_MINUTES: "300"   # all submissions in this run
   SCREEN_THRESHOLD: "1e10"
   GH_TOKEN: ${{ github.token }}
   BEFORE: ${{ github.event.before }}
@@ -44,23 +49,30 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Add the rows of submissions merged in this push
+      - name: Add the rows of merged submissions not yet in the table
         run: |
           : > applied.txt
-          if [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
-            echo "No previous commit to compare with (manual run or new branch): no submission is added."
-            exit 0
-          fi
-          slugs=$(git diff --name-only --diff-filter=A "$BEFORE" "$GITHUB_SHA" -- 'submissions/*/claims.csv' |
-                  sed -n 's#^submissions/\([A-Za-z0-9._-]*\)/claims\.csv$#\1#p' | grep -v '^example$' | sort -u)
-          [ -n "$slugs" ] || { echo "No new submission in this push."; exit 0; }
+          slugs=""
+          for f in submissions/*/claims.csv; do
+            [ -f "$f" ] || continue
+            slug=$(basename "$(dirname "$f")")
+            case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
+            [ -f "submissions/$slug/NOT_APPLIED.md" ] && continue
+            if grep -qE "submission ${slug//./\\.}([;,\"])" table/ca_table.csv; then continue; fi
+            slugs="$slugs $slug"
+          done
+          [ -n "$slugs" ] || { echo "Every merged submission is in the table."; exit 0; }
+          echo "Not yet in the table:$slugs"
           cc -O3 -pthread -o ca_verify ca_verify.c
           cc -O2 -o tools/constant_rows tools/constant_rows.c
-          pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" --jq '.[0].number' 2>/dev/null || true)
-          case "$pr" in ''|*[!0-9]*) pr="" ;; esac
           stamp=$(git rev-parse --short HEAD)
           start=$(date +%s)
           for slug in $slugs; do
+            # the pull request that added this submission (not the one that started the run)
+            added=$(git log --diff-filter=A --format=%H -n 1 -- "submissions/$slug/claims.csv")
+            pr=""
+            [ -n "$added" ] && pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$added/pulls" --jq '.[0].number' 2>/dev/null || true)
+            case "$pr" in ''|*[!0-9]*) pr="" ;; esac
             left=$(( TOTAL_BUDGET_MINUTES - ($(date +%s) - start) / 60 ))
             if python3 tools/check_submission.py "submissions/$slug" \
                  --table-dir table --ca-verify ./ca_verify --threads "$THREADS" \
@@ -72,6 +84,7 @@ jobs:
             else
               echo "::warning::submission $slug did not pass on main and was not added; see the run summary"
               msg="Merged, but \`$slug\` did not pass when checked again on main at $stamp, so nothing was added to the table. Report below."
+              { echo "# Not added to the table"; echo; echo "Checked again on main at $stamp; it did not pass. Delete this file to try again."; echo; cat "out/$slug/report.md"; } > "submissions/$slug/NOT_APPLIED.md"
             fi
             cat "out/$slug/report.md" >> "$GITHUB_STEP_SUMMARY"
             if [ -n "$pr" ]; then
@@ -101,6 +114,7 @@ jobs:
       - name: Commit what changed
         run: |
           git add docs/index.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays
+          git add submissions/*/NOT_APPLIED.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing changed."
             exit 0
