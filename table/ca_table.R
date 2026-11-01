@@ -19,7 +19,7 @@ load_ca_table <- function(path = "ca_table.csv") {
 ## "certificate" or "certificate + fusing" (NA for other tiers); mirrors
 ## check_method() in ca_table.py
 check_method <- function(tab) {
-    cert <- grepl("^repcheck(_pp)? ", tab$verify_stamp)
+    cert <- grepl("^(repcheck(_pp)?|cphfcheck) ", tab$verify_stamp)
     ifelse(tab$tier != "VERIFIED", NA_character_,
            ifelse(cert & grepl("fused", tab$verify_stamp), "certificate + fusing",
                   ifelse(cert, "certificate", "direct")))
@@ -43,6 +43,21 @@ best_known <- function(tab, t, v, k, methods = NULL) {
     s <- s[s$t == t & s$v == v & s$k >= k, ]
     if (nrow(s) == 0) return(NA_real_)
     min(s$N)
+}
+
+## the same, also over derived.csv (tools/derive_table.py): sizes that follow from
+## the counted rows by published constructions; computed sizes, not arrays
+load_derived <- function(path = "derived.csv") {
+    if (!file.exists(path)) return(NULL)
+    utils::read.csv(path, stringsAsFactors = FALSE)
+}
+best_derived <- function(tab, derived, t, v, k, methods = NULL) {
+    b <- best_known(tab, t, v, k, methods)
+    if (!is.null(derived)) {
+        d <- derived[derived$t == t & derived$v == v & derived$k >= k, ]
+        if (nrow(d) > 0) b <- min(c(b, d$N), na.rm = TRUE)
+    }
+    b
 }
 
 verified_rows <- function(tab, t = NULL, v = NULL) {

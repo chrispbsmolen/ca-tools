@@ -142,6 +142,36 @@ stored family passed it; the results are at the end of RUNS.txt.
     clang -O2 -fobjc-arc -framework Metal -framework Foundation -o cphfcheck_metal cphfcheck_metal.m
     ./cphfcheck_metal ../../../table/certificates/CPHF_13_2801_7_5.txt 5 7 1     # FILE t q s
 
+## The general certificate checker (cphfcheck.c, since 2026-11-01)
+
+`cphfcheck.c` checks any CPHF(n; k, q, t) with q a prime or a prime power
+up to 32 (4, 8, 9, 16, 25, 27, 32 by Conway polynomials) and t up to 8,
+for submitted certificates (`../check_certificates.py`). It was written
+independently of `repcheck_pp.c` and decides coverage another way: for a
+prefix of t - 1 columns it reduces their vectors by Gaussian elimination
+and solves for the normal w of their span; the t-set with last column c
+is covered in a row iff w . v[c] != 0. Modes: `full` (every t-set),
+`cyclic s` (the symmetry col -> col + s solved for and checked in every
+row, then the t-sets with smallest column < s), `sample S seed` (a
+screen, never used to enter a row), and `expand OUT [affine]`, which
+writes the covering array in the order of `cphf_tools_pp.c expand` (the
+same hashes) or, for affine families, the n(q^t - q) + q array of
+Sherwood, Martirosyan and Colbourn.
+
+Tests (2026-11-01): on seven cyclic families (q = 4, 5, 7, 8, 9, 16 at
+t = 3) it agrees with `repcheck_pp.c` in full and cyclic mode, and its
+expansion has the same SHA-256 as `cphf_tools_pp.c expand`; on random
+families for q = 2, 3, 4, 5, 7, 8, 9, 16, 17, 19, 23, 25, 27, 32 its
+uncovered counts equal those of an independent Python brute force with
+its own field arithmetic (`tests/cphfcheck_brute_test.py`); a family
+with one entry changed fails the cyclic certificate; an affine expansion
+is verified by `ca_verify` and has no repeated run.
+
+    gcc -O3 -fopenmp -o cphfcheck cphfcheck.c
+    ./cphfcheck FAMILY t q full 14
+    ./cphfcheck FAMILY t q cyclic s 14
+    ./cphfcheck FAMILY t q expand CA.txt [affine]
+
 ## Credits and bounds
 
 The CPHF method and the CPHF-to-CA construction are those of Sherwood,
