@@ -113,6 +113,22 @@ the array files and these documents agree.
   program could not be built). Whether an array splits into the
   blocks a product construction needs (its partition profile) is not
   computed; it is recorded only when the construction states it.
+- `derived.csv` - generated, never edited by hand: sizes that follow from the
+  counted rows by published constructions (fusing symbols, deriving a strength,
+  composition, Chateauneuf-Kreher doubling, CMTW Thm 3.4, k-ary Roux with Yin's
+  DCAN values, Power CT, direct product, ordered design, Shokri-Moura), at the
+  points where they are below the counted lookup. One line per point with the
+  construction and its arithmetic, every ingredient written CAN(t,k,v)=N.
+  Recomputed from scratch by `../tools/derive_table.py` on every push to main and
+  checked line by line by `../tools/consistency.py` without that program. These
+  are computed sizes, not arrays: they are never part of the counted rows, and
+  `best_derived()` in `ca_table.py` / `ca_table.R` is the lookup that includes
+  them. The page lists them on `derived.html`.
+- `EXTERNAL.csv` - one row per array kept in a public deposit instead of
+  `arrays/` (too large for the repository): its SHA-256, parameters, size in
+  bytes, location (https URL, or zip URL `::` member), status and the stamp of
+  the check by `tools/external_array.py`. Each has a VERIFIED or SCREENED row
+  in `ca_table.csv` with the same hash.
 - `VERIFICATION_LOG.md` - the record of the verification runs that
   produced the stamps.
 - `verify_pipeline.R` - the canonicalization, hashing, and

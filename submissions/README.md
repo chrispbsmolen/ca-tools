@@ -161,14 +161,67 @@ GitHub's web page accepts uploads only up to 25 MiB per file, so an
 array file larger than that has to be added with git from your own
 machine.
 
-An array too large for these limits can still enter the table, by
-arrangement. Open an issue describing it. The array is then deposited
-in a public archive that issues a DOI, verified in full by a
-maintainer on a larger machine with `ca_verify`, and recorded as a
-table row whose `source_detail` is the archive link, with the SHA-256
-of its canonical form and the stamp of that verification. The table
-then names the exact array and how it was checked without holding a
-copy.
+An array too large for these limits can still enter the table. It stays
+in a public deposit (a Zenodo record, or a release of this repository),
+and the submission names it in `submissions/<slug>/external.csv`
+instead of adding the file:
+
+    t,v,k,N,location,sha256,source_detail,construction,credit,notes
+
+`location` is the https URL of the file, or of a zip archive followed by
+`::` and the member name, for example
+`https://zenodo.org/records/123/files/arrays.zip::part1/CA_x.txt`.
+`sha256` is the SHA-256 of the array's canonical form (0-based, single
+spaces, `NA` for don't-care, a line feed after every row), the same
+hash the check reports for an ordinary submission. The other fields are
+as in `claims.csv`.
+
+The pull request check does not download these. A maintainer runs
+`python3 tools/external_array.py submissions/<slug>` on a larger
+machine. It downloads each file, rebuilds the canonical form as a
+stream, compares the hash, runs `ca_verify` at strength t (in full
+within the time budget, otherwise on the same deterministic column
+windows as the pull request check, which gives SCREENED), compares the
+size with the table, and with `--apply` adds the rows and an entry in
+`table/EXTERNAL.csv`. The table then names the exact array, where it is
+and how it was checked, without holding a copy, and the page links to
+the deposit. Anyone can fetch and confirm an external array with
+`python3 tools/external_array.py --fetch LOCATION SHA256 OUT`.
+
+## Certificates: covering perfect hash families
+
+A covering array given by a covering perfect hash family (CPHF) can be
+submitted as the family instead of the array. The submission holds
+`submissions/<slug>/certificates.csv`
+
+    t,v,k,N,file,mode,source_detail,construction,credit,notes
+
+and the family files it names, each at most 50 MiB: n lines of k
+integers, each integer a vector of GF(v)^t written in base v, most
+significant digit first (for v = p^e the digits are field elements
+coded as in `../tools/cphf/cphfcheck.c`, Conway polynomials; v up to 32,
+t up to 8). `mode` says how the family is checked: `full` (every set of
+t columns), or `cyclic s` (the shift of columns by s is a symmetry of
+every row, certified by the checker before it relies on it, and then
+every t-set whose smallest column is below s is checked). Either may end
+in ` affine` when every vector has first coordinate 1 (points of an
+affine space); the array then has n(v^t - v) + v runs instead of
+n(v^t - 1) + 1. N must be the size the family gives.
+
+The pull request check does not run these, because an exact check can
+take hours. A maintainer runs
+`python3 tools/check_certificates.py submissions/<slug>`. It checks every
+family exactly with `../tools/cphf/cphfcheck.c` (never by sampling),
+expands it to the covering array in the table's canonical form and hashes
+it as a stream, and compares N with the table. With `--apply` the family
+goes to `table/certificates/`, is listed in `CERTIFICATES.csv`, and the
+array enters as a VERIFIED row whose stamp begins `cphfcheck`, with the
+array's SHA-256. Anyone can rebuild the array from the family with
+`cphfcheck FILE t v expand OUT [affine]` and compare the hash.
+
+A family with no symmetry the checker can use, and too many t-sets to
+check every one, cannot enter as VERIFIED. Write first (an issue), so
+that the check can be planned.
 
 ## Large arrays: the screened status
 

@@ -20,7 +20,9 @@ matched to each other, the table's structure is checked, the generated counts
 are compared with the data, and every relative link and repository path named
 in the Markdown documents is checked to exist.
 """
+import bisect
 import collections
+import math
 import csv
 import os
 import re
@@ -35,6 +37,13 @@ MANIFEST = "table/MANIFEST.csv"
 ARRAYS = "table/arrays"
 CERTS = "table/certificates"
 CERT_LIST = "table/certificates/CERTIFICATES.csv"
+DERIVED = "table/derived.csv"
+DERIVED_HEADER = ["t", "v", "k", "N", "lookup_N", "gain_pct", "law", "arithmetic", "round"]
+DERIVED_LAWS = {"fuse", "derive", "comp", "CK", "CMTW34", "kRoux", "PCT", "DP2", "OD", "SM"}
+EXTERNAL = "table/EXTERNAL.csv"
+EXTERNAL_HEADER = ["sha256", "t", "v", "k", "N", "bytes", "location", "status",
+                   "source_detail", "verify_stamp"]
+EXTERNAL_HOSTS = ("zenodo.org", "github.com", "objects.githubusercontent.com")
 CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "check"]
 README = "table/README.md"
 HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id",
@@ -388,14 +397,14 @@ def check_certificates(rows):
         if not match:
             problem("%s: %s has no VERIFIED row with the same t, v, k, N and array_sha256"
                     % (CERT_LIST, c["file"]))
-        elif (match[0]["verify_stamp"].startswith(("repcheck ", "repcheck_pp "))
+        elif (match[0]["verify_stamp"].startswith(("repcheck ", "repcheck_pp ", "cphfcheck "))
               and not c["check"].startswith(match[0]["verify_stamp"].split(" (")[0])):
             problem("%s: %s: the check %r does not start with the row's stamp %r"
                     % (CERT_LIST, c["file"], c["check"][:40], match[0]["verify_stamp"]))
     # the other way: a row checked through a certificate has its certificate listed
     csha = {(c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) for c in certs}
     for r in rows:
-        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith(("repcheck ", "repcheck_pp ")):
+        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith(("repcheck ", "repcheck_pp ", "cphfcheck ")):
             if (r["t"], r["v"], r["k"], r["N"], r["array_sha256"]) not in csha:
                 problem("%s: VERIFIED row %s,%s,%s,%s is stamped by repcheck but has no certificate in %s"
                         % (TABLE, r["t"], r["v"], r["k"], r["N"], CERT_LIST))
@@ -424,6 +433,134 @@ def check_arrays(rows, man):
                     "t, v, k, N" % (MANIFEST, m["file"], m["sha256"][:12]))
         if m["status"] not in ("equals_best", "exceeds_snapshot", "above_snapshot", "above_best", "screened"):
             problem("%s: %s has unknown status %r" % (MANIFEST, m["file"], m["status"]))
+
+
+def _stairs(points):
+    """{(t,v): (sorted ks, suffix minima)} from {(t,v,k): N}"""
+    by = collections.defaultdict(dict)
+    for (t, v, k), n in points.items():
+        by[(t, v)][k] = min(n, by[(t, v)].get(k, n))
+    out = {}
+    for tv, d in by.items():
+        ks = sorted(d); suf = [0] * len(ks); m = 10 ** 30
+        for i in range(len(ks) - 1, -1, -1):
+            m = min(m, d[ks[i]]); suf[i] = m
+        out[tv] = (ks, suf)
+    return out
+
+
+def _look(st, t, k, v):
+    if t <= 0: return 1
+    if t == 1: return v
+    if k < t: return 0
+    if k == t: return v ** t
+    if (t, v) not in st: return None
+    ks, suf = st[(t, v)]
+    i = bisect.bisect_left(ks, k)
+    return suf[i] if i < len(ks) else None
+
+
+def check_derived(rows):
+    """table/derived.csv (tools/derive_table.py), checked without the engine: every line is
+    below the counted lookup, names a published construction, and its arithmetic, with every
+    ingredient equal to the lookup (counted or derived) at that point, gives its N."""
+    if not os.path.exists(DERIVED):
+        return 0
+    der = list(csv.DictReader(open(DERIVED, newline="", encoding="utf-8")))
+    if der and list(der[0].keys()) != DERIVED_HEADER:
+        problem("%s: header differs from %s" % (DERIVED, ",".join(DERIVED_HEADER)))
+        return 0
+    cnt = {}
+    for r in counted(rows):
+        key = (int(r["t"]), int(r["v"]), int(r["k"])); n = int(float(r["N"]))
+        cnt[key] = min(n, cnt.get(key, n))
+    st0 = _stairs(cnt)
+    comb = dict(cnt)
+    for d in der:
+        key = (int(d["t"]), int(d["v"]), int(d["k"])); n = int(d["N"])
+        comb[key] = min(n, comb.get(key, n))
+    st1 = _stairs(comb)
+    tok = re.compile(r"CAN\((\d+),(\d+),(\d+)\)=(\d+)")
+    for d in der:
+        t, v, k, n = int(d["t"]), int(d["v"]), int(d["k"]), int(d["N"])
+        where = "%s: %d,%d,%d,%d" % (DERIVED, t, v, k, n)
+        if d["law"] not in DERIVED_LAWS:
+            problem("%s: unknown construction %r" % (where, d["law"])); continue
+        l0 = _look(st0, t, k, v)
+        if l0 is None or n >= l0 or int(d["lookup_N"]) != l0:
+            problem("%s: not below the counted lookup %s (line says %s)" % (where, l0, d["lookup_N"])); continue
+        expr = d["arithmetic"]
+        bad = []
+        def sub(m):
+            tt, kk, vv, x = (int(g) for g in m.groups())
+            if _look(st1, tt, kk, vv) != x:
+                bad.append("CAN(%d,%d,%d)=%d but the lookup is %s" % (tt, kk, vv, x, _look(st1, tt, kk, vv)))
+            return str(x)
+        expr = tok.sub(sub, expr)
+        if bad:
+            problem("%s: %s" % (where, "; ".join(bad))); continue
+        expr = re.sub(r", q=\d+, e=\d+, p=\d+$", "", expr)              # PCT parameters
+        expr = re.sub(r"^M=(\d+) x", r"\1 x", expr)                     # PCT copies
+        expr = re.sub(r"DCAN\(2,\d+,\d+\)=(\d+) \(Yin 2003, [^)]*\)", r"\1", expr)
+        expr = re.sub(r"2q\^2-q=(\d+)", r"\1", expr)                    # Shokri-Moura cap
+        expr = re.sub(r"C\((\d+)\+1,2\)", lambda m: str(math.comb(int(m.group(1)) + 1, 2)), expr)
+        expr = re.sub(r"^floor\((.*) / (\d+)\)$", r"(\1)//(\2)", expr)
+        expr = expr.replace("x", "*").replace("^", "**")
+        if not re.fullmatch(r"[0-9+\-*/() ,min]*", expr):
+            problem("%s: arithmetic not understood: %s" % (where, d["arithmetic"])); continue
+        try:
+            val = eval(expr, {"__builtins__": {}}, {"min": min})
+        except Exception as e:  # noqa: BLE001
+            problem("%s: arithmetic %r failed: %s" % (where, d["arithmetic"], e)); continue
+        if val != n:
+            problem("%s: arithmetic gives %s" % (where, val))
+    return len(der)
+
+
+def check_external(rows, man):
+    """table/EXTERNAL.csv: arrays kept in a public deposit (tools/external_array.py)."""
+    if not os.path.exists(EXTERNAL):
+        return
+    raw = open(EXTERNAL, "rb").read()
+    if b"\r" in raw:
+        problem("%s: contains CR characters; the file is LF throughout" % EXTERNAL)
+    ext = list(csv.DictReader(open(EXTERNAL, newline="", encoding="utf-8")))
+    hdr = raw.split(b"\n", 1)[0].decode("utf-8", "replace").split(",")
+    if hdr != EXTERNAL_HEADER:
+        problem("%s: header differs from %s" % (EXTERNAL, ",".join(EXTERNAL_HEADER)))
+        return
+    msha = {m["sha256"] for m in man}
+    bysha = collections.defaultdict(list)
+    for r in rows:
+        if r["array_sha256"]:
+            bysha[r["array_sha256"]].append(r)
+    seen = collections.Counter(e["sha256"] for e in ext)
+    for e in ext:
+        sha = e["sha256"]
+        if not HEX64.match(sha):
+            problem("%s: sha256 %r is not 64 lower-case hex digits" % (EXTERNAL, sha))
+            continue
+        if seen[sha] > 1:
+            problem("%s: sha256 %s listed %d times" % (EXTERNAL, sha[:12], seen[sha]))
+        if sha in msha:
+            problem("%s: %s is also in %s; an array is either in the repository or external"
+                    % (EXTERNAL, sha[:12], MANIFEST))
+        match = [r for r in bysha.get(sha, []) if r["tier"] in ("VERIFIED", "SCREENED")
+                 and (r["t"], r["v"], r["k"], r["N"]) == (e["t"], e["v"], e["k"], e["N"])]
+        if not match:
+            problem("%s: %s has no VERIFIED or SCREENED table row with the same t, v, k, N"
+                    % (EXTERNAL, sha[:12]))
+        elif any((r["tier"] == "VERIFIED") != (e["status"] == "verified") for r in match):
+            problem("%s: %s status %s does not match the tier of its table row"
+                    % (EXTERNAL, sha[:12], e["status"]))
+        if e["status"] not in ("verified", "screened"):
+            problem("%s: %s has unknown status %r" % (EXTERNAL, sha[:12], e["status"]))
+        base = e["location"].split("::", 1)[0]
+        mm = re.match(r"^https://([A-Za-z0-9.-]+)/\S+$", base)
+        if not mm or not any(mm.group(1).lower() == h or mm.group(1).lower().endswith("." + h)
+                             for h in EXTERNAL_HOSTS):
+            problem("%s: %s location %r is not an https URL on %s"
+                    % (EXTERNAL, sha[:12], e["location"], ", ".join(EXTERNAL_HOSTS)))
 
 
 LINK = re.compile(r"\]\(([^)\s]+)\)")
@@ -507,6 +644,8 @@ def main():
         return 2
     check_structure(raw, rows, man)
     check_arrays(rows, man)
+    check_external(rows, man)
+    nder = check_derived(rows)
     check_certificates(rows)
     check_disputed(rows, man)
     check_retracted(rows)
@@ -529,8 +668,8 @@ def main():
                     % README)
     for p in problems:
         print("PROBLEM  " + p)
-    print("consistency: %d rows, %d arrays, %.0f MB stored, %d problems"
-          % (c["rows"], c["arrays"], store / 1e6, len(problems)))
+    print("consistency: %d rows, %d arrays, %.0f MB stored, %d derived points, %d problems"
+          % (c["rows"], c["arrays"], store / 1e6, nder, len(problems)))
     return 1 if problems else 0
 
 

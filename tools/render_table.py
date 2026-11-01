@@ -97,6 +97,8 @@ def constant_rows_of(r):
 
 SHA2FILE = {}
 SHA2CERT = {}
+SHA2EXT = {}      # table/EXTERNAL.csv: arrays kept in a public deposit
+DERIVED_COUNT = [0]   # lines of table/derived.csv
 CERT_URL = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/certificates/"
 LOG_URL = REPO_URL + "/blob/main/table/VERIFICATION_LOG.md"
 ARRAY_URL = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/"
@@ -109,7 +111,7 @@ def stamp_html(r):
     st = r.get("verify_stamp") or ""
     m = re.match(r"^(caverify) (\S+)(.*)$", st)
     m2 = re.match(r"^(ca_verify) ([0-9a-f]{7,40})(.*)$", st)
-    m3 = re.match(r"^(repcheck|repcheck_pp) ([0-9a-f]{12})(.*)$", st)
+    m3 = re.match(r"^(repcheck|repcheck_pp|cphfcheck) ([0-9a-f]{12})(.*)$", st)
     if m:
         head = '<a href="https://cran.r-project.org/package=caverify">%s %s</a>%s' % (
             m.group(1), html.escape(m.group(2)), html.escape(m.group(3)))
@@ -125,6 +127,9 @@ def stamp_html(r):
     f = SHA2FILE.get(r.get("array_sha256") or "")
     if f:
         links.append('<a href="%s%s">%s</a>' % (ARRAY_URL, html.escape(f), "array, gzip" if f.endswith(".gz") else "array"))
+    x = SHA2EXT.get(r.get("array_sha256") or "")
+    if x:
+        links.append('<a href="%s">array, in deposit</a>' % html.escape(x.split("::", 1)[0], quote=True))
     c = SHA2CERT.get(r.get("array_sha256") or "")
     if c:
         links.append('<a href="%s%s">certificate</a>' % (CERT_URL, html.escape(c)))
@@ -212,6 +217,8 @@ def submissions_html(subs):
             cf = SHA2CERT.get(r.get("array_sha256") or "")
             tag = tag + note + ('<span class=stamp><a href="%s%s">array</a></span>' % (ARRAY_URL, html.escape(af)) if af else "")
             tag = tag + ('<span class=stamp><a href="%s%s">certificate</a></span>' % (CERT_URL, html.escape(cf)) if cf else "")
+            xf = SHA2EXT.get(r.get("array_sha256") or "")
+            tag = tag + ('<span class=stamp><a href="%s">array, in deposit</a></span>' % html.escape(xf.split("::", 1)[0], quote=True) if xf else "")
             out.append("<tr><td class=n>%d</td><td class=n>%d</td><td class=n>%d</td>"
                        "<td class=n>%d</td><td class=n>%s</td><td class=n>%s</td><td>%s</td>%s</tr>"
                        % (r["t"], r["v"], r["k"], r["N"], prev.group(1) if prev else "",
@@ -402,10 +409,12 @@ def render(rows, manifest, date):
              "(tier SCREENED); they are listed but do not count as best known. Where Colbourn's "
              "construction for an entry, as checked here, did not give a covering array at the "
              "recorded size, the "
-             "entry stays as recorded and its rung is marked disputed (tier DISPUTED). Improvements "
-             "are not yet propagated through recursive constructions: the propagation engine "
-             "in <a href=\"%s/tree/main/r/livingtable\">r/livingtable</a> is run by hand and "
-             "is not connected to submissions, so no entry here is derived by it.</p>" % REPO_URL)
+             "entry stays as recorded and its rung is marked disputed (tier DISPUTED). No entry "
+             "here is a computed size. Sizes that follow from these entries by published "
+             "constructions (fusing symbols, deriving a strength, Power CT and others) are "
+             "recomputed on every change and listed separately, each with its arithmetic, on "
+             "<a href=\"derived.html\">the derived sizes page</a> (%s points); they are not "
+             "counted as best known here.</p>" % DERIVED_COUNT[0])
     H.append("<p>Rows are stair-steps: an entry (t, v, k, N) means N runs suffice for up "
              "to k columns, so the best known N at k is the smallest N among entries with "
              "at least k columns. The construction column names the construction or "
@@ -500,6 +509,15 @@ def main():
         with open(cp, newline="", encoding="utf-8") as f:
             for c in csv.DictReader(f):
                 SHA2CERT[c["array_sha256"]] = c["file"]
+    dp = os.path.join(a.table_dir, "derived.csv")
+    if os.path.exists(dp):
+        with open(dp, newline="", encoding="utf-8") as f:
+            DERIVED_COUNT[0] = sum(1 for _ in csv.DictReader(f))
+    xp = os.path.join(a.table_dir, "EXTERNAL.csv")
+    if os.path.exists(xp):
+        with open(xp, newline="", encoding="utf-8") as f:
+            for e in csv.DictReader(f):
+                SHA2EXT[e["sha256"]] = e["location"]
     page = render(rows, manifest, date)
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
