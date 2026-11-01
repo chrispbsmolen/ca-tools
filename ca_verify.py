@@ -15,7 +15,7 @@ from itertools import combinations, product
 
 WILD = -1
 
-def read_array(path):
+def read_array(path, v=None):
     rows = []
     with open(path) as f:
         for line in f:
@@ -36,7 +36,8 @@ def read_array(path):
     if any(len(r) != k for r in rows):
         raise ValueError("ragged rows")
     vals = [x for r in rows for x in r if x != WILD]
-    if min(vals) == 1:               # auto-shift 1-based symbols
+    # auto-shift 1-based symbols, as ca_verify.c does: only when they span exactly 1..v
+    if min(vals) == 1 and (v is None or max(vals) == v):
         rows = [[x - 1 if x != WILD else x for x in r] for r in rows]
     return rows
 
@@ -69,7 +70,7 @@ def main():
         print(__doc__)
         return 2
     path, t, v = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
-    rows = read_array(path)
+    rows = read_array(path, v)
     n, k = len(rows), len(rows[0])
     # reject symbols outside 0..v-1, as ca_verify.c does (issue #2): an out-of-range
     # tuple must not stand in for a missing one
