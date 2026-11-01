@@ -15,6 +15,17 @@
 # submissions/<slug>/NOT_APPLIED.md (delete that file to try again) and its
 # pull request gets the report as a comment. If a check fails the run turns
 # red, GitHub emails the person who pushed, and nothing is committed.
+#
+# Certificate submissions (submissions/<slug>/certificates.csv, since 2026-11-02) are checked
+# by certificate-check.yml, in shards, after the merge; that workflow writes nothing and starts
+# this one when its results are saved. Here every certificate submission whose rows are not in
+# the table yet ("submissions/<slug>/certificates.csv" in no row's notes) and that has no
+# NOT_APPLIED.md gets its result from the newest completed run of certificate-check.yml on main
+# (push or manual run of this repository, never a pull request run) that holds one. The result
+# is checked again against the table at this moment (identity, duplicates, the shard counts,
+# the comparison; tools/check_certificates.py --apply-result) and its rows are entered, VERIFIED
+# or SCREENED, or its report is committed as NOT_APPLIED.md. A submission without a result yet
+# is listed in the run summary as waiting and picked up by a later run.
 
 name: Table page
 
@@ -26,6 +37,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: read           # the results of certificate-check.yml (artifacts)
 
 concurrency:
   group: table-page
@@ -93,6 +105,62 @@ jobs:
             fi
           done
           rm -f ca_verify tools/constant_rows c.md
+      - name: Add the rows of checked certificate submissions not yet in the table
+        run: |
+          : > applied_cert.txt
+          pending=""
+          for f in submissions/*/certificates.csv; do
+            [ -f "$f" ] || continue
+            slug=$(basename "$(dirname "$f")")
+            case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
+            [ -f "submissions/$slug/NOT_APPLIED.md" ] && continue
+            grep -qF "submissions/$slug/certificates.csv" table/ca_table.csv && continue
+            pending="$pending $slug"
+          done
+          [ -n "$pending" ] || { echo "Every merged certificate submission is in the table."; exit 0; }
+          echo "Certificate submissions not yet in the table:$pending"
+          # completed runs of certificate-check.yml on main of this repository, started by a push or
+          # by the maintainer, newest first (a pull request run never counts)
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/certificate-check.yml/runs?branch=main&status=completed&per_page=50" \
+            --jq '.workflow_runs[] | select(.event == "push" or .event == "workflow_dispatch")
+                  | select(.head_repository.full_name == "'"$GITHUB_REPOSITORY"'") | .id' > cert_runs.txt || : > cert_runs.txt
+          stamp=$(git rev-parse --short HEAD)
+          for slug in $pending; do
+            found=""
+            while read -r run; do
+              case "$run" in ''|*[!0-9]*) continue ;; esac
+              d="certres/$run"
+              if [ ! -d "$d" ]; then
+                mkdir -p "$d"
+                gh run download "$run" --repo "$GITHUB_REPOSITORY" -n cert-results -D "$d" < /dev/null 2>/dev/null || true
+              fi
+              if [ -f "$d/$slug/result.json" ]; then found="$d/$slug"; break; fi
+            done < cert_runs.txt
+            if [ -z "$found" ]; then
+              echo "Certificate submission \`$slug\`: waiting for certificate-check.yml (still running, or start it again for this slug)." >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            added=$(git log --diff-filter=A --format=%H -n 1 -- "submissions/$slug/certificates.csv")
+            pr=""
+            [ -n "$added" ] && pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$added/pulls" --jq '.[0].number' 2>/dev/null || true)
+            case "$pr" in ''|*[!0-9]*) pr="" ;; esac
+            if python3 tools/check_certificates.py "submissions/$slug" --table-dir table \
+                 --apply-result "$found" --apply --out "out/cert-$slug" > /dev/null; then
+              echo "$slug" >> applied_cert.txt
+              msg="Merged and added to the table: \`$slug\` (certificates checked on main by certificate-check.yml, entered at $stamp)."
+            else
+              echo "::warning::certificate submission $slug did not pass on main and was not added"
+              msg="Merged, but the certificates of \`$slug\` did not pass on main, so nothing was added to the table. Report below."
+              { echo "# Not added to the table"; echo; echo "Checked on main at $stamp; it did not pass. Delete this file and start certificate-check.yml for this slug to try again."; echo
+                cat "$found/report.md" 2>/dev/null; echo; cat "out/cert-$slug/report.md" 2>/dev/null; } > "submissions/$slug/NOT_APPLIED.md"
+            fi
+            { cat "$found/report.md" 2>/dev/null; cat "out/cert-$slug/report.md" 2>/dev/null; } >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$pr" ]; then
+              { echo "$msg"; echo; cat "$found/report.md" "out/cert-$slug/report.md" 2>/dev/null | head -c 55000; } > c.md
+              gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body-file c.md || true
+            fi
+          done
+          rm -rf certres cert_runs.txt c.md
       - name: Regenerate table/derived.csv (sizes that follow by published constructions)
         run: python3 tools/derive_table.py
       - uses: r-lib/actions/setup-r@v2
@@ -117,7 +185,7 @@ jobs:
           python3 tools/check_submission.py --selftest --table-dir table > /dev/null
       - name: Commit what changed
         run: |
-          git add docs/index.html docs/derived.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays table/derived.csv
+          git add docs/index.html docs/derived.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays table/derived.csv table/certificates
           git add submissions/*/NOT_APPLIED.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing changed."
@@ -125,6 +193,7 @@ jobs:
           fi
           git config user.name "ca-table-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cat applied_cert.txt >> applied.txt 2>/dev/null || true
           if [ -s applied.txt ]; then
             git commit -q -m "Add submissions $(tr '\n' ' ' < applied.txt)to the table (checked again on main); regenerate table page, counts and R data file"
           else

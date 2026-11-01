@@ -13,6 +13,10 @@ did not give a covering array at the recorded size; not counted, and the CITED r
 disputes is still counted), RETRACTED (since 2026-10-31: an added row beside a
 VERIFIED or SCREENED row, same t, v, k, N and array_sha256, saying that row was
 found wrong; not counted, and the row it retracts is no longer counted either).
+A row with an array is identified by array_sha256 (the SHA-256 of the canonical array text).
+Since 2026-11-02 a certificate row whose array has more than 10^12 entries may leave
+array_sha256 empty and is identified by family_sha256 (the last column: the SHA-256 of
+its covering perfect hash family, tools/cphf/README.md); identity() gives either.
 Which rows count is defined once, in counted() below; the other tools import it.
 Stair-step semantics: a row (t, v, k, N) means N runs
 suffice for up to k columns.
@@ -43,8 +47,21 @@ def load():
 COUNTED_TIERS = ("CITED", "VERIFIED")
 
 
+def identity(r):
+    """("array", array_sha256) for a row with an array hash, ("family", family_sha256) for a
+    certificate row identified by its family alone (array not hashed), (None, "") otherwise."""
+    if r.get("array_sha256"):
+        return ("array", r["array_sha256"])
+    if r.get("family_sha256"):
+        return ("family", r["family_sha256"])
+    return (None, "")
+
+
 def _key(r):
-    return (str(r["t"]), str(r["v"]), str(r["k"]), str(r["N"]), r["array_sha256"])
+    """what a RETRACTED row matches: t, v, k, N, array_sha256 and family_sha256 (empty when the
+    column is missing, as in tables before 2026-11-02)"""
+    return (str(r["t"]), str(r["v"]), str(r["k"]), str(r["N"]), r["array_sha256"],
+            r.get("family_sha256") or "")
 
 
 METHODS = ("direct", "certificate", "certificate + fusing")
@@ -67,7 +84,8 @@ def check_method(r):
 
 def counted(rows, methods=None):
     """The rows that count as best known: tier CITED or VERIFIED, less every
-    VERIFIED row that a RETRACTED row names (same t, v, k, N and array_sha256).
+    VERIFIED row that a RETRACTED row names (same t, v, k, N, array_sha256 and
+    family_sha256).
     With methods (a subset of METHODS), only VERIFIED rows checked by one of
     those methods count; for example methods=("direct",) counts only arrays
     checked directly. The default counts them all. This is the one
@@ -120,7 +138,9 @@ def main(argv):
         t, v = int(argv[1]), int(argv[2])
         for r in rows:
             if r["tier"] == "VERIFIED" and int(r["t"]) == t and int(r["v"]) == v:
-                print(r["k"], r["N"], r["array_sha256"][:12], r["verify_stamp"],
+                kind, ident = identity(r)
+                print(r["k"], r["N"], ident[:12] + ("" if kind != "family" else " (family; array not hashed)"),
+                      r["verify_stamp"],
                       "|", r["notes"])
     elif len(argv) >= 3 and argv[0] == "steps":
         t, v = int(argv[1]), int(argv[2])

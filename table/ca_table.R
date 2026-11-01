@@ -7,14 +7,25 @@
 ##   verified_rows(tab, t = 5, v = 3)       # stamped rows
 
 load_ca_table <- function(path = "ca_table.csv") {
-    tab <- utils::read.csv(path, stringsAsFactors = FALSE)
+    tab <- utils::read.csv(path, stringsAsFactors = FALSE,
+                           colClasses = c(array_sha256 = "character", family_sha256 = "character"))
     tab$N <- as.numeric(tab$N)   ## 844 entries exceed 32-bit integers
     tab
 }
 
+## identity of a row: its array_sha256, or for a certificate row whose array
+## is not hashed (more than 10^12 entries, since 2026-11-02) "family:" and its
+## family_sha256; "" when neither is given. Mirrors identity() in ca_table.py.
+row_identity <- function(tab) {
+    fam <- if ("family_sha256" %in% names(tab)) tab$family_sha256 else rep("", nrow(tab))
+    fam[is.na(fam)] <- ""
+    ifelse(!is.na(tab$array_sha256) & tab$array_sha256 != "", tab$array_sha256,
+           ifelse(fam != "", paste0("family:", fam), ""))
+}
+
 ## the rows that count as best known: tier CITED or VERIFIED, less every
-## VERIFIED row that a RETRACTED row names (same t, v, k, N and
-## array_sha256). Mirrors counted() in ca_table.py, the one definition.
+## VERIFIED row that a RETRACTED row names (same t, v, k, N, array_sha256
+## and family_sha256). Mirrors counted() in ca_table.py, the one definition.
 ## how a VERIFIED row was checked, from its stamp: "direct",
 ## "certificate" or "certificate + fusing" (NA for other tiers); mirrors
 ## check_method() in ca_table.py
@@ -27,7 +38,8 @@ check_method <- function(tab) {
 ## methods = NULL counts every VERIFIED row; for example
 ## methods = "direct" counts only arrays checked directly
 counted_rows <- function(tab, methods = NULL) {
-    key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256)
+    key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256,
+                             if ("family_sha256" %in% names(x)) x$family_sha256 else "")
     r <- tab[tab$tier == "RETRACTED", ]
     keep <- tab$tier %in% c("CITED", "VERIFIED") &
         !(tab$tier == "VERIFIED" & key(tab) %in% key(r))

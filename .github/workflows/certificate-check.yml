@@ -1,0 +1,210 @@
+# Check merged certificate submissions (submissions/<slug>/certificates.csv, see
+# submissions/README.md, "Certificates") exactly, in shards on GitHub-hosted runners.
+#
+# Runs after a push to main that changes a submission folder, and on a manual run for one
+# submission. Everything that runs is the code of main at the pushed commit (trusted, reviewed
+# before the merge); the submission's files are read as data. A pull_request run executes the
+# pull request's own copy of the workflows and tools, so its verdict is never used to enter
+# rows: on a pull request only the light check of verify-submission.yml runs.
+#
+#   plan     for every certificate submission of the push that is not in the table yet, the
+#            estimate of each family (tools/cphf/cphfcheck.c, mode estimate) and the plan: the
+#            cheapest exact method and the number of shards, within the time budget of
+#            tools/cphf_cert.py (per submission at most MAX_SHARDS shards of at most SHARD_HOURS
+#            hours on RUNNER_THREADS threads, the estimate times SAFETY). A family over the
+#            budget is planned for a screen instead.
+#   run      one job per task: shard i of m of a family ("cphfcheck ... shard i m"), or the
+#            array hash of a family (expanded and hashed as a stream; skipped above 10^12
+#            entries). At most 20 jobs run at once.
+#   collect  combines the shards of each family (tools/cphf_cert.py checks that shards 0..m-1
+#            are each there once, that every index of the outer loop is in exactly one shard
+#            and that the counts add up to the binomial totals of an unsharded run), screens
+#            the families over the budget or whose shards did not all finish, and saves the
+#            result as the artifact "cert-results". Then it starts table-page.yml.
+#
+# This workflow never writes to the repository. table-page.yml, the only writer of table/
+# (concurrency group table-page, one run at a time, one pending), finds the result of every
+# certificate submission not yet in the table among the completed runs of this workflow on
+# main, checks it again against the table at that moment (tools/check_certificates.py
+# --apply-result) and enters the rows: VERIFIED for an exact check, SCREENED for a screen. So
+# two certificate submissions merged close together are checked side by side and entered one
+# after the other, and a pending table-page run that GitHub cancels loses nothing (the next
+# run finds the same results). If a run of this workflow is cancelled or fails before
+# "collect", nothing is entered; table-page.yml lists the submission as waiting, and the
+# maintainer starts this workflow again for it ("Run workflow", slug).
+
+name: Certificate check
+
+on:
+  push:
+    branches: [main]
+    paths: ["submissions/**"]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "submission folder name (submissions/<slug>)"
+        required: true
+
+permissions:
+  contents: read
+  actions: write          # to start table-page.yml when the results are saved
+
+concurrency:
+  group: certificate-check-${{ github.event.inputs.slug || github.sha }}
+  cancel-in-progress: false
+
+env:
+  # tools/cphf_cert.py has the same defaults; GitHub-hosted runners for public repositories:
+  # 4 cores, 6 hours per job, 20 jobs at once
+  RUNNER_THREADS: "4"
+  MAX_SHARDS: "20"
+  SHARD_HOURS: "5"
+  SAFETY: "2"
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      sha: ${{ steps.find.outputs.sha }}
+      slugs: ${{ steps.find.outputs.slugs }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Find the certificate submissions to check
+        id: find
+        env:
+          BEFORE: ${{ github.event.before }}
+          INPUT_SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          if [ -n "$INPUT_SLUG" ]; then
+            cand="$INPUT_SLUG"
+          elif [ -n "$BEFORE" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            cand=$(git diff --name-only "$BEFORE" HEAD -- submissions | sed -n 's#^submissions/\([^/]*\)/.*#\1#p' | sort -u)
+          else
+            cand=$(ls submissions)
+          fi
+          slugs=""
+          for slug in $cand; do
+            case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
+            [ -f "submissions/$slug/certificates.csv" ] || continue
+            [ -f "submissions/$slug/NOT_APPLIED.md" ] && { echo "$slug has NOT_APPLIED.md; delete it to check again"; continue; }
+            if grep -qF "submissions/$slug/certificates.csv" table/ca_table.csv; then
+              echo "$slug is in the table already"; continue
+            fi
+            slugs="$slugs $slug"
+          done
+          echo "Certificate submissions to check:${slugs:- none}"
+          echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
+
+      - name: Plan (estimate, method, shards)
+        id: plan
+        env:
+          SLUGS: ${{ steps.find.outputs.slugs }}
+        run: |
+          mkdir -p plan
+          for slug in $SLUGS; do
+            python3 tools/check_certificates.py "submissions/$slug" --plan "plan/$slug.json" \
+              --threads "$RUNNER_THREADS" --runner-threads "$RUNNER_THREADS" --max-shards "$MAX_SHARDS" \
+              --shard-hours "$SHARD_HOURS" --safety "$SAFETY" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+          python3 -c '
+          import glob, json, os
+          m = []
+          for p in sorted(glob.glob("plan/*.json")):
+              d = json.load(open(p))
+              m += [{"slug": d["slug"], "task": t} for t in d["tasks"]]
+          if len(m) > 256:
+              raise SystemExit("more than 256 tasks; run the submissions one at a time (workflow_dispatch)")
+          print("matrix=" + json.dumps(m))
+          ' >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        if: steps.find.outputs.slugs != ''
+        with:
+          name: cert-plan
+          path: plan/
+          retention-days: 7
+
+  run:
+    needs: plan
+    if: needs.plan.outputs.matrix != '' && needs.plan.outputs.matrix != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      SLUG: ${{ matrix.slug }}
+      TASK: ${{ matrix.task }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.plan.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: cert-plan
+          path: plan
+      - name: Run the task
+        # a shard that does not finish in time leaves no output; collect then screens the family
+        run: |
+          case "$SLUG" in *[!A-Za-z0-9._-]*) exit 2 ;; esac
+          timeout 335m python3 tools/check_certificates.py "submissions/$SLUG" --run "plan/$SLUG.json" \
+            --task "$TASK" --out "out/$SLUG" --threads "$RUNNER_THREADS"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cert-task-${{ matrix.slug }}-${{ matrix.task }}
+          path: out/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  collect:
+    needs: [plan, run]
+    if: always() && needs.plan.result == 'success' && needs.plan.outputs.slugs != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.plan.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: cert-plan
+          path: plan
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cert-task-*
+          path: tasks
+          merge-multiple: true          # tasks/<slug>/c<i>-s<j>.txt, tasks/<slug>/c<i>-hash.txt
+      - name: Combine the shards, screen what is over the budget, save the results
+        env:
+          SLUGS: ${{ needs.plan.outputs.slugs }}
+        run: |
+          mkdir -p results
+          for slug in $SLUGS; do
+            [ -f "plan/$slug.json" ] || continue
+            python3 tools/check_certificates.py "submissions/$slug" --results "plan/$slug.json" \
+              --tasks "tasks/$slug" --out "results/$slug" --threads "$RUNNER_THREADS" \
+              --runner-threads "$RUNNER_THREADS" --max-shards "$MAX_SHARDS" --shard-hours "$SHARD_HOURS" \
+              --safety "$SAFETY" > /dev/null || true
+            [ -f "results/$slug/report.md" ] && cat "results/$slug/report.md" >> "$GITHUB_STEP_SUMMARY"
+          done
+          git rev-parse HEAD > results/sha.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cert-results
+          path: results/
+          retention-days: 90
+      - name: Start the table workflow (it enters the rows, one submission at a time)
+        run: gh workflow run table-page.yml --repo "$GITHUB_REPOSITORY" --ref main

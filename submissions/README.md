@@ -214,35 +214,85 @@ and the family files it names, each at most 50 MiB: n lines of k
 integers, each integer a vector of GF(v)^t written in base v, most
 significant digit first (for v = p^e the digits are field elements
 coded as in `../tools/cphf/cphfcheck.c`, Conway polynomials; v up to 32,
-t up to 8). `mode` says how the family is checked: `full` (every set of
-t columns), `fullfast` (the same exact answer found faster by projection
-hashing), `progression` (for families whose rows are mostly affine
-progressions, column c+1 = A times column c for an invertible matrix A:
-the checker finds and certifies A for each such row from the data, checks
-every set of columns that starts at column 0 and fails in all of those
-rows, and tests every translate of each such set in the remaining rows;
-see `../tools/cphf/README.md`), or `cyclic s` (the shift of columns by s
-is a symmetry of every row, certified by the checker before it relies on
-it, and then every t-set whose smallest column is below s is checked).
-Any of these may end
-in ` affine` when every vector has first coordinate 1 (points of an
-affine space); the array then has n(v^t - v) + v runs instead of
-n(v^t - 1) + 1. N must be the size the family gives.
+t up to 8, n up to 64). N must be the size the family gives: n(v^t - 1) + 1, or
+n(v^t - v) + v when every vector has first coordinate 1 (points of an
+affine space, Sherwood, Martirosyan and Colbourn 2006).
 
-The pull request check does not run these, because an exact check can
-take hours. A maintainer runs
-`python3 tools/check_certificates.py submissions/<slug>`. It checks every
-family exactly with `../tools/cphf/cphfcheck.c` (never by sampling),
-expands it to the covering array in the table's canonical form and hashes
-it as a stream, and compares N with the table. With `--apply` the family
-goes to `table/certificates/`, is listed in `CERTIFICATES.csv`, and the
-array enters as a VERIFIED row whose stamp begins `cphfcheck`, with the
-array's SHA-256. Anyone can rebuild the array from the family with
+The `mode` column is optional (since 2026-11-02): leave it out, leave it
+empty or write `auto`, and the checker chooses the cheapest exact method
+from the data itself. It classifies the rows, finds a cyclic shift
+symmetry if there is one, estimates the work of every method and runs the
+cheapest (`../tools/cphf/README.md`, "One command, estimates and shards").
+The explicit modes are still accepted: `full` (every set of t columns),
+`fullfast` (the same exact answer found faster by projection hashing),
+`progression` (for families whose rows are mostly affine progressions,
+column c+1 = A times column c for an invertible matrix A, certified from
+the data), `fastprog` (the answer of `progression` by a much faster exact
+method; this is what `auto` uses for such families), or `cyclic s` (the shift of columns by s is a symmetry of every
+row, certified by the checker before it relies on it). Any of these may
+end in ` affine`; without it the size N decides which of the two rules
+applies. Every method is exact; none samples.
+
+Each family is identified by its family_sha256, the SHA-256 of a
+canonical form of the family (`cphf1`, defined in
+`../tools/cphf/README.md`). A family already in the table is rejected as a
+duplicate, also when its file is formatted differently, except that a
+family that entered as SCREENED (below) may be entered again once it has
+been checked exactly. The array is identified as before by the SHA-256 of
+its canonical text when it has at most 10^12 entries (N times k); a larger
+array is not hashed, and its row is identified by the family alone.
+
+What happens:
+
+1. On the pull request, the check (`.github/workflows/verify-submission.yml`,
+   which runs `tools/check_certificates.py --light`) reads every claim,
+   checks the format, the size N, builds_on and the identity, rejects
+   duplicates, prints the estimate of every method and the plan for the
+   exact check, and screens each family a little (5 random windows of 30
+   columns checked exactly and 100,000 random t-sets, seeded from
+   family_sha256). It does not run the exact check, and a pass here is not
+   a verdict: a run on a pull request uses the pull request's own copy of
+   the workflow, so nothing it says is used to enter rows.
+2. After the merge, the workflow `.github/workflows/certificate-check.yml`
+   on main, with the trusted tools of main, plans the exact check of every
+   family, runs it in shards on GitHub-hosted runners in parallel, combines
+   the shards (every shard present once, every part of the work done
+   exactly once, the counts equal to those of an unsharded run), and hashes
+   the array as a stream.
+3. Then `.github/workflows/table-page.yml`, the only workflow that writes
+   the table, checks that result again against the table at that moment
+   and enters the rows, one submission at a time, so two certificate
+   submissions merged close together never overwrite each other. The
+   family goes to `table/certificates/`, is listed in
+   `table/certificates/CERTIFICATES.csv` with its family_sha256 and its
+   expansion rule, and the array enters as a VERIFIED row whose stamp
+   begins `cphfcheck`. The result is posted on the pull request. If a
+   claim fails, nothing of the submission is added, and the report is kept
+   as `submissions/<slug>/NOT_APPLIED.md`.
+
+The time budget. GitHub's hosted runners are free for public
+repositories: a job may run up to 6 hours on 4 cores, and up to 20 jobs
+run at once. The exact check of a submission runs on GitHub when its
+estimated work, doubled as a safety margin, fits in at most 20 shards of
+at most 5 hours each on 4 cores (about 400 core-hours of doubled
+estimate). Within the budget the rows enter as VERIFIED. Over the budget,
+or when a shard does not finish in time, the family is screened instead
+(20 random windows of 30 columns, each checked exactly, and 1,000,000
+random t-sets, all seeded from family_sha256, the conventions of the
+screen of large arrays below) and enters as SCREENED: recorded, with its
+identity, but not counted as best known. Anyone can check it exactly later
+on any machine with Python 3 and a C compiler (the script builds
+`cphfcheck` itself):
+
+    python3 tools/check_certificates.py submissions/<slug> --threads N --apply
+
+which runs the exact check unsharded and adds a VERIFIED row beside the
+SCREENED one (the plan and shard steps, `--plan`, `--run` and `--results`,
+can also be run by hand on several machines). An uncovered set of t
+columns found by a shard, by the screen or by the pull request check is a
+proof that the family is not a CPHF, and the claim fails. Anyone can
+rebuild an array from its family with
 `cphfcheck FILE t v expand OUT [affine]` and compare the hash.
-
-A family with no symmetry the checker can use, and too many t-sets to
-check every one, cannot enter as VERIFIED. Write first (an issue), so
-that the check can be planned.
 
 ## Large arrays: the screened status
 
@@ -311,10 +361,10 @@ write access to your fork.
    "Admissible sources").
 3. Certificates. A claim given by a certificate instead of a written
    array is accepted only for a certificate type that the table can
-   check with its own independent tool. Today that is the cyclic
-   covering perfect hash families of `../tools/cphf/`. The pull
-   request check does not run those tools, so open an issue first;
-   other certificate types are declined until such a tool exists.
+   check with its own independent tool. Today that is the covering
+   perfect hash families checked by `../tools/cphf/cphfcheck.c`, as
+   described above; other certificate types are declined until such a
+   tool exists.
 4. Licence. By opening a pull request you confirm that you may release
    the arrays and that you license them under CC BY 4.0, as the arrays
    built by this project are. An array derived from someone else's

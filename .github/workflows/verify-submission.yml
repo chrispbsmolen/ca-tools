@@ -17,6 +17,13 @@
 # The check only reports. The table rows are added after merge, by
 # table-page.yml on main, which checks the submission again with the
 # trusted tools against the table at that moment.
+#
+# A certificate submission (certificates.csv, since 2026-11-02) gets the light
+# check here (tools/check_certificates.py --light, run by check_submission.py):
+# format, identity and duplicates, the estimate and plan of the exact check, and
+# a small screen. Its exact check runs after merge on main, in shards
+# (certificate-check.yml), because a run on a pull request executes the pull
+# request's own copy of this workflow and its verdict cannot be trusted.
 
 name: Verify submission
 

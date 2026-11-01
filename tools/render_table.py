@@ -21,7 +21,7 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "table"))
-from ca_table import counted, check_method  # noqa: E402  (the one definition of the counted rows)
+from ca_table import counted, check_method, identity  # noqa: E402  (the one definition of the counted rows)
 REPO_URL = "https://github.com/chrispbsmolen/ca-tools"
 RAW_CSV = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv"
 
@@ -105,6 +105,22 @@ LOG_URL = REPO_URL + "/blob/main/table/VERIFICATION_LOG.md"
 ARRAY_URL = "https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/arrays/"
 
 
+def row_key(r):
+    """What identifies a row's array on this page: its array_sha256, or, for a certificate row whose
+    array is not hashed (more than 10^12 entries), "family:" and its family_sha256
+    (table/ca_table.py identity())."""
+    kind, ident = identity(r)
+    return "family:" + ident if kind == "family" else ident
+
+
+def identity_html(r):
+    """sha256 abcdef123456, or identity: family abcdef123456 (array not hashed)"""
+    kind, ident = identity(r)
+    if kind == "family":
+        return "identity: family %s (array not hashed)" % html.escape(ident[:12])
+    return "sha256 %s" % html.escape(ident[:12])
+
+
 def stamp_html(r):
     """The verification stamp with links: the verifier it names (caverify by
     version, on CRAN; ca_verify by the commit of its source), the stored array
@@ -131,7 +147,7 @@ def stamp_html(r):
     x = SHA2EXT.get(r.get("array_sha256") or "")
     if x:
         links.append('<a href="%s">array, in deposit</a>' % html.escape(x.split("::", 1)[0], quote=True))
-    c = SHA2CERT.get(r.get("array_sha256") or "")
+    c = SHA2CERT.get(row_key(r))
     if c:
         links.append('<a href="%s%s">certificate</a>' % (CERT_URL, html.escape(c)))
     links.append('<a href="%s">verification log</a>' % LOG_URL)
@@ -269,7 +285,7 @@ def submissions_html(subs):
                            for name, f in shared_fields
                            if name in common and f(r) != common[name])
             af = SHA2FILE.get(r.get("array_sha256") or "")
-            cf = SHA2CERT.get(r.get("array_sha256") or "")
+            cf = SHA2CERT.get(row_key(r))
             tag = tag + note + ('<span class=stamp><a href="%s%s">array</a></span>' % (ARRAY_URL, html.escape(af)) if af else "")
             tag = tag + ('<span class=stamp><a href="%s%s">certificate</a></span>' % (CERT_URL, html.escape(cf)) if cf else "")
             xf = SHA2EXT.get(r.get("array_sha256") or "")
@@ -329,6 +345,10 @@ LEGEND = [
      "array give the same entry, the page shows both, labelled. The Dwyer source codes are "
      "Aaron Dwyer's abbreviations for the method; many of his arrays cite personal "
      "communication with Colbourn"),
+    ("family_sha256", "since 2026-11-02, for a row given by a covering perfect hash family: the SHA-256 "
+     "of the family in its canonical form (cphf1, tools/cphf/README.md). An array of more than 10^12 "
+     "entries is not hashed; such a row has an empty array_sha256 and is identified by its family, "
+     "shown on this page as \"identity: family ... (array not hashed)\""),
 ]
 
 
@@ -367,8 +387,8 @@ def evidence_html(rs):
     ver, seen = [], set()
     # when several rows carry the same array, show the one built here (S8) first
     for r in sorted(rs, key=lambda x: x.get("source_id") != "S8"):
-        if r["tier"] == "VERIFIED" and r["array_sha256"] not in seen:
-            seen.add(r["array_sha256"]); ver.append(r)
+        if r["tier"] == "VERIFIED" and row_key(r) not in seen:
+            seen.add(row_key(r)); ver.append(r)
     cited = [r for r in rs if r["tier"] == "CITED" and r["source_id"] == "S1"]
     lit = [r for r in rs if r["tier"] == "CITED" and r["source_id"] != "S1"]
     parts = []
@@ -393,12 +413,12 @@ def evidence_html(rs):
         con = page_text(construction_of(r))
         crs = constant_rows_of(r)
         vparts.append('<span class="tag ver">verified</span>%s%s%s'
-                     '<span class="stamp">%s%s, sha256 %s%s</span>' % (
+                     '<span class="stamp">%s%s, %s%s</span>' % (
                          html.escape(cr + "; ") if cr else "",
                          ("<i>%s</i>; " % html.escape(con)) if con else "",
                          html.escape(r["source_detail"]),
                          ("builds on %s; " % builds_on_html(r)) if builds_on_html(r) else "",
-                         stamp_html(r), html.escape(r["array_sha256"][:12]),
+                         stamp_html(r), identity_html(r),
                          (", " + crs) if crs else ""))
     parts.append("".join(vparts))
     if not ver and not lit:
@@ -431,9 +451,9 @@ def disputed_html(d, rows_tv):
                      key=lambda r: -r["k"])
         if ver:
             a = ver[0]
-            out += ('<span class="stamp">verified at this point: N = %d (%s), %s, sha256 %s%s</span>'
+            out += ('<span class="stamp">verified at this point: N = %d (%s), %s, %s%s</span>'
                     % (a["N"], html.escape(page_text(construction_of(a))), stamp_html(a),
-                       html.escape(a["array_sha256"][:12]),
+                       identity_html(a),
                        (", " + constant_rows_of(a)) if constant_rows_of(a) else ""))
     return out
 
@@ -444,8 +464,8 @@ def render(rows, manifest, date):
     SHA2FILE.clear(); SHA2FILE.update({m["sha256"]: m["file"] for m in manifest})
     # a SCREENED row whose array was later verified in full (a VERIFIED row
     # with the same hash) is superseded: kept in the table, not shown
-    verified_sha = {r["array_sha256"] for r in rows if r["tier"] == "VERIFIED" and r["array_sha256"]}
-    rows_shown = [r for r in rows if not (r["tier"] == "SCREENED" and r["array_sha256"] in verified_sha)]
+    verified_sha = {row_key(r) for r in rows if r["tier"] == "VERIFIED" and row_key(r)}
+    rows_shown = [r for r in rows if not (r["tier"] == "SCREENED" and row_key(r) in verified_sha)]
     tiers = collections.Counter(r["tier"] for r in rows_shown)
     mstat = collections.Counter(m["status"] for m in manifest)
     # community submissions are the S7 rows that came through the submission check (their notes
@@ -530,7 +550,7 @@ def render(rows, manifest, date):
         rs = by_tv[(t, v)]
         steps = stair(rs)
         nver = sum(1 for _, _, _, e in steps if any(r["tier"] == "VERIFIED" for r in e))
-        scr = [r for r in rs if r["tier"] == "SCREENED" and r["array_sha256"] not in verified_sha]
+        scr = [r for r in rs if r["tier"] == "SCREENED" and row_key(r) not in verified_sha]
         dis = {(r["k"], r["N"]): r for r in rs if r["tier"] == "DISPUTED"}
         H.append("<details><summary>t = %d, v = %d: %d rungs, %d verified%s%s</summary>"
                  % (t, v, len(steps), nver,
@@ -591,7 +611,10 @@ def main():
     if os.path.exists(cp):
         with open(cp, newline="", encoding="utf-8") as f:
             for c in csv.DictReader(f):
-                SHA2CERT[c["array_sha256"]] = c["file"]
+                if c["array_sha256"]:
+                    SHA2CERT[c["array_sha256"]] = c["file"]
+                elif c.get("family_sha256"):
+                    SHA2CERT["family:" + c["family_sha256"]] = c["file"]
     dp = os.path.join(a.table_dir, "derived.csv")
     if os.path.exists(dp):
         with open(dp, newline="", encoding="utf-8") as f:

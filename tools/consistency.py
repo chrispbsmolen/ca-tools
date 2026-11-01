@@ -31,6 +31,8 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "table"))
 from ca_table import counted, check_method, METHODS  # noqa: E402  (the one definition of the counted rows)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cphf_cert  # noqa: E402  (family identity, expansion rules, ARRAY_HASH_MAX_ENTRIES)
 
 TABLE = "table/ca_table.csv"
 MANIFEST = "table/MANIFEST.csv"
@@ -44,11 +46,12 @@ EXTERNAL = "table/EXTERNAL.csv"
 EXTERNAL_HEADER = ["sha256", "t", "v", "k", "N", "bytes", "location", "status",
                    "source_detail", "verify_stamp"]
 EXTERNAL_HOSTS = ("zenodo.org", "github.com", "objects.githubusercontent.com")
-CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "check"]
+CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "check", "family_sha256",
+               "expansion"]
 README = "table/README.md"
 HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id",
           "array_sha256", "verify_stamp", "entered", "notes", "lb", "lb_evidence",
-          "construction", "builds_on"]
+          "construction", "builds_on", "family_sha256"]
 REFERENCES = "table/references.csv"
 MANIFEST_HEADER = ["file", "t", "v", "k", "N", "status", "sha256", "source_id",
                    "source_detail", "verify_stamp", "constant_rows"]
@@ -56,7 +59,8 @@ TIERS = {"CITED", "VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK", "DISPUTED", 
 # columns that state the claim and its evidence; once a row is in the table these
 # never change (append-only). The free-text columns may be corrected in place.
 FROZEN = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id", "array_sha256",
-          "verify_stamp", "entered"]
+          "verify_stamp", "entered", "family_sha256"]
+CERT_STAMPS = ("repcheck ", "repcheck_pp ", "cphfcheck ")
 MAX_FILE_BYTES = 50 * 1024 * 1024        # one array or certificate file
 MAX_STORE_BYTES = 800 * 1000 * 1000      # table/arrays and table/certificates together
 SOURCES = {"S1", "S4", "S5", "S6", "S7", "S8"}
@@ -133,7 +137,9 @@ def counts(rows, man):
             worse += 1
     latest = max(r["entered"] for r in rows if DATE.match(r["entered"]))
     methods = collections.Counter(check_method(r) for r in rows if r["tier"] == "VERIFIED")
-    return dict(methods=methods, rows=len(rows), tiers=tiers, arrays=len(man), status=status,
+    by_family = sum(1 for r in rows if r["tier"] == "VERIFIED" and not r["array_sha256"]
+                    and r.get("family_sha256"))
+    return dict(methods=methods, by_family=by_family, rows=len(rows), tiers=tiers, arrays=len(man), status=status,
                 nofile=len(nofile), nofile_src=nofile_src, nofile_above=nofile_above,
                 points=sum(1 for r in rows if r["source_id"] == "S1"), smaller_n=smaller_n, more_k=more_k, worse=worse,
                 latest=latest)
@@ -166,7 +172,9 @@ def block(c):
         "- VERIFIED rows by how they were checked: %s" % ", ".join(
             "%s %s" % (m, fmt(c["methods"][m])) for m in METHODS if c["methods"][m]),
         "- VERIFIED rows without a stored array: %s (%s), %s of them above the best "
-        "known size" % (fmt(c["nofile"]), src, fmt(c["nofile_above"])),
+        "known size%s" % (fmt(c["nofile"]), src, fmt(c["nofile_above"]),
+                          "; %s identified by their family, array not hashed" % fmt(c["by_family"])
+                          if c["by_family"] else ""),
         "- against the frozen tables at their %s points, the lookups over CITED and "
         "VERIFIED rows give a smaller N at %s and more columns at %s, and a worse "
         "value at %s" % (fmt(c["points"]), fmt(c["smaller_n"]), fmt(c["more_k"]), fmt(c["worse"])),
@@ -183,6 +191,20 @@ def current_block(text):
 
 
 # ---------------------------------------------------------------- checks
+
+def hashless_ok(r):
+    """A VERIFIED or SCREENED certificate row may leave array_sha256 empty (since 2026-11-02) when
+    its array has more than cphf_cert.ARRAY_HASH_MAX_ENTRIES entries: its stamp is a cphfcheck stamp
+    saying "array not hashed" and its family_sha256 is listed in CERTIFICATES.csv (checked in
+    check_certificates below)."""
+    try:
+        big = int(r["N"]) * int(r["k"]) > cphf_cert.ARRAY_HASH_MAX_ENTRIES
+    except ValueError:
+        return False
+    return (r["tier"] in ("VERIFIED", "SCREENED") and big and not r["array_sha256"]
+            and r["verify_stamp"].startswith("cphfcheck ") and "array not hashed" in r["verify_stamp"]
+            and bool(HEX64.match(r.get("family_sha256") or "")))
+
 
 def check_structure(raw, rows, man):
     first = raw.split(b"\n", 1)[0].rstrip(b"\r").decode("utf-8")
@@ -213,8 +235,15 @@ def check_structure(raw, rows, man):
             problem("%s: N is not an integer: %r" % (where, r["N"]))
         if not DATE.match(r["entered"]):
             problem("%s: entered is not a date: %r" % (where, r["entered"]))
+        fam = r.get("family_sha256") or ""
+        if fam and not HEX64.match(fam):
+            problem("%s: family_sha256 %r is not 64 lower-case hex digits" % (where, fam[:20]))
+        if fam and r["tier"] not in ("VERIFIED", "SCREENED", "RETRACTED"):
+            problem("%s: a %s row with a family_sha256" % (where, r["tier"]))
+        if fam and r["tier"] in ("VERIFIED", "SCREENED") and not r["verify_stamp"].startswith(CERT_STAMPS):
+            problem("%s: family_sha256 on a row not checked through a certificate" % where)
         if r["tier"] in ("VERIFIED", "SCREENED", "FAILED_PENDING_RECHECK"):
-            if not HEX64.match(r["array_sha256"]):
+            if not HEX64.match(r["array_sha256"]) and not hashless_ok(r):
                 problem("%s: %s row without a sha256" % (where, r["tier"]))
             if not r["verify_stamp"]:
                 problem("%s: %s row without a verify_stamp" % (where, r["tier"]))
@@ -327,19 +356,21 @@ def check_disputed(rows, man):
 
 
 def check_retracted(rows):
-    """A RETRACTED row names exactly one VERIFIED or SCREENED row by t, v, k, N and
-    array_sha256, is not from the baseline, and says in its notes what was found."""
-    targets = collections.Counter((r["t"], r["v"], r["k"], r["N"], r["array_sha256"])
+    """A RETRACTED row names exactly one VERIFIED or SCREENED row by t, v, k, N, array_sha256 and
+    family_sha256 (a row identified by its family alone has an empty array_sha256), is not from the
+    baseline, and says in its notes what was found."""
+    targets = collections.Counter((r["t"], r["v"], r["k"], r["N"], r["array_sha256"], r.get("family_sha256") or "")
                                   for r in rows if r["tier"] in ("VERIFIED", "SCREENED"))
     seen = collections.Counter()
     for r in rows:
         if r["tier"] != "RETRACTED":
             continue
-        key = (r["t"], r["v"], r["k"], r["N"], r["array_sha256"])
+        key = (r["t"], r["v"], r["k"], r["N"], r["array_sha256"], r.get("family_sha256") or "")
         seen[key] += 1
         name = ",".join(key[:4])
-        if not HEX64.match(r["array_sha256"]):
-            problem("%s: RETRACTED row %s must give the array_sha256 of the row it retracts" % (TABLE, name))
+        if not HEX64.match(r["array_sha256"]) and not (not r["array_sha256"] and HEX64.match(key[5])):
+            problem("%s: RETRACTED row %s must give the array_sha256 (or, for a row identified by its "
+                    "family, the family_sha256) of the row it retracts" % (TABLE, name))
         elif targets[key] != 1:
             problem("%s: RETRACTED row %s matches %d VERIFIED or SCREENED rows; it must match exactly one"
                     % (TABLE, name, targets[key]))
@@ -373,9 +404,26 @@ def check_sizes():
     return total
 
 
+def family_fill_ok(a, b):
+    """The one change allowed in a FROZEN column of an existing row: family_sha256 going from empty
+    to the family_sha256 of a CERTIFICATES.csv listing of that row (same t, v, k, N and
+    array_sha256; table/README.md, "written into existing rows"). The column is new (2026-11-02), so
+    the certificate rows entered before it get their value once; a value once set never changes."""
+    if (a.get("family_sha256") or "") or not b.get("family_sha256"):
+        return False
+    if b["tier"] not in ("VERIFIED", "SCREENED") or not b["verify_stamp"].startswith(CERT_STAMPS):
+        return False
+    if not os.path.exists(CERT_LIST):
+        return False
+    certs = list(csv.DictReader(open(CERT_LIST, newline="", encoding="utf-8")))
+    return any(c.get("family_sha256") == b["family_sha256"] and c["array_sha256"] and cert_matches(c, b)
+               for c in certs)
+
+
 def check_append_only(base):
     """Every row of the table at git revision `base` is still there, in the same
-    position, with the same FROZEN columns; new rows are only appended."""
+    position, with the same FROZEN columns; new rows are only appended. The one exception is
+    family_sha256 filled once in a certificate row (family_fill_ok)."""
     try:
         old = subprocess.run(["git", "show", "%s:%s" % (base, TABLE)], stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, check=True).stdout.decode("utf-8")
@@ -390,7 +438,10 @@ def check_append_only(base):
                 % (TABLE, len(new_rows), len(old_rows), base))
     changed = 0
     for i, (a, b) in enumerate(zip(old_rows, new_rows), 2):
-        diff = [c for c in FROZEN if a.get(c) != b.get(c)]
+        # a column added later (family_sha256, 2026-11-02) is empty in the rows of an older table
+        diff = [c for c in FROZEN if (a.get(c) or "") != (b.get(c) or "")]
+        if diff == ["family_sha256"] and family_fill_ok(a, b):
+            diff = []
         if diff:
             changed += 1
             if changed <= 20:
@@ -401,12 +452,26 @@ def check_append_only(base):
     return len(new_rows) - len(old_rows)
 
 
+def cert_matches(c, r):
+    """a CERTIFICATES.csv listing and a table row stand for the same array: same t, v, k, N, and the
+    same array_sha256, or (array not hashed) both identified by the same family_sha256"""
+    if (r["t"], r["v"], r["k"], r["N"]) != (c["t"], c["v"], c["k"], c["N"]):
+        return False
+    if r.get("family_sha256") and r["family_sha256"] != c.get("family_sha256"):
+        return False
+    if c["array_sha256"]:
+        return r["array_sha256"] == c["array_sha256"]
+    return not r["array_sha256"] and bool(r.get("family_sha256")) and r["family_sha256"] == c.get("family_sha256")
+
+
 def check_certificates(rows):
-    """A certificate (since 2026-10-28) stands for an array too large to store: a
-    covering perfect hash family, listed in CERTIFICATES.csv with its own SHA-256 and the
-    SHA-256 of the array it expands to, checked exactly by tools/cphf/repcheck.c. Every
-    file of the folder is listed, every listed file is there with that hash, and each
-    certificate belongs to a VERIFIED row with the same t, v, k, N and array_sha256."""
+    """A certificate (since 2026-10-28) stands for an array too large to store: a covering perfect
+    hash family, listed in CERTIFICATES.csv with its own SHA-256, the SHA-256 of the array it expands
+    to (empty above 10^12 entries, since 2026-11-02), the check, its family_sha256 (the SHA-256 of
+    the canonical serialization cphf1, recomputed here from the file) and the expansion rule (whose
+    size must be the listed N and v). Every file of the folder is listed, every listed file is there
+    with that hash, no family is listed under two files, and each listing belongs to a VERIFIED or
+    SCREENED row (by array_sha256, or by family_sha256 when the array is not hashed), and back."""
     import hashlib
     if not os.path.isdir(CERTS):
         return
@@ -421,11 +486,17 @@ def check_certificates(rows):
     listed = collections.Counter(c["file"] for c in certs)
     for f in sorted(files - set(listed)):
         problem("%s/%s is not listed in %s" % (CERTS, f, CERT_LIST))
-    plain = collections.Counter(c["file"] for c in certs if "fused" not in c["family"])
+    # a certificate may be listed again for an array derived from it by fusing symbols (family
+    # "... fused ..."), and once more when a family entered as SCREENED is later checked exactly;
+    # never twice as itself with the same kind of check
+    plain = collections.Counter((c["file"], "screened" if "screened" in c["check"] else "exact")
+                                for c in certs if "fused" not in c["family"])
+    fam_files = collections.defaultdict(set)
+    fam_cache = {}
     for c in certs:
-        # a certificate may be listed again for an array derived from it by
-        # fusing symbols (family "... fused ..."), never twice as itself
-        if plain[c["file"]] > 1 or ("fused" in c["family"] and plain[c["file"]] != 1):
+        kind = "screened" if "screened" in c["check"] else "exact"
+        if plain[(c["file"], kind)] > 1 or ("fused" in c["family"]
+                                            and plain[(c["file"], "exact")] + plain[(c["file"], "screened")] < 1):
             problem("%s: %s listed more than once as itself, or a fused listing without its own"
                     % (CERT_LIST, c["file"]))
         path = os.path.join(CERTS, c["file"])
@@ -434,22 +505,47 @@ def check_certificates(rows):
             continue
         if hashlib.sha256(open(path, "rb").read()).hexdigest() != c["sha256"]:
             problem("%s: %s does not have the listed sha256" % (CERT_LIST, c["file"]))
-        match = [r for r in rows if r["tier"] == "VERIFIED" and r["array_sha256"] == c["array_sha256"]
-                 and (r["t"], r["v"], r["k"], r["N"]) == (c["t"], c["v"], c["k"], c["N"])]
+        if c["array_sha256"] and not HEX64.match(c["array_sha256"]):
+            problem("%s: %s: array_sha256 is not 64 hex digits" % (CERT_LIST, c["file"]))
+        m = re.match(r"^CPHF\((\d+); (\d+), (\d+), (\d+)\)", c["family"])
+        if not m or not HEX64.match(c["family_sha256"] or ""):
+            problem("%s: %s: family %r or family_sha256 not readable" % (CERT_LIST, c["file"], c["family"][:40]))
+            continue
+        n, k, q, t = (int(x) for x in m.groups())
+        try:
+            if (c["file"], q, t) not in fam_cache:
+                fam_cache[(c["file"], q, t)] = cphf_cert.family_identity(path, q, t)
+            fsha, fn, fk, _ = fam_cache[(c["file"], q, t)]
+            if (fn, fk) != (n, k) or str(k) != c["k"]:
+                problem("%s: %s is a %d x %d family, listed as %s" % (CERT_LIST, c["file"], fn, fk, c["family"]))
+            if fsha != c["family_sha256"]:
+                problem("%s: %s: family_sha256 is not the hash of its cphf1 serialization" % (CERT_LIST, c["file"]))
+            fam_files[fsha].add(c["file"])
+            N, v = cphf_cert.expansion_runs(c["expansion"], n, q, t)
+            if (str(N), str(v)) != (c["N"], c["v"]):
+                problem("%s: %s: expansion %s gives N=%d, v=%d, listed N=%s, v=%s"
+                        % (CERT_LIST, c["file"], c["expansion"], N, v, c["N"], c["v"]))
+            if not c["array_sha256"] and N * k <= cphf_cert.ARRAY_HASH_MAX_ENTRIES:
+                problem("%s: %s: array not hashed, but it has only %d entries" % (CERT_LIST, c["file"], N * k))
+        except (cphf_cert.CertError, OSError, UnicodeDecodeError) as e:
+            problem("%s: %s: %s" % (CERT_LIST, c["file"], e))
+        match = [r for r in rows if r["tier"] in ("VERIFIED", "SCREENED") and cert_matches(c, r)]
         if not match:
-            problem("%s: %s has no VERIFIED row with the same t, v, k, N and array_sha256"
-                    % (CERT_LIST, c["file"]))
-        elif (match[0]["verify_stamp"].startswith(("repcheck ", "repcheck_pp ", "cphfcheck "))
-              and not c["check"].startswith(match[0]["verify_stamp"].split(" (")[0])):
+            problem("%s: %s has no VERIFIED or SCREENED row with the same t, v, k, N and array_sha256 "
+                    "(or family_sha256)" % (CERT_LIST, c["file"]))
+        elif (match[0]["verify_stamp"].startswith(CERT_STAMPS)
+              and not any(c["check"].startswith(x["verify_stamp"].split(" (")[0]) for x in match)):
             problem("%s: %s: the check %r does not start with the row's stamp %r"
                     % (CERT_LIST, c["file"], c["check"][:40], match[0]["verify_stamp"]))
+    for f, names in fam_files.items():
+        if len(names) > 1:
+            problem("%s: the same family (family_sha256 %s) is stored as %s" % (CERT_LIST, f[:12], ", ".join(sorted(names))))
     # the other way: a row checked through a certificate has its certificate listed
-    csha = {(c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) for c in certs}
     for r in rows:
-        if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith(("repcheck ", "repcheck_pp ", "cphfcheck ")):
-            if (r["t"], r["v"], r["k"], r["N"], r["array_sha256"]) not in csha:
-                problem("%s: VERIFIED row %s,%s,%s,%s is stamped by repcheck but has no certificate in %s"
-                        % (TABLE, r["t"], r["v"], r["k"], r["N"], CERT_LIST))
+        if r["tier"] in ("VERIFIED", "SCREENED") and r["verify_stamp"].startswith(CERT_STAMPS):
+            if not any(cert_matches(c, r) for c in certs):
+                problem("%s: %s row %s,%s,%s,%s is stamped by a certificate checker but has no certificate in %s"
+                        % (TABLE, r["tier"], r["t"], r["v"], r["k"], r["N"], CERT_LIST))
 
 
 def check_arrays(rows, man):

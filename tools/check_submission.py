@@ -59,7 +59,10 @@ PREV_CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "construction
 OLD_CLAIMS_HEADER = ["t", "v", "k", "N", "file", "source_detail", "credit", "notes"]
 TABLE_HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail",
                 "snapshot_id", "array_sha256", "verify_stamp", "entered",
-                "notes", "lb", "lb_evidence", "construction", "builds_on"]
+                "notes", "lb", "lb_evidence", "construction", "builds_on",
+                "family_sha256"]
+# family_sha256 (since 2026-11-02): the identity of the covering perfect hash family that gives a
+# certificate row (tools/cphf_cert.py); empty in every row this script writes
 MANIFEST_HEADER = ["file", "t", "v", "k", "N", "status", "sha256",
                    "source_id", "source_detail", "verify_stamp", "constant_rows"]
 SOURCE_ID = "S7"
@@ -731,7 +734,7 @@ def build_rows(claims, ctx):
                            cl["raw"]["source_detail"].strip(), ctx["snapshot_id"],
                            cl["sha256"], ctx["stamp"], ctx["date"],
                            table_notes(cl, ctx), "", "",
-                           cl["raw"]["construction"].strip(), cl.get("builds_on", "")])
+                           cl["raw"]["construction"].strip(), cl.get("builds_on", ""), ""])
         if cl["status"] == "screened":
             mstatus = "screened"
         else:
@@ -927,6 +930,26 @@ def selftest(table_dir):
     return 1 if bad else 0
 
 
+def certificate_light(sub, a, out):
+    """The pull request check of certificates.csv (tools/check_certificates.py --light): returns
+    (passed, report text). Nothing exact is run here."""
+    import contextlib
+    import check_certificates
+    cout = os.path.join(out, "certificates")
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf):
+            rc = check_certificates.main([sub, "--light", "--table-dir", a.table_dir, "--out", cout,
+                                          "--threads", str(max(1, min(64, a.threads)))])
+    except SystemExit as e:
+        return False, "## Certificate check\n\n**Result: FAIL.** %s\n" % md_cell(e)
+    try:
+        with open(os.path.join(cout, "report.md"), encoding="utf-8") as f:
+            return rc == 0, f.read()
+    except OSError:
+        return False, "## Certificate check\n\n**Result: FAIL.** the check stopped without a report\n"
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("submission", nargs="?", help="submissions/<slug> directory")
@@ -1012,23 +1035,30 @@ def main(argv=None):
                         "(see \"Size limits\" in submissions/README.md)"
                         % (total_bytes / 1048576.0, MAX_SUBMISSION_BYTES // 1048576))
     cpath = os.path.join(sub, "claims.csv")
-    # a submission of certificates or of arrays kept in a deposit only: these are checked by the maintainer
-    # (tools/check_certificates.py, tools/external_array.py), not here; say so instead of failing
+    # certificates (certificates.csv) get the light check of tools/check_certificates.py here: format,
+    # identity, duplicates, the estimate and plan of the exact check, and a small screen; the exact
+    # check runs after merge (.github/workflows/certificate-check.yml). Arrays kept in a deposit
+    # (external.csv) are checked by the maintainer (tools/external_array.py), not here.
     others = [n for n in ("certificates.csv", "external.csv") if os.path.isfile(os.path.join(sub, n))]
+    cert_ok, cert_text = True, ""
+    if "certificates.csv" in others and not problems:
+        cert_ok, cert_text = certificate_light(sub, a, out)
     if not os.path.exists(cpath) and others and not problems:
-        lines = ["## Covering array submission check: %s" % slug, "",
-                 "This submission holds %s and no claims.csv. %s checked by the maintainer on a larger machine "
-                 "(%s), as submissions/README.md describes, and the result is posted here. Nothing in it is "
-                 "checked by this run." % (" and ".join("`%s`" % n for n in others),
-                                           "It is" if len(others) == 1 else "They are",
-                                           ", ".join({"certificates.csv": "`tools/check_certificates.py`",
-                                                      "external.csv": "`tools/external_array.py`"}[n] for n in others))]
+        lines = ["## Covering array submission check: %s" % slug, ""]
+        if "external.csv" in others:
+            lines.append("This submission holds `external.csv`. Arrays kept in a deposit are checked by the "
+                         "maintainer on a larger machine (`tools/external_array.py`), as submissions/README.md "
+                         "describes, and the result is posted here.")
+            lines.append("")
+        if cert_text:
+            lines.append(cert_text)
         with open(os.path.join(out, "report.md"), "w", encoding="utf-8") as f:
             f.write("\n".join(lines) + "\n")
         with open(os.path.join(out, "summary.json"), "w", encoding="utf-8") as f:
-            json.dump(dict(slug=slug, passed=True, maintainer_check=others, claims=[]), f)
-        print("maintainer-checked submission (%s): nothing to check here" % ", ".join(others), file=sys.stderr)
-        return 0
+            json.dump(dict(slug=slug, passed=cert_ok, maintainer_check=[n for n in others if n == "external.csv"],
+                           certificates="certificates.csv" in others, claims=[]), f)
+        print("\n".join(lines))
+        return 0 if cert_ok else 1
     if total_bytes > MAX_SUBMISSION_BYTES:
         pass                              # refused before reading any claim
     elif os.path.islink(sub.rstrip(os.sep)) or os.path.islink(cpath):
@@ -1134,13 +1164,16 @@ def main(argv=None):
     elif a.apply:
         report += "\nNot applied: the submission did not pass.\n"
 
+    if cert_text:
+        report += "\n" + cert_text
+        summary["certificates_passed"] = cert_ok
     with open(os.path.join(out, "report.md"), "w", encoding="utf-8") as f:
         f.write(report)
     with open(os.path.join(out, "summary.json"), "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=1)
         f.write("\n")
     print(report)
-    return 0 if all_pass else 1
+    return 0 if all_pass and cert_ok else 1
 
 
 if __name__ == "__main__":

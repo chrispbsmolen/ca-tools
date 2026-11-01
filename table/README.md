@@ -85,7 +85,15 @@ the array files and these documents agree.
   lists each file with its SHA-256, the SHA-256 of the array it expands
   to (the `array_sha256` of its table row) and the exact check that
   `../tools/cphf/repcheck.c` or `../tools/cphf/repcheck_pp.c` made of
-  it. The first two were CA(40613; 5, 781, 5) and
+  it, and since 2026-11-02 also its `family_sha256` (the SHA-256 of the
+  family's canonical form `cphf1`) and its `expansion` (the rule that
+  gives the array: `smc-1`, `smc-1-affine`, with `+fuse a>b` or
+  `+fuse2 a` for a fused array; both defined in `../tools/cphf/README.md`).
+  Certificates submitted since then are checked by
+  `../tools/cphf/cphfcheck.c` (`../tools/check_certificates.py`), on
+  GitHub in shards after the merge when the work fits the time budget of
+  `../submissions/README.md`, and listed whether they entered as VERIFIED
+  or as SCREENED. The first two were CA(40613; 5, 781, 5) and
   CA(218479; 5, 2801, 7), 63 MB and about 1.2 GB as text, whose
   families are 49 KB and 196 KB; `certificates/CERTIFICATES.csv` lists
   them all, and `../tools/cphf/README.md` says how to rebuild and
@@ -213,6 +221,15 @@ v symbols". `tier` is the evidence class:
   `certificates/CERTIFICATES.csv` for the fused array, and the fused
   array is spot-checked directly as well. Only fusing, and only from
   certificates this table has checked itself, is accepted this way.
+  Since 2026-11-02 a submitted certificate is checked by
+  `../tools/cphf/cphfcheck.c` with the cheapest exact method it finds in
+  the data (a certified cyclic symmetry, progression rows, projection
+  hashing or every set of t columns), on GitHub in shards when the work
+  fits the time budget (`../submissions/README.md`, "Certificates"); its
+  stamp begins `cphfcheck` and ends "(CPHF certificate, exact)", or
+  "(CPHF certificate, exact; array not hashed)" for an array of more than
+  10^12 entries, whose `array_sha256` is then empty and whose
+  `family_sha256` identifies it.
   Every VERIFIED row therefore has a check method, read from its stamp
   by `check_method()` in `ca_table.py`: "direct" (the array itself
   checked exhaustively), "certificate", or "certificate + fusing". The
@@ -231,7 +248,12 @@ v symbols". `tier` is the evidence class:
   random column windows instead of verified in full (see
   `../submissions/README.md`). Listed but not counted as best known;
   when the array is later verified in full it gets a new VERIFIED row
-  (below).
+  (below). Since 2026-11-02 also a covering perfect hash family whose
+  exact check is over the time budget of the public runners: screened on
+  random column windows of the family and random sets of t columns, its
+  stamp ends "(CPHF certificate, screened)", and an exact check run later
+  on any machine (`python3 tools/check_certificates.py ... --apply`) adds
+  the VERIFIED row.
 - `DISPUTED` (defined 2026-10-23; until then reserved, with no rows) -
   a CITED entry whose cited construction, as implemented and checked
   here, did not give a covering array at the recorded size. It is
@@ -246,13 +268,32 @@ v symbols". `tier` is the evidence class:
 - `RETRACTED` (defined 2026-10-31) - a VERIFIED or SCREENED row found
   wrong after it was entered, for example an array a later check shows
   is not covering, or a stamp from a faulty verifier build. It is
-  recorded as an added row with the same t, v, k, N and `array_sha256`
-  as the row it retracts, and notes saying what was found and how. The
+  recorded as an added row with the same t, v, k, N, `array_sha256`
+  and `family_sha256` as the row it retracts, and notes saying what was
+  found and how. The
   retracted row stays in the file, unchanged, but no longer counts as
   best known, so the lookups below drop it at once. Anyone can raise a
   suspected error by opening an issue with a check that fails;
   `../tools/consistency.py` requires that a RETRACTED row matches
   exactly one VERIFIED or SCREENED row and has notes.
+
+`family_sha256` (added 2026-11-02, the last column) is empty except in
+rows given by a covering perfect hash family checked by `cphfcheck`: the
+SHA-256 of the family's canonical form `cphf1` (first line
+`cphf1 n k q t`, then n lines of k decimal codes, single spaces, a line
+feed after every line, rows and columns as given;
+`../tools/cphf/README.md`). Every certificate row entered since then has
+it. A row's array is identified by `array_sha256` whenever the array has
+at most 10^12 entries (N times k); above that a certificate row may leave
+`array_sha256` empty and is identified by `family_sha256`, which
+`certificates/CERTIFICATES.csv` must list. `identity()` in `ca_table.py`
+and `row_identity()` in `ca_table.R` give either, and the page shows
+such a row as "identity: family ... (array not hashed)". The ten
+certificate rows entered before the column existed (stamps `repcheck`
+and `repcheck_pp`) had it filled once, with the family_sha256 of their
+listing in `certificates/CERTIFICATES.csv` (below, "How to append a
+row"); the row of CA(2663; 5, 121, 3), whose array is stored and was
+checked directly by `ca_verify`, keeps it empty.
 
 `source_id` names the source class (S1 Colbourn snapshot, S4 NIST
 covering array library, S5 Dwyer CA_Database, S6 the CAs package's
@@ -318,7 +359,7 @@ https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv
 is the whole table, always current, and the only interface. There is
 no separate API. The rows that count as best known are the rows of
 tier CITED or VERIFIED, less any VERIFIED row that a RETRACTED row
-names (same t, v, k, N and `array_sha256`). This is defined once, by
+names (same t, v, k, N, `array_sha256` and `family_sha256`). This is defined once, by
 `counted()` in `ca_table.py`, which the tools in `../tools/` import,
 and mirrored by `counted_rows()` in `ca_table.R`. The stair-step rule
 gives the best known N at (t, v, k) as the smallest N among the
@@ -326,10 +367,11 @@ counted rows with the same t and v and k at least the requested k. In
 R, with no packages:
 
     tab <- read.csv("https://raw.githubusercontent.com/chrispbsmolen/ca-tools/main/table/ca_table.csv",
-                    stringsAsFactors = FALSE)
+                    stringsAsFactors = FALSE,
+                    colClasses = c(array_sha256 = "character", family_sha256 = "character"))
     tab$N <- as.numeric(tab$N)
     counted_rows <- function(tab) {
-        key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256)
+        key <- function(x) paste(x$t, x$v, x$k, x$N, x$array_sha256, x$family_sha256)
         r <- tab[tab$tier == "RETRACTED", ]
         tab[tab$tier %in% c("CITED", "VERIFIED") &
             !(tab$tier == "VERIFIED" & key(tab) %in% key(r)), ]
@@ -427,12 +469,17 @@ caverify package.
 ## How to append a row (maintainer's guide)
 
 The table is append-only in its claims: a row's t, v, k, N, tier,
-source_id, source_detail, snapshot_id, array_sha256, verify_stamp and
-entered are never changed, and a better N
+source_id, source_detail, snapshot_id, array_sha256, verify_stamp,
+entered and (since 2026-11-02) family_sha256 are never changed, and a better N
 or a correction is a new row. Since 2026-10-31
 `../tools/consistency.py --base` enforces this on every pull request
 and every push to main (the free-text columns notes, lb, lb_evidence
-construction and builds_on may still be corrected in place). The things written
+construction and builds_on may still be corrected in place). The one
+exception is family_sha256 going from empty to a value, allowed only in
+a VERIFIED or SCREENED row checked through a certificate (stamp
+`repcheck`, `repcheck_pp` or `cphfcheck`) and only to the family_sha256
+of that row's listing in `certificates/CERTIFICATES.csv` (same t, v, k,
+N and array_sha256); once set it never changes. The things written
 into existing rows since publication are all recorded here (dates as in the
 commits, US Central time): on 2026-10-19 the new `construction` column
 was filled for rows that predate it (above; commits a1ad327 and
@@ -459,7 +506,17 @@ two rows moved); on 2026-10-27 the notes of the 137 rows whose array
 files were withdrawn (`withdrawn_files.csv`) were extended by a
 sentence saying so (for CA(16; 4, 5, 2), that the identical array is
 stored as built here); on 2026-11-01 the new `builds_on` column was
-filled for every row that predates it (above). To add a claim with evidence:
+filled for every row that predates it (above); on 2026-11-02 the column
+`family_sha256` was added at the end of every row, empty in all existing
+rows (the append-only check reads it as empty in older versions of the
+table), and in the same change it was filled, once, in the ten
+certificate rows that predate it (CA(40613; 5, 781, 5), CA(218479; 5,
+2801, 7), CA(10921; 6, 121, 3), CA(249985; 6, 781, 5), CA(49985; 5,
+1562, 5), CA(767625; 5, 1210, 9), CA(268897; 5, 5602, 7), CA(885721;
+5, 7381, 9) and the two fused arrays CA(249985; 6, 781, 4) and
+CA(249983; 6, 781, 4)), with the family_sha256 of their listings in
+`certificates/CERTIFICATES.csv` (computed from the stored families, as
+the column `family_sha256` of that file was). To add a claim with evidence:
 
 1. Get the array (download, construct, or receive it) and note the
    exact recipe: URL and date, or the generating call and package

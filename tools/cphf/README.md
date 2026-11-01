@@ -235,7 +235,7 @@ first prefix column. Output as in full, plus the two count lines.
 
 | section | tests | what |
 |---|---|---|
-| legacy | 63 | full, cyclic, sample, expand (also affine), usage errors: stdout, stderr, exit code and expanded file identical to the original build; header and `checked` line of the new modes match what check_certificates.py parses |
+| legacy | 63 (53 without the optional inputs in `tests/legacy/`, which are not in the repository) | full, cyclic, sample, expand (also affine), usage errors: stdout, stderr, exit code and expanded file identical to the original build; header and `checked` line of the new modes match what check_certificates.py parses |
 | diff | 700 | random families, t = 2..6 (mostly 3..6), q in {3,4,5,7,8,9}, k up to 90 (t=3), 60 (t=4), 55 (t=5), 26 (t=6); 0..4 progression-built rows (generic A, shared A, monomial and conjugated monomial A, affine x -> Mx+b, -I, I, eigenvector start, translations, invariant subspace starts) and 0..3 other rows (random, affine, few repeated vectors, corrupted progression, singular A). 127 cases have k > q^(t-1). Row classes over all cases: 1021 P, 1290 O, 707 dead. Compared with full (1 thread): exit code, uncovered count, first uncovered set, the complete sorted list whenever there are at most 20000, and the row classification against an independent Python classifier (solves all k-1 equations for A). 15% of runs use the build without OpenMP; thread counts 1 to 3. |
 | planted | 120 | a set failing in every P row (from the full listing of the P rows) is made dependent in every O row; 20 each of shift a = 0, middle, a = k-1-max(D), each with and without WILD columns or wildcard rows; the set must be in all three lists and the lists identical |
 | negative | 146 | corrupted P row at the first, middle and last column, singular A with spanning row, non-spanning row, constant row: `P=` exits 3 naming the row, the class is right ("singular" reported), the good row alone certifies, and results still equal full; bad `P=` exits 2 |
@@ -291,6 +291,231 @@ rows and how often they fail together.
 - In mode full with more than one thread, "first uncovered" depends on scheduling (unchanged
   behaviour); the new modes always report the lexicographic minimum.
 - The `checked` count is printed exactly (128-bit), also past 2^63.
+
+## Mode fastprog (cphfcheck.c, since 2026-11-02)
+
+The research behind this mode (the ideas tried, their complexity, why each kept step is exact, and
+the ones dropped) is in `RESEARCH_fastprog.md` in this folder.
+
+    cphfcheck FILE t q fastprog [threads] [P=r1,r2,...] [shard i m]
+
+The result of `progression` (the same row classification, the same representatives D with
+0 in D failing in every progression row, the same counts and binomials, the same rank recheck of
+every representative and the same shift tests in the other rows, so the same output lines) by a
+faster exact method, 11 to 21 times faster per unit on the benchmark families below. `progression`
+stays available as the simpler reference; `auto` uses fastprog whenever there are progression
+rows (it is then always cheaper than `progression`). k is at most 65535 (16-bit column indices);
+at t = 2 fastprog runs the code of `progression`.
+
+1. Prefixes of t-3 columns. For a prefix P' (0 in P') and a progression row in which P' has rank
+   t-3, the quotient of GF(q)^t by span(P') is 3-dimensional; every column maps to zero or a point
+   of PG(2,q), computed once per (P', row) (three dot products per column, vectorised). For
+   P = P' + {p} and D = P + {x, y}, dim span(D) = (t-3) + dim span(phi(p), phi(x), phi(y)), so
+   D fails in the row iff the three images are dependent: x or y is WILD (zero, or the point of
+   p), or x and y lie on the same line through phi(p). The class of a column is that line, read
+   from a byte table of PG(2,q) (built and verified at start: q+1 lines through every point, q
+   further points on each). These are exactly the classes and the rule of `progression`. A row
+   in which P' has rank below t-3, or in which phi(p) = 0, is a wildcard row (every completion
+   fails) and is skipped, as in `progression`.
+2. Hash join. For one p, the columns c > p get a key: their classes in the first one, two or
+   three live rows (by the number of columns), radix q+1. Two non-WILD columns fail those rows
+   iff their keys are equal (a stamped hash table with chains); a column WILD in some of the rows
+   probes the (q+1)^|S| compatible keys; two WILD columns go through the row-by-row rule. Every
+   pair is decided exactly once; pairs passing the joined rows continue row by row through the
+   other live rows, and a pair passing all of them is a representative. The key pass uses AVX2
+   gathers when the build has them (`-march=native`; `-DNO_AVX2` forces the scalar pass, which
+   gives the same results).
+3. Completeness: prefixes, candidate columns and pairs failing + pairs ruled out must equal the
+   binomials of `progression`, and every representative is rechecked by rank in every
+   progression row before its shifts are tested; a mismatch exits 4 (a bug, never a verdict).
+   During development the recheck caught both bugs found, never a wrong verdict.
+
+Shards: `shard i m` splits the same outer loop as `progression` (the second column of the
+representative, t >= 4; one index at t = 2 and 3), deals it the same way, prints the same
+`SHARD` lines with `mode=fastprog`, and `../cphf_cert.py` combines the shards with the same
+checks (every index in exactly one shard, each shard's counts recomputed from its indices, totals
+equal to an unsharded run). The prototype's own `part=i/m` splitting is not part of this build.
+
+Unit cost: 4.4 ns per C(k-1, t-2) unit on one core of the test VM at q = 23 (the constant
+`UNIT_NS_FASTPROG` in `cphfcheck.c` and `UNIT_NS["fastprog"]` in `../cphf_cert.py`; the shift
+tests are counted at 200 ns each, as for `progression`). It is provisional: recalibrate it, and
+the other unit costs, from the first real runs on the GitHub runners (the shard outputs give the
+units, the job logs the times).
+
+| family (q = 23) | t | k | rows (P + O) | progression | fastprog, 1 thread | ns per unit |
+|---|---|---|---|---|---|---|
+| b5_1200 | 5 | 1200 | 6 + 2 | 16.9 s | 1.11 s | 3.9 |
+| b5_2000 | 5 | 2000 | 6 + 2 | 125 s | 5.85 s | 4.4 |
+| p5_4000 | 5 | 4000 | 8 + 0 | 769 s | 47.3 s | 4.4 |
+| b6_240 | 6 | 240 | 6 + 2 | 8.90 s | 0.51 s | 3.8 |
+| p6_700 | 6 | 700 | 8 + 0 | 624 s | 43.6 s | 4.4 |
+| p6_1000 | 6 | 1000 | 10 + 0 | (about 1.3 h) | 200 s | 4.9 |
+
+(Measured 2026-11-01 on the prototype, whose fastprog code is the code of this build; results
+identical to `progression` in every run. With few progression rows and other rows, the shift
+tests can dominate both modes: b6_700, 4 + 2 rows, 1060 s against 459 s.) Extrapolation at
+q = 23, k = 10000: t = 5, C(9999, 3) units, about 12 minutes on one core; t = 6, C(9999, 4) =
+4.2e14 units, about 21 core-days, which is more than 20 shards of 5 hours on 4 threads (the
+budget of `../cphf_cert.py`), so such a family enters as SCREENED unless the budget or the
+runners change.
+
+Tests: `tests/test_fastprog.py` (below, "Tests").
+
+## One command, estimates and shards (cphfcheck.c, since 2026-11-02)
+
+    cphfcheck FILE t q estimate [threads]
+    cphfcheck FILE t q auto [threads] [shard i m]
+    cphfcheck FILE t q full|fullfast|progression|fastprog [threads] shard i m
+    cphfcheck FILE t q cyclic s [threads] shard i m
+    cphfcheck FILE t q canon OUT
+
+### Mode estimate and mode auto
+
+`estimate` runs nothing exact. It classifies the rows as `progression` does, looks for a cyclic
+shift symmetry (the smallest s, 1 <= s < k, s dividing k, for which `cyclic s` certifies every
+row; rows whose columns 0..k-s-1 do not span GF(q)^t are never certified, as before), and prints
+for every method that applies its work units and an estimated time on one core:
+
+| method | units | ns per unit | from the timing table above |
+|---|---|---|---|
+| cyclic s | t-sets with smallest column < s | 52 | the engine of `full` |
+| fastprog (t >= 3, k <= 65535) | C(k-1, t-2), plus 200 ns per shift test | 4.4 | "Mode fastprog" above; provisional |
+| progression | C(k-1, t-2), plus 200 ns per shift test | 64 | 64 at t = 5, 63 at t = 6; shift tests: about 5e10 in 1 to 3 hours |
+| fullfast | C(k, t-1) | 92 | 92 at t = 4, 75 at t = 5 |
+| full | C(k, t) | 52 | 16 at t = 4, 52 at t = 5 |
+
+Where the table gives two values the larger is used. The number of shift tests is C(k, t) times
+the product of the failure rates of the progression rows, each measured on 20,000 random t-sets
+with a fixed seed (rows are assumed to fail independently; a row with no failure in the sample
+counts as 0.5 / 20,000). The constants are `UNIT_NS_*` in `cphfcheck.c`. They were measured at
+q = 23 with 8 rows and are a planning aid only, good to within a few times: the method changes how
+long an exact check takes, never its answer, and every method below is exact. Then `cheapest:`
+names the method of smallest estimate (ties go to cyclic, fastprog, progression, fullfast, full,
+in that order; fastprog has the units and shift tests of progression at a lower unit cost, so
+progression is never chosen when fastprog applies). `auto` prints the estimate, then `auto: method ...`, then runs that method exactly; the
+choice depends only on the data, so every shard of an `auto` run makes the same choice.
+
+### Shards
+
+`shard i m` (the last three arguments) runs shard i of m of the outer loop of an exact mode:
+
+| mode | outer index j | weight of j |
+|---|---|---|
+| full | smallest column of the t-set, 0..k-t | C(k-1-j, t-1) |
+| cyclic s | smallest column, 0..s-1 | C(k-1-j, t-1) |
+| fullfast (t >= 3) | first prefix column, 0..k-1 | C(k-1-j, t-2) |
+| progression, fastprog (t >= 4) | second column of the representative, 1..k-1 | C(k-1-j, t-3) |
+
+fullfast at t = 2 and progression and fastprog at t = 2 and 3 have one outer index, which goes to shard 0. The
+indices are sorted by weight, largest first (ties: smaller index first), and each goes to the
+shard with the least weight so far (ties: the lower shard): deterministic, and every index is in
+exactly one shard whatever m is. A shard prints its indices (`SHARD indices: ...` as ranges), the
+counts of its share in a line `SHARD i=.. m=.. mode=.. units=.. ...` (units: t-sets for full and
+cyclic, pairs for fullfast, progression and fastprog; also prefixes and candidate columns for the hashing
+modes), every uncovered t-set it finds as `U c1 ... ct` (at most `CPHFCHECK_LISTCAP`, default
+10,000) and its lexicographically smallest one. The shard checks its own counts against the
+binomial sums of its indices (exit 4 if they differ) and never prints `RESULT`.
+
+`../cphf_cert.py` (`combine()`) puts the shards together. It accepts them only if shards
+0..m-1 are each there exactly once, ran the same method on the same family (family_sha256, tool
+hash, header and row classification), exited 0 or 1, list disjoint sets of indices that together
+are the whole outer loop, have the counts their indices stand for (recomputed in Python from the
+binomials), and add up exactly to the totals an unsharded run checks: C(k, t) t-sets for full,
+the representatives for cyclic s, C(k, t) pairs, C(k, t-2) prefixes and C(k, t-1) candidate
+columns for fullfast, C(k-1, t-1) pairs, C(k-1, t-3) prefixes and C(k-1, t-2) candidate columns
+for progression and fastprog. Sharding splits the same loop the unsharded run does, so it never changes the
+answer; a missing, repeated or relabelled shard, or one from another run, is refused.
+
+### Tests (`tests/test_shards.py`, `tests/test_certificates.py`, `tests/test_fastprog.py`, 2026-11-02)
+
+`tests/test_progression.py --no-timing` on this source: 1031 tests, 0 failed, 359 s on 2 cores
+(legacy 53, all seven mutations caught; mode fastprog does not change the old modes, whose output
+is also byte-identical to the build published before 2026-11-02 on 2,400 further runs).
+
+`tests/test_shards.py`: 13,162 tests, 0 failed, 70 s on 2 cores: 160 random families (the generators of
+`tests/test_progression.py`, t = 2 to 6, q = 3 to 9; a quarter of them with a cyclic symmetry of
+one or two column orbits), each in full, fullfast, progression, fastprog and (when certified) cyclic s, with
+m = 1, 2, a random m up to 6, and more shards than the outer loop has indices, 1 or 2 threads,
+OpenMP and plain builds. The combined count, smallest uncovered t-set and complete list equal those
+of the unsharded `full` listing (2,448 tests); a missing, repeated, relabelled, other-m and truncated
+shard is refused every time (8,905); the planner's replica of the deal (`cphf_cert.deal()`) gives the
+weights cphfcheck prints (1,450); `auto` reaches the verdict of `full` with the cheapest method and
+finds the planted symmetry (187); `canon` equals the Python serialization (160); the buffered
+`expand` writes the same bytes as the first published version (12, plain and affine).
+
+`tests/test_certificates.py` (45 tests, 0 failed, 15 s) runs `../check_certificates.py` end to end
+on a temporary copy of the table: the family_sha256 of every stored family (Python and
+`cphfcheck canon`), the local exact check and its entry, duplicates (a family already in the table,
+a family named twice), affine claims with and without the mode, the explicit modes cyclic s,
+progression and fastprog, plan (auto plans fastprog for a family of progression rows), shards,
+results and entry (VERIFIED), a missing, repeated or relabelled shard (never VERIFIED: the family is screened), a
+result folder tampered with after the fact (refused at entry), a family that is not a CPHF (found by
+the shards, by the screen and by the light check), a family over the budget (SCREENED, then
+VERIFIED by a later exact check, then a duplicate), an array above the hash threshold (lowered for
+the test: no array_sha256, identified by family_sha256, a RETRACTED row matched by it, and the
+same rows rejected under the real threshold), the one-time fill of family_sha256 in the existing
+certificate rows (allowed from empty to the listing's value; refused for another value, on a row
+not checked through a certificate, and once set; needs git), and the light check of a pull request.
+
+`tests/test_fastprog.py`: 1,565 tests, 0 failed, about 20 minutes on 2 cores. 300 random families
+(t = 3 to 6, q up to 13, k up to 70; every progression row kind of `tests/test_progression.py`,
+many WILD columns, all-progression and near-CPHF families) and 60 planted ones: fastprog (1 to 3
+threads, AVX2 and scalar builds) and progression give the exit code, count, first set and
+`checked` total of `full` of the first published build and the complete list of `full`, with
+consistent completeness lines and the Python row classification; in a third of the cases (half of
+the planted ones) fastprog also runs as m = 1, 2, 3 or 5 shards and as more shards than indices,
+combined by `combine()` (1,190 tests: the same count, first set and list as unsharded fastprog and
+full; a missing, repeated or relabelled shard refused). Mutations (scalar build, 80 + 10 cases
+each): all 14 caught (WILD treated as a class, no probing of WILD partners, WILD-WILD pairs skipped,
+chain cut to one partner, probe one class short, candidate range off by one, LINE[P][P] not WILD,
+survivors not checked in the remaining rows, non-projective point index, prefix rank below t-3 not
+a wildcard row, progression check stopping one column early, last shift skipped, a shard doing
+every index, a shard doing an index it does not own); the equivalent mutant "wildcard row kept"
+changes nothing, as expected (control).
+
+### Identity of a family (cphf1)
+
+A family is identified by family_sha256, the SHA-256 of its canonical serialization `cphf1`: the
+first line `cphf1 n k q t`, then n lines of k decimal codes (each vector of GF(q)^t written in
+base q, most significant digit first, the code of the family file), single spaces, a line feed
+after every line, no comments, rows and columns in the order given. `cphfcheck FILE t q canon OUT`
+writes it; `../cphf_cert.py` computes it independently, and `../check_certificates.py` refuses a
+family for which the two differ. The table's rows keep the SHA-256 of the expanded array in
+`array_sha256` whenever N times k is at most 10^12 entries; above that a certificate row may leave
+`array_sha256` empty and is identified by the `family_sha256` column of `../../table/ca_table.csv`
+alone. Every certificate row since 2026-11-02 records family_sha256, below the threshold as well.
+
+### Expansion rules
+
+`../../table/certificates/CERTIFICATES.csv` names the rule that turns each listed family into its
+array (column `expansion`):
+
+- `smc-1`: the all-zero run, then for r = 0..n-1 and beta = 1..q^t-1 in increasing base-q code
+  (most significant digit first) the run whose entry in column c is beta . v_r[c]: n (q^t - 1) + 1
+  runs (Sherwood, Martirosyan and Colbourn 2006). This is `cphfcheck expand` and
+  `cphf_tools_pp.c expand`.
+- `smc-1-affine`: as `smc-1`, but beta whose coordinates after the first are all zero are skipped,
+  and the constant runs b = 1..q-1 are appended at the end: n (q^t - q) + q runs, for a family in
+  which every vector has first coordinate 1 (`cphfcheck expand OUT affine`).
+- a rule followed by `+fuse a>b`: then symbol a is written as b in every entry (Colbourn, Keri,
+  Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1): the same runs, one symbol fewer.
+- a rule followed by `+fuse2 a`: then symbol a (the largest, a = q - 1) is removed with two runs
+  as `fuse2.c` does: in every column the entry of the first run is exchanged with a, so that run is
+  constant a and is deleted; then in every other run an a in column c is replaced by the entry of
+  the second run in column c (by 0 where that entry is a), and the second run is deleted. Two runs
+  and one symbol fewer (Lemma 3.1 of the same paper, used twice).
+
+The listings of 2026-10-28 to 2026-10-31 are `smc-1`, `smc-1+fuse 4>0` and `smc-1+fuse2 4`.
+
+### Buffered expand
+
+Since 2026-11-02 `expand` builds each run in a buffer (per row, the sum over the first t-1
+coordinates once for every q values of the last one) and writes it in blocks instead of one
+`fprintf` per entry. The output bytes are unchanged (tested above and by the legacy section of
+`tests/test_progression.py`). CA(40613; 5, 781, 5), 3.2e7 entries, now expands to a file in
+0.17 s instead of 1.4 s; CA(218479; 5, 2801, 7), 6.1e8 entries, expands and hashes through a pipe
+in 4.1 s (2.3 s for the expansion alone), about 4 ns per entry, so an array of 10^12 entries takes
+about an hour to hash (`HASH_NS_PER_ENTRY` in `../cphf_cert.py`).
 
 ## Credits and bounds
 

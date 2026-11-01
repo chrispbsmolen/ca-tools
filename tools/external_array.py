@@ -359,7 +359,7 @@ def main(argv=None):
             trows.append([r["t"], r["v"], r["k"], r["N"], tier, cs.SOURCE_ID,
                           raw["source_detail"].strip(), snap, r["sha256"], stamp, today,
                           "; ".join(notes), "", "", raw["construction"].strip(),
-                          raw["builds_on_value"]])
+                          raw["builds_on_value"], ""])
             erows.append([r["sha256"], r["t"], r["v"], r["k"], r["N"], r["bytes"],
                           raw["location"].strip(), r["status"], raw["source_detail"].strip(), stamp])
         eol = "\r\n" if b"\r\n" in open(table_path, "rb").read(4096) else "\n"
