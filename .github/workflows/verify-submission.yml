@@ -126,6 +126,8 @@ jobs:
       - name: Say what happens on merge
         if: env.STATUS == '0' && env.SLUGS != ''
         run: |
+          has=""; for slug in $SLUGS; do [ -f "pr/submissions/$slug/claims.csv" ] && has=1; done
+          [ -n "$has" ] || exit 0      # certificates or deposited arrays only: checked by the maintainer
           { echo
             echo "Every claim passed. When this pull request is merged, the table workflow on main checks the submission again against the table at that moment and adds its rows, with the credit given in claims.csv. Nothing else is needed from you."; } >> comment.md
 

@@ -978,6 +978,23 @@ def main(argv=None):
                         "(see \"Size limits\" in submissions/README.md)"
                         % (total_bytes / 1048576.0, MAX_SUBMISSION_BYTES // 1048576))
     cpath = os.path.join(sub, "claims.csv")
+    # a submission of certificates or of arrays kept in a deposit only: these are checked by the maintainer
+    # (tools/check_certificates.py, tools/external_array.py), not here; say so instead of failing
+    others = [n for n in ("certificates.csv", "external.csv") if os.path.isfile(os.path.join(sub, n))]
+    if not os.path.exists(cpath) and others and not problems:
+        lines = ["## Covering array submission check: %s" % slug, "",
+                 "This submission holds %s and no claims.csv. %s checked by the maintainer on a larger machine "
+                 "(%s), as submissions/README.md describes, and the result is posted here. Nothing in it is "
+                 "checked by this run." % (" and ".join("`%s`" % n for n in others),
+                                           "It is" if len(others) == 1 else "They are",
+                                           ", ".join({"certificates.csv": "`tools/check_certificates.py`",
+                                                      "external.csv": "`tools/external_array.py`"}[n] for n in others))]
+        with open(os.path.join(out, "report.md"), "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+        with open(os.path.join(out, "summary.json"), "w", encoding="utf-8") as f:
+            json.dump(dict(slug=slug, passed=True, maintainer_check=others, claims=[]), f)
+        print("maintainer-checked submission (%s): nothing to check here" % ", ".join(others), file=sys.stderr)
+        return 0
     if total_bytes > MAX_SUBMISSION_BYTES:
         pass                              # refused before reading any claim
     elif os.path.islink(sub.rstrip(os.sep)) or os.path.islink(cpath):

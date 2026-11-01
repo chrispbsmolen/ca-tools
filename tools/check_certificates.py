@@ -97,10 +97,14 @@ def check_claim(raw, sub, exe, threads, ctx, tmp):
         raise CertError("mode %r is not 'full' or 'cyclic s', optionally followed by ' affine'" % raw["mode"])
     affine = bool(m.group(3))
     fname = raw["file"].strip()
-    if not cs.SAFE_NAME.match(fname):
-        raise CertError("file name %r is not a plain file name" % fname)
-    fam = os.path.join(sub, fname)
-    if os.path.islink(fam) or not os.path.isfile(fam):
+    parts = fname.split("/")
+    if not fname or any(not cs.SAFE_NAME.match(x) for x in parts) or len(parts) > 3:
+        raise CertError("file %r is not a plain path inside the submission (names of letters, digits, '.', '_', '-', "
+                        "at most two folders)" % fname)
+    fam = os.path.join(sub, *parts)
+    if any(os.path.islink(os.path.join(sub, *parts[:i + 1])) for i in range(len(parts))):
+        raise CertError("family file %s or a folder on its path is a symbolic link" % fname)
+    if not os.path.isfile(fam):
         raise CertError("family file %s is missing" % fname)
     if os.path.getsize(fam) > cs.MAX_FILE_BYTES:
         raise CertError("family file is over the 50 MiB limit")
