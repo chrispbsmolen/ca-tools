@@ -505,18 +505,37 @@ def budget_args(a):
     return dict(threads=a.runner_threads, max_shards=a.max_shards, shard_hours=a.shard_hours, safety=a.safety)
 
 
+MAX_TASKS = 250      # a workflow matrix takes at most 256 jobs; the rest is margin
+
+
+class Pool:
+    """The budget of one submission, in core-hours of doubled estimate: a.max_shards shards of
+    a.shard_hours hours on a.runner_threads threads (400 core-hours with the defaults), and at most
+    MAX_TASKS matrix jobs. Each claim may use up to a.max_shards shards of its own; small claims take
+    only what they need, so many small families fit (until 2026-11-02 every claim used up a whole
+    shard of a pool of 20 shards, and the 21st family of a submission was screened however small)."""
+    def __init__(self, a):
+        self.core_hours = a.max_shards * a.shard_hours * a.runner_threads
+        self.tasks = MAX_TASKS
+
+    def take(self, p, hashed):
+        need = p["shards"] + (1 if hashed else 0)
+        if not p["exact"] or p["core_hours"] > self.core_hours or need > self.tasks:
+            return dict(p, exact=False, shards=0, shard_hours=None)
+        self.core_hours -= p["core_hours"]
+        self.tasks -= need
+        return p
+
+
 def make_plan(claims, sub, exe, ctx, tmp, a):
-    """method and shards of every claim within one pool of a.max_shards shards"""
-    pool = a.max_shards
+    """method and shards of every claim within the budget of one submission (Pool)"""
+    pool = Pool(a)
     plan = []
     for i, raw in enumerate(claims):
         c = prepare(raw, sub, exe, ctx, tmp)
         ctx["seen_family"].add(c["fam_sha"])
         est = estimate(c, exe, a.threads)
-        b = budget_args(a); b["max_shards"] = pool
-        p = cc.plan_claim(est, c["k"], c["t"], **b)
-        if p["exact"]:
-            pool -= p["shards"]
+        p = pool.take(cc.plan_claim(est, c["k"], c["t"], **budget_args(a)), c["hashed"])
         plan.append(dict(index=i, file=c["fname"], t=c["t"], v=c["v"], k=c["k"], N=c["N"], n=c["n"],
                          family_sha256=c["fam_sha"], file_sha256=c["file_sha"], affine=c["affine"],
                          hashed=c["hashed"], method=p["method"], shards=p["shards"], exact=p["exact"],
@@ -532,9 +551,11 @@ def plan_text(p, a):
                     p["method"], p["shards"], "" if p["shards"] == 1 else "s", p["shard_hours"], a.safety,
                     p["core_hours"]))
     return ("cheapest exact method %s, about %.3g core-hours (estimate times %g): over the budget of "
-            "%d shards of %g hours on %d threads; screened on GitHub and enters as SCREENED until an "
-            "exact check is run elsewhere" % (p["method"], p["core_hours"], a.safety, a.max_shards,
-                                             a.shard_hours, a.runner_threads))
+            "this submission (%d shards of %g hours on %d threads per family, %g core-hours and %d jobs "
+            "for the whole submission); screened on GitHub and enters as SCREENED until an exact check "
+            "is run elsewhere" % (p["method"], p["core_hours"], a.safety, a.max_shards, a.shard_hours,
+                                  a.runner_threads, a.max_shards * a.shard_hours * a.runner_threads,
+                                  MAX_TASKS))
 
 
 def tasks_of(plan):
@@ -649,7 +670,7 @@ def form_local(claims, sub, slug, exe, ctx, tmp, a, today):
 
 def form_light(claims, sub, slug, exe, ctx, tmp, a):
     """pull request: everything but the exact check"""
-    out, ok, pool = [], True, a.max_shards
+    out, ok, pool = [], True, Pool(a)
     for raw in claims:
         c = dict(raw=raw, lines=[], reasons=[])
         try:
@@ -658,10 +679,7 @@ def form_light(claims, sub, slug, exe, ctx, tmp, a):
             c.update(p)
             c["lines"] += describe(c)
             est = estimate(c, exe, a.runner_threads)
-            b = budget_args(a); b["max_shards"] = pool
-            pl = cc.plan_claim(est, c["k"], c["t"], **b)
-            if pl["exact"]:
-                pool -= pl["shards"]
+            pl = pool.take(cc.plan_claim(est, c["k"], c["t"], **budget_args(a)), c["hashed"])
             ests = ", ".join("%s %.3g core-seconds" % (e["method"], e["core_seconds"])
                              for e in est["methods"].values())
             c["lines"].append("rows: %d progression, %d other, %d dead; %s" % (
@@ -797,8 +815,10 @@ def settle(c, p, shards, hashtxt, exe, tmp, a, today, tool):
             why = "the exact check planned on GitHub did not complete (%s)" % e
     else:
         why = ("the exact check (%s, about %.3g core-hours with the safety factor) is over the budget of "
-               "%d shards of %g hours on %d threads" % (p["method"], p["core_hours"], a.max_shards,
-                                                        a.shard_hours, a.runner_threads))
+               "this submission (%d shards of %g hours on %d threads per family, %g core-hours and %d "
+               "jobs in all)" % (p["method"], p["core_hours"], a.max_shards, a.shard_hours,
+                                 a.runner_threads, a.max_shards * a.shard_hours * a.runner_threads,
+                                 MAX_TASKS))
     if not exact:
         if c.get("upgrade"):
             raise CertError("duplicate: this family is already SCREENED and was screened again")

@@ -23,6 +23,11 @@ ca_verify.c
     VERIFIED or the missing
     tuples. Exit code 0/1/2 = verified / gaps / error, so it can gate a CI
     pipeline. Build: cc -O3 -pthread -o ca_verify ca_verify.c
+    Since 2026-11-02 it decides all t-sets sharing their t-1 smallest columns
+    at once with vector operations (exact; about 350 times faster on large
+    binary strength-4 arrays, see tools/RESEARCH_ca_verify.md and
+    tools/BENCH_ca_verify.md), with the same arguments, output and exit codes;
+    an optional SHARD/NSHARDS argument splits the work (tools/ca_shard_merge.py).
 
 ca_verify.py
 :   The same checker in pure Python, no compiler needed. Slower; same

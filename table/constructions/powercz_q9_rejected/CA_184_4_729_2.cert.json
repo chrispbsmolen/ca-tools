@@ -1,0 +1,117 @@
+{
+ "format": "construction-cert-1",
+ "construction": "powercz-1",
+ "notes": [
+  "Colbourn and Zhou 2012, Theorem 2.2 with Lemma 2.3; recipe cz729.json"
+ ],
+ "t": 4,
+ "v": 2,
+ "e": 3,
+ "field": {
+  "q": 9,
+  "p": 3,
+  "m": 2,
+  "modulus": [
+   1,
+   0,
+   1
+  ]
+ },
+ "family": {
+  "type": "reed-solomon",
+  "rows": [
+   {
+    "point": 0,
+    "forbidden": [],
+    "ingredient": "S22_9"
+   },
+   {
+    "point": 1,
+    "forbidden": [],
+    "ingredient": "S22_9"
+   },
+   {
+    "point": 2,
+    "forbidden": [],
+    "ingredient": "S22_9"
+   },
+   {
+    "point": 3,
+    "forbidden": [],
+    "ingredient": "S22_9"
+   },
+   {
+    "point": 4,
+    "forbidden": [],
+    "ingredient": "S03_9"
+   },
+   {
+    "point": 5,
+    "forbidden": [],
+    "ingredient": "S14_9"
+   },
+   {
+    "point": 6,
+    "forbidden": [],
+    "ingredient": "S13_9"
+   },
+   {
+    "point": 7,
+    "forbidden": [],
+    "ingredient": "S13_9"
+   },
+   {
+    "point": 8,
+    "forbidden": [],
+    "ingredient": "S13_9"
+   }
+  ]
+ },
+ "ingredients": {
+  "S22_9": {
+   "file": "S22_9.txt",
+   "sha256": "032d8931e1e0745b9d9e794ce349ee5bbd3223a771aec45da0ecf743ddaa6963",
+   "covers": {
+    "weights": [
+     2,
+     2
+    ]
+   }
+  },
+  "S03_9": {
+   "file": "S03_9.txt",
+   "sha256": "0a9eac26228a432fa89b328b21ac7cd685fddeea7809ba55560a42c8d9c45cce",
+   "covers": {
+    "weights": [
+     0,
+     3
+    ]
+   }
+  },
+  "S14_9": {
+   "file": "S14_9.txt",
+   "sha256": "16821d112e86d6408e9b1ae5f69dfcbec4898c334726b9894ea4fb77594ee4d9",
+   "covers": {
+    "weights": [
+     1,
+     4
+    ]
+   }
+  },
+  "S13_9": {
+   "file": "S13_9.txt",
+   "sha256": "51e76400947c04752d44cdbea01bb5fc74a578752abc2076caccd053baf90275",
+   "covers": {
+    "weights": [
+     1,
+     3
+    ]
+   }
+  }
+ },
+ "expected": {
+  "N": 184,
+  "k": 729,
+  "array_sha256": "0242863dd98d48a186b31b20fd2ad262ff5037d5381ef06775e8f602d842c30d"
+ }
+}

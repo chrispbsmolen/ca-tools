@@ -105,6 +105,11 @@ the array files and these documents agree.
   from the repository history). The arrays themselves are not stored.
   The submission check uses it to flag a submission that is one of
   those arrays in disguise.
+- `constructions/` (since 2026-11-02) - construction certificates: the recipe of an array built by
+  a published recursive construction (for now Power CZ, Colbourn and Zhou 2012), with its small
+  ingredient arrays. `../tools/construction_cert.py` checks every hypothesis of the theorem
+  exactly, rebuilds the array and prints its canonical sha256, in a fraction of a second; see
+  `../tools/CONSTRUCTION_CERT.md`.
 - `references.csv` (since 2026-10-31; ids since 2026-11-01) - the
   bibliography of construction methods: an `id` (for example
   `cphf-smc2006`), `keywords` (a case-insensitive regular expression

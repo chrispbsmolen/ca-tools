@@ -274,8 +274,11 @@ The time budget. GitHub's hosted runners are free for public
 repositories: a job may run up to 6 hours on 4 cores, and up to 20 jobs
 run at once. The exact check of a submission runs on GitHub when its
 estimated work, doubled as a safety margin, fits in at most 20 shards of
-at most 5 hours each on 4 cores (about 400 core-hours of doubled
-estimate). Within the budget the rows enter as VERIFIED. Over the budget,
+at most 5 hours each on 4 cores for each family, and the whole submission
+fits in about 400 core-hours of doubled estimate and 250 jobs (a small
+family takes only the time it needs, so a submission of many small
+families is checked in full; before 2026-11-02 each family used up a whole
+shard of 20, and families after the 20th were screened). Within the budget the rows enter as VERIFIED. Over the budget,
 or when a shard does not finish in time, the family is screened instead
 (20 random windows of 30 columns, each checked exactly, and 1,000,000
 random t-sets, all seeded from family_sha256, the conventions of the
