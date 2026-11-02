@@ -281,6 +281,52 @@ The unit costs fall slightly as k grows (fixed per-prefix cost spread over more 
 these are upper-side estimates for the hashing; the shift-test term depends on the number of P
 rows and how often they fail together.
 
+### Unit costs (the estimate, since 2026-11-02)
+
+`cphfcheck FILE t q estimate` and `../cphf_cert.py` (its function `unit_ns`, which must equal the
+function `unit_ns` of `cphfcheck.c`, as `tests/test_certificates.py` checks) price the methods
+in nanoseconds on one core per unit, with n the number of rows of the family:
+
+| method | unit | ns per unit |
+|---|---|---|
+| full, cyclic | t-set (representative t-set for cyclic) | 0.15 n t^2 |
+| fullfast | C(k, t-1) | n (11 + 28/q) |
+| progression | C(k-1, t-2) | 10.5 (t-3)^2 + 4.6 k/q^2 |
+| fastprog | C(k-1, t-2) | 0.8 (t-3)^2 + 1.1 k/q^2 |
+| shift test (progression, fastprog) | one shift tested in the other rows | 140 |
+
+The term in k/q^2 is the work on columns that fall on the same line of PG(2, q), which grows with
+k and falls fast with q. The plans of `../cphf_cert.py` multiply the estimate by SAFETY = 2.
+
+Measured on the test VM (2 vCPUs of an Intel Xeon at 2.1 GHz, gcc 13.3, `cc -O3
+-march=native -fopenmp`), one thread per run with two runs at a time (one per core), wall-clock
+time of the whole process, 2026-11-02. The real families are the 52 families of
+`submissions/canli-2026-11-cphf-full/families/` and those of `table/certificates/`, every method
+whose old estimate was between 0.02 s and 25 s (runs under 0.1 s were left out of the fit).
+The synthetic families have generic progression rows and random other rows from the generators of
+`tests/test_progression.py`, t = 3 to 6, q = 5 to 23, k = 200 to 4000, 3 to 8 progression rows
+and 0 to 4 other rows. The formulas were fitted by non-negative least squares on relative
+error. Model time over measured time (shift tests counted with the estimate's own count):
+
+| method | runs | t | q | n | k | model / measured |
+|---|---|---|---|---|---|---|
+| full | 18 (17 real) | 3 to 5 | 3 to 23 | 4 to 11 | 121 to 1247 | 0.62 to 1.23 |
+| fullfast | 37 (33 real) | 3 to 5 | 3 to 25 | 4 to 11 | 121 to 4750 | 0.60 to 1.48 real, 0.39 to 1.02 synthetic |
+| progression | 12 (2 real) | 3 to 6 | 3 to 23 | 6 to 15 | 121 to 4000 | 0.58 to 1.52, and 0.06 (see below) |
+| fastprog | 15 (3 real) | 3 to 6 | 3 to 23 | 6 to 15 | 121 to 4000 | 0.35 to 1.60, and 0.06 (see below) |
+
+The largest real run was fastprog on CPHF_13_2801_7_5 (t = 5, q = 7, k = 2801): 218 s, model
+270 s. The provisional constants used before (52, 92, 64 and 4.4 ns per unit, 200 ns per shift
+test) were up to 16 times too low for fastprog at small q (CPHF_13_781_5_5, t = 5, q = 5: 71 ns
+per unit) and up to 3.3 times too low for fullfast at small q (q = 4, n = 10: 300 ns per unit),
+and too high for full (5 to 21 ns per t-set at t = 3 and 4 against 52). The two cases far below 1
+are one synthetic family at t = 3, q = 23 with 4 progression rows, where the estimate's count of
+shift tests (the product of the rows' sampled failure rates) is far below the number of shift
+tests actually made. That is an error of the count, not of the unit cost, and it is not covered
+by the safety factor. Such a family should be planned with fullfast, which the estimate prices
+correctly. Families of progression rows also run fullfast up to 2.6 times slower than the
+formula (the synthetic rows), which the safety factor covers.
+
 ### Limits and doubts
 
 - Sets proven covered by a P row are never rechecked one by one (that is the whole saving); the
@@ -336,11 +382,8 @@ representative, t >= 4; one index at t = 2 and 3), deals it the same way, prints
 checks (every index in exactly one shard, each shard's counts recomputed from its indices, totals
 equal to an unsharded run). The prototype's own `part=i/m` splitting is not part of this build.
 
-Unit cost: 4.4 ns per C(k-1, t-2) unit on one core of the test VM at q = 23 (the constant
-`UNIT_NS_FASTPROG` in `cphfcheck.c` and `UNIT_NS["fastprog"]` in `../cphf_cert.py`; the shift
-tests are counted at 200 ns each, as for `progression`). It is provisional: recalibrate it, and
-the other unit costs, from the first real runs on the GitHub runners (the shard outputs give the
-units, the job logs the times).
+Unit cost: measured at 3.8 to 4.4 ns per C(k-1, t-2) unit on the benchmark families below. The
+cost that `estimate` uses depends on t, q and k, see "Unit costs" above.
 
 | family (q = 23) | t | k | rows (P + O) | progression | fastprog, 1 thread | ns per unit |
 |---|---|---|---|---|---|---|
@@ -376,20 +419,21 @@ shift symmetry (the smallest s, 1 <= s < k, s dividing k, for which `cyclic s` c
 row; rows whose columns 0..k-s-1 do not span GF(q)^t are never certified, as before), and prints
 for every method that applies its work units and an estimated time on one core:
 
-| method | units | ns per unit | from the timing table above |
-|---|---|---|---|
-| cyclic s | t-sets with smallest column < s | 52 | the engine of `full` |
-| fastprog (t >= 3, k <= 65535) | C(k-1, t-2), plus 200 ns per shift test | 4.4 | "Mode fastprog" above; provisional |
-| progression | C(k-1, t-2), plus 200 ns per shift test | 64 | 64 at t = 5, 63 at t = 6; shift tests: about 5e10 in 1 to 3 hours |
-| fullfast | C(k, t-1) | 92 | 92 at t = 4, 75 at t = 5 |
-| full | C(k, t) | 52 | 16 at t = 4, 52 at t = 5 |
+| method | units | ns per unit (n rows) |
+|---|---|---|
+| cyclic s | t-sets with smallest column < s | 0.15 n t^2 (the engine of `full`) |
+| fastprog (t >= 3, k <= 65535) | C(k-1, t-2), plus 140 ns per shift test | 0.8 (t-3)^2 + 1.1 k/q^2 |
+| progression | C(k-1, t-2), plus 140 ns per shift test | 10.5 (t-3)^2 + 4.6 k/q^2 |
+| fullfast | C(k, t-1) | n (11 + 28/q) |
+| full | C(k, t) | 0.15 n t^2 |
 
-Where the table gives two values the larger is used. The number of shift tests is C(k, t) times
+The costs are those of "Unit costs" above. The number of shift tests is C(k, t) times
 the product of the failure rates of the progression rows, each measured on 20,000 random t-sets
 with a fixed seed (rows are assumed to fail independently; a row with no failure in the sample
-counts as 0.5 / 20,000). The constants are `UNIT_NS_*` in `cphfcheck.c`. They were measured at
-q = 23 with 8 rows and are a planning aid only, good to within a few times: the method changes how
-long an exact check takes, never its answer, and every method below is exact. Then `cheapest:`
+counts as 0.5 / 20,000). The costs are the function `unit_ns` in `cphfcheck.c`. They are a
+planning aid only, good to within about 1.6 times on the families measured (apart from a poor
+count of shift tests, see "Unit costs"). The method changes how long an exact check takes, never
+its answer, and every method below is exact. Then `cheapest:`
 names the method of smallest estimate (ties go to cyclic, fastprog, progression, fullfast, full,
 in that order; fastprog has the units and shift tests of progression at a lower unit cost, so
 progression is never chosen when fastprog applies). `auto` prints the estimate, then `auto: method ...`, then runs that method exactly; the

@@ -1,7 +1,17 @@
-# Construction certificates: Power CZ (powercz-1)
+# Construction certificates
 
 A construction certificate proves a covering array by its recipe instead of by checking every
-t-set of the array. For CA(242; 4, 1728, 2) a direct check covers C(1728, 4) = 3.7e11 column
+t-set of the array. Four constructions are known to the checker, each with its theorem stated
+and proved below. They are Power CZ (`powercz-1`, Colbourn and Zhou 2012), fusing one symbol
+(`fuse-1`, Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1), the derived array of
+a lower strength (`derive-1`) and the direct product of two strength-2 arrays (`product-1`). Since
+2026-11-02 a certificate is also a submission route (`constructions.csv`, section "The submission
+route" below), and an ingredient may be an array of the table named by its hash (section
+"Ingredients from the table").
+
+## Power CZ (powercz-1)
+
+ For CA(242; 4, 1728, 2) a direct check covers C(1728, 4) = 3.7e11 column
 sets; the certificate check of the same array takes about 0.2 s. The checker
 `tools/construction_cert.py` (standard library Python) regenerates the hash family, checks every
 hypothesis of the coverage proof exactly, rebuilds the array in the table's canonical text and
@@ -124,6 +134,8 @@ A JSON file. Unknown keys and duplicate keys are rejected.
 * `covers`: exactly one of `{"weights": [a, b]}` (v = 2: every weight a..b),
   `{"species": [[c_0, ..., c_{v-1}], ...]}` (count vectors summing to t; may be empty), or
   `{"all": true}`.
+* An ingredient may instead be `{"table": "<array_sha256>", "covers": ...}`, the array of a
+  VERIFIED row of the table (section "Ingredients from the table" below).
 * Ingredient files sit beside the certificate (plain names, no paths), whitespace-separated
   integers 0..v-1, one run per line; the sha256 is of the file bytes. Every defined ingredient
   must be assigned to some row.
@@ -141,9 +153,8 @@ Certificates in `table/constructions/powercz/` (with the five ingredient files t
 build specs of the arrays (the construction run of 2026-10-31). The rebuilt sha256 equals the canonical sha256
 of the stored array (computed with `check_submission.canonical_of_file`) in all four cases.
 The arrays are stored in `table/arrays/` and verified by `ca_verify`, and their table rows name
-the certificate in `source_detail`. Construction certificates are made and checked by the
-maintainer. No workflow runs them, and a submission cannot yet use one in place of an array
-(`submissions/README.md`, "Which route to use").
+the certificate in `source_detail`. These four were made and checked by the maintainer before the
+submission route existed, and their rows keep their `ca_verify` stamps.
 
 | array | rows of H (width 13 / 12) | rebuilt = stored canonical sha256 | check time |
 |---|---|---|---|
@@ -159,7 +170,7 @@ hash) on the 2-core test VM.
 rebuilds exactly the array we stored as FAILED_q9 (sha256 0242863d...), and the checker rejects
 it: weights 1 and 3 are declared in 5 rows where 7 are needed.
 
-## Tests
+## Tests of powercz-1
 
 `tools/tests_construction/test_construction_cert.py` (randomized, small parameters) and
 `tools/tests_construction/test_real_certs.py`
@@ -277,3 +288,191 @@ The outputs of these runs are not kept in the repository.
   description is not trusted.
 * The paper's Theorem 2.1 constant-row saving (chi) is not part of powercz-1; a certificate that
   uses it needs a separate construction id.
+
+## Ingredients from the table
+
+In every construction an ingredient may be given in three ways. `{"rows": [[...], ...]}` puts it
+inline, and `{"file": "name.txt", "sha256": "<sha256 of the file bytes>"}` names a file beside the
+certificate. Both are checked here exhaustively (a quilting check for Power CZ, every t-set and
+every tuple for the other constructions). An inline or file ingredient whose check would read more
+than 3 x 10^8 entries is refused, and must be entered in the table first. The third form,
+`{"table": "<array_sha256>"}`, names the array of a counted VERIFIED row of the table (tier
+VERIFIED and not retracted, `counted()` in `table/ca_table.py`). The checker reads it from
+`table/arrays/` (gzip or plain), checks that its canonical text hashes to that value, refuses an
+array with don't-care entries, and trusts its coverage as verified by the table. The check
+`ingredient_table` then requires the row's strength to be at least the strength the construction
+needs of that ingredient, its v to be the v needed, and its N and k to be those of the stored
+array. A Power CZ ingredient from the table takes `covers` as usual and is not given to the
+quilting check (a covering array of strength at least t covers every species). The array of a
+row that is not stored (a certificate row whose array is not in `table/arrays/`) cannot be used
+this way yet. `--table-dir DIR` points the checker at a table (by default the `table/` of the
+repository).
+
+The other three constructions share these checks.
+
+| name | hypothesis |
+|---|---|
+| shape | every ingredient is a nonempty rectangular array over 0..v_in-1 (the symbols the theorem needs of it), with at least as many columns as the strength needed of it |
+| ingredient_hash | every file ingredient has the sha256 the certificate records |
+| ingredient_ca | every inline or file ingredient is a covering array of the strength needed, over v_in symbols (exhaustive) |
+| ingredient_table | (only when a table ingredient is named) as above |
+| symbols, alphabet | the rebuilt array uses symbol 0, and only symbols 0..v-1 |
+| N, k, sha256 | the rebuilt array has the certificate's N, k and canonical sha256 |
+
+An ingredient has no don't-care entries. The format of these three is `construction-cert-1` with
+the keys `format`, `construction`, `t`, `v` (of the array built), `expected` (`N`, `k`,
+`array_sha256`, as for Power CZ), optional `notes`, and the keys of the construction below.
+Unknown and duplicate keys are rejected.
+
+## Fusing a symbol (fuse-1)
+
+Source: C. J. Colbourn, G. Keri, P. P. Rivas Soriano and J.-C. Schlage-Puchta, Covering and
+radius-covering arrays: constructions and classification, Discrete Appl. Math. 158 (2010)
+1158-1180, Lemma 3.1 (`fuse-ckrs2010` in `table/references.csv`).
+
+Theorem. Let t >= 2, v >= 2, and let A be a CA(N; t, k, v+1) over the symbols 0..v. Let z and r
+be two distinct rows of A. In every column c exchange the symbols A[z][c] and v (so row z reads v
+everywhere). Delete rows z and r, and in every other row replace an entry v in column c by the
+entry R[c] of row r in that column after the exchange (by 0 when R[c] is v). The result is a
+CA(N-2; t, k, v).
+
+Proof. Exchanging two symbols in a column keeps a covering array covering, so let A be the array
+after the exchanges, with row z constant v. Take t columns c_1, ..., c_t and a tuple u over
+0..v-1. Some row X of A shows u, and X is not row z (u has no v). If X is not row r, its entries
+in these columns are u (none is v), so after the replacement X still shows u. If X is row r, then
+R[c_1] = u_1 is not v. The tuple (v, u_2, ..., u_t) is shown by some row Y of A. Y is not row z,
+since u_2 is not v (here t >= 2 is used), and Y is not row r, since R[c_1] is not v. After the
+replacement Y has R[c_1] = u_1 in column c_1 and u_2, ..., u_t in the others, so Y shows u. Every
+entry of the result is in 0..v-1, and it has N-2 rows.
+
+Hypotheses checked: shape, ingredient_hash, ingredient_ca or ingredient_table (the input is a
+CA(N; t, k, v+1)), `fuse_strength` (t >= 2), `fuse_rows` (z and r are two distinct rows of the
+input), then symbols, alphabet, N, k, sha256. The rebuild is the rule of `tools/cphf/fuse2.c`
+(`+fuse2 v` in `tools/cphf/README.md`) with rows z and r in place of the first two.
+
+    {"format": "construction-cert-1", "construction": "fuse-1", "t": 2, "v": 3,
+     "input": {"table": "<array_sha256 of a CA(N; 2, k, 4) of the table>"},
+     "rows": [0, 1],                                  (optional, default [0, 1])
+     "expected": {"N": 14, "k": 5, "array_sha256": "..."}}
+
+## The derived array (derive-1)
+
+Source: the derived array is folklore of the subject, stated for covering arrays as inequality
+(7) of Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010 (`fuse-ckrs2010`), and used by
+`tools/derive_laws.py` for the sizes of `table/derived.csv`.
+
+Theorem. Let t >= 1 and let A be a CA(N; t+1, k+1, v) with k >= t. For a column c and a symbol
+s, the rows of A with s in column c, with column c deleted, form a CA(N_s; t, k, v), N_s the
+number of those rows. (With s the symbol that occurs least in column c, N_s <= floor(N/v), which
+is inequality (7).)
+
+Proof. Take t columns other than c and a tuple u over 0..v-1. The t+1 columns with c added carry
+the tuple (s, u) in some row of A (strength t+1). That row has s in column c, so it is one of the
+rows kept, and it shows u in the t columns.
+
+Hypotheses checked: shape, ingredient_hash, ingredient_ca or ingredient_table (the input is a
+CA(N; t+1, k+1, v)), `derive_column` (c is a column of the input and the result has at least t
+columns), `derive_symbol` (s is one of 0..v-1), then symbols, alphabet, N, k, sha256. The rows
+kept stay in their order.
+
+    {"format": "construction-cert-1", "construction": "derive-1", "t": 2, "v": 2,
+     "input": {"file": "ca3.txt", "sha256": "..."}, "column": 2, "symbol": 1,
+     "expected": {"N": 9, "k": 5, "array_sha256": "..."}}
+
+## The direct product (product-1)
+
+Source: the direct product of strength-2 covering arrays, in C. J. Colbourn, S. S. Martirosyan,
+G. L. Mullen, D. Shasha, G. B. Sherwood and J. L. Yucas, Products of mixed covering arrays of
+strength two, J. Combin. Des. 14 (2006) 124-138 (`product-cmmssy2006`). Saving rows through
+constant rows is studied in C. J. Colbourn and J. Torres-Jimenez, Profiles of covering arrays of
+strength two, J. Algorithms Comput. 44 (2013) 31-59 (`pca-ct2013`).
+
+Theorem. Let A be a CA(N1; 2, k1, v) and B a CA(N2; 2, k2, v). Optionally make one row a of A
+constant 0 by exchanging, in every column, its entry with 0, and the same for one row b of B. Index
+the k1 k2 columns by pairs (i, j), i < k1, j < k2, in the order i k2 + j. The rows are, for every
+row x of A, the row with x[i] in column (i, j), then, for every row y of B, the row with y[j] in
+column (i, j), except the rows y that are constant with a symbol for which A has a constant row.
+The result is a CA(N1 + N2 - d; 2, k1 k2, v), d the number of rows left out.
+
+Proof. Take columns (i, j) and (i', j') and a pair (x, y) of symbols. If i and i' differ, A covers
+(x, y) in columns i and i' in some row, and its row in the first part shows (x, y). If i = i',
+then j and j' differ, and B covers (x, y) in columns j and j' in some row y'. If that row of the
+second part was left out, y' is constant and so x = y, and A has the row constant x, whose row in
+the first part shows (x, x). Exchanging symbols within a column keeps A and B covering.
+
+Hypotheses checked: shape, ingredient_hash, ingredient_ca or ingredient_table (both inputs are
+covering arrays of strength 2 over v symbols), `product_strength` (the certificate says t = 2),
+`product_constant_rows` (each given row is a row of its ingredient), then symbols, alphabet, N, k,
+sha256. With no constant rows given, rows that happen to be constant still count. Making one row
+of each ingredient constant always saves one row, N1 + N2 - 1. The generalized products of
+Colbourn and Torres-Jimenez 2013 (Corollary 4.3, as `tools/derive_laws.py` states it for
+`table/derived.csv`, CAN(2, k1 k2, v) <= CAN(2, k1, v) + CAN(2, k2, v) - 2) are not part of
+product-1, and a certificate that uses them needs a construction id of its own.
+
+    {"format": "construction-cert-1", "construction": "product-1", "t": 2, "v": 3,
+     "first": {"rows": [[0, 0, 0, 0], ...]}, "second": {"table": "<array_sha256>"},
+     "constant_rows": [0, null],                      (optional, default [null, null])
+     "expected": {"N": 17, "k": 16, "array_sha256": "..."}}
+
+## The submission route
+
+A submission `submissions/<slug>/constructions.csv` (`submissions/README.md`, "Construction
+certificates") names certificates in its folder, with the fields of `claims.csv`. On the pull
+request `tools/check_constructions.py --light` runs the checker and reports. On main
+`.github/workflows/table-page.yml` runs it again with the tools of main and enters the rows. The
+row of an array built by a certificate is identified, like every array row, by the canonical
+sha256 of the rebuilt array (`array_sha256`), and `family_sha256` stays empty. The certificate is
+always stored, in `table/constructions/<slug>/` with its file ingredients, and listed in
+`table/constructions/CONSTRUCTIONS.csv` (file, t, v, k, N, construction, the certificate's sha256,
+array_sha256, the check, and the stored array if any). It is the recipe that rebuilds the array.
+The rebuilt array itself is stored in `table/arrays/` by the rules of submitted arrays when it is
+at most 50 MiB as text (gzip above 1 MiB). A larger array is kept only as its certificate, and the
+row's notes say so. The row's stamp is `construction_cert <tool> <date> <machine> (<construction>,
+exact)`, the tool being the first twelve hex digits of the sha256 of `tools/construction_cert.py`,
+and its check method (`check_method()` in `table/ca_table.py`) is "construction certificate". When
+`ca_verify` can check a stored array within two minutes, it does so as well, and a disagreement
+fails the claim. `tools/consistency.py` rebuilds every listed certificate of at most 5 x 10^7
+entries and compares the sha256, and requires every row stamped `construction_cert` to have its
+listing. A certificate that names a table ingredient therefore stops passing when that row is
+retracted, which shows the rows that depend on it.
+
+## Tests of fuse-1, derive-1, product-1 and table ingredients
+
+`tools/tests_construction/test_kinds.py` writes random small certificates of the three
+constructions, valid ones and ones with planted faults, with their ingredients inline, in files or
+in a small table of their own. It rebuilds each array with its own code, evaluates every
+hypothesis by its definition (its own coverage count for every ingredient), and checks every
+rebuilt array with `ca_verify`, itself compared with a Python brute force. The assertions are those
+of the Power CZ tests (A1 to A4). Then each check is disabled in turn, and three boundary mutants
+are applied (fuse_strength with t >= 1, ingredient_table without comparing the strength,
+ingredient_ca one strength lower). It also checks Power CZ certificates whose ingredient is a
+table array (24 certificates, a row of too low strength refused by ingredient_table).
+`tools/tests_construction/test_route.py` runs the route end to end on a copy of the table.
+
+### Results (2026-11-02)
+
+| | seed 20261102 | seed 777 |
+|---|---|---|
+| certificates (400 per construction) | 1200 | 1200 |
+| valid certificates accepted | 402 of 402 | 402 of 402 |
+| faulted certificates accepted | 0 of 798 | 0 of 798 |
+| certificates satisfying every hypothesis / of these not covering (A4) | 402 / 0 | 402 / 0 |
+| ca_verify vs brute force | 972 arrays, 0 disagreements | 1020 arrays, 0 disagreements |
+| Power CZ with a table ingredient | 24, 0 errors | 24, 0 errors |
+| A1, A2, A3, A4 violations | 0 | 0 |
+| mutants surviving (18) | 0 | 0 |
+
+Mutants (seed 20261102), the cases that kill each and the non-covering arrays each accepts:
+disable shape 89 / 0, ingredient_hash 66 / 0, ingredient_ca 79 / 45, ingredient_table 88 / 45,
+fuse_strength 26 / 2, fuse_rows 28 / 0, derive_column 29 / 0, derive_symbol 27 / 0,
+product_strength 27 / 27, product_constant_rows 33 / 0, symbols 49 / 0, alphabet 34 / 0, N 78 / 0,
+k 75 / 0, sha256 70 / 0. The boundary mutants: fuse_strength with t >= 1 26 / 2, ingredient_table
+without the strength 45 / 45, ingredient_ca one strength lower 79 / 45. The checks that accept no non-covering array
+when disabled (fuse_rows, derive_column, derive_symbol, product_constant_rows, shape) guard against
+a recipe that cannot be rebuilt or would be recorded wrongly, and their planted faults are each
+reported by the check itself. The Power CZ suite (`test_construction_cert.py --cases 40`) passes
+unchanged with the new code (15 mutants killed).
+
+    python3 tools/tests_construction/test_kinds.py --cases 400 --seed 20261102
+    python3 tools/tests_construction/test_kinds.py --cases 400 --seed 777
+    python3 tools/tests_construction/test_route.py

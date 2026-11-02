@@ -29,7 +29,9 @@ ca_verify.c
     tools/BENCH_ca_verify.md), with the same arguments, output and exit codes.
     An optional SHARD/NSHARDS argument splits the work into parts that
     can run on different machines, and tools/ca_shard_merge.py combines
-    their outputs into one verdict. The full usage is
+    their outputs into one verdict, after checking that each shard checked
+    exactly the column sets of its part, so that together they checked
+    every one of the C(k,t) column sets once. The full usage is
     ca_verify FILE t v [threads] [SHARD/NSHARDS] [--fail-fast].
 
 ca_verify.py
@@ -64,8 +66,14 @@ few days. Array files may be up to 50 MiB. An array given by a covering
 perfect hash family can be submitted as the family (certificates.csv),
 and is then checked exactly on GitHub after the merge, in shards. A
 larger array can stay in a public deposit and be named in external.csv,
-and the maintainer checks it. submissions/README.md says which route
-to use.
+and the maintainer checks it. Anyone can ask for the exact check of an
+entry that entered as SCREENED (upgrade.csv). It runs on GitHub after
+the merge, and a VERIFIED row is added beside the SCREENED one, with the
+original credit. An array built by a published construction (Power CZ,
+fusing a symbol, the derived array, the direct product of strength-2
+arrays) can be submitted as its construction certificate
+(constructions.csv), which tools/construction_cert.py checks exactly
+from the recipe. submissions/README.md says which route to use.
 Every new row records the published work its construction builds on
 (the builds_on field), so the table credits earlier authors and records new methods under the
 names of the people who found them. The

@@ -33,7 +33,6 @@ import argparse
 import csv
 import datetime
 import hashlib
-import math
 import os
 import re
 import shutil
@@ -160,11 +159,14 @@ def canonicalize_stream(src, v, out):
                 else:
                     cells.append(str(int(tok) - shift))
             s = " ".join(cells) + "\n"
-            if len(s) > cs.CA_VERIFY_MAX_LINE:
-                raise ExtError("rows are too long for ca_verify's line buffer (k=%d)" % width)
             g.write(s)
             h.update(s.encode("utf-8"))
     return nrow, width, h.hexdigest(), bool(shift)
+
+
+def canon_has_wildcards(canon):
+    with open(canon, "r", encoding="utf-8") as f:
+        return any("NA" in line for line in f)
 
 
 def screen_stream(canon, k, t, v, sha, ca_verify, threads, windows, width, stop_at, tmp):
@@ -195,6 +197,8 @@ def check_claim(raw, ctx, tmp):
     t = int(raw["t"]); v = int(raw["v"]); k = int(raw["k"]); N = int(raw["N"])
     if t < 1 or t > k or v < 2 or v > cs.CA_VERIFY_MAX_V:
         raise ExtError("t, v, k out of range")
+    if v ** t > (1 << 40) or v ** (t - 1) > cs.CA_VERIFY_MAX_VT1:
+        raise ExtError("v^t is too large for ca_verify (it needs v^t <= 2^40 and v^(t-1) <= 2^26)")
     want = raw["sha256"].strip().lower()
     if not re.fullmatch(r"[0-9a-f]{64}", want):
         raise ExtError("sha256 %r is not 64 hex digits" % want)
@@ -216,10 +220,13 @@ def check_claim(raw, ctx, tmp):
     prev, _ = cs.best_known(ctx["table_rows"], t, v, k)
     comparison = ("exceeds_table" if prev is None or N < prev else
                   "equals_best" if N == prev else "above_table")
-    work = math.comb(k, t) * v ** t
     budget = ctx["budget"]
     status, screen, secs = None, None, {}
-    mode = "screen" if (k > ctx["window"] and work > ctx["threshold"]) else "full"
+    wild = canon_has_wildcards(canon)
+    mode, why = cs.full_or_screen(N, t, v, k, ctx["threads"], budget, ctx["window"],
+                                  ctx["threshold"], wild)
+    if why:
+        print("note: " + why, file=sys.stderr)
     if mode == "full":
         r = cs.run_ca_verify(ctx["ca_verify"], canon, t, v, ctx["threads"], budget)
         secs["verify"] = r["seconds"]
@@ -254,7 +261,8 @@ def main(argv=None):
     ap.add_argument("--ca-verify", default=os.path.join(cs.REPO, "ca_verify"))
     ap.add_argument("--threads", type=int, default=max(1, (os.cpu_count() or 2) - 2))
     ap.add_argument("--budget-minutes", type=float, default=60.0)
-    ap.add_argument("--screen-threshold", type=float, default=cs.SCREEN_THRESHOLD)
+    ap.add_argument("--screen-threshold", type=float, default=cs.SCREEN_THRESHOLD,
+                    help="deprecated. Also screen when C(k,t)*v^t exceeds this (default 0, off)")
     ap.add_argument("--windows", type=int, default=20)
     ap.add_argument("--window", type=int, default=30)
     ap.add_argument("--apply", action="store_true")

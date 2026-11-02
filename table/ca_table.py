@@ -64,19 +64,24 @@ def _key(r):
             r.get("family_sha256") or "")
 
 
-METHODS = ("direct", "certificate", "certificate + fusing")
+METHODS = ("direct", "certificate", "certificate + fusing", "construction certificate")
 
 
 def check_method(r):
     """How a VERIFIED row was checked, from its stamp: "direct" (the array
     itself checked exhaustively), "certificate" (a covering perfect hash
     family checked exactly, expanded by the theorem of Sherwood, Martirosyan
-    and Colbourn 2006), or "certificate + fusing" (that array with symbols
+    and Colbourn 2006), "certificate + fusing" (that array with symbols
     fused, Lemma 3.1 of Colbourn, Keri, Rivas Soriano and Schlage-Puchta
-    2010). None for rows of other tiers."""
+    2010), or "construction certificate" (since 2026-11-02, the array rebuilt
+    from a construction certificate whose hypotheses tools/construction_cert.py
+    checked exactly, stamp "construction_cert ..."). None for rows of other
+    tiers."""
     if r["tier"] != "VERIFIED":
         return None
     st = r.get("verify_stamp") or ""
+    if st.startswith("construction_cert "):
+        return "construction certificate"
     if st.startswith(("repcheck ", "repcheck_pp ", "cphfcheck ")):
         return "certificate + fusing" if "fused" in st else "certificate"
     return "direct"

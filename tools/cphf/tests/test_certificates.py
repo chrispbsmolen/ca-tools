@@ -6,6 +6,8 @@ Usage: python3 tools/cphf/tests/test_certificates.py
 Works on a temporary copy of table/ (without arrays/), never on the repository's own table. Tests:
   identity     family_sha256 of the stored families equals CERTIFICATES.csv, and cphfcheck canon
                writes the same bytes as the Python serialization
+  unit costs   the unit costs printed by cphfcheck estimate equal cphf_cert.unit_ns on the stored
+               families
   local        the unsharded exact check, --apply, and the consistency checks of the result
   duplicate    the same family again is rejected, and so is a family named twice
   sharded      plan, run (3 shards + array hash), results, apply-result: VERIFIED
@@ -249,6 +251,24 @@ def run_all(tmp):
         if fs != c["family_sha256"] or ck.file_sha(os.path.join(tmp, "c.txt")) != fs:
             ok, why = False, c["file"]
     record("identity stored families (Python and cphfcheck canon)", ok, why)
+    # the unit costs of cphfcheck estimate and cphf_cert.unit_ns agree
+    ok, why, seen = True, "", 0
+    for c in certs:
+        m = re.match(r"CPHF\((\d+); (\d+), (\d+), (\d+)\)", c["family"]); n, k, q, t = map(int, m.groups())
+        path = os.path.join(REPO, "table", "certificates", c["file"])
+        est = subprocess.run([exe, path, str(t), str(q), "estimate", "1"], stdout=subprocess.PIPE,
+                             universal_newlines=True).stdout
+        for mm in re.finditer(r"estimate (cyclic \d+|fastprog|progression|fullfast|full) .*?unit_ns=(\S+)"
+                              r"(?: shift_tests=\S+ shift_ns=(\S+))?", est):
+            name = mm.group(1).split()[0]
+            want = cc.unit_ns(name, t, q, k, n)
+            digits = 1 if name == "fastprog" else 0
+            seen += 1
+            if float(mm.group(2)) != round(want, digits) and abs(float(mm.group(2)) - want) > 0.5 * 10 ** -digits:
+                ok, why = False, "%s %s: cphfcheck %s, unit_ns %.3f" % (c["file"], name, mm.group(2), want)
+            if mm.group(3) and abs(float(mm.group(3)) - cc.unit_ns("shift", t, q, k, n)) > 0.5:
+                ok, why = False, "%s shift: cphfcheck %s" % (c["file"], mm.group(3))
+    record("unit costs of cphfcheck estimate equal cphf_cert.unit_ns", ok and seen > 0, why or "no estimates")
 
     # local exact check and entry
     root = fresh(tmp); tdir = os.path.join(root, "table")

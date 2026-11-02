@@ -22,6 +22,15 @@
 #            the families over the budget or whose shards did not all finish, and saves the
 #            result as the artifact "cert-results". Then it starts table-page.yml.
 #
+# Upgrade requests (submissions/<slug>/upgrade.csv, since 2026-11-02) run the same three jobs with
+# tools/check_upgrades.py: plan resolves every entry the request names (a SCREENED array in
+# table/arrays or in a deposit of table/EXTERNAL.csv, or a SCREENED family in table/certificates)
+# and plans its exact check within the same budget; run does one shard ("u<i>-s<j>": ca_verify
+# with SHARD/NSHARDS on the array, which the job retrieves and hashes itself, or cphfcheck on the
+# family); collect combines the shards (tools/ca_shard_merge.py proves that every one of the C(k,t)
+# column sets was checked exactly once) into the same artifact "cert-results". An entry over the
+# budget, or whose shards did not all finish, stays SCREENED.
+#
 # This workflow never writes to the repository. table-page.yml, the only writer of table/
 # (concurrency group table-page, one run at a time, one pending), finds the result of every
 # certificate submission not yet in the table among the completed runs of this workflow on
@@ -93,14 +102,16 @@ jobs:
           slugs=""
           for slug in $cand; do
             case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
-            [ -f "submissions/$slug/certificates.csv" ] || continue
+            if [ -f "submissions/$slug/certificates.csv" ]; then mark="submissions/$slug/certificates.csv"
+            elif [ -f "submissions/$slug/upgrade.csv" ]; then mark="requested in submissions/$slug by"
+            else continue; fi
             [ -f "submissions/$slug/NOT_APPLIED.md" ] && { echo "$slug has NOT_APPLIED.md; delete it to check again"; continue; }
-            if grep -qF "submissions/$slug/certificates.csv" table/ca_table.csv; then
+            if grep -qF "$mark" table/ca_table.csv; then
               echo "$slug is in the table already"; continue
             fi
             slugs="$slugs $slug"
           done
-          echo "Certificate submissions to check:${slugs:- none}"
+          echo "Certificate submissions and upgrade requests to check:${slugs:- none}"
           echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
 
       - name: Plan (estimate, method, shards)
@@ -110,7 +121,9 @@ jobs:
         run: |
           mkdir -p plan
           for slug in $SLUGS; do
-            python3 tools/check_certificates.py "submissions/$slug" --plan "plan/$slug.json" \
+            tool=tools/check_certificates.py
+            [ -f "submissions/$slug/upgrade.csv" ] && tool=tools/check_upgrades.py
+            python3 "$tool" "submissions/$slug" --plan "plan/$slug.json" \
               --threads "$RUNNER_THREADS" --runner-threads "$RUNNER_THREADS" --max-shards "$MAX_SHARDS" \
               --shard-hours "$SHARD_HOURS" --safety "$SAFETY" | tee -a "$GITHUB_STEP_SUMMARY"
           done
@@ -158,7 +171,9 @@ jobs:
         # a shard that does not finish in time leaves no output; collect then screens the family
         run: |
           case "$SLUG" in *[!A-Za-z0-9._-]*) exit 2 ;; esac
-          timeout 335m python3 tools/check_certificates.py "submissions/$SLUG" --run "plan/$SLUG.json" \
+          tool=tools/check_certificates.py
+          [ -f "submissions/$SLUG/upgrade.csv" ] && tool=tools/check_upgrades.py
+          timeout 335m python3 "$tool" "submissions/$SLUG" --run "plan/$SLUG.json" \
             --task "$TASK" --out "out/$SLUG" --threads "$RUNNER_THREADS"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -186,7 +201,7 @@ jobs:
         with:
           pattern: cert-task-*
           path: tasks
-          merge-multiple: true          # tasks/<slug>/c<i>-s<j>.txt, tasks/<slug>/c<i>-hash.txt
+          merge-multiple: true          # tasks/<slug>/c<i>-s<j>.txt, tasks/<slug>/c<i>-hash.txt, tasks/<slug>/u<i>-s<j>.txt
       - name: Combine the shards, screen what is over the budget, save the results
         env:
           SLUGS: ${{ needs.plan.outputs.slugs }}
@@ -194,7 +209,9 @@ jobs:
           mkdir -p results
           for slug in $SLUGS; do
             [ -f "plan/$slug.json" ] || continue
-            python3 tools/check_certificates.py "submissions/$slug" --results "plan/$slug.json" \
+            tool=tools/check_certificates.py
+            [ -f "submissions/$slug/upgrade.csv" ] && tool=tools/check_upgrades.py
+            python3 "$tool" "submissions/$slug" --results "plan/$slug.json" \
               --tasks "tasks/$slug" --out "results/$slug" --threads "$RUNNER_THREADS" \
               --runner-threads "$RUNNER_THREADS" --max-shards "$MAX_SHARDS" --shard-hours "$SHARD_HOURS" \
               --safety "$SAFETY" > /dev/null || true

@@ -26,6 +26,16 @@ CERTS = os.path.join(ROOT, "table", "constructions", "powercz")
 STORED = os.environ.get("POWERCZ_ARRAYS", os.path.join(
     ROOT, "table", "arrays"))
 CT_TOOLS = os.path.join(ROOT, "tools")
+
+
+def stored_path(n):
+    """the stored array: N_t_k_v.txt in POWERCZ_ARRAYS, or table/arrays/N_t_k_v_<sha8>.txt in the table"""
+    import glob
+    p = os.path.join(STORED, n + ".txt")
+    if os.path.exists(p):
+        return p
+    hits = sorted(glob.glob(os.path.join(STORED, n + "_*.txt")))
+    return hits[0] if hits else p
 NAMES = ["CA_216_4_1368_2", "CA_224_4_1476_2", "CA_233_4_1596_2", "CA_242_4_1728_2"]
 COVERS = {"S22_13": (2, 2), "S03_13": (0, 3), "S14_13": (1, 4), "S13_12": (1, 3), "S14_12": (1, 4)}
 
@@ -66,7 +76,7 @@ def main():
     for n in NAMES:
         ok, got, r = run(os.path.join(CERTS, n + ".cert.json"))
         expect("real certificate valid", ok, True, got)
-        _, _, sha = cs.canonical_of_file(os.path.join(STORED, n + ".txt"), 2)
+        _, _, sha = cs.canonical_of_file(stored_path(n), 2)
         if r["sha256"] != sha:
             errors.append("%s: rebuilt sha %s, stored canonical %s" % (n, r["sha256"], sha))
         print("%s: valid=%s N=%d k=%d rebuilt %s stored-canonical %s %.2f s"

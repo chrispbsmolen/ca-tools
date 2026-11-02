@@ -123,6 +123,119 @@ before it).
   (61 KB for CA_242_4_1728_2); the row bitsets k * v * ceil(N/64) * 8
   bytes; per thread v^(t-1) * ceil(N/64) * 8 bytes of class bitsets.
 
+## Predicted time (the full check or the screen)
+
+Since 2026-11-02 `tools/check_submission.py` and `tools/external_array.py` decide between the
+exhaustive check and the screen by the time that `predict_verify_seconds` (in
+check_submission.py) predicts for `ca_verify`, not by C(k,t) * v^t. An array is checked in full
+when the prediction is at most 40 percent of the budget per array (FULL_FRACTION), and the full
+run still has the whole budget as its timeout, after which the check falls back to the screen as
+before.
+
+The model follows the program. The prefixes whose largest column is c number C(c, t-2), and for
+each of them the kernel reads the N rows once per 256-column chunk past c (binary planes), once
+per chunk and value (value planes), or once per 32-byte unit of one-hot lanes past c. The terms
+are these row loads, a cost per class and chunk pass (and per word of class bitsets), a counting
+sort of N rows per prefix when v^(t-1) * ceil(N/64) > 8N, an extra cost per load when the planes
+are larger than 2 MiB (growing up to 32 MiB of planes, since without it the arrays whose planes
+leave the cache ran up to 2.8 times longer than predicted), the reading of the file per
+entry and a fixed start-up. The kernel and the class method are chosen exactly as ca_verify.c
+chooses them.
+
+Measured on this VM (2 vCPUs of an Intel Xeon at 2.1 GHz, 2 MiB L2 per core, AVX2 kernel, gcc
+13.3, `cc -O3 -pthread`), otherwise idle, 2 threads, wall-clock time of the whole process,
+2026-11-02. The arrays have random rows (with N near the size at which random rows cover, so most are
+covering and the others have few gaps), or are Bush orthogonal arrays for q = 23, 11, 7. The
+coefficients were fitted by non-negative least squares on relative error, on the calibration set
+(arrays under 0.05 s and random t >= 4, v > 2 arrays with many gaps left out of the fit), plus three
+covering arrays run with `CA_VERIFY2_CLASSES=sort` to fit the counting sort term. The fitted costs
+in nanoseconds of one thread are 12 per entry read, 0.61 per binary load, 0.71 per value plane
+load, 1.06 per one-hot load, 3.2 per class pass, 2.6 per sorted row, 3.6 extra per load beyond
+the cache, 0.05 s start-up.
+
+Calibration set (model without the safety factor):
+
+| t | v | k | N | kernel | verdict | actual s | model s | model/actual |
+|--:|--:|--:|--:|--------|---------|---------:|--------:|-------------:|
+| 2 | 2 | 4000 | 60 | binary planes | covering | 0.01 | 0.05 | 8.11 |
+| 2 | 2 | 20000 | 200 | binary planes | covering | 0.12 | 0.15 | 1.23 |
+| 3 | 2 | 2000 | 200 | binary planes | covering | 0.66 | 0.58 | 0.88 |
+| 3 | 2 | 3000 | 500 | binary planes | covering | 3.71 | 3.79 | 1.02 |
+| 4 | 2 | 600 | 300 | binary planes | gaps | 13.32 | 10.64 | 0.80 |
+| 4 | 2 | 1000 | 250 | binary planes | gaps | 53.20 | 39.62 | 0.74 |
+| 4 | 2 | 300 | 2000 | binary planes | covering | 8.18 | 8.08 | 0.99 |
+| 5 | 2 | 200 | 900 | binary planes | covering | 62.78 | 67.76 | 1.08 |
+| 5 | 2 | 120 | 3000 | binary planes | covering | 21.92 | 26.63 | 1.22 |
+| 6 | 2 | 80 | 1900 | binary planes | covering | 69.99 | 83.50 | 1.19 |
+| 6 | 2 | 60 | 5000 | binary planes | covering | 38.68 | 48.44 | 1.25 |
+| 2 | 3 | 3000 | 150 | value planes | covering | 0.02 | 0.06 | 3.31 |
+| 3 | 3 | 500 | 800 | value planes | covering | 0.22 | 0.22 | 1.00 |
+| 4 | 3 | 150 | 2500 | one-hot lanes | covering | 2.47 | 2.43 | 0.98 |
+| 5 | 3 | 50 | 7000 | one-hot lanes | covering | 5.51 | 4.01 | 0.73 |
+| 3 | 4 | 400 | 2000 | value planes | covering | 0.45 | 0.45 | 1.02 |
+| 4 | 4 | 80 | 8000 | one-hot lanes | covering | 1.83 | 1.61 | 0.88 |
+| 2 | 5 | 2000 | 300 | value planes | gaps | 0.02 | 0.06 | 2.64 |
+| 3 | 5 | 200 | 4000 | one-hot lanes | covering | 0.21 | 0.25 | 1.20 |
+| 4 | 5 | 50 | 15000 | one-hot lanes | covering | 1.69 | 1.11 | 0.66 |
+| 3 | 7 | 100 | 10000 | one-hot lanes | covering | 0.21 | 0.18 | 0.87 |
+| 2 | 10 | 1500 | 1200 | value planes | gaps | 0.08 | 0.10 | 1.25 |
+| 3 | 10 | 60 | 25000 | one-hot lanes | covering | 0.29 | 0.24 | 0.83 |
+| 2 | 16 | 800 | 3000 | value planes | gaps | 0.22 | 0.20 | 0.92 |
+| 2 | 25 | 500 | 8000 | value planes | gaps | 0.38 | 0.33 | 0.87 |
+| 2 | 25 | 200 | 50000 | one-hot lanes | covering | 0.54 | 0.48 | 0.88 |
+| 3 | 13 | 30 | 50000 | one-hot lanes | covering | 0.23 | 0.17 | 0.75 |
+| 3 | 23 | 24 | 12167 | Bush OA, one-hot lanes | covering | 0.02 | 0.10 | 4.29 |
+| 4 | 11 | 12 | 14641 | Bush OA, one-hot lanes | covering | 0.01 | 0.14 | 9.53 |
+| 5 | 7 | 8 | 16807 | Bush OA, one-hot lanes | covering | 0.01 | 0.09 | 8.75 |
+| 2 | 3 | 20000 | 300 | value planes | covering | 0.45 | 0.43 | 0.95 |
+| 3 | 3 | 1500 | 1000 | value planes | covering | 3.10 | 3.56 | 1.15 |
+| 3 | 4 | 1200 | 2500 | value planes | covering | 7.22 | 7.02 | 0.97 |
+| 2 | 5 | 10000 | 600 | value planes | covering | 0.73 | 0.60 | 0.82 |
+| 3 | 5 | 600 | 5000 | value planes | covering | 4.64 | 4.50 | 0.97 |
+| 2 | 10 | 6000 | 2500 | value planes | covering | 3.73 | 3.68 | 0.99 |
+| 3 | 7 | 400 | 12000 | one-hot lanes | covering | 5.41 | 6.65 | 1.23 |
+| 4 | 3 | 400 | 3000 | value planes | covering | 66.37 | 65.41 | 0.99 |
+| 4 | 4 | 200 | 10000 | one-hot lanes | covering | 49.50 | 41.82 | 0.84 |
+| 2 | 25 | 1500 | 15000 | value planes | covering | 4.78 | 4.65 | 0.97 |
+| 3 | 10 | 150 | 30000 | one-hot lanes | covering | 2.34 | 3.05 | 1.30 |
+| 5 | 5 | 30 | 20000 | one-hot lanes | gaps | 3.50 | 8.38 | 2.39 |
+| 4 | 9 | 40 | 30000 | one-hot lanes | gaps | 2.37 | 5.75 | 2.43 |
+
+Held-out set (not used in the fit):
+
+| t | v | k | N | kernel | verdict | actual s | model s | model/actual |
+|--:|--:|--:|--:|--------|---------|---------:|--------:|-------------:|
+| 2 | 2 | 30000 | 150 | binary planes | covering | 0.17 | 0.19 | 1.12 |
+| 3 | 2 | 2500 | 300 | binary planes | covering | 1.52 | 1.43 | 0.94 |
+| 4 | 2 | 450 | 600 | binary planes | covering | 9.55 | 7.32 | 0.77 |
+| 5 | 2 | 150 | 1500 | binary planes | covering | 28.91 | 33.81 | 1.17 |
+| 6 | 2 | 70 | 3000 | binary planes | covering | 54.17 | 65.00 | 1.20 |
+| 2 | 4 | 8000 | 400 | value planes | covering | 0.13 | 0.17 | 1.28 |
+| 3 | 3 | 1000 | 1500 | value planes | covering | 1.57 | 1.81 | 1.15 |
+| 3 | 6 | 500 | 6000 | one-hot lanes | covering | 5.07 | 4.29 | 0.85 |
+| 4 | 3 | 250 | 4000 | one-hot lanes | covering | 20.16 | 21.35 | 1.06 |
+| 4 | 6 | 60 | 20000 | one-hot lanes | gaps | 5.81 | 3.99 | 0.69 |
+| 2 | 20 | 2500 | 6000 | value planes | gaps | 3.31 | 3.87 | 1.17 |
+| 3 | 8 | 250 | 15000 | one-hot lanes | covering | 3.51 | 2.25 | 0.64 |
+| 2 | 12 | 3000 | 4000 | value planes | covering | 2.26 | 1.89 | 0.84 |
+
+Errors on arrays that take at least 0.5 s: on the held-out set the model is at most 1.20 times
+the actual time and the actual time at most 1.56 times the model. On the calibration set the
+figures are 2.43 (the two random arrays with millions of missing tuples, which run faster than a
+covering array of the same size) and 1.52. Below 0.5 s the start-up term dominates and the model
+overestimates, which does not matter for the decision.
+
+The tools multiply the model by COST_SAFETY = 2. An array is then checked in full when the model
+predicts at most 3 minutes on this VM (6 minutes with the factor, 40 percent of the 15-minute
+budget), so the full check finishes in time unless the runner is more than 5 times slower than
+the model, which leaves room for the worst held-out error (1.56) times a runner up to 3 times
+slower than this VM. A runner that is slower still only loses the time of the timeout and then
+screens the array, as before. Arrays with many gaps take longer than the model (each gap is
+listed) but fail either way. The four t = 4 binary arrays above are predicted at 120 s
+(CA_216_4_1368_2) to 256 s (CA_242_4_1728_2) of wall time with 2 threads before the factor, so
+the first two are now checked in full on the runner and the other two are screened, where the
+old limit of 5e10 screened all four.
+
 ## Tests
 
 - `tests/difftest.py ORIG NEW [count] [seed]`: random small arrays

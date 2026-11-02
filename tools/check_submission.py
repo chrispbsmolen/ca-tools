@@ -75,15 +75,120 @@ MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
 # Arrays above this size (canonical text) are stored in table/arrays gzip-compressed (CA_N_t_k_v.txt.gz,
 # gzip header time 0, so the file is reproducible); the MANIFEST hash stays the hash of the text.
 GZIP_ABOVE = int(os.environ.get("CA_GZIP_ABOVE", 1024 * 1024))
-# Screen instead of the exhaustive check when C(k,t) * v^t is above this. 1e10 was set for the
-# first ca_verify; ca_verify v2 (2026-11-02) is far faster, and on a 2-thread run the slowest
-# kinds of array measured (small k, strength 5 and 6) take about 6e-9 s per unit of C(k,t) * v^t,
-# so an array at 5e10 needs at most about 5 minutes, a third of the 15-minute budget per array of
-# the workflows (measured 2026-11-02 on random arrays, 2 threads, AVX2). The workflows pass the same
-# value (SCREEN_THRESHOLD in verify-submission.yml and table-page.yml).
-SCREEN_THRESHOLD = 5e10
-CA_VERIFY_MAX_LINE = 65000   # set for the first ca_verify (64 KiB line buffer); v2 reads lines of any length
+# Full check or screen. An array is verified in full when predict_verify_seconds (below) says that
+# ca_verify needs at most FULL_FRACTION of the budget per array, and screened otherwise. The full
+# run keeps the whole budget as its timeout, so an array the model underestimates still gets the
+# exhaustive check if it finishes, and falls back to the screen when it does not.
+# Until 2026-11-02 the decision was C(k,t) * v^t <= SCREEN_THRESHOLD, which ignores N; the
+# threshold is still accepted on the command line as an extra limit (0 or less turns it off).
+FULL_FRACTION = 0.4
+SCREEN_THRESHOLD = 0         # deprecated, off (the decision is by predicted time, see above)
 CA_VERIFY_MAX_V = 127        # ca_verify stores symbols as int8
+CA_VERIFY_MAX_VT1 = 1 << 26  # ca_verify refuses v^(t-1) above this (its class tables)
+
+# Cost model of ca_verify (version 2), calibrated 2026-11-02 on this repository's 2-vCPU VM
+# (Intel Xeon 2.1 GHz, AVX2 kernels, gcc 13.3, 2 threads) against wall-clock runs of synthetic
+# arrays. The arrays, the fit and its errors are in tools/BENCH_ca_verify.md ("Predicted time").
+# The model follows the program. Every t-set is a (t-1)-prefix plus a larger column d, and the
+# prefixes whose largest column is c number C(c, t-2). For such a prefix the kernel walks the N
+# rows (split into v^(t-1) classes) once per 256-column chunk past c with one 256-bit load per
+# chunk (binary planes), once per chunk and value (value planes), or once per 32-byte unit of
+# one-hot lanes past c. Each class also costs a fixed amount per chunk pass, and when
+# v^(t-1) * ceil(N/64) > 8N the classes come from a counting sort that reads N entries per
+# prefix. COST_NS gives nanoseconds of one thread per unit of each term; COST_SAFETY covers the
+# spread of the fit and runners slower than the calibration machine.
+COST_NS = dict(
+    read=12.0,        # per entry of the array (parsing and building the planes)
+    bin_load=0.61,    # binary kernel, per row per 256-column chunk
+    gen_load=0.71,    # value planes, per row per chunk per value
+    oh_load=1.06,     # one-hot lanes, per row per 32-byte unit
+    cls=3.2,          # per class per pass, and per 64-bit word of class bitsets
+    sort=2.6,         # counting sort, per row per prefix
+    far=3.6,          # extra per load when the planes exceed 2 MiB (scaled, see below)
+)
+COST_SAFETY = 2.0
+COST_STARTUP = 0.05  # seconds, process start and allocation
+
+
+def verify_cost_terms(N, t, v, k, wildcards=False):
+    """The terms of the cost model for ca_verify on an N x k array over v
+    symbols at strength t, as a dict keyed like COST_NS (counts, not times),
+    with the kernel ca_verify will pick. Mirrors the choices in ca_verify.c."""
+    W = (N + 63) // 64
+    nch_all = ((k + 63) // 64 + 3) // 4
+    vt1 = v ** (t - 1)
+    binary = v == 2 and not wildcards
+    bitset = vt1 * W <= 8 * N
+    onehot = False
+    if not binary and v <= 64:
+        lb = 8 if v <= 8 else 16 if v <= 16 else 32 if v <= 32 else 64
+        cand = k / t
+        onehot = cand * lb / 256.0 < v * max(1.0, cand / 256.0)
+    if onehot:
+        cpu = 256 // lb
+        nu = (k + cpu - 1) // cpu
+    plane_bytes = 32 * N * (nu if onehot else nch_all * (1 if binary else v))
+    terms = dict((name, 0.0) for name in COST_NS)
+    terms["read"] = float(N) * k
+    # prefixes with largest column c: C(c, t-2) of them, c = t-2 .. k-2 (t = 1: one, c = -1)
+    if t == 1:
+        groups = [(-1, 1)]
+    else:
+        groups = []
+        m = 1                                   # C(c, t-2) for c = t-2
+        for c in range(t - 2, k - 1):
+            groups.append((c, m))
+            m = m * (c + 1) // (c + 1 - (t - 2))
+    for c, m in groups:
+        nch = nch_all - ((c + 1) >> 8)
+        if binary:
+            terms["bin_load"] += m * N * nch
+            terms["cls"] += m * vt1 * (2 * W + nch // 4 + (nch % 4) // 2 + nch % 2)
+        elif onehot:
+            units = nu - (c + 1) // cpu
+            terms["oh_load"] += m * N * units
+            terms["cls"] += m * vt1 * (W + units // 4 + units % 4)
+        else:
+            terms["gen_load"] += m * N * nch * v
+            terms["cls"] += m * vt1 * (W + nch * v)
+        if not binary and not bitset:
+            terms["sort"] += m * N
+    if plane_bytes > (2 << 20):
+        # loads from beyond a 2 MiB cache cost more, the more so up to 32 MiB of planes
+        ramp = min(1.0, math.log2(plane_bytes / float(2 << 20)) / 4.0)
+        terms["far"] = ramp * (terms["bin_load"] + terms["gen_load"] + terms["oh_load"])
+    terms["kernel"] = "binary planes" if binary else "one-hot lanes" if onehot else "value planes"
+    return terms
+
+
+def full_or_screen(N, t, v, k, threads, budget, window, threshold=0, wildcards=False):
+    """Returns ('full', '') when the array is to be checked exhaustively and
+    ('screen', why) when it is to be screened. It is screened when the
+    predicted time is above FULL_FRACTION of the budget per array, or (the
+    deprecated rule, when threshold > 0) when C(k,t) * v^t is above threshold.
+    Arrays of at most window columns are always checked in full."""
+    if k <= window:
+        return "full", ""
+    pred = predict_verify_seconds(N, t, v, k, threads, wildcards)
+    if pred > FULL_FRACTION * budget:
+        return "screen", ("predicted time of the full check %s is above %d percent of the "
+                          "budget per array (%s)" % (fmt_secs(pred), round(100 * FULL_FRACTION),
+                                                     fmt_secs(budget)))
+    work = math.comb(k, t) * v ** t
+    if threshold and threshold > 0 and work > threshold:
+        return "screen", ("estimated work C(%d,%d)*%d^%d = %.3g exceeds the screen "
+                          "threshold %.3g" % (k, t, v, t, work, threshold))
+    return "full", ""
+
+
+def predict_verify_seconds(N, t, v, k, threads=2, wildcards=False):
+    """Predicted wall-clock seconds of a full ca_verify run (version 2) on a
+    covering array with these parameters, including COST_SAFETY. Arrays with
+    many gaps take longer (each gap is listed), but they fail either way."""
+    terms = verify_cost_terms(N, t, v, k, wildcards)
+    ns = terms["read"] * COST_NS["read"]
+    work = sum(terms[name] * COST_NS[name] for name in COST_NS if name != "read")
+    return COST_SAFETY * (COST_STARTUP + 1e-9 * (ns + work / max(1, threads)))
 
 
 class ClaimError(Exception):
@@ -452,8 +557,9 @@ def check_claim(cl, ctx, deadline):
         cl.update(t=t, v=v, k=k, N=N)
         if t > k:
             raise ClaimError("strength t=%d exceeds k=%d" % (t, k))
-        if v ** t > (1 << 40):
-            raise ClaimError("v^t is too large for ca_verify")
+        if v ** t > (1 << 40) or v ** (t - 1) > CA_VERIFY_MAX_VT1:
+            raise ClaimError("v^t is too large for ca_verify (it needs v^t <= 2^40 and "
+                             "v^(t-1) <= 2^26)")
         fname = raw["file"].strip()
         if not SAFE_NAME.match(fname) or fname == "claims.csv":
             raise ClaimError("file name %r is not a plain file name in the "
@@ -476,9 +582,6 @@ def check_claim(cl, ctx, deadline):
         sha = sha256_text(text)
         cl["sha256"] = sha
         cl["canon_text"] = text
-        if max(len(line) for line in text.split("\n")) > CA_VERIFY_MAX_LINE:
-            raise ClaimError("rows are too long for ca_verify's line buffer "
-                             "(k=%d)" % k)
 
         # duplicates
         if sha in ctx["manifest_sha"]:
@@ -523,15 +626,13 @@ def check_claim(cl, ctx, deadline):
             canon_path = os.path.join(tmp, "canon.txt")
             with open(canon_path, "w", encoding="utf-8", newline="\n") as f:
                 f.write(text)
-            work = math.comb(k, t) * v ** t
-            cl["work"] = work
             budget = ctx["budget"]
-            mode = "full"
-            if k > ctx["window"] and work > ctx["threshold"]:
-                mode = "screen"
-                cl["notes_out"].append(
-                    "estimated work C(%d,%d)*%d^%d = %.3g exceeds the screen "
-                    "threshold %.3g" % (k, t, v, t, work, ctx["threshold"]))
+            wild = any(None in row for row in rows)
+            mode, why = full_or_screen(N, t, v, k, ctx["threads"], budget, ctx["window"],
+                                       ctx["threshold"], wild)
+            cl["predicted_seconds"] = predict_verify_seconds(N, t, v, k, ctx["threads"], wild)
+            if mode == "screen":
+                cl["notes_out"].append(why)
             if mode == "full":
                 left = deadline() - time.monotonic()
                 if left <= 0:
@@ -810,10 +911,13 @@ def render_report(claims, ctx, all_pass, elapsed):
                  "to the table until every claim passes." % (n_pass, len(claims)))
     L.append("")
     L.append("Checked %s with `ca_verify` (%s), %d threads, budget %s per array, "
-             "screen threshold %.3g (C(k,t) times v^t), screen of %d windows x %d "
-             "columns. Total time %s."
+             "full check when its predicted time is at most %d percent of that%s, "
+             "otherwise a screen of %d windows x %d columns. Total time %s."
              % (ctx["date"], ctx["stamp"], ctx["threads"], fmt_secs(ctx["budget"]),
-                ctx["threshold"], ctx["windows"], ctx["window"], fmt_secs(elapsed)))
+                round(100 * FULL_FRACTION),
+                (" and C(k,t) times v^t is at most %.3g" % ctx["threshold"])
+                if ctx["threshold"] and ctx["threshold"] > 0 else "",
+                ctx["windows"], ctx["window"], fmt_secs(elapsed)))
     L.append("")
     L.append("| # | file | t | v | k | N | result | status | vs table | previous best | time |")
     L.append("|---|---|---|---|---|---|---|---|---|---|---|")
@@ -956,6 +1060,31 @@ def certificate_light(sub, a, out):
         return False, "## Certificate check\n\n**Result: FAIL.** the check stopped without a report\n"
 
 
+def route_light(module, sub, a, out, name):
+    """The pull request check of upgrade.csv (tools/check_upgrades.py --light) or constructions.csv
+    (tools/check_constructions.py --light): returns (passed, report text). Like certificate_light,
+    a report only; the rows are entered on main with the tools of main."""
+    import contextlib
+    import importlib
+    mod = importlib.import_module(module)
+    rout = os.path.join(out, name)
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf):
+            args = [sub, "--light", "--table-dir", a.table_dir, "--out", rout,
+                    "--threads", str(max(1, min(64, a.threads)))]
+            if module == "check_constructions":
+                args += ["--ca-verify", a.ca_verify]      # the same verifier as the claims route
+            rc = mod.main(args)
+    except SystemExit as e:
+        return False, "## %s\n\n**Result: FAIL.** %s\n" % (name, md_cell(e))
+    try:
+        with open(os.path.join(rout, "report.md"), encoding="utf-8") as f:
+            return rc == 0, f.read()
+    except OSError:
+        return False, "## %s\n\n**Result: FAIL.** the check stopped without a report\n" % name
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("submission", nargs="?", help="submissions/<slug> directory")
@@ -967,7 +1096,8 @@ def main(argv=None):
     ap.add_argument("--total-budget-minutes", type=float, default=None,
                     help="wall-clock budget for the whole submission")
     ap.add_argument("--screen-threshold", type=float, default=SCREEN_THRESHOLD,
-                    help="screen instead of full check when C(k,t)*v^t exceeds this")
+                    help="deprecated. Also screen when C(k,t)*v^t exceeds this (default 0, "
+                         "off). The decision is by predicted time (FULL_FRACTION)")
     ap.add_argument("--screen-windows", type=int, default=20)
     ap.add_argument("--constant-rows-minutes", type=float, default=10.0,
                     help="time budget for the constant rows count per array "
@@ -1045,10 +1175,18 @@ def main(argv=None):
     # identity, duplicates, the estimate and plan of the exact check, and a small screen; the exact
     # check runs after merge (.github/workflows/certificate-check.yml). Arrays kept in a deposit
     # (external.csv) are checked by the maintainer (tools/external_array.py), not here.
-    others = [n for n in ("certificates.csv", "external.csv") if os.path.isfile(os.path.join(sub, n))]
+    # A request to check SCREENED entries exactly (upgrade.csv, tools/check_upgrades.py) and construction
+    # certificates (constructions.csv, tools/check_constructions.py) get their own light check here too.
+    others = [n for n in ("certificates.csv", "external.csv", "upgrade.csv", "constructions.csv")
+              if os.path.isfile(os.path.join(sub, n))]
     cert_ok, cert_text = True, ""
     if "certificates.csv" in others and not problems:
         cert_ok, cert_text = certificate_light(sub, a, out)
+    for name, module in (("upgrade.csv", "check_upgrades"), ("constructions.csv", "check_constructions")):
+        if name in others and not problems:
+            ok2, text2 = route_light(module, sub, a, out, name.split(".")[0])
+            cert_ok = cert_ok and ok2
+            cert_text = (cert_text + "\n" + text2) if cert_text else text2
     if not os.path.exists(cpath) and others and not problems:
         lines = ["## Covering array submission check: %s" % slug, ""]
         if "external.csv" in others:
@@ -1062,7 +1200,8 @@ def main(argv=None):
             f.write("\n".join(lines) + "\n")
         with open(os.path.join(out, "summary.json"), "w", encoding="utf-8") as f:
             json.dump(dict(slug=slug, passed=cert_ok, maintainer_check=[n for n in others if n == "external.csv"],
-                           certificates="certificates.csv" in others, claims=[]), f)
+                           certificates="certificates.csv" in others, upgrade="upgrade.csv" in others,
+                           constructions="constructions.csv" in others, claims=[]), f)
         print("\n".join(lines))
         return 0 if cert_ok else 1
     if total_bytes > MAX_SUBMISSION_BYTES:
@@ -1146,7 +1285,9 @@ def main(argv=None):
                      previous_best=c.get("previous_best"), sha256=c.get("sha256"),
                      canonical_name=c.get("canonical_name"), reasons=c["reasons"],
                      uncovered=c["uncovered"], notes=c["notes_out"],
-                     seconds={k2: round(v2, 2) for k2, v2 in c["seconds"].items()})
+                     seconds={k2: round(v2, 2) for k2, v2 in c["seconds"].items()},
+                     predicted_seconds=(round(c["predicted_seconds"], 2)
+                                        if c.get("predicted_seconds") is not None else None))
                 for c in claims])
 
     if a.apply and rows:

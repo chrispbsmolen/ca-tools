@@ -18,6 +18,10 @@
 # table-page.yml on main, which checks the submission again with the
 # trusted tools against the table at that moment.
 #
+# An upgrade request (upgrade.csv) and construction certificates (constructions.csv), both since
+# 2026-11-02, get the light checks of tools/check_upgrades.py and tools/check_constructions.py
+# here, also run by check_submission.py, as reports only.
+#
 # A certificate submission (certificates.csv, since 2026-11-02) gets the light
 # check here (tools/check_certificates.py --light, run by check_submission.py):
 # format, identity and duplicates, the estimate and plan of the exact check, and
@@ -42,11 +46,11 @@ concurrency:
 
 env:
   # GitHub-hosted runner for a public repository: 4 cores, 6 hour job limit. The check uses
-  # 2 threads (the budgets and the screen threshold were measured with 2).
+  # 2 threads (the budgets and the cost model of ca_verify were measured with 2).
   THREADS: "2"
   BUDGET_MINUTES: "15"          # per array
   TOTAL_BUDGET_MINUTES: "300"   # all submissions in the pull request
-  SCREEN_THRESHOLD: "5e10"      # C(k,t) * v^t above this: screen instead (SCREEN_THRESHOLD in tools/check_submission.py; 1e10 before ca_verify v2)
+  SCREEN_THRESHOLD: "0"         # 0 is off. An array is screened when its predicted full check takes more than 40 percent of the budget (FULL_FRACTION in tools/check_submission.py). Until 2026-11-02 this was 5e10, a limit on C(k,t) * v^t
   PR: ${{ github.event.pull_request.number }}
   HEAD_SHA: ${{ github.event.pull_request.head.sha }}
   BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -134,10 +138,20 @@ jobs:
       - name: Say what happens on merge
         if: env.STATUS == '0' && env.SLUGS != ''
         run: |
-          has=""; for slug in $SLUGS; do [ -f "pr/submissions/$slug/claims.csv" ] && has=1; done
-          [ -n "$has" ] || exit 0      # certificates or deposited arrays only: checked by the maintainer
-          { echo
-            echo "Every claim passed. When this pull request is merged, the table workflow on main checks the submission again against the table at that moment and adds its rows, with the credit given in claims.csv. Nothing else is needed from you."; } >> comment.md
+          has=""; up=""
+          for slug in $SLUGS; do
+            [ -f "pr/submissions/$slug/claims.csv" ] && has=1
+            [ -f "pr/submissions/$slug/constructions.csv" ] && has=1
+            [ -f "pr/submissions/$slug/upgrade.csv" ] && up=1
+          done
+          if [ -n "$has" ]; then
+            { echo
+              echo "Every claim passed. When this pull request is merged, the table workflow on main checks the submission again against the table at that moment and adds its rows, with the credit given in the submission. Nothing else is needed from you."; } >> comment.md
+          fi
+          if [ -n "$up" ]; then
+            { echo
+              echo "When this pull request is merged, the certificate workflow on main runs the exact checks planned above, in shards, with the tools of main, and the table workflow adds a VERIFIED row beside each SCREENED row that passes. Nothing else is needed from you."; } >> comment.md
+          fi
 
       - name: Save the report for verify-report.yml
         if: always()

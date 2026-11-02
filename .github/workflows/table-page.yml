@@ -26,6 +26,21 @@
 # the comparison; tools/check_certificates.py --apply-result) and its rows are entered, VERIFIED
 # or SCREENED, or its report is committed as NOT_APPLIED.md. A submission without a result yet
 # is listed in the run summary as waiting and picked up by a later run.
+#
+# Upgrade requests (submissions/<slug>/upgrade.csv, since 2026-11-02) ask for the exact check of
+# SCREENED entries. certificate-check.yml runs the check in shards and saves the result in the
+# same artifact; here every request not in the table yet ("requested in submissions/<slug> by" in
+# no row's notes) and without NOT_APPLIED.md gets that result checked again against the table at
+# this moment (tools/check_upgrades.py --apply-result: the entries are still SCREENED with no
+# VERIFIED row, the shard outputs are merged again with the tools of this commit) and a VERIFIED
+# row is entered beside each SCREENED row that passed. A request that fails, or of which no entry
+# passed (over the budget, or shards that did not finish), gets NOT_APPLIED.md with the report.
+#
+# Construction certificates (submissions/<slug>/constructions.csv, since 2026-11-02) are checked
+# here, with the tools of this commit, like claims.csv: tools/check_constructions.py re-runs
+# tools/construction_cert.py on every certificate (a fraction of a second each), and enters the
+# rows, the certificates (table/constructions/<slug>/) and the rebuilt arrays that fit the
+# storage rules (table/arrays/), or writes NOT_APPLIED.md.
 
 name: Table page
 
@@ -45,11 +60,11 @@ concurrency:
 
 env:
   # GitHub-hosted runner for a public repository: 4 cores, 6 hour job limit. The check uses
-  # 2 threads (the budgets and the screen threshold were measured with 2).
+  # 2 threads (the budgets and the cost model of ca_verify were measured with 2).
   THREADS: "2"
   BUDGET_MINUTES: "15"          # per array
   TOTAL_BUDGET_MINUTES: "300"   # all submissions in this run
-  SCREEN_THRESHOLD: "5e10"      # the same as verify-submission.yml and tools/check_submission.py
+  SCREEN_THRESHOLD: "0"         # 0 is off. An array is screened when its predicted full check takes more than 40 percent of the budget (FULL_FRACTION in tools/check_submission.py). Until 2026-11-02 this was 5e10, a limit on C(k,t) * v^t
   GH_TOKEN: ${{ github.token }}
   BEFORE: ${{ github.event.before }}
 
@@ -162,6 +177,105 @@ jobs:
             fi
           done
           rm -rf certres cert_runs.txt c.md
+      - name: Add the rows of checked upgrade requests not yet in the table
+        run: |
+          : > applied_up.txt
+          pending=""
+          for f in submissions/*/upgrade.csv; do
+            [ -f "$f" ] || continue
+            slug=$(basename "$(dirname "$f")")
+            case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
+            [ -f "submissions/$slug/NOT_APPLIED.md" ] && continue
+            grep -qF "requested in submissions/$slug by" table/ca_table.csv && continue
+            pending="$pending $slug"
+          done
+          [ -n "$pending" ] || { echo "Every merged upgrade request is in the table."; exit 0; }
+          echo "Upgrade requests not yet in the table:$pending"
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/certificate-check.yml/runs?branch=main&status=completed&per_page=50" \
+            --jq '.workflow_runs[] | select(.event == "push" or .event == "workflow_dispatch")
+                  | select(.head_repository.full_name == "'"$GITHUB_REPOSITORY"'") | .id' > up_runs.txt || : > up_runs.txt
+          stamp=$(git rev-parse --short HEAD)
+          for slug in $pending; do
+            found=""
+            while read -r run; do
+              case "$run" in ''|*[!0-9]*) continue ;; esac
+              d="upres/$run"
+              if [ ! -d "$d" ]; then
+                mkdir -p "$d"
+                gh run download "$run" --repo "$GITHUB_REPOSITORY" -n cert-results -D "$d" < /dev/null 2>/dev/null || true
+              fi
+              if [ -f "$d/$slug/result.json" ]; then found="$d/$slug"; break; fi
+            done < up_runs.txt
+            if [ -z "$found" ]; then
+              echo "Upgrade request \`$slug\`: waiting for certificate-check.yml (still running, or start it again for this slug)." >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            added=$(git log --diff-filter=A --format=%H -n 1 -- "submissions/$slug/upgrade.csv")
+            pr=""
+            [ -n "$added" ] && pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$added/pulls" --jq '.[0].number' 2>/dev/null || true)
+            case "$pr" in ''|*[!0-9]*) pr="" ;; esac
+            rc=0
+            python3 tools/check_upgrades.py "submissions/$slug" --table-dir table \
+              --apply-result "$found" --apply --out "out/up-$slug" > /dev/null || rc=$?
+            if [ "$rc" = 0 ]; then
+              echo "$slug" >> applied_up.txt
+              msg="Merged: the exact check of \`$slug\` ran on main (certificate-check.yml) and its VERIFIED rows were entered at $stamp. Entries that stayed SCREENED, if any, are listed below."
+            else
+              if [ "$rc" = 3 ]; then
+                why="No entry passed the exact check in time (over the budget, or shards that did not finish), so every entry stays SCREENED."
+              else
+                echo "::warning::upgrade request $slug did not pass on main and was not added"
+                why="The request did not pass on main, so nothing was added to the table."
+              fi
+              msg="Merged. $why Report below."
+              { echo "# Not added to the table"; echo; echo "Checked on main at $stamp. $why Delete this file and start certificate-check.yml for this slug to try again."; echo
+                cat "$found/report.md" 2>/dev/null; echo; cat "out/up-$slug/report.md" 2>/dev/null; } > "submissions/$slug/NOT_APPLIED.md"
+            fi
+            { cat "$found/report.md" 2>/dev/null; cat "out/up-$slug/report.md" 2>/dev/null; } >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$pr" ]; then
+              { echo "$msg"; echo; cat "$found/report.md" "out/up-$slug/report.md" 2>/dev/null | head -c 55000; } > c.md
+              gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body-file c.md || true
+            fi
+          done
+          rm -rf upres up_runs.txt c.md
+      - name: Add the rows of merged construction certificates not yet in the table
+        run: |
+          : > applied_con.txt
+          slugs=""
+          for f in submissions/*/constructions.csv; do
+            [ -f "$f" ] || continue
+            slug=$(basename "$(dirname "$f")")
+            case "$slug" in example|*[!A-Za-z0-9._-]*) continue ;; esac
+            [ -f "submissions/$slug/NOT_APPLIED.md" ] && continue
+            grep -qF "submissions/$slug/constructions.csv" table/ca_table.csv && continue
+            slugs="$slugs $slug"
+          done
+          [ -n "$slugs" ] || { echo "Every merged construction submission is in the table."; exit 0; }
+          echo "Construction submissions not yet in the table:$slugs"
+          cc -O3 -pthread -o ca_verify ca_verify.c
+          cc -O2 -o tools/constant_rows tools/constant_rows.c
+          stamp=$(git rev-parse --short HEAD)
+          for slug in $slugs; do
+            added=$(git log --diff-filter=A --format=%H -n 1 -- "submissions/$slug/constructions.csv")
+            pr=""
+            [ -n "$added" ] && pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$added/pulls" --jq '.[0].number' 2>/dev/null || true)
+            case "$pr" in ''|*[!0-9]*) pr="" ;; esac
+            if python3 tools/check_constructions.py "submissions/$slug" --table-dir table --ca-verify ./ca_verify \
+                 --threads "$THREADS" --pr "${pr:-main}" --out "out/con-$slug" --apply > /dev/null; then
+              echo "$slug" >> applied_con.txt
+              msg="Merged and added to the table: \`$slug\` (construction certificates checked again on main at $stamp)."
+            else
+              echo "::warning::construction submission $slug did not pass on main and was not added"
+              msg="Merged, but \`$slug\` did not pass when checked again on main at $stamp, so nothing was added to the table. Report below."
+              { echo "# Not added to the table"; echo; echo "Checked again on main at $stamp; it did not pass. Delete this file to try again."; echo; cat "out/con-$slug/report.md"; } > "submissions/$slug/NOT_APPLIED.md"
+            fi
+            cat "out/con-$slug/report.md" >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$pr" ]; then
+              { echo "$msg"; echo; head -c 55000 "out/con-$slug/report.md"; } > c.md
+              gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body-file c.md || true
+            fi
+          done
+          rm -f ca_verify tools/constant_rows c.md
       - name: Regenerate table/derived.csv (sizes that follow by published constructions)
         run: python3 tools/derive_table.py
       - uses: r-lib/actions/setup-r@v2
@@ -186,7 +300,7 @@ jobs:
           python3 tools/check_submission.py --selftest --table-dir table > /dev/null
       - name: Commit what changed
         run: |
-          git add docs/index.html docs/derived.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays table/derived.csv table/certificates
+          git add docs/index.html docs/derived.html table/README.md table/ca_table.rda table/ca_table.csv table/MANIFEST.csv table/arrays table/derived.csv table/certificates table/EXTERNAL.csv table/constructions
           git add submissions/*/NOT_APPLIED.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing changed."
@@ -194,7 +308,7 @@ jobs:
           fi
           git config user.name "ca-table-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cat applied_cert.txt >> applied.txt 2>/dev/null || true
+          cat applied_cert.txt applied_up.txt applied_con.txt >> applied.txt 2>/dev/null || true
           if [ -s applied.txt ]; then
             git commit -q -m "Add submissions $(tr '\n' ' ' < applied.txt)to the table (checked again on main); regenerate table page, counts and R data file"
           else

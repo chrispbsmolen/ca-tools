@@ -49,12 +49,25 @@ SAFETY = 2.0
 # expanding and hashing an array costs about 4 ns per entry on one core (cphfcheck expand into a
 # pipe, measured 2026-11-02: 6.1e8 entries in 4.1 s); the array hash runs as its own job
 HASH_NS_PER_ENTRY = 4.0
-# the unit costs of cphfcheck.c (UNIT_NS_*, from the timing table of tools/cphf/README.md), mirrored
-# here only to estimate an explicit "cyclic s" that cphfcheck's own estimate does not list. fastprog:
-# 4.4 ns per C(k-1, t-2) unit at q = 23 on the test VM (2026-11-01), provisional: recalibrate all of
-# these from the first real runs on the runners (tools/cphf/README.md, "Unit costs").
-UNIT_NS = {"full": 52.0, "cyclic": 52.0, "fullfast": 92.0, "progression": 64.0, "fastprog": 4.4,
-           "shift": 200.0}
+# the unit costs of cphfcheck.c (its function unit_ns, fitted 2026-11-02 to timed runs on one core of the
+# test VM, tools/cphf/README.md "Unit costs"), mirrored here to estimate an explicit "cyclic s" that
+# cphfcheck's own estimate does not list and the methods it lists as not applicable. n is the number of
+# rows of the family. The two must stay equal (tools/cphf/tests/test_certificates.py compares them).
+def unit_ns(method, t, q, k, n):
+    """Nanoseconds on one core per unit of a method of cphfcheck: "full" and "cyclic" per t-set,
+    "fullfast" per C(k, t-1), "progression" and "fastprog" per C(k-1, t-2), "shift" per shift test."""
+    kq = k / float(q * q)
+    if method in ("full", "cyclic"):
+        return 0.15 * n * t * t
+    if method == "fullfast":
+        return n * (11.0 + 28.0 / q)
+    if method == "progression":
+        return 10.5 * (t - 3) ** 2 + 4.6 * kq
+    if method == "fastprog":
+        return 0.8 * (t - 3) ** 2 + 1.1 * kq
+    if method == "shift":
+        return 140.0
+    raise CertError("unknown method %r" % method)
 
 
 class CertError(Exception):

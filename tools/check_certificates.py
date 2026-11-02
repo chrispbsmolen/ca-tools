@@ -311,13 +311,15 @@ def estimate(c, exe, threads):
     if code != 0:
         raise CertError("estimate failed: %s" % (err.strip() or out.strip())[:300])
     est = cc.parse_estimate(out)
+    n = sum(est["rows"])                  # rows of the family (progression, other, dead)
     if c["method"]:                       # the submitter's method: its own estimate
         name = c["method"].split()[0]
         e = est["methods"].get(name)
         if name == "cyclic" and (e is None or e["method"] != c["method"]):
             s = int(c["method"].split()[1])
             units = cc.expected_totals(c["method"], c["k"], c["t"])["units"]
-            e = dict(method=c["method"], units=units, core_seconds=units * cc.UNIT_NS["cyclic"] * 1e-9)
+            e = dict(method=c["method"], units=units,
+                     core_seconds=units * cc.unit_ns("cyclic", c["t"], c["v"], c["k"], n) * 1e-9)
             if est["symmetry"] == 0 or s % est["symmetry"]:
                 e["note"] = "cphfcheck found no certified symmetry col -> col+%d" % s
         if e is None and (name == "progression" or (name == "fastprog" and c["k"] <= 65535)):
@@ -326,8 +328,8 @@ def estimate(c, exe, threads):
             import math
             k, t = c["k"], c["t"]
             e = dict(method=name, units=math.comb(k - 1, t - 2),
-                     core_seconds=(math.comb(k - 1, t - 2) * cc.UNIT_NS[name]
-                                   + math.comb(k, t) * cc.UNIT_NS["shift"]) * 1e-9)
+                     core_seconds=(math.comb(k - 1, t - 2) * cc.unit_ns(name, t, c["v"], k, n)
+                                   + math.comb(k, t) * cc.unit_ns("shift", t, c["v"], k, n)) * 1e-9)
         if e is None:
             raise CertError("method %s does not apply to this family (%s)" % (c["method"], name))
         est["cheapest"] = dict(method=e["method"], core_seconds=e["core_seconds"])

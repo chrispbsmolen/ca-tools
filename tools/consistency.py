@@ -49,6 +49,10 @@ EXTERNAL_HOSTS = ("zenodo.org", "github.com", "objects.githubusercontent.com")
 CERT_HEADER = ["file", "t", "v", "k", "N", "family", "sha256", "array_sha256", "check", "family_sha256",
                "expansion"]
 README = "table/README.md"
+CONS = "table/constructions"
+CONS_LIST = "table/constructions/CONSTRUCTIONS.csv"
+CONS_HEADER = ["file", "t", "v", "k", "N", "construction", "sha256", "array_sha256", "check", "stored"]
+CONS_RECHECK_ENTRIES = 5 * 10 ** 7      # listings rebuilt here by tools/construction_cert.py up to this N k
 HEADER = ["t", "v", "k", "N", "tier", "source_id", "source_detail", "snapshot_id",
           "array_sha256", "verify_stamp", "entered", "notes", "lb", "lb_evidence",
           "construction", "builds_on", "family_sha256"]
@@ -383,6 +387,37 @@ def check_retracted(rows):
             problem("%s: %d RETRACTED rows for %s; one is enough" % (TABLE, n, ",".join(key[:4])))
 
 
+UPGRADE_MARK = re.compile(r"exact check of the SCREENED row of (\d{4}-\d{2}-\d{2}), requested in "
+                          r"submissions/([A-Za-z0-9._-]+) by ")
+UPGRADE_SAME = ["t", "v", "k", "N", "source_id", "source_detail", "snapshot_id", "array_sha256", "family_sha256"]
+
+
+def check_upgrades(rows):
+    """A VERIFIED row entered by an upgrade request (tools/check_upgrades.py, since 2026-11-02; its
+    notes say "exact check of the SCREENED row of DATE, requested in submissions/SLUG by ...") stands
+    beside exactly one SCREENED row with the same claim (t, v, k, N, source, snapshot,
+    array_sha256, family_sha256) entered on DATE, and is the only such VERIFIED row."""
+    n = 0
+    for r in rows:
+        if r["tier"] != "VERIFIED":
+            continue
+        m = UPGRADE_MARK.search(r["notes"])
+        if not m:
+            continue
+        n += 1
+        key = tuple(r.get(c) or "" for c in UPGRADE_SAME)
+        name = ",".join(key[:4])
+        scr = [x for x in rows if x["tier"] == "SCREENED" and tuple(x.get(c) or "" for c in UPGRADE_SAME) == key]
+        if len(scr) != 1 or scr[0]["entered"] != m.group(1):
+            problem("%s: upgrade row %s matches %d SCREENED rows of %s with the same claim; it must match exactly one"
+                    % (TABLE, name, len(scr), m.group(1)))
+        ver = [x for x in rows if x["tier"] == "VERIFIED" and tuple(x.get(c) or "" for c in UPGRADE_SAME[:4]) == key[:4]
+               and (x["array_sha256"], x.get("family_sha256") or "") == key[7:]]
+        if len(ver) != 1:
+            problem("%s: upgrade row %s is one of %d VERIFIED rows of the same array" % (TABLE, name, len(ver)))
+    return n
+
+
 def check_sizes():
     """No stored array or certificate file above MAX_FILE_BYTES, and the store as a
     whole under MAX_STORE_BYTES (GitHub refuses files over 100 MB and slows down
@@ -548,6 +583,73 @@ def check_certificates(rows):
                         % (TABLE, r["tier"], r["t"], r["v"], r["k"], r["N"], CERT_LIST))
 
 
+def check_constructions(rows, man):
+    """Construction certificates entered through a submission (constructions.csv, since 2026-11-02):
+    every listing of table/constructions/CONSTRUCTIONS.csv names a certificate file there with the
+    listed sha256, belongs to exactly one VERIFIED row with the same t, v, k, N and array_sha256
+    whose stamp begins "construction_cert" (the listing's check begins with that stamp), names its
+    stored array (if any) as MANIFEST lists it, and, up to CONS_RECHECK_ENTRIES entries, rebuilds
+    (tools/construction_cert.py) to that array_sha256; every VERIFIED row stamped construction_cert
+    has a listing and no family_sha256. Files of the folder that no listing names (the maintainer's
+    certificates of 2026-11-02) are allowed."""
+    import hashlib
+    stamped = [r for r in rows if r["tier"] == "VERIFIED" and r["verify_stamp"].startswith("construction_cert ")]
+    if not os.path.exists(CONS_LIST):
+        for r in stamped:
+            problem("%s: row %s,%s,%s,%s is stamped construction_cert but %s does not exist"
+                    % (TABLE, r["t"], r["v"], r["k"], r["N"], CONS_LIST))
+        return 0
+    raw = open(CONS_LIST, "rb").read()
+    if b"\r" in raw:
+        problem("%s: contains CR characters; the file is LF throughout" % CONS_LIST)
+    lst = list(csv.DictReader(open(CONS_LIST, newline="", encoding="utf-8")))
+    if raw.split(b"\n", 1)[0].decode("utf-8", "replace").replace('"', "").split(",") != CONS_HEADER:
+        problem("%s: header differs from %s" % (CONS_LIST, ",".join(CONS_HEADER)))
+        return 0
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import construction_cert
+    mfile = {m["file"]: m["sha256"] for m in man}
+    seen = collections.Counter((c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) for c in lst)
+    for c in lst:
+        key = (c["t"], c["v"], c["k"], c["N"], c["array_sha256"])
+        name = "%s: %s" % (CONS_LIST, c["file"])
+        if seen[key] > 1:
+            problem("%s: the array %s is listed %d times" % (name, c["array_sha256"][:12], seen[key]))
+        path = os.path.join(CONS, *c["file"].split("/"))
+        if ".." in c["file"].split("/") or not os.path.isfile(path):
+            problem("%s: the certificate is not in %s/" % (name, CONS))
+            continue
+        if hashlib.sha256(open(path, "rb").read()).hexdigest() != c["sha256"]:
+            problem("%s: the certificate does not have the listed sha256" % name)
+        if not HEX64.match(c["array_sha256"]):
+            problem("%s: array_sha256 is not 64 hex digits" % name)
+        match = [r for r in stamped if (r["t"], r["v"], r["k"], r["N"], r["array_sha256"]) == key]
+        if len(match) != 1:
+            problem("%s: %d VERIFIED rows stamped construction_cert have its t, v, k, N and array_sha256; one must"
+                    % (name, len(match)))
+        elif not c["check"].startswith(match[0]["verify_stamp"].split(" (")[0]):
+            problem("%s: the check %r does not start with the row's stamp" % (name, c["check"][:40]))
+        if c["stored"] and mfile.get(c["stored"]) != c["array_sha256"]:
+            problem("%s: the stored array %s is not in %s with that sha256" % (name, c["stored"], MANIFEST))
+        if int(c["N"]) * int(c["k"]) <= CONS_RECHECK_ENTRIES:
+            try:
+                res = construction_cert.run(path, table_dir=os.path.dirname(TABLE))
+                if not res["ok"] or res["sha256"] != c["array_sha256"] or res["construction"] != c["construction"]:
+                    problem("%s: tools/construction_cert.py does not rebuild the listed array (%s)"
+                            % (name, "; ".join("[%s] %s" % f for f in res["failures"][:3]) or res["sha256"]))
+            except construction_cert.CertError as e:
+                problem("%s: the certificate is malformed (%s)" % (name, e))
+    for r in stamped:
+        if not any((c["t"], c["v"], c["k"], c["N"], c["array_sha256"]) == (r["t"], r["v"], r["k"], r["N"], r["array_sha256"])
+                   for c in lst):
+            problem("%s: row %s,%s,%s,%s is stamped construction_cert but has no listing in %s"
+                    % (TABLE, r["t"], r["v"], r["k"], r["N"], CONS_LIST))
+        if r.get("family_sha256") or not HEX64.match(r["array_sha256"]):
+            problem("%s: row %s,%s,%s,%s stamped construction_cert must have an array_sha256 and no family_sha256"
+                    % (TABLE, r["t"], r["v"], r["k"], r["N"]))
+    return len(lst)
+
+
 def check_arrays(rows, man):
     files = set(os.listdir(ARRAYS)) if os.path.isdir(ARRAYS) else set()
     mfiles = collections.Counter(m["file"] for m in man)
@@ -571,6 +673,9 @@ def check_arrays(rows, man):
                     "t, v, k, N" % (MANIFEST, m["file"], m["sha256"][:12]))
         if m["status"] not in ("equals_best", "exceeds_snapshot", "above_snapshot", "above_best", "screened"):
             problem("%s: %s has unknown status %r" % (MANIFEST, m["file"], m["status"]))
+        if m["status"] == "screened" and any(r["tier"] == "VERIFIED" for r in match):
+            problem("%s: %s has status screened but a VERIFIED row; the status follows the exact check"
+                    % (MANIFEST, m["file"]))
 
 
 def _stairs(points):
@@ -688,8 +793,10 @@ def check_external(rows, man):
         if not match:
             problem("%s: %s has no VERIFIED or SCREENED table row with the same t, v, k, N"
                     % (EXTERNAL, sha[:12]))
-        elif any((r["tier"] == "VERIFIED") != (e["status"] == "verified") for r in match):
-            problem("%s: %s status %s does not match the tier of its table row"
+        elif any(r["tier"] == "VERIFIED" for r in match) != (e["status"] == "verified"):
+            # "verified" once a VERIFIED row has the hash (also a VERIFIED row added beside the
+            # SCREENED one by an upgrade request, tools/check_upgrades.py), "screened" before
+            problem("%s: %s status %s does not match the tiers of its table rows"
                     % (EXTERNAL, sha[:12], e["status"]))
         if e["status"] not in ("verified", "screened"):
             problem("%s: %s has unknown status %r" % (EXTERNAL, sha[:12], e["status"]))
@@ -785,9 +892,11 @@ def main():
     check_external(rows, man)
     nder = check_derived(rows)
     check_certificates(rows)
+    check_constructions(rows, man)
     check_builds_on(rows)
     check_disputed(rows, man)
     check_retracted(rows)
+    check_upgrades(rows)
     store = check_sizes()
     check_links()
     if "--base" in args:

@@ -54,7 +54,7 @@
  *                        (since 2026-11-02) runs nothing exact: classifies the rows, looks for a cyclic shift
  *                        symmetry (the smallest s dividing k, s < k, that certify_cyclic accepts), and prints
  *                        for every applicable method its work units and estimated time from the unit costs
- *                        measured in tools/cphf/README.md (constants UNIT_NS_* below), then the cheapest.
+ *                        measured in tools/cphf/README.md (function unit_ns below), then the cheapest.
  *   MODE auto [threads] [shard i m]
  *                        the estimate, then the cheapest exact method (cyclic s, fastprog, progression, fullfast or full),
  *                        printed as "auto: method ..." before its own output. The choice depends on the data only.
@@ -1126,19 +1126,18 @@ static int run_hash_mode(int threads, const int *must, int nmust, int affine) {
 }
 
 /* ---------- estimate and auto ----------
- * Unit costs measured on one core (tools/cphf/README.md, "Timing": q = 23, n = 8 rows, 6 progression rows and 2
- * random rows, 2026-11-01). Where the table gives two values the larger is used. They are a planning aid only:
- * the choice of method changes how long an exact check takes, never its answer. */
-#define UNIT_NS_FULL 52.0         /* mode full, per t-set (16 ns at t = 4, 52 ns at t = 5) */
-#define UNIT_NS_CYCLIC 52.0       /* mode cyclic, per representative t-set (the engine of mode full) */
-#define UNIT_NS_FULLFAST 92.0     /* mode fullfast, per C(k, t-1) (92 ns at t = 4, 75 ns at t = 5) */
-#define UNIT_NS_PROG 64.0         /* mode progression, per C(k-1, t-2) (64 ns at t = 5, 63 ns at t = 6) */
-/* mode fastprog, per C(k-1, t-2) unit (the same units as mode progression): 4.4 ns measured on one core of the
- * test VM at q = 23 for families of progression rows only (t = 5, k = 4000 and t = 6, k = 700 to 1000; 3.8 to
- * 6.4 ns over the benchmark families, 2026-11-01). A provisional constant: recalibrate it, and the others, from
- * the first real runs on the GitHub runners (the shard outputs give units and the job logs the times). */
-#define UNIT_NS_FASTPROG 4.4
-#define UNIT_NS_SHIFT 200.0       /* one shift tested in the other rows (README: about 5e10 tests in 1 to 3 hours) */
+ * Unit costs in ns on one core, fitted to timed runs of real and synthetic families (tools/cphf/README.md,
+ * "Unit costs", 2026-11-02; the same formulas as unit_ns() in tools/cphf_cert.py). They depend on n, q, k and t
+ * as the measurements showed. They are a planning aid only: the choice of method changes how long an exact
+ * check takes, never its answer. */
+static double unit_ns(const char *mode) {
+    double tt = t, kq = (double)k / ((double)q * q);
+    if (!strcmp(mode, "full") || !strcmp(mode, "cyclic")) return 0.15 * n * tt * tt;   /* per t-set */
+    if (!strcmp(mode, "fullfast")) return n * (11.0 + 28.0 / q);                       /* per C(k, t-1) */
+    if (!strcmp(mode, "progression")) return 10.5 * (tt - 3) * (tt - 3) + 4.6 * kq;    /* per C(k-1, t-2) */
+    if (!strcmp(mode, "fastprog")) return 0.8 * (tt - 3) * (tt - 3) + 1.1 * kq;        /* per C(k-1, t-2) */
+    return 140.0;                                         /* "shift": one shift tested in the other rows */
+}
 #define EST_SAMPLES 20000         /* random t-sets per progression row for its failure rate (fixed seed) */
 
 static double u2d(u128 x) { return (double)x; }
@@ -1172,8 +1171,8 @@ static void estimate(int threads, char *best, int *best_s) {
     else printf("symmetry: none (no s < k dividing k with col -> col+s certified in every row)\n");
     char b1[64]; double cs, bestcs = -1; strcpy(best, "full"); *best_s = 0;
     if (s) {
-        u128 u = cyclic_reps(s); cs = u2d(u) * UNIT_NS_CYCLIC * 1e-9; u128_str(u, b1);
-        printf("estimate cyclic %d units=%s unit_ns=%.0f core_seconds=%.4g\n", s, b1, UNIT_NS_CYCLIC, cs);
+        u128 u = cyclic_reps(s); cs = u2d(u) * unit_ns("cyclic") * 1e-9; u128_str(u, b1);
+        printf("estimate cyclic %d units=%s unit_ns=%.0f core_seconds=%.4g\n", s, b1, unit_ns("cyclic"), cs);
         bestcs = cs; strcpy(best, "cyclic"); *best_s = s;
     }
     if (np) {
@@ -1194,22 +1193,22 @@ static void estimate(int threads, char *best, int *best_s) {
         u128 u = binom(k - 1, t - 2); double sh = frac * u2d(binom(k, t));
         u128_str(u, b1);
         if (t >= 3 && k <= 65535) {
-            cs = u2d(u) * UNIT_NS_FASTPROG * 1e-9 + sh * UNIT_NS_SHIFT * 1e-9;
-            printf("estimate fastprog units=%s unit_ns=%.1f shift_tests=%.4g shift_ns=%.0f core_seconds=%.4g\n", b1, UNIT_NS_FASTPROG, sh, UNIT_NS_SHIFT, cs);
+            cs = u2d(u) * unit_ns("fastprog") * 1e-9 + sh * unit_ns("shift") * 1e-9;
+            printf("estimate fastprog units=%s unit_ns=%.1f shift_tests=%.4g shift_ns=%.0f core_seconds=%.4g\n", b1, unit_ns("fastprog"), sh, unit_ns("shift"), cs);
             if (bestcs < 0 || cs < bestcs) { bestcs = cs; strcpy(best, "fastprog"); }
         } else printf("estimate fastprog not applicable (%s)\n", t < 3 ? "t = 2: mode progression's code" : "k above 65535");
-        cs = u2d(u) * UNIT_NS_PROG * 1e-9 + sh * UNIT_NS_SHIFT * 1e-9;
-        printf("estimate progression units=%s unit_ns=%.0f shift_tests=%.4g shift_ns=%.0f core_seconds=%.4g\n", b1, UNIT_NS_PROG, sh, UNIT_NS_SHIFT, cs);
+        cs = u2d(u) * unit_ns("progression") * 1e-9 + sh * unit_ns("shift") * 1e-9;
+        printf("estimate progression units=%s unit_ns=%.0f shift_tests=%.4g shift_ns=%.0f core_seconds=%.4g\n", b1, unit_ns("progression"), sh, unit_ns("shift"), cs);
         if (bestcs < 0 || cs < bestcs) { bestcs = cs; strcpy(best, "progression"); }
     } else printf("estimate fastprog not applicable (no progression rows)\nestimate progression not applicable (no progression rows)\n");
     {
-        u128 u = binom(k, t - 1); cs = u2d(u) * UNIT_NS_FULLFAST * 1e-9; u128_str(u, b1);
-        printf("estimate fullfast units=%s unit_ns=%.0f core_seconds=%.4g\n", b1, UNIT_NS_FULLFAST, cs);
+        u128 u = binom(k, t - 1); cs = u2d(u) * unit_ns("fullfast") * 1e-9; u128_str(u, b1);
+        printf("estimate fullfast units=%s unit_ns=%.0f core_seconds=%.4g\n", b1, unit_ns("fullfast"), cs);
         if (bestcs < 0 || cs < bestcs) { bestcs = cs; strcpy(best, "fullfast"); }
     }
     {
-        u128 u = binom(k, t); cs = u2d(u) * UNIT_NS_FULL * 1e-9; u128_str(u, b1);
-        printf("estimate full units=%s unit_ns=%.0f core_seconds=%.4g\n", b1, UNIT_NS_FULL, cs);
+        u128 u = binom(k, t); cs = u2d(u) * unit_ns("full") * 1e-9; u128_str(u, b1);
+        printf("estimate full units=%s unit_ns=%.0f core_seconds=%.4g\n", b1, unit_ns("full"), cs);
         if (bestcs < 0 || cs < bestcs) { bestcs = cs; strcpy(best, "full"); }
     }
     int th = threads;

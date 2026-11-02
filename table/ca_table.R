@@ -27,13 +27,15 @@ row_identity <- function(tab) {
 ## VERIFIED row that a RETRACTED row names (same t, v, k, N, array_sha256
 ## and family_sha256). Mirrors counted() in ca_table.py, the one definition.
 ## how a VERIFIED row was checked, from its stamp: "direct",
-## "certificate" or "certificate + fusing" (NA for other tiers); mirrors
+## "certificate", "certificate + fusing" or "construction certificate" (NA for other tiers); mirrors
 ## check_method() in ca_table.py
 check_method <- function(tab) {
     cert <- grepl("^(repcheck(_pp)?|cphfcheck) ", tab$verify_stamp)
+    con <- grepl("^construction_cert ", tab$verify_stamp)
     ifelse(tab$tier != "VERIFIED", NA_character_,
-           ifelse(cert & grepl("fused", tab$verify_stamp), "certificate + fusing",
-                  ifelse(cert, "certificate", "direct")))
+           ifelse(con, "construction certificate",
+                  ifelse(cert & grepl("fused", tab$verify_stamp), "certificate + fusing",
+                         ifelse(cert, "certificate", "direct"))))
 }
 ## methods = NULL counts every VERIFIED row; for example
 ## methods = "direct" counts only arrays checked directly

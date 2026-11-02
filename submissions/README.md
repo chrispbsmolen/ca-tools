@@ -18,8 +18,10 @@ hyphens and underscores, for example `smith-t4-v3-2026-11`. It holds
 a file named `claims.csv` and the array files that file names.
 Nothing else in the repository should change in your pull request.
 This is the route for an array file of at most 50 MiB. The section
-"Which route to use" below lists the other two, a covering perfect hash
-family and an array kept in a public deposit.
+"Which route to use" below lists the others: a covering perfect hash
+family, an array kept in a public deposit, a construction certificate
+(`constructions.csv`), and a request to check a SCREENED entry exactly
+(`upgrade.csv`).
 
 `claims.csv` has exactly this header and one row per array:
 
@@ -236,13 +238,18 @@ the deposit. Anyone can fetch and confirm an external array with
   store or to check one t-set at a time.
 - Any other array larger than 50 MiB stays in a public deposit and is
   named in `external.csv` (above). The maintainer checks it.
-- An array built by a recursive construction with a construction
-  certificate (`../table/constructions/`, `../tools/CONSTRUCTION_CERT.md`,
-  for now Power CZ) is entered as an array by one of the routes above.
-  Construction certificates are checked and stored by the maintainer and
-  are not a submission route yet. A submission cannot use one in place
-  of the array. Describe the recipe in `construction` and
-  `source_detail`, and the maintainer may add the certificate.
+- An array built by a construction the table can check from its recipe
+  (Power CZ, fusing a symbol, the derived array, the direct product of
+  strength-2 arrays) can be submitted as its construction certificate,
+  with `constructions.csv` (section "Construction certificates" below).
+  The certificate is small, its check takes a fraction of a second, and
+  its ingredients may be arrays already in the table. The array is
+  stored as well when it fits the limits of this page.
+- An entry that is already in the table as SCREENED (an array screened
+  by any route above, or a family over the time budget) is checked
+  exactly when someone asks for it with `upgrade.csv` (section
+  "Upgrading a SCREENED entry" below). Anyone may ask, and the row keeps
+  its original credit.
 
 ## Certificates: covering perfect hash families
 
@@ -346,14 +353,72 @@ This runs the exact check unsharded and, when it passes, adds a VERIFIED
 row beside the SCREENED one in that copy of the table. The plan and
 shard steps (`--plan`, `--run` and `--results`) can also be run by hand
 on several machines. A pull request may only add files under
-`submissions/<slug>/`, so the new row reaches the repository through the
-maintainer. Open an issue or write to the maintainer with the report,
-and the maintainer runs the check again and commits the row.
+`submissions/<slug>/`, so a row made this way reaches the repository
+through the maintainer. Since 2026-11-02 the usual way is a request
+(`upgrade.csv`, section "Upgrading a SCREENED entry" below). The check
+then runs on GitHub after the merge, within the time budget above.
 
 An uncovered set of t columns found by a shard, by the screen or by the
 pull request check is a proof that the family is not a CPHF, and the
 claim fails. Anyone can rebuild an array from its family with
 `cphfcheck FILE t v expand OUT [affine]` and compare the hash.
+
+## Construction certificates (constructions.csv)
+
+A construction certificate records how an array is built from smaller
+arrays by a published construction, and `../tools/construction_cert.py`
+checks every hypothesis of the construction's theorem exactly and
+rebuilds the array. The format, the four constructions it knows
+(`powercz-1`, `fuse-1`, `derive-1` and `product-1`), the theorems and
+their proofs are in `../tools/CONSTRUCTION_CERT.md`. A submission holds
+`submissions/<slug>/constructions.csv`
+
+    t,v,k,N,file,source_detail,construction,builds_on,credit,notes
+
+with the fields of `claims.csv`, where `file` names a certificate (a
+`.json` file) in the same directory, and the certificates and their
+ingredient files. An ingredient is given inline in the certificate, as a
+file beside it (checked exhaustively), or by the `array_sha256` of a
+VERIFIED row of the table whose array is stored in `../table/arrays/`
+(read from there, checked against its hash, and trusted as verified).
+`builds_on` may not be empty. The reference of the construction's theorem
+(`power-cz2012`, `fuse-ckrs2010` for fusing, none for the derived array, which has no single source,
+`product-cmmssy2006` for the product) is added when it is missing. For
+example, an array that fuses one symbol of an array of the table is
+
+    t,v,k,N,file,source_detail,construction,builds_on,credit,notes
+    2,3,5,14,fuse.json,certificate fuse.json in this folder,"CKRS fusing of OA(16; 2, 5, 4)",fuse-ckrs2010,Jane Smith,
+
+with `fuse.json`
+
+    {"format": "construction-cert-1", "construction": "fuse-1", "t": 2, "v": 3,
+     "input": {"table": "<array_sha256 of the OA(16; 2, 5, 4) row>"},
+     "expected": {"N": 14, "k": 5, "array_sha256": "<the sha256 the checker prints>"}}
+
+`python3 tools/construction_cert.py fuse.json` prints N, k and the
+`array_sha256` to write in `expected`.
+
+On the pull request, `tools/check_constructions.py --light` (run by the
+same check as every submission) runs the certificate checker, compares
+t, v, k and N with the claim, rejects an array whose hash is already in
+the table, compares N with the best known size, and says how the array
+will be stored. When `ca_verify` can check the rebuilt array within two
+minutes it checks it too, as a cross-check of the certificate checker.
+After the merge, `.github/workflows/table-page.yml` runs the same check
+again with the tools of main, against the table at that moment, and
+enters the rows. Each row is VERIFIED, identified by the canonical
+sha256 of the rebuilt array, with the stamp
+`construction_cert <tool> <date> <machine> (<construction>, exact)`
+and notes that name the certificate and its ingredients. The certificate
+and its ingredient files are stored in `../table/constructions/<slug>/`
+and listed in `../table/constructions/CONSTRUCTIONS.csv`. The rebuilt
+array is stored in `../table/arrays/` when it is at most 50 MiB as text,
+as for `claims.csv`. A larger array is kept only as its certificate, which
+rebuilds it. If a claim fails, nothing of the submission is added and the
+report is kept as `NOT_APPLIED.md`.
+
+You can run the same check on your own machine with
+`python3 tools/check_constructions.py submissions/<slug> --light`.
 
 ## Large arrays: the screened status
 
@@ -362,13 +427,15 @@ GitHub-hosted runner with a 6-hour job limit. Each array gets a budget
 of 15 minutes of wall-clock time for the exhaustive check, then, if it
 is screened, 15 minutes for the screen and 10 minutes for counting its
 constant rows. A whole pull request gets 300 minutes. The check after
-the merge on main uses the same limits. The work of an exhaustive check
-grows like C(k, t) times v^t. When that number exceeds 5 x 10^10, or
-when an exhaustive check does not finish within its budget, the check
-screens the array instead of verifying it. (The threshold was 10^10
-until the faster `ca_verify` of 2026-11-02. Measured on that version,
-an array at the threshold takes at most about 5 minutes and usually
-well under one.)
+the merge on main uses the same limits. Before the exhaustive check,
+the tool predicts how long `ca_verify` will take from t, v, k and N
+(a cost model of the program, calibrated by timing it, with a safety
+factor of 2). When the prediction is more than 40 percent of the
+budget, or when an exhaustive check does not finish within its budget,
+the check screens the array instead of verifying it. (Until 2026-11-02
+the rule was a limit on C(k, t) times v^t. That number ignores N, and
+the time per unit of it varied 700-fold across the arrays timed for
+the model.)
 
 A screen picks 20 random sets of 30 columns, seeded from the array's
 own hash so anyone can repeat it, and verifies each of these
@@ -386,9 +453,95 @@ A screened array can be verified in full later on any machine with
 its optional `SHARD/NSHARDS` argument, and `tools/ca_shard_merge.py`
 combines the outputs into one verdict. Submitting the same array again
 does not work, because the check rejects an array whose hash is already
-in the table. Send the output to the maintainer instead (an issue or an
-email), and the maintainer checks it again and adds the VERIFIED row.
-The SCREENED row stays in the table, as `../table/README.md` describes.
+in the table. Since 2026-11-02 anyone can instead ask for the exact
+check with `upgrade.csv` (next section), and it runs on GitHub after the
+merge. An array beyond that budget still goes to the maintainer (an
+issue or an email with the output), who checks it again and adds the
+VERIFIED row. Either way the SCREENED row stays in the table, as
+`../table/README.md` describes.
+
+## Upgrading a SCREENED entry (upgrade.csv)
+
+A SCREENED row is evidence, not proof, and it does not count as best
+known. Anyone, not only its submitter, can ask for the exact check of
+SCREENED entries, with a pull request that adds one directory
+`submissions/<slug>/` holding only `upgrade.csv`:
+
+    kind,sha256,credit,notes
+
+`kind` is `array` or `family`. For `array`, `sha256` is the
+`array_sha256` of the SCREENED row, and the array must be stored in
+`../table/arrays/` or listed in `../table/EXTERNAL.csv` (a deposit). For
+`family`, `sha256` is the `family_sha256` of a SCREENED covering perfect
+hash family stored in `../table/certificates/`. (A SCREENED row given by a
+family is named by its family, not by its array.) `credit` names the
+person who asks, with a real name as for any submission (Rule 5), and
+`notes` is free text and may be empty. For example
+
+    kind,sha256,credit,notes
+    array,c3295291c39635bb044efd25c97ceb0e6b0476f85127f3771df5bbe2b329e9b6,Jane Smith,
+    family,c0c4ba8383449ed714b2900dc37c7d77fe1faec9231b386327efcae76b08b348,Jane Smith,
+
+(These two entries were upgraded before the route existed, so a request
+for them is refused, as below.) The file sits alone in its directory,
+without `claims.csv` or another route's file.
+
+On the pull request, `tools/check_upgrades.py --light` (run by the same
+check as every submission) confirms for every entry that the row exists,
+is SCREENED, is not retracted and has no VERIFIED row yet, that its array
+or family can be retrieved (the stored file must hash to the row's
+`array_sha256`), and prints the estimate of the exact check and what will
+happen on merge. It does not run the exact check. A run on a pull request uses the pull
+request's own copy of the tools, so its verdict is only a report (as
+under "Certificates").
+
+After the merge, `.github/workflows/certificate-check.yml` on main plans
+and runs the exact check with the tools of main, in shards on
+GitHub-hosted runners. An array is checked by `ca_verify` at its strength
+on every one of the C(k, t) column sets, split with `SHARD/NSHARDS`; each
+shard job fetches the array itself (from `table/arrays/` or from the
+deposit) and checks that its canonical form has the row's hash, and
+`tools/ca_shard_merge.py` combines the shards only when every shard is
+there once and each has checked exactly the number of column sets of its
+part, so that together they checked every column set once. A family is
+checked by the exact methods of `cphfcheck`, in shards, as under
+"Certificates". The budget is the one of certificates. The estimate
+is doubled, each entry may use at most 20 shards of at most 5 hours on 4
+cores, and the whole request shares 400 core-hours and 250 jobs, taken
+by its entries in the order of `upgrade.csv`. Nothing is sampled. Then
+`.github/workflows/table-page.yml` checks the result again against the
+table at that moment and, for each entry that passed, appends a VERIFIED
+row beside the SCREENED one. The new row has the same t, v, k, N,
+source, `source_detail`, `snapshot_id`, `array_sha256` and
+`family_sha256` as the SCREENED row, and its `construction` and
+`builds_on`. Its notes begin with the original credit (`credit: ...`, as
+in the SCREENED row), then say "exact check of the SCREENED row of DATE,
+requested in submissions/SLUG by CREDIT", how it was checked, and the
+comparison with the table at that moment. Its stamp is
+`ca_verify <commit> <date> github-actions` for an array (with
+"(exact, M shards)" when it was split), or `cphfcheck <tool> <date>
+github-actions (CPHF certificate, exact)` for a family.
+
+The array's MANIFEST status or EXTERNAL status changes from `screened`
+to what the check found, and a family is listed again in
+`../table/certificates/CERTIFICATES.csv` with its exact check. The
+SCREENED row stays.
+
+An entry over the budget, or whose shards did not all finish, stays
+SCREENED, and the report says so. The other entries of the request are
+entered. If no entry was entered, the report is kept as
+`submissions/<slug>/NOT_APPLIED.md`. An entry whose array the exact
+check finds not covering (or whose family is not a CPHF) fails the whole
+request: nothing is entered, the report with the uncovered combination is
+kept as `NOT_APPLIED.md`, and the maintainer decides whether the SCREENED
+row is retracted (`../table/README.md`, RETRACTED). A request that names
+an entry with a VERIFIED row, an unknown hash, a retracted row or a row
+of another tier is refused on the pull request and again on main.
+
+You can run the check on your own machine.
+`python3 tools/check_upgrades.py submissions/<slug> --light` is the
+pull request check, and the same command without `--light` runs the
+exact check, unsharded.
 
 Arrays with at most 30 columns are never screened: the screen would
 be the full check, so they get the full check.
@@ -437,11 +590,12 @@ write access to your fork.
 3. Certificates. A claim given by a certificate instead of a written
    array is accepted only for a certificate type that the table can
    check with its own independent tool. Today that is the covering
-   perfect hash families checked by `../tools/cphf/cphfcheck.c`, as
-   described above. Construction certificates (`../tools/construction_cert.py`,
-   for now Power CZ) are checked by the maintainer and are not yet
-   accepted in a submission. Other certificate types are declined until
-   such a tool exists.
+   perfect hash families checked by `../tools/cphf/cphfcheck.c` and,
+   since 2026-11-02, the construction certificates checked by
+   `../tools/construction_cert.py` (Power CZ, fusing a symbol, the
+   derived array and the direct product of strength-2 arrays), as
+   described above. Other certificate types are declined until such a
+   tool exists.
 4. Licence. By opening a pull request you confirm that you may release
    the arrays and that you license them under CC BY 4.0, as the arrays
    built by this project are. An array derived from someone else's
@@ -470,9 +624,12 @@ It prints the report and writes it, a JSON summary and the rows it
 would append to `check-<slug>/`. Nothing in `table/` changes unless
 you add `--apply`. Locally the per-array budget defaults to 20 minutes
 instead of the 15 of the workflows, and the threads to the number of
-cores of your machine instead of 2. The screen threshold is the same
-(5 x 10^10). The options `--budget-minutes`, `--screen-threshold` and
-`--threads` change the limits. For a certificate submission,
+cores of your machine instead of 2. The predicted time is compared
+with the budget in the same way, so a longer `--budget-minutes` or more
+`--threads` lets more arrays be checked in full. The options
+`--budget-minutes` and `--threads` change the limits, and
+`--screen-threshold` (deprecated, off by default) adds the old limit on
+C(k, t) times v^t. For a certificate submission,
 `python3 tools/check_certificates.py submissions/<slug> --light` runs
 the pull request check, and the same command without `--light` runs
 the exact check on your machine.

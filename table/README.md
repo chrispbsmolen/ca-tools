@@ -51,7 +51,11 @@ the array files and these documents agree.
   reproducible, readable by R's `read.table` and Python's `gzip` with
   nothing extra). Its MANIFEST hash is the hash of
   the uncompressed canonical text, and the self-test checks the
-  decompressed bytes against it. A submitted array file is at most
+  decompressed bytes against it. The MANIFEST `status` of a screened
+  array changes from `screened` to what the exact check found when a
+  VERIFIED row is added beside its SCREENED row (since 2026-11-02 by an
+  upgrade request, below under SCREENED), and `../tools/consistency.py`
+  requires that no array with a VERIFIED row is still `screened`. A submitted array file is at most
   50 MiB as text, and a larger array stays in a public deposit and is
   listed in `EXTERNAL.csv` (below, and `../submissions/README.md`,
   "Size limits"). The recipe and
@@ -108,12 +112,22 @@ the array files and these documents agree.
   The submission check uses it to flag a submission that is one of
   those arrays in disguise.
 - `constructions/` (since 2026-11-02) - construction certificates: the recipe of an array built by
-  a published recursive construction (for now Power CZ, Colbourn and Zhou 2012), with its small
-  ingredient arrays. `../tools/construction_cert.py` checks every hypothesis of the theorem
-  exactly, rebuilds the array and prints its canonical sha256, in a fraction of a second; see
-  `../tools/CONSTRUCTION_CERT.md`. The four certificates there prove arrays this project built,
-  which are also stored in `arrays/` and verified by `ca_verify`. They are made and checked by the
-  maintainer. No workflow runs them, and a submission cannot yet use one in place of an array.
+  a published construction (Power CZ, Colbourn and Zhou 2012; fusing a symbol and the derived
+  array, Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010; the direct product of strength-2
+  arrays), with its small ingredient arrays or the hashes of ingredient arrays of this table.
+  `../tools/construction_cert.py` checks every hypothesis of the theorem exactly, rebuilds the
+  array and prints its canonical sha256, in a fraction of a second; see
+  `../tools/CONSTRUCTION_CERT.md`. The four certificates in `constructions/powercz/` prove arrays
+  this project built, which are also stored in `arrays/` and verified by `ca_verify`. Since
+  2026-11-02 a certificate is also a submission route (`constructions.csv`,
+  `../submissions/README.md`). A certificate entered that way is stored in
+  `constructions/<slug>/` with its ingredient files and listed in `constructions/CONSTRUCTIONS.csv`
+  (file, t, v, k, N, construction, the certificate's sha256, array_sha256, the check, and the
+  stored array, if any). Its row is VERIFIED, identified by the array_sha256 of the rebuilt array
+  like every array row, with an empty family_sha256, and the array is stored in `arrays/` when it
+  is at most 50 MiB as text. A larger one is kept only as its certificate, which rebuilds it.
+  `../tools/consistency.py` rebuilds every listed certificate of at most 5 x 10^7 entries and
+  compares the hash.
 - `references.csv` (since 2026-10-31; ids since 2026-11-01) - the
   bibliography of construction methods: an `id` (for example
   `cphf-smc2006`), `keywords` (a case-insensitive regular expression
@@ -151,7 +165,10 @@ the array files and these documents agree.
   `arrays/` (too large for the repository): its SHA-256, parameters, size in
   bytes, location (https URL, or zip URL `::` member), status and the stamp of
   the check by `tools/external_array.py`. Each has a VERIFIED or SCREENED row
-  in `ca_table.csv` with the same hash.
+  in `ca_table.csv` with the same hash. The status is `verified` exactly when
+  a VERIFIED row has the hash, so an upgrade request that adds one (since
+  2026-11-02) also sets the status to `verified` and the stamp to that of
+  the exact check.
 - `VERIFICATION_LOG.md` - the record of the verification runs that
   produced the stamps.
 - `verify_pipeline.R` - the canonicalization, hashing, and
@@ -239,9 +256,16 @@ v symbols". `tier` is the evidence class:
   "(CPHF certificate, exact; array not hashed)" for an array of more than
   10^12 entries, whose `array_sha256` is then empty and whose
   `family_sha256` identifies it.
+  Since 2026-11-02 an array may also be given by a construction
+  certificate (`constructions/`, above), checked by
+  `../tools/construction_cert.py`; its stamp is
+  `construction_cert <tool> <date> <machine> (<construction>, exact)`,
+  the tool being the first twelve hex digits of the sha256 of that
+  program.
   Every VERIFIED row therefore has a check method, read from its stamp
   by `check_method()` in `ca_table.py`: "direct" (the array itself
-  checked exhaustively), "certificate", or "certificate + fusing". The
+  checked exhaustively), "certificate", "certificate + fusing", or
+  "construction certificate". The
   page shows it with each row, and the lookups can be limited to the
   methods a reader trusts (`counted(rows, methods=...)`,
   `counted_rows(tab, methods = ...)` in R; the default counts all).
@@ -266,6 +290,21 @@ v symbols". `tier` is the evidence class:
   on any machine (`python3 tools/check_certificates.py ... --apply`) adds
   the VERIFIED row beside it (the maintainer commits it, since a pull
   request may only add files under `submissions/<slug>/`).
+  Since 2026-11-02 anyone can ask for the exact check of SCREENED
+  entries with a request, `submissions/<slug>/upgrade.csv`
+  (`../submissions/README.md`, "Upgrading a SCREENED entry"). It runs on
+  GitHub after the merge (`../tools/check_upgrades.py`, `ca_verify` in
+  shards for an array, `cphfcheck` in shards for a family) within the time
+  budget of certificates, and each entry that passes gets a VERIFIED row
+  with the same t, v, k, N, `source_id`, `source_detail`, `snapshot_id`,
+  `array_sha256` and `family_sha256`, the same `construction` and
+  `builds_on`, notes that keep the original credit and say "exact check
+  of the SCREENED row of DATE, requested in submissions/SLUG by CREDIT",
+  and the stamp of the exact check (`ca_verify <commit> <date>
+  github-actions`, with "(exact, M shards)" when it was split, or
+  `cphfcheck ... (CPHF certificate, exact)`). `../tools/consistency.py`
+  requires such a row to match exactly one SCREENED row of that date and
+  to be the only VERIFIED row of its array.
 - `DISPUTED` (defined 2026-10-23; until then reserved, with no rows) -
   a CITED entry whose cited construction, as implemented and checked
   here, did not give a covering array at the recorded size. It is

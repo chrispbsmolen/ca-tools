@@ -695,7 +695,14 @@ int main(int argc, char **argv) {
         if (VT > (1LL << 40)) { fprintf(stderr, "v^t too large\n"); return 2; }
     }
     VT1 = VT / V;
-    if (VT1 > (1LL << 26)) { fprintf(stderr, "v^(t-1) too large for ca_verify2 (use ca_verify)\n"); return 2; }
+    if (VT1 > (1LL << 26)) {
+        /* the class tables hold v^(t-1) row sets per thread; no array of a size that can be
+           stored reaches this, since a covering array has at least v^t rows */
+        fprintf(stderr, "v^(t-1) = %lld is above 2^26, out of range for ca_verify "
+                "(a covering array of strength t over v symbols has at least v^t = %lld rows)\n",
+                VT1, VT);
+        return 2;
+    }
 
     /* ---- read the array (same tokenizer as ca_verify) ---- */
     FILE *f = fopen(path, "r");
