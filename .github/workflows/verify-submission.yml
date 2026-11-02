@@ -41,11 +41,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # GitHub-hosted runner: 2 cores, 6 hour job limit.
+  # GitHub-hosted runner for a public repository: 4 cores, 6 hour job limit. The check uses
+  # 2 threads (the budgets and the screen threshold were measured with 2).
   THREADS: "2"
   BUDGET_MINUTES: "15"          # per array
   TOTAL_BUDGET_MINUTES: "300"   # all submissions in the pull request
-  SCREEN_THRESHOLD: "1e10"      # C(k,t) * v^t above this: screen instead
+  SCREEN_THRESHOLD: "5e10"      # C(k,t) * v^t above this: screen instead (SCREEN_THRESHOLD in tools/check_submission.py; 1e10 before ca_verify v2)
   PR: ${{ github.event.pull_request.number }}
   HEAD_SHA: ${{ github.event.pull_request.head.sha }}
   BASE_SHA: ${{ github.event.pull_request.base.sha }}

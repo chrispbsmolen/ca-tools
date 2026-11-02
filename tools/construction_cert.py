@@ -23,7 +23,7 @@ claimed to cover. This program
   4. compares N, k and the sha256 with the certificate's expected values.
 
 It exits 0 only if every check passes. The format and the proof are in
-README_construction_cert.md. Standard library only.
+tools/CONSTRUCTION_CERT.md. Standard library only.
 
 Usage:
   construction_cert.py CERT.json [--write ARRAY.txt] [--quiet]

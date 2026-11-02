@@ -1,8 +1,9 @@
 /* ca_verify (version 2, 2026-11-02) - fast exact strength-t coverage checker for covering arrays.
  *
- * Drop-in replacement for ca_verify.c (same arguments, same stdout lines,
- * same exit codes, same input conventions, same list of example gaps),
- * typically two to three orders of magnitude faster on large arrays.
+ * Drop-in replacement for the first ca_verify.c, which it replaced in this
+ * file on 2026-11-02 (same arguments, same stdout lines, same exit codes,
+ * same input conventions, same list of example gaps), typically two to
+ * three orders of magnitude faster on large arrays.
  *
  * Verifies that an N x k array over v symbols covers every t-way interaction:
  * for every choice of t columns and every one of the v^t value tuples, some
@@ -27,7 +28,7 @@
  *                  gaps are not necessarily the lexicographically first.
  * Exit status: 0 = full coverage verified, 1 = coverage gaps found, 2 = error.
  *
- * Method (see RESEARCH.md): every t-set of columns is written uniquely as a
+ * Method (see tools/RESEARCH_ca_verify.md): every t-set of columns is written uniquely as a
  * (t-1)-set P (its t-1 smallest columns) plus its largest column d. For a
  * fixed P the rows are partitioned by their value tuple on P into v^(t-1)
  * classes. The t-set P+{d} covers tuple (s,u) iff some row of class s has
@@ -58,7 +59,7 @@
  * CA_VERIFY2_KERNEL=base disables the AVX2 clone. All paths give identical
  * output; the differential tests exercise each of them.
  *
- * Build: cc -O3 -pthread -o ca_verify2 ca_verify2.c
+ * Build: cc -O3 -pthread -o ca_verify ca_verify.c
  * On x86-64 the hot kernels are compiled twice (AVX2 and baseline) and the
  * AVX2 version is selected at run time when the CPU supports it; on other
  * architectures (e.g. Apple Silicon, NEON) the compiler's native vector

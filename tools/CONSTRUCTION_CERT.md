@@ -9,7 +9,7 @@ prints its sha256, so the table records exactly the array that was proved. Nothi
 
 Source: C. J. Colbourn and J. Zhou, Improving two recursive constructions for covering arrays,
 J. Stat. Theory Pract. 6 (2012) 30-47, doi:10.1080/15598608.2012.647489, Theorem 2.2 with
-Lemma 2.3 (statements as transcribed in `powercz_src/POWERCZ_NOTES.md`). The proof below is
+Lemma 2.3 (statements as transcribed in `r/livingtable/findings/POWERCZ_NOTES.md`). The proof below is
 written out in full and is what the checker implements; it does not rely on the paper beyond the
 idea.
 
@@ -118,7 +118,7 @@ A JSON file. Unknown keys and duplicate keys are rejected.
 * Columns are the coefficient tuples (c_0, ..., c_{e-1}) in lexicographic order with c_0 most
   significant (Python `itertools.product(range(q), repeat=e)`), after deleting the columns with a
   forbidden value; the polynomial is c_0 + c_1 x + ... + c_{e-1} x^{e-1}; point "inf" gives
-  c_{e-1}. This is exactly the convention of our assemble.py.
+  c_{e-1}. This is the convention of the build specs from which the four arrays were made.
 * `"type": "explicit"` instead gives the rows directly:
   `{"width": w, "values": [k symbols 0..w-1], "ingredient": name}` (no field).
 * `covers`: exactly one of `{"weights": [a, b]}` (v = 2: every weight a..b),
@@ -139,7 +139,11 @@ and the array sha256.
 
 Certificates in `table/constructions/powercz/` (with the five ingredient files they use), made from our
 build specs of the arrays (the construction run of 2026-10-31). The rebuilt sha256 equals the canonical sha256
-of the stored array (computed with `check_submission.canonical_of_file`) in all four cases:
+of the stored array (computed with `check_submission.canonical_of_file`) in all four cases.
+The arrays are stored in `table/arrays/` and verified by `ca_verify`, and their table rows name
+the certificate in `source_detail`. Construction certificates are made and checked by the
+maintainer. No workflow runs them, and a submission cannot yet use one in place of an array
+(`submissions/README.md`, "Which route to use").
 
 | array | rows of H (width 13 / 12) | rebuilt = stored canonical sha256 | check time |
 |---|---|---|---|
@@ -157,7 +161,8 @@ it: weights 1 and 3 are declared in 5 rows where 7 are needed.
 
 ## Tests
 
-`tests/test_construction_cert.py` (randomized, small parameters) and `tests/test_real_certs.py`
+`tools/tests_construction/test_construction_cert.py` (randomized, small parameters) and
+`tools/tests_construction/test_real_certs.py`
 (planted faults on the four real certificates). The randomized test reimplements independently
 of the checker the field arithmetic (multiplication by x with reduction, instead of tables), the
 Reed-Solomon family (direct power sums, instead of Horner), every hypothesis by its definition
@@ -240,7 +245,7 @@ accepted without them): a wrong field can only make the agreement check fail, an
 satisfies every hypothesis is covering and so contains symbol 0. They are kept as input
 validation and are caught at the reason level by their planted faults.
 
-Real certificates (`tests/test_real_certs.py`): the four pass and match the stored arrays (also
+Real certificates (`tools/tests_construction/test_real_certs.py`): the four pass and match the stored arrays (also
 byte for byte with `--write`); a duplicated point (agreement), weights 1 and 3 in 6 rows and
 weight 0 in no row (species), an over-claimed ingredient (quilting), wrong N, k, sha256, a
 changed forbidden value, a wrong ingredient hash and a duplicate JSON key are all rejected by the
@@ -253,11 +258,11 @@ Run times: randomized suite 2754 s (seed 20261101) and 2275 s (seed 777), both r
 2 cores; almost all of it is test-side generation and ca_verify, the checker itself took 31 s and
 57 s for all certificates. Commands:
 
-    python3 tests/test_construction_cert.py --cases 400 --seed 20261101
-    python3 tests/test_construction_cert.py --cases 300 --seed 777
-    python3 tests/test_real_certs.py
+    python3 tools/tests_construction/test_construction_cert.py --cases 400 --seed 20261101
+    python3 tools/tests_construction/test_construction_cert.py --cases 300 --seed 777
+    python3 tools/tests_construction/test_real_certs.py
 
-Outputs are in `tests/results/`.
+The outputs of these runs are not kept in the repository.
 
 ## Remarks on the theorem as used
 

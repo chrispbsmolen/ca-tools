@@ -1,5 +1,9 @@
 # Benchmarks: ca_verify2 against ca_verify
 
+Since 2026-11-02 the program called ca_verify2 here is `ca_verify.c` itself (version 2), and
+the program called ca_verify here is the first version, which it replaced. The names below are
+those of the time of writing.
+
 Machine: this VM, 2 vCPUs of an Intel Xeon at 2.1 GHz (AVX2 and AVX-512
 present; ca_verify2 uses its AVX2 kernel), 8 GB RAM, gcc 13.3, both tools
 built with `cc -O3 -pthread`. During all measurements the main session's

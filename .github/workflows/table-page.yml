@@ -44,11 +44,12 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # GitHub-hosted runner: 2 cores, 6 hour job limit.
+  # GitHub-hosted runner for a public repository: 4 cores, 6 hour job limit. The check uses
+  # 2 threads (the budgets and the screen threshold were measured with 2).
   THREADS: "2"
   BUDGET_MINUTES: "15"          # per array
   TOTAL_BUDGET_MINUTES: "300"   # all submissions in this run
-  SCREEN_THRESHOLD: "1e10"
+  SCREEN_THRESHOLD: "5e10"      # the same as verify-submission.yml and tools/check_submission.py
   GH_TOKEN: ${{ github.token }}
   BEFORE: ${{ github.event.before }}
 

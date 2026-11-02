@@ -26,12 +26,16 @@ ca_verify.c
     Since 2026-11-02 it decides all t-sets sharing their t-1 smallest columns
     at once with vector operations (exact; about 350 times faster on large
     binary strength-4 arrays, see tools/RESEARCH_ca_verify.md and
-    tools/BENCH_ca_verify.md), with the same arguments, output and exit codes;
-    an optional SHARD/NSHARDS argument splits the work (tools/ca_shard_merge.py).
+    tools/BENCH_ca_verify.md), with the same arguments, output and exit codes.
+    An optional SHARD/NSHARDS argument splits the work into parts that
+    can run on different machines, and tools/ca_shard_merge.py combines
+    their outputs into one verdict. The full usage is
+    ca_verify FILE t v [threads] [SHARD/NSHARDS] [--fail-fast].
 
 ca_verify.py
 :   The same checker in pure Python, no compiler needed. Slower; same
-    input format, same output, same exit codes.
+    input format, same output, same exit codes. It has no threads or
+    shards, and its arguments are FILE t v.
 
 ca_query.py
 :   Lookup and filtering over the Colbourn catalogue snapshot
@@ -49,14 +53,21 @@ colbourn_catalogue.csv
 
 Anyone can add an explicit covering array to the provenance table in
 table/ by pull request. A pull request adds one directory
-submissions/<slug>/ with a claims.csv and the array files; a GitHub
-Actions workflow verifies every array with ca_verify and posts a report
-on the pull request; when a passing pull request is merged, the table
-workflow on main checks it again against the current table and adds
-its rows. The report usually appears within a few minutes. A
-maintainer then reviews and merges, usually within a few days.
-Every row records the published work its construction builds on, so
-the table credits earlier authors and records new methods under the
+submissions/<slug>/ with a claims.csv and the array files. A GitHub
+Actions workflow verifies every array with ca_verify, or screens it on
+random column windows when it is too large to verify in the time
+budget, and posts a report on the pull request. When a passing pull
+request is merged, the table workflow on main checks it again against
+the current table and adds its rows. The report usually appears within
+a few minutes. A maintainer then reviews and merges, usually within a
+few days. Array files may be up to 50 MiB. An array given by a covering
+perfect hash family can be submitted as the family (certificates.csv),
+and is then checked exactly on GitHub after the merge, in shards. A
+larger array can stay in a public deposit and be named in external.csv,
+and the maintainer checks it. submissions/README.md says which route
+to use.
+Every new row records the published work its construction builds on
+(the builds_on field), so the table credits earlier authors and records new methods under the
 names of the people who found them. The
 format and the rules are in
 submissions/README.md. tools/check_submission.py is the check (also
@@ -127,9 +138,13 @@ deleting a row, flipping a single entry, and over-claiming strength (t=4 on
 a strength-3 array) are all detected and reported with example missing
 tuples.
 
-Speed on a small 2-core machine: a full scan of 2,118,760 column sets
-(t=5, k=50, v=2, N=150) takes 1.7 seconds. Verification of all 77
-of those arrays takes well under a second in total.
+Speed on a small 2-core machine, measured with the first version of
+ca_verify. A full scan of 2,118,760 column sets (t=5, k=50, v=2, N=150)
+takes 1.7 seconds, and verification of all 77 of those arrays takes
+well under a second in total. The version of 2026-11-02 is much faster
+on large arrays. A random binary 250 x 1000 array at strength 4
+(41,417,124,750 column sets) takes 52 seconds on 2 threads.
+tools/BENCH_ca_verify.md has the comparison.
 
 ## Why a fast verifier matters
 

@@ -1,5 +1,9 @@
 # Faster exact verification of explicit covering arrays
 
+Since 2026-11-02 the program called ca_verify2 here is `ca_verify.c` itself (version 2), and
+the program called ca_verify here is the first version, which it replaced. The names below are
+those of the time of writing.
+
 Problem. An N x k array A over {0..v-1} is a CA(N; t, k, v) iff for every
 t-set of columns every one of the v^t value tuples appears in some row. The
 reference tool `ca_verify.c` enumerates the C(k,t) column sets and, for

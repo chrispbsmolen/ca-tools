@@ -2,9 +2,8 @@
 """check_submission - verify a covering array submission against the table.
 
 A submission is a directory submissions/<slug>/ holding claims.csv
-(header t,v,k,N,file,source_detail,construction,credit,notes) and the
-array files it
-names. For every claim this script parses the array, checks its shape
+(header t,v,k,N,file,source_detail,construction,builds_on,credit,notes)
+and the array files it names. For every claim this script parses the array, checks its shape
 and symbols, canonicalizes it exactly as table/verify_pipeline.R does,
 hashes it, rejects duplicates, runs ca_verify at strength t under a
 wall-clock budget (or a column-window screen for very large checks),
@@ -76,7 +75,14 @@ MAX_SUBMISSION_BYTES = 200 * 1024 * 1024
 # Arrays above this size (canonical text) are stored in table/arrays gzip-compressed (CA_N_t_k_v.txt.gz,
 # gzip header time 0, so the file is reproducible); the MANIFEST hash stays the hash of the text.
 GZIP_ABOVE = int(os.environ.get("CA_GZIP_ABOVE", 1024 * 1024))
-CA_VERIFY_MAX_LINE = 65000   # ca_verify reads lines into a 64 KiB buffer
+# Screen instead of the exhaustive check when C(k,t) * v^t is above this. 1e10 was set for the
+# first ca_verify; ca_verify v2 (2026-11-02) is far faster, and on a 2-thread run the slowest
+# kinds of array measured (small k, strength 5 and 6) take about 6e-9 s per unit of C(k,t) * v^t,
+# so an array at 5e10 needs at most about 5 minutes, a third of the 15-minute budget per array of
+# the workflows (measured 2026-11-02 on random arrays, 2 threads, AVX2). The workflows pass the same
+# value (SCREEN_THRESHOLD in verify-submission.yml and table-page.yml).
+SCREEN_THRESHOLD = 5e10
+CA_VERIFY_MAX_LINE = 65000   # set for the first ca_verify (64 KiB line buffer); v2 reads lines of any length
 CA_VERIFY_MAX_V = 127        # ca_verify stores symbols as int8
 
 
@@ -960,7 +966,7 @@ def main(argv=None):
                     help="wall-clock budget per array (default 20)")
     ap.add_argument("--total-budget-minutes", type=float, default=None,
                     help="wall-clock budget for the whole submission")
-    ap.add_argument("--screen-threshold", type=float, default=1e10,
+    ap.add_argument("--screen-threshold", type=float, default=SCREEN_THRESHOLD,
                     help="screen instead of full check when C(k,t)*v^t exceeds this")
     ap.add_argument("--screen-windows", type=int, default=20)
     ap.add_argument("--constant-rows-minutes", type=float, default=10.0,

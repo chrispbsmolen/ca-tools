@@ -4,7 +4,8 @@ This directory is how anyone adds an explicit covering array to the
 provenance table in `table/`. You open a pull request, the repository
 checks your arrays itself and reports on the pull request, and when
 it is merged the table gains the rows that record them, with your
-credit. No maintainer has to look at the arrays for that to happen. The current table is
+credit. A maintainer reviews and merges the pull request, but nobody
+has to check the arrays by hand for them to enter. The current table is
 published as a web page from `docs/index.html` (GitHub Pages, served
 from the `docs/` folder of `main` and regenerated on every push to
 `main`).
@@ -16,6 +17,9 @@ slug is a short name of your choosing made of letters, digits, dots,
 hyphens and underscores, for example `smith-t4-v3-2026-11`. It holds
 a file named `claims.csv` and the array files that file names.
 Nothing else in the repository should change in your pull request.
+This is the route for an array file of at most 50 MiB. The section
+"Which route to use" below lists the other two, a covering perfect hash
+family and an array kept in a public deposit.
 
 `claims.csv` has exactly this header and one row per array:
 
@@ -37,14 +41,21 @@ needs in order to know how the array can be used as an ingredient
 (constant rows, how it splits). Write `unknown` only if you cannot
 say. `builds_on` names the published work the array rests on. List
 the id of every method used, from `../table/references.csv`, separated
-by semicolons (for example `cphf-smc2006;fuse-ckrs2010`). If a method
-you used is not there, name it in your pull request and it will be
-added. If the construction is your own, write `new` followed by a link
-to where it is described, such as a paper, preprint or code repository
-(`new https://arxiv.org/abs/...`, `new doi:...`). A new method can be
-combined with known ones (`new https://...;fuse-ckrs2010`). The check
-suggests ids from your `construction` text, and every `new` entry is
-confirmed by the maintainer before the merge. This field is how the
+by semicolons (for example `cphf-smc2006;fuse-ckrs2010`). An id that
+is not in that file fails the claim, and so does an empty field. If a
+method you used is not there, name it in your pull request. The
+maintainer adds it to `references.csv`, and the claim passes on your
+next push. If the construction is your own, write `new` followed
+by a link to where it is described, such as a paper, preprint or code
+repository. The link starts with `https://`, `http://`, `doi:` or
+`arXiv:` (`new https://arxiv.org/abs/...`, `new doi:...`). A new method
+can be combined with known ones (`new https://...;fuse-ckrs2010`). The
+check suggests ids from your `construction` text and notes any it finds
+there that you did not list, and every `new` entry is confirmed by the
+maintainer before the merge. A `claims.csv` without the `builds_on`
+column fails, except for the submissions opened before the column
+existed (2026-11-01), which are listed in `BUILDS_ON_EXEMPT.txt` and
+whose field the maintainer fills in. This field is how the
 table gives credit. Each row lists the work it builds on, so anyone
 who uses an array also sees, and can cite, the papers behind it.
 `credit` is the person, group or paper to be credited. `notes`
@@ -104,15 +115,20 @@ computes the SHA-256 of that text. The hash is the array's identity:
 an array whose hash is already in the table is a duplicate and is
 rejected, however it was formatted. The check then runs `ca_verify`
 at strength t on the canonical array and looks up the current best
-known N.
+known N. An array whose estimated work is too large for the runner
+is screened instead (below, "Large arrays: the screened status").
 
 The check posts its report as a comment on the pull request. The
 report gives a verdict for every claim, the reasons for any failure,
 the exact uncovered combination (columns and values) if the array is
 not covering, and timings. The report usually appears within a few
-minutes of opening the pull request. A maintainer then reviews and
-merges, usually within a few days, and the table updates on its own
-after the merge.
+minutes of opening the pull request. A large array can take up to
+about 40 minutes, the sum of its time budgets (below), and a whole
+pull request at most about 5 hours.
+If this is your first pull request to the repository, GitHub holds
+the check until a maintainer approves the run. A maintainer then
+reviews and merges, usually within a few days, and the table updates
+on its own after the merge.
 
 There are two outcomes. If every claim passes, the check passes and
 the comment says so. Nothing is written to your branch. When the pull
@@ -158,27 +174,31 @@ those parameters.
 An array file may be at most 50 MiB, and the files of one submission
 together at most 200 MiB. A file over the first limit fails its claim
 before it is read, and a submission over the second is refused before
-any claim is checked. The report states the size.
+any claim is checked. The report states the size. The file is
+submitted as plain text. The check does not read a compressed file.
 
 The limits come from storage. GitHub refuses any file over 100 MiB,
 warns above 50 MiB, and recommends keeping a repository under 1 GB,
-and the table keeps a copy of every accepted array. For scale, the
+and the table keeps a copy of every accepted array. Since 2026-11-01
+an accepted array larger than 1 MiB as text is stored in `table/arrays/`
+compressed with gzip (`CA_N_t_k_v.txt.gz`, rule in `../table/README.md`),
+and its hash stays the hash of the text. This changes nothing for the
+submitter, whose limit is still 50 MiB of plain text. For scale, the
 largest arrays stored as plain text, CA(1078; 2, 8000, 19) and
-Bergeron's CA(20216; 3, 401, 19) and its two neighbors, are 18 to 20
-MiB each as text. One array, CA(1870; 2, 17576, 25), is 82 MiB as text
-and is stored gzip-compressed by the maintainer under the rule in
-`../table/README.md`; a submitted file stays within the limits above.
-Array text compresses well, so git stores the whole repository, those
-files included, in far less than its size as text.
+Bergeron's CA(20216; 3, 401, 19) and its two neighbors, entered before
+that rule and are 18 to 20 MiB each. CA(1870; 2, 17576, 25) is 82 MiB as
+text and was stored gzip-compressed by the maintainer. Array text
+compresses well, so git stores the whole repository, those files
+included, in far less than its size as text.
 
 GitHub's web page accepts uploads only up to 25 MiB per file, so an
 array file larger than that has to be added with git from your own
 machine.
 
 An array too large for these limits can still enter the table. It stays
-in a public deposit (a Zenodo record, or a release of this repository),
-and the submission names it in `submissions/<slug>/external.csv`
-instead of adding the file:
+in a public deposit, a Zenodo record or a GitHub release (the location
+must be on zenodo.org or github.com), and the submission names it in
+`submissions/<slug>/external.csv` instead of adding the file:
 
     t,v,k,N,location,sha256,source_detail,construction,builds_on,credit,notes
 
@@ -190,17 +210,39 @@ spaces, `NA` for don't-care, a line feed after every row), the same
 hash the check reports for an ordinary submission. The other fields are
 as in `claims.csv`.
 
-The pull request check does not download these. A maintainer runs
-`python3 tools/external_array.py submissions/<slug>` on a larger
-machine. It downloads each file, rebuilds the canonical form as a
-stream, compares the hash, runs `ca_verify` at strength t (in full
-within the time budget, otherwise on the same deterministic column
-windows as the pull request check, which gives SCREENED), compares the
-size with the table, and with `--apply` adds the rows and an entry in
-`table/EXTERNAL.csv`. The table then names the exact array, where it is
+The pull request check does not download these. It reads
+`external.csv` only to say that the maintainer will check it. A
+maintainer runs `python3 tools/external_array.py submissions/<slug>`
+on a larger machine, usually within a few days, and posts the result
+on the pull request. It downloads each file, rebuilds the canonical
+form as a stream, compares the hash, runs `ca_verify` at strength t (in
+full within its budget of 60 minutes per array, otherwise on the same
+deterministic column windows as the pull request check, which gives
+SCREENED), compares the size with the table, and with `--apply` adds
+the rows and an entry in `table/EXTERNAL.csv`. The table then names the exact array, where it is
 and how it was checked, without holding a copy, and the page links to
 the deposit. Anyone can fetch and confirm an external array with
 `python3 tools/external_array.py --fetch LOCATION SHA256 OUT`.
+
+## Which route to use
+
+- An array file of at most 50 MiB as plain text goes in the pull
+  request with `claims.csv` (above). The check verifies it there, or
+  screens it if it is too large to verify in the time budget.
+- An array that a covering perfect hash family gives goes in as the
+  family, with `certificates.csv` (next section), whatever the size of
+  the array. The family files are small, and the exact check runs on
+  GitHub after the merge. This is the route for arrays too large to
+  store or to check one t-set at a time.
+- Any other array larger than 50 MiB stays in a public deposit and is
+  named in `external.csv` (above). The maintainer checks it.
+- An array built by a recursive construction with a construction
+  certificate (`../table/constructions/`, `../tools/CONSTRUCTION_CERT.md`,
+  for now Power CZ) is entered as an array by one of the routes above.
+  Construction certificates are checked and stored by the maintainer and
+  are not a submission route yet. A submission cannot use one in place
+  of the array. Describe the recipe in `construction` and
+  `source_detail`, and the maintainer may add the certificate.
 
 ## Certificates: covering perfect hash families
 
@@ -209,6 +251,10 @@ submitted as the family instead of the array. The submission holds
 `submissions/<slug>/certificates.csv`
 
     t,v,k,N,file,mode,source_detail,construction,builds_on,credit,notes
+
+The fields are as in `claims.csv`. `builds_on` always includes
+`cphf-smc2006`, and the check adds it if you leave it out, but the field
+may not be empty.
 
 and the family files it names, each at most 50 MiB: n lines of k
 integers, each integer a vector of GF(v)^t written in base v, most
@@ -265,46 +311,64 @@ What happens:
    submissions merged close together never overwrite each other. The
    family goes to `table/certificates/`, is listed in
    `table/certificates/CERTIFICATES.csv` with its family_sha256 and its
-   expansion rule, and the array enters as a VERIFIED row whose stamp
-   begins `cphfcheck`. The result is posted on the pull request. If a
+   expansion rule (`smc-1`, or `smc-1-affine` for the affine rule), and
+   the array enters as a VERIFIED row whose stamp begins `cphfcheck`, or
+   as SCREENED when the exact check was over the budget (below). The result is posted on the pull request. If a
    claim fails, nothing of the submission is added, and the report is kept
    as `submissions/<slug>/NOT_APPLIED.md`.
 
 The time budget. GitHub's hosted runners are free for public
-repositories: a job may run up to 6 hours on 4 cores, and up to 20 jobs
-run at once. The exact check of a submission runs on GitHub when its
-estimated work, doubled as a safety margin, fits in at most 20 shards of
-at most 5 hours each on 4 cores for each family, and the whole submission
-fits in about 400 core-hours of doubled estimate and 250 jobs (a small
+repositories. A job may run up to 6 hours on 4 cores, and up to 20 jobs
+run at once. The checker estimates the work of the cheapest exact
+method for each family and doubles it as a safety margin. A family is
+checked exactly on GitHub when that doubled estimate fits in at most 20
+shards of at most 5 hours each on 4 cores, which is 400 core-hours. The
+whole submission shares one budget of the same 400 core-hours and 250
+jobs, taken by its families in the order of `certificates.csv`. A small
 family takes only the time it needs, so a submission of many small
-families is checked in full; before 2026-11-02 each family used up a whole
-shard of 20, and families after the 20th were screened). Within the budget the rows enter as VERIFIED. Over the budget,
-or when a shard does not finish in time, the family is screened instead
-(20 random windows of 30 columns, each checked exactly, and 1,000,000
-random t-sets, all seeded from family_sha256, the conventions of the
-screen of large arrays below) and enters as SCREENED: recorded, with its
-identity, but not counted as best known. Anyone can check it exactly later
-on any machine with Python 3 and a C compiler (the script builds
-`cphfcheck` itself):
+families is checked in full. (Before 2026-11-02 each family used up a
+whole shard of 20, and families after the 20th were screened.)
+
+Within the budget the rows enter as VERIFIED. A family over the budget,
+or one whose shards do not all finish, is screened instead (20 random
+windows of 30 columns, each checked exactly, and 1,000,000 random
+t-sets, all seeded from family_sha256, the conventions of the screen of
+large arrays below). It enters as SCREENED, recorded with its identity
+but not counted as best known. The pull request check prints the plan,
+so you know before the merge which families will be screened.
+
+A SCREENED family can be checked exactly later on any machine with
+Python 3 and a C compiler (the script builds `cphfcheck` itself):
 
     python3 tools/check_certificates.py submissions/<slug> --threads N --apply
 
-which runs the exact check unsharded and adds a VERIFIED row beside the
-SCREENED one (the plan and shard steps, `--plan`, `--run` and `--results`,
-can also be run by hand on several machines). An uncovered set of t
-columns found by a shard, by the screen or by the pull request check is a
-proof that the family is not a CPHF, and the claim fails. Anyone can
-rebuild an array from its family with
+This runs the exact check unsharded and, when it passes, adds a VERIFIED
+row beside the SCREENED one in that copy of the table. The plan and
+shard steps (`--plan`, `--run` and `--results`) can also be run by hand
+on several machines. A pull request may only add files under
+`submissions/<slug>/`, so the new row reaches the repository through the
+maintainer. Open an issue or write to the maintainer with the report,
+and the maintainer runs the check again and commits the row.
+
+An uncovered set of t columns found by a shard, by the screen or by the
+pull request check is a proof that the family is not a CPHF, and the
+claim fails. Anyone can rebuild an array from its family with
 `cphfcheck FILE t v expand OUT [affine]` and compare the hash.
 
 ## Large arrays: the screened status
 
-The pull request check runs on a GitHub-hosted runner with 2 cores
-and a 6-hour job limit. Each array gets a budget of 15 minutes of
-wall-clock time, and a whole pull request gets 300 minutes. The work
-of an exhaustive check grows like C(k, t) times v^t; when that number
-exceeds 10^10, or when an exhaustive check does not finish within
-its budget, the check screens the array instead of verifying it.
+The pull request check runs `ca_verify` with 2 threads on a
+GitHub-hosted runner with a 6-hour job limit. Each array gets a budget
+of 15 minutes of wall-clock time for the exhaustive check, then, if it
+is screened, 15 minutes for the screen and 10 minutes for counting its
+constant rows. A whole pull request gets 300 minutes. The check after
+the merge on main uses the same limits. The work of an exhaustive check
+grows like C(k, t) times v^t. When that number exceeds 5 x 10^10, or
+when an exhaustive check does not finish within its budget, the check
+screens the array instead of verifying it. (The threshold was 10^10
+until the faster `ca_verify` of 2026-11-02. Measured on that version,
+an array at the threshold takes at most about 5 minutes and usually
+well under one.)
 
 A screen picks 20 random sets of 30 columns, seeded from the array's
 own hash so anyone can repeat it, and verifies each of these
@@ -313,11 +377,18 @@ uncovered combination the array is not a covering array, and the
 claim fails with that combination as proof. If all of them pass, the
 claim is recorded with tier `SCREENED` and MANIFEST status
 `screened`, never `VERIFIED`. A screened row is evidence, not proof,
-and it does not count as the best known value. Anyone with a bigger
-machine can verify the array in full later with `ca_verify` and
-record that as a new VERIFIED row. If even the screen cannot finish
-within the budget, the claim fails; such arrays need a maintainer
-with more computing power.
+and it does not count as the best known value. If even the screen
+cannot finish within the budget, the claim fails, and such an array
+needs a maintainer with more computing power.
+
+A screened array can be verified in full later on any machine with
+`ca_verify`. The work can be split over several runs or machines with
+its optional `SHARD/NSHARDS` argument, and `tools/ca_shard_merge.py`
+combines the outputs into one verdict. Submitting the same array again
+does not work, because the check rejects an array whose hash is already
+in the table. Send the output to the maintainer instead (an issue or an
+email), and the maintainer checks it again and adds the VERIFIED row.
+The SCREENED row stays in the table, as `../table/README.md` describes.
 
 Arrays with at most 30 columns are never screened: the screen would
 be the full check, so they get the full check.
@@ -337,9 +408,10 @@ slug, and your notes. The MANIFEST row also records the array's
 constant rows, the largest number of rows that symbol permutations
 within columns make constant, computed by `tools/constant_rows.c`
 (the computation of `cafast::maxconstant_c`); the report states it.
-The canonical file is named `CA_N_t_k_v.txt`;
-if that name is already taken by a different array, the first eight
-hex digits of the hash are appended, as in `CA_9_2_4_3_9133df95.txt`.
+The canonical file is named `CA_N_t_k_v.txt`, or `CA_N_t_k_v.txt.gz`
+when it is larger than 1 MiB as text. If that name is already taken
+by a different array, the first eight hex digits of the hash are
+appended, as in `CA_9_2_4_3_9133df95.txt`.
 
 ## Pull requests from forks
 
@@ -366,8 +438,10 @@ write access to your fork.
    array is accepted only for a certificate type that the table can
    check with its own independent tool. Today that is the covering
    perfect hash families checked by `../tools/cphf/cphfcheck.c`, as
-   described above; other certificate types are declined until such a
-   tool exists.
+   described above. Construction certificates (`../tools/construction_cert.py`,
+   for now Power CZ) are checked by the maintainer and are not yet
+   accepted in a submission. Other certificate types are declined until
+   such a tool exists.
 4. Licence. By opening a pull request you confirm that you may release
    the arrays and that you license them under CC BY 4.0, as the arrays
    built by this project are. An array derived from someone else's
@@ -394,6 +468,11 @@ compiler:
 
 It prints the report and writes it, a JSON summary and the rows it
 would append to `check-<slug>/`. Nothing in `table/` changes unless
-you add `--apply`. Locally the per-array budget defaults to 20
-minutes; `--budget-minutes`, `--screen-threshold` and `--threads`
-change the limits.
+you add `--apply`. Locally the per-array budget defaults to 20 minutes
+instead of the 15 of the workflows, and the threads to the number of
+cores of your machine instead of 2. The screen threshold is the same
+(5 x 10^10). The options `--budget-minutes`, `--screen-threshold` and
+`--threads` change the limits. For a certificate submission,
+`python3 tools/check_certificates.py submissions/<slug> --light` runs
+the pull request check, and the same command without `--light` runs
+the exact check on your machine.

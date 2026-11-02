@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Combine the outputs of sharded ca_verify2 runs into one verdict.
+"""Combine the outputs of sharded ca_verify runs (version 2, SHARD/NSHARDS) into one verdict.
 
 Usage: ca_shard_merge.py t k OUT0 OUT1 ... OUTn-1
 
-Each OUTi is the stdout of `ca_verify2 FILE t v threads i/n`. The shards
+Each OUTi is the stdout of `ca_verify FILE t v threads i/n`. The shards
 partition the C(k,t) column sets (shard i checks the sets whose smallest
 column is congruent to i mod n), so the merge is a sum: it checks that every
 shard 0..n-1 is present exactly once, that the column-set counts add up to

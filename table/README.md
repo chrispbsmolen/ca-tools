@@ -49,10 +49,12 @@ the array files and these documents agree.
   2026-11-01; before that, larger than 50 MiB) is stored compressed with
   gzip (`CA_N_t_k_v.txt.gz`, gzip header time 0 so the file is
   reproducible, readable by R's `read.table` and Python's `gzip` with
-  nothing extra) when the compressed file is at most 50 MiB; its MANIFEST hash is the hash of
+  nothing extra). Its MANIFEST hash is the hash of
   the uncompressed canonical text, and the self-test checks the
-  decompressed bytes against it. A larger one goes by the archive
-  route of `../submissions/README.md` ("Size limits"). The recipe and
+  decompressed bytes against it. A submitted array file is at most
+  50 MiB as text, and a larger array stays in a public deposit and is
+  listed in `EXTERNAL.csv` (below, and `../submissions/README.md`,
+  "Size limits"). The recipe and
   the hash are always in the row. An array is stored when it equals or
   beats the best known size at entry, when it is the verified size
   beside a disputed entry, or when it came through the submission
@@ -109,7 +111,9 @@ the array files and these documents agree.
   a published recursive construction (for now Power CZ, Colbourn and Zhou 2012), with its small
   ingredient arrays. `../tools/construction_cert.py` checks every hypothesis of the theorem
   exactly, rebuilds the array and prints its canonical sha256, in a fraction of a second; see
-  `../tools/CONSTRUCTION_CERT.md`.
+  `../tools/CONSTRUCTION_CERT.md`. The four certificates there prove arrays this project built,
+  which are also stored in `arrays/` and verified by `ca_verify`. They are made and checked by the
+  maintainer. No workflow runs them, and a submission cannot yet use one in place of an array.
 - `references.csv` (since 2026-10-31; ids since 2026-11-01) - the
   bibliography of construction methods: an `id` (for example
   `cphf-smc2006`), `keywords` (a case-insensitive regular expression
@@ -253,12 +257,15 @@ v symbols". `tier` is the evidence class:
   random column windows instead of verified in full (see
   `../submissions/README.md`). Listed but not counted as best known;
   when the array is later verified in full it gets a new VERIFIED row
-  (below). Since 2026-11-02 also a covering perfect hash family whose
+  (below), entered by the maintainer, since the submission check
+  rejects an array whose hash is already in the table.
+  Since 2026-11-02 also a covering perfect hash family whose
   exact check is over the time budget of the public runners: screened on
   random column windows of the family and random sets of t columns, its
   stamp ends "(CPHF certificate, screened)", and an exact check run later
   on any machine (`python3 tools/check_certificates.py ... --apply`) adds
-  the VERIFIED row.
+  the VERIFIED row beside it (the maintainer commits it, since a pull
+  request may only add files under `submissions/<slug>/`).
 - `DISPUTED` (defined 2026-10-23; until then reserved, with no rows) -
   a CITED entry whose cited construction, as implemented and checked
   here, did not give a covering array at the recorded size. It is
@@ -545,8 +552,9 @@ the column `family_sha256` of that file was). To add a claim with evidence:
    the run red and GitHub sends an email.
 
 Since 2026-10-18 the usual route is the submission check
-(`../submissions/README.md`), which does steps 2 to 4 on a pull
-request and fills `construction` from the claim.
+(`../submissions/README.md`), which does steps 2 and 3 on a pull
+request and step 4 after the merge (`table-page.yml` on main), and fills
+`construction` and `builds_on` from the claim.
 
 ### Admissible sources
 

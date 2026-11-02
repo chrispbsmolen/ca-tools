@@ -254,7 +254,7 @@ def main(argv=None):
     ap.add_argument("--ca-verify", default=os.path.join(cs.REPO, "ca_verify"))
     ap.add_argument("--threads", type=int, default=max(1, (os.cpu_count() or 2) - 2))
     ap.add_argument("--budget-minutes", type=float, default=60.0)
-    ap.add_argument("--screen-threshold", type=float, default=1e10)
+    ap.add_argument("--screen-threshold", type=float, default=cs.SCREEN_THRESHOLD)
     ap.add_argument("--windows", type=int, default=20)
     ap.add_argument("--window", type=int, default=30)
     ap.add_argument("--apply", action="store_true")
