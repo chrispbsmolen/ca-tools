@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """construction_cert - check a construction certificate and rebuild the array it proves.
 
-A construction certificate records the recipe of a covering array instead of the array. Eight
+A construction certificate records the recipe of a covering array instead of the array. Nine
 constructions are known (tools/CONSTRUCTION_CERT.md states each theorem, its hypotheses and the
 proof the checker follows):
 
@@ -26,6 +26,11 @@ proof the checker follows):
              general theorem 5.2.6 with the redundant rows of the last block removed: x copies of the
              CA(2q^3 - 1; 3, q^2+q+1, q) of a primitive cubic and its inverse, shifted by a difference
              covering array, P blocks, and a last block; the 2-, q-, q^2- and (q^2-q+1)-plications
+  product-ctj-1
+             Colbourn and Torres-Jimenez 2013, Corollary 4.3: the direct product of a CA(N1; 2, k1, v)
+             and a CA(N2; 2, k2, v) with a set S of rows of the first and a set T of rows of the
+             second made constant with |S| + |T| <= v distinct symbols, those rows left out: a
+             CA(N1 + N2 - |S| - |T|; 2, k1 k2, v); an ingredient may itself be such a product
 
 An ingredient is given inline ("rows"), as a file beside the certificate ("file" and its "sha256"),
 both checked exhaustively here, or by the array_sha256 of a counted VERIFIED row of the table
@@ -71,7 +76,7 @@ import time
 
 FORMAT = "construction-cert-1"
 CONSTRUCTIONS = ("powercz-1", "powercz-2", "fuse-1", "derive-1", "product-1", "sms51-1", "sms65-1",
-                 "sm-xplication-1")
+                 "sm-xplication-1", "product-ctj-1")
 ARRAY_KINDS = ("fuse-1", "derive-1", "product-1")
 SMS_KINDS = ("sms51-1", "sms65-1")
 # the reference id (table/references.csv) of the theorem of each construction, for builds_on
@@ -79,7 +84,7 @@ SMS_KINDS = ("sms51-1", "sms65-1")
 # references.csv, so the submitter's builds_on is kept as given and nothing is added)
 REFERENCE = {"powercz-1": "power-cz2012", "powercz-2": "power-cz2012", "fuse-1": "fuse-ckrs2010",
              "derive-1": None, "product-1": "product-cmmssy2006", "sms51-1": "mobius-sms2025",
-             "sms65-1": "mobius-sms2025", "sm-xplication-1": "lfsr-sm2025"}
+             "sms65-1": "mobius-sms2025", "sm-xplication-1": "lfsr-sm2025", "product-ctj-1": "pca-ct2013"}
 REPO_TABLE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "table")
 # the exhaustive check of an inline or file ingredient here costs about C(k, t) * N entry reads in
 # Python; above this an ingredient must be entered in the table first and named by its hash
@@ -329,6 +334,8 @@ def load_certificate(path, table_dir=None):
         return load_sms(cert, raw, path, table_dir)
     if isinstance(cert, dict) and cert.get("construction") == SMX_KIND:
         return load_smx(cert, raw, path, table_dir)
+    if isinstance(cert, dict) and cert.get("construction") == CTJ_KIND:
+        return load_ctj(cert, raw, path, table_dir)
     cz2 = isinstance(cert, dict) and cert.get("construction") == "powercz-2"
     only_keys(cert, ("format", "construction", "t", "v", "e", "field", "family", "ingredients",
                      "expected", "notes") + (("enumerate_weights",) if cz2 else ()), "certificate")
@@ -2371,6 +2378,251 @@ POST_CHECKS = [("symbols", check_symbols), ("N", check_N), ("k", check_k), ("sha
 
 
 # ---------------------------------------------------------------------------
+# the product of Colbourn and Torres-Jimenez 2013 (Corollary 4.3): product-ctj-1. tools/CONSTRUCTION_CERT.md
+# states the theorem and the proof these checks follow.
+# ---------------------------------------------------------------------------
+
+CTJ_KIND = "product-ctj-1"
+CTJ_MAX_DEPTH = 8             # nesting depth of products inside the certificate
+CTJ_MAX_INNER = 5 * 10 ** 7   # entries of an inner product held in memory
+
+
+def parse_ctj_constant(obj, where):
+    """[[rows of S], [rows of T]]: two lists of row numbers (default [[], []])"""
+    if obj is None:
+        return [[], []]
+    if not (isinstance(obj, list) and len(obj) == 2 and all(isinstance(x, list) for x in obj)
+            and all(is_int(i) and i >= 0 for x in obj for i in x)):
+        raise CertError("%s: constant must be [[rows of the first], [rows of the second]], lists of row "
+                        "numbers" % where)
+    return [list(obj[0]), list(obj[1])]
+
+
+def parse_ctj_node(obj, where, c, table_dir, depth):
+    """an ingredient of product-ctj-1: an array (rows, file or table, as for the other array
+    constructions) or a product {"product": {"first", "second", "constant"}, "N", "k"}; either with
+    an optional "columns": k' (the first k' columns are kept)"""
+    if not isinstance(obj, dict):
+        raise CertError("%s must be an object" % where)
+    if depth > CTJ_MAX_DEPTH:
+        raise CertError("%s: products nested deeper than %d" % (where, CTJ_MAX_DEPTH))
+    if "product" in obj:
+        only_keys(obj, ("product", "N", "k", "columns"), where)
+        p = obj["product"]
+        if not isinstance(p, dict):
+            raise CertError("%s.product must be an object" % where)
+        only_keys(p, ("first", "second", "constant"), where + ".product")
+        node = {"where": where, "leaf": None, "N_decl": need_int(obj, "N", 1, None, where + ": "),
+                "k_decl": need_int(obj, "k", 1, None, where + ": ")}
+        for role in ("first", "second"):
+            if role not in p:
+                raise CertError("%s.product: missing key %r" % (where, role))
+            node[role] = parse_ctj_node(p[role], where + "." + role, c, table_dir, depth + 1)
+        node["constant"] = parse_ctj_constant(p.get("constant"), where + ".product")
+    else:
+        leaf = dict((k, x) for k, x in obj.items() if k != "columns")
+        d = parse_array_ingredient(leaf, where, c, table_dir)
+        d["need_t"], d["need_v"] = 2, c["v"]
+        c["ingredients"][where] = d
+        node = {"where": where, "leaf": d}
+    node["columns"] = need_int(obj, "columns", 0, None, where + ": ") if "columns" in obj else None
+    c["ctj_nodes"].append(node)
+    return node
+
+
+def load_ctj(cert, raw, path, table_dir):
+    only_keys(cert, ("format", "construction", "t", "v", "first", "second", "constant", "expected", "notes"),
+              "certificate")
+    if cert.get("format") != FORMAT:
+        raise CertError("format must be %r" % FORMAT)
+    if "notes" in cert and not (isinstance(cert["notes"], str) or
+                                (isinstance(cert["notes"], list) and all(isinstance(x, str) for x in cert["notes"]))):
+        raise CertError("notes must be a string or a list of strings")
+    t = need_int(cert, "t", 1, 32)
+    v = need_int(cert, "v", 2, 64)
+    c = {"kind": CTJ_KIND, "t": t, "v": v, "dir": os.path.dirname(os.path.abspath(path)),
+         "cert_sha256": hashlib.sha256(raw).hexdigest(), "ingredients": {}, "ctj_nodes": []}
+    parse_expected(cert, c)
+    top = {"where": "top", "leaf": None, "N_decl": None, "k_decl": None, "columns": None}
+    for role in ("first", "second"):
+        if role not in cert:
+            raise CertError("missing key %r" % role)
+        top[role] = parse_ctj_node(cert[role], role, c, table_dir, 1)
+    top["constant"] = parse_ctj_constant(cert.get("constant"), "certificate")
+    c["ctj_nodes"].append(top)
+    c["ctj_top"] = top
+    return c
+
+
+def ctj_relabel(M, S, base, v):
+    """the symbol exchange of the theorem: in every column the entry of row S[r] becomes base + r, and the
+    other symbols of 0..v-1 take the other values of 0..v-1, both in increasing order (rows of S that
+    are not rows of M are skipped; symbols outside 0..v-1 are left as they are)"""
+    if not S:
+        return M
+    S = [s for s in S if s < len(M)]
+    k = len(M[0])
+    maps = []
+    for j in range(k):
+        perm = {}
+        for r, s in enumerate(S):
+            perm.setdefault(M[s][j], base + r)
+        tgt = set(perm.values())
+        rest_src = [x for x in range(v) if x not in perm]
+        rest_tgt = [y for y in range(v) if y not in tgt]
+        for x, y in zip(rest_src, rest_tgt):
+            perm[x] = y
+        maps.append(perm)
+    return [[maps[j].get(x, x) for j, x in enumerate(row)] for row in M]
+
+
+def ctj_parts(c, node):
+    """the two ingredients of a product node after the symbol exchange, and the rows kept"""
+    A, B = ctj_array(c, node["first"]), ctj_array(c, node["second"])
+    S, T = node["constant"]
+    A2 = ctj_relabel(A, S, 0, c["v"])
+    B2 = ctj_relabel(B, T, len(set(S)), c["v"])
+    sS, sT = set(S), set(T)
+    return ([r for x, r in enumerate(A2) if x not in sS], [r for y, r in enumerate(B2) if y not in sT],
+            len(A[0]), len(B[0]))
+
+
+def ctj_full(c, node):
+    """a product node as built (before its columns option), held in memory"""
+    if "_full" not in node:
+        Ak, Bk, k1, k2 = ctj_parts(c, node)
+        if (len(Ak) + len(Bk)) * k1 * k2 > CTJ_MAX_INNER:
+            raise ValueError("%s: an inner product of %d entries is above %d" %
+                             (node["where"], (len(Ak) + len(Bk)) * k1 * k2, CTJ_MAX_INNER))
+        rows = [[a[i] for i in range(k1) for _ in range(k2)] for a in Ak]
+        rows += [b * k1 for b in Bk]
+        node["_full"] = rows
+    return node["_full"]
+
+
+def ctj_array(c, node):
+    """the array an ingredient node stands for: the leaf or the inner product, then its first
+    `columns` columns"""
+    if "_arr" not in node:
+        M = node["leaf"]["rows"] if node["leaf"] is not None else ctj_full(c, node)
+        if node["columns"] is not None:
+            M = [r[:node["columns"]] for r in M]
+        node["_arr"] = M
+    return node["_arr"]
+
+
+def ctj_products(c):
+    return [n for n in c["ctj_nodes"] if n["leaf"] is None]
+
+
+def check_ctj_strength(c):
+    """product-ctj-1: the theorem gives strength 2 only"""
+    return [] if c["t"] == 2 else ["product-ctj-1 gives strength 2, the certificate says t = %d" % c["t"]]
+
+
+def check_ctj_columns(c):
+    """product-ctj-1: every columns option keeps at least 2 and at most all the columns of its array"""
+    out = []
+    for n in c["ctj_nodes"]:
+        if n["columns"] is None:
+            continue
+        M = n["leaf"]["rows"] if n["leaf"] is not None else ctj_full(c, n)
+        k = len(M[0]) if M else 0
+        if not 2 <= n["columns"] <= k:
+            out.append("%s: columns %d is not between 2 and the %d columns of the array" % (n["where"], n["columns"], k))
+    return out
+
+
+def check_ctj_rows(c):
+    """product-ctj-1: every row named in constant is a row of its ingredient, named once"""
+    out = []
+    for n in ctj_products(c):
+        for role, L in zip(("first", "second"), n["constant"]):
+            N = len(ctj_array(c, n[role]))
+            bad = [x for x in L if x >= N]
+            if bad:
+                out.append("%s: constant row %d is not a row of the %d-row %s ingredient" % (n["where"], bad[0], N, role))
+            if len(set(L)) != len(L):
+                out.append("%s: a constant row of the %s ingredient is named twice" % (n["where"], role))
+    return out
+
+
+def check_ctj_constant(c):
+    """product-ctj-1: every two rows of S differ in every column, and every two rows of T"""
+    out = []
+    for n in ctj_products(c):
+        for role, L in zip(("first", "second"), n["constant"]):
+            M = ctj_array(c, n[role])
+            L = [x for x in L if x < len(M)]
+            for a, b in itertools.combinations(L, 2):
+                same = [j for j, (x, y) in enumerate(zip(M[a], M[b])) if x == y]
+                if same:
+                    out.append("%s: rows %d and %d of the %s ingredient agree in column %d, so they cannot both "
+                               "be made constant with distinct symbols" % (n["where"], a, b, role, same[0]))
+    return out
+
+
+def check_ctj_budget(c):
+    """product-ctj-1: |S| + |T| <= v (the constant rows take distinct symbols)"""
+    out = []
+    for n in ctj_products(c):
+        s = len(set(n["constant"][0])) + len(set(n["constant"][1]))
+        if s > c["v"]:
+            out.append("%s: %d constant rows, more than v = %d" % (n["where"], s, c["v"]))
+    return out
+
+
+def check_ctj_nested(c):
+    """product-ctj-1: every inner product has the N and k its specification declares"""
+    out = []
+    for n in ctj_products(c):
+        if n["N_decl"] is None:
+            continue
+        M = ctj_full(c, n)
+        if (len(M), len(M[0]) if M else 0) != (n["N_decl"], n["k_decl"]):
+            out.append("%s: the inner product is %d x %d, its specification says N = %d, k = %d"
+                       % (n["where"], len(M), len(M[0]) if M else 0, n["N_decl"], n["k_decl"]))
+    return out
+
+
+CTJ_CHECKS = [("shape", check_array_shape), ("ingredient_hash", check_ingredient_hash),
+              ("ingredient_ca", check_ingredient_ca), ("ctj_strength", check_ctj_strength),
+              ("ctj_columns", check_ctj_columns), ("ctj_rows", check_ctj_rows),
+              ("ctj_constant", check_ctj_constant), ("ctj_budget", check_ctj_budget),
+              ("ctj_nested", check_ctj_nested)]
+
+
+def assemble_ctj(c, write=None):
+    """the top product row by row in the table's canonical text, hashed as a stream: the kept rows of the
+    first ingredient with entry i repeated k2 times in column block i, then the kept rows of the second
+    ingredient repeated k1 times (column (i, j) at i k2 + j)"""
+    Ak, Bk, k1, k2 = ctj_parts(c, c["ctj_top"])
+    h = hashlib.sha256()
+    fout = open(write, "w", encoding="ascii", newline="\n") if write else None
+    N, symbols = 0, set()
+    try:
+        for a in Ak:
+            symbols.update(a)
+            line = " ".join([" ".join([str(x)] * k2) for x in a]) + "\n"
+            h.update(line.encode("ascii"))
+            if fout:
+                fout.write(line)
+            N += 1
+        for b in Bk:
+            symbols.update(b)
+            s = " ".join(map(str, b))
+            line = " ".join([s] * k1) + "\n"
+            h.update(line.encode("ascii"))
+            if fout:
+                fout.write(line)
+            N += 1
+    finally:
+        if fout:
+            fout.close()
+    c["N"], c["k"], c["sha256"], c["symbols"] = N, k1 * k2, h.hexdigest(), symbols
+
+
+# ---------------------------------------------------------------------------
 # assembly in the table's canonical text
 # ---------------------------------------------------------------------------
 
@@ -2429,6 +2681,12 @@ def run(path, write=None, log=None, table_dir=None):
         checks, post, build = SMX_CHECKS, POST_CHECKS + KIND_POST_CHECKS, assemble_smx
         say("certificate %s: %s, t = 3, q = %d, cubic %r, D %d x %d, last block from %d generator matrices"
             % (path, kind, c["q"], c["cubic"], len(c["D"]), c["x"], len(c["last"])))
+    elif kind == CTJ_KIND:
+        checks, post, build = CTJ_CHECKS, POST_CHECKS + KIND_POST_CHECKS, assemble_ctj
+        say("certificate %s: %s, t = %d, v = %d, %d product(s), leaf ingredients %s"
+            % (path, kind, c["t"], c["v"], len(ctj_products(c)),
+               ", ".join("%s %d x %d" % (n, len(i["rows"]), len(i["rows"][0]) if i["rows"] else 0)
+                         for n, i in c["ingredients"].items())))
     elif kind == "powercz-2":
         build_family(c)
         apply_relabel(c)

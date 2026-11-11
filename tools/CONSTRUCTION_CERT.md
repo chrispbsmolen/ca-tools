@@ -1,14 +1,15 @@
 # Construction certificates
 
 A construction certificate proves a covering array by its recipe instead of by checking every
-t-set of the array. Eight constructions are known to the checker, each with its theorem stated
+t-set of the array. Nine constructions are known to the checker, each with its theorem stated
 and proved below. They are Power CZ (`powercz-1`, Colbourn and Zhou 2012), Power CZ with relabelled
 blocks and constant tuples proved by enumeration (`powercz-2`, since 2026-11-03), fusing one symbol
 (`fuse-1`, Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1), the derived array of
 a lower strength (`derive-1`), the direct product of two strength-2 arrays (`product-1`), and the
 two strength-4 constructions of Shokri, Moura and Stevens from truncated Moebius planes (`sms51-1`
-and `sms65-1`, since 2026-11-10), and the strength-3 x-plications of Shokri and Moura
-(`sm-xplication-1`, since 2026-11-10). Since
+and `sms65-1`, since 2026-11-10), the strength-3 x-plications of Shokri and Moura
+(`sm-xplication-1`, since 2026-11-10), and the product of Colbourn and Torres-Jimenez that saves one
+row for each constant row of either ingredient (`product-ctj-1`, since 2026-11-11). Since
 2026-11-02 a certificate is also a submission route (`constructions.csv`, section "The submission
 route" below), and an ingredient may be an array of the table named by its hash (section
 "Ingredients from the table").
@@ -627,12 +628,148 @@ sha256. With no constant rows given, rows that happen to be constant still count
 of each ingredient constant always saves one row, N1 + N2 - 1. The generalized products of
 Colbourn and Torres-Jimenez 2013 (Corollary 4.3, as `tools/derive_laws.py` states it for
 `table/derived.csv`, CAN(2, k1 k2, v) <= CAN(2, k1, v) + CAN(2, k2, v) - 2) are not part of
-product-1, and a certificate that uses them needs a construction id of its own.
+product-1; they are the construction `product-ctj-1` below.
 
     {"format": "construction-cert-1", "construction": "product-1", "t": 2, "v": 3,
      "first": {"rows": [[0, 0, 0, 0], ...]}, "second": {"table": "<array_sha256>"},
      "constant_rows": [0, null],                      (optional, default [null, null])
      "expected": {"N": 17, "k": 16, "array_sha256": "..."}}
+
+## The product with constant rows of both ingredients (product-ctj-1)
+
+Source: C. J. Colbourn and J. Torres-Jimenez, Profiles of covering arrays of strength two, J.
+Algorithms Comput. 44 (2013) 31-59, Corollary 4.3 (`pca-ct2013`), which bounds CAN(2, k1 k2, v) by
+CAN(2, k1, v) + CAN(2, k2, v) - min(v, s1 + s2) when the two arrays have s1 and s2 rows that can be
+made constant together. U. Groemping's R package CAs builds it as `productCA`. product-1 saves at
+most one row (a constant row of the second ingredient that repeats one of the first), so on the
+same ingredients it can be up to v - 1 rows larger.
+
+Theorem. Let A be a CA(N1; 2, k1, v) and B a CA(N2; 2, k2, v), k1, k2 >= 2. Let S be a set of rows of
+A that differ pairwise in every column, T a set of rows of B with the same property, and |S| + |T|
+<= v. In every column of A exchange symbols so that the rows of S read distinct constant symbols
+(the set sigma), and in every column of B so that the rows of T read distinct constant symbols (the
+set tau), sigma and tau disjoint. Index the k1 k2 columns by pairs (i, j). Take, for every row x of A
+not in S, the row with x[i] in column (i, j), and for every row y of B not in T, the row with y[j]
+in column (i, j). The result is a CA(N1 + N2 - |S| - |T|; 2, k1 k2, v).
+
+The exchanges exist: in a column, the rows of S show |S| distinct symbols (they differ pairwise),
+so a permutation of the v symbols takes them to sigma, and the same for T and tau, which has room
+because |S| + |T| <= v. Exchanging symbols within a column keeps a covering array covering.
+
+Proof. Take two columns (i, j) and (i', j') and a pair (x, y) of symbols. Every row of A in S shows
+only symbols of sigma, and every row of B in T only symbols of tau.
+
+1. j = j' (so i and i' differ). If x and y differ, A covers (x, y) in columns i, i' in some row; that
+   row is not constant, so it is not in S, and its row in the first part shows (x, y). If x = y, B
+   has a row with x in column j that is not constant: B covers (x, z) in columns j and j'' for some
+   z other than x and some other column j'' (k2 >= 2, v >= 2). That row is not in T, and its row in
+   the second part shows x in both columns (i, j) and (i', j).
+2. j and j' differ. B covers (x, y) in columns j, j' in some row y0. If y0 is not in T, its row in
+   the second part shows (x, y). If y0 is in T, then x = y = c with c in tau. If i and i' differ, A
+   covers (c, c) in columns i, i' in some row; that row shows c, which is not in sigma, so it is not
+   in S, and its row in the first part shows (c, c). If i = i', any row of A with c in column i
+   will do, and it is not in S for the same reason.
+
+Every pair is covered, and the array has N1 - |S| + N2 - |T| rows.
+
+Nested ingredients and the columns option. An ingredient may itself be a product of this kind. The
+theorem applied to it gives a covering array of strength 2 over v symbols, so only the arrays at the
+leaves need a coverage check (exhaustive for a file or inline array, the table's for a table array).
+The first k' columns of a CA(N; 2, k, v), 2 <= k' <= k, form a CA(N; 2, k', v), so an ingredient
+may keep only its first `columns` columns; the constant rows S or T are then rows of the array as
+kept, and they need to differ only in the columns kept.
+
+What the checker verifies, at every product of the certificate (the top one and every nested one),
+before rebuilding:
+
+| name | hypothesis |
+|---|---|
+| shape, ingredient_hash, ingredient_ca, ingredient_table | every leaf is a CA(N; 2, k, v) over 0..v-1 (as for the other array constructions) |
+| ctj_strength | t = 2 |
+| ctj_columns | every `columns` value keeps at least 2 and at most all the columns of its array |
+| ctj_rows | every row named in S or T is a row of its ingredient (as kept), and no row is named twice |
+| ctj_constant | every two rows of S differ in every column, and every two rows of T |
+| ctj_budget | \|S\| + \|T\| <= v |
+| ctj_nested | every nested product has the N and k its specification declares |
+
+then symbols, alphabet, N, k and sha256 of the rebuilt array as for the other constructions.
+
+The exchange is fixed so that the hash can be reproduced: in every column the row S[r] (in the order
+the certificate lists S) gets symbol r, and the other symbols of 0..v-1 take the other values in
+increasing order of both; the row T[r] gets |S| + r, and the other symbols take the values outside
+|S|..|S|+|T|-1 in increasing order. Rows keep their order (the rows of A not in S, then the rows of
+B not in T), and column (i, j) is column i k2 + j, as in product-1. A nested product is built the
+same way and then cut to its `columns`.
+
+Format (`construction-cert-1`, keys `first`, `second`, `constant`):
+
+    {"format": "construction-cert-1", "construction": "product-ctj-1", "t": 2, "v": 25,
+     "first": {"file": "CA_727_2_30_25.txt", "sha256": "..."},
+     "second": {"product": {"first": {"file": "CA_727_2_30_25.txt", "sha256": "..."},
+                            "second": {"file": "CA_727_2_30_25.txt", "sha256": "..."},
+                            "constant": [[0, 1, ..., 24], []]},
+                "N": 1429, "k": 900},
+     "constant": [[0, 1, ..., 24], []],
+     "expected": {"N": 2131, "k": 27000, "array_sha256": "..."}}
+
+`constant` is [S, T] (row numbers, 0-based; default [[], []]). An ingredient is an array (`rows`,
+`file` with `sha256`, or `table`, section "Ingredients from the table") or `{"product": {"first",
+"second", "constant"}, "N", "k"}`, either with an optional `"columns": k'`. Nesting is limited to 8
+levels, and a nested product is held in memory up to 5 x 10^7 entries. The top product is hashed row
+by row as it is built, so its size is limited only by the route (`check_constructions.py`). A
+certificate that leaves out a constant row it could have used is still valid; it only proves a
+larger array.
+
+The rows S and T are not searched for by the checker. The certificate names them; a largest such
+set is a largest clique of the graph whose vertices are the rows and whose edges join rows that
+differ in every column (`tools/constant_rows`, the count the table records for its arrays).
+
+### Tests of product-ctj-1
+
+`tools/tests_construction/test_ctj.py` writes random small certificates (v = 2 to 4, leaves of 2 to
+4 columns built with v rows that differ pairwise in every column, about half of them with a nested
+product and a quarter of the ingredients cut by `columns`, leaves inline, in files or in a small
+table of its own), valid ones and ones with one planted fault each: two rows of S agreeing in one
+column (half the time a new row that agrees with a named row in the last column only), |S| + |T| =
+v + 1, a row number out of range or named twice, a wrong N or k in a nested specification, `columns`
+of 1 or above k, a leaf with a missing pair, a leaf symbol v, a file with a wrong sha256, a table
+row of strength 1, t = 3, and an expected N, k or sha256 that is wrong. It rebuilds each array with
+its own code, evaluates every hypothesis by its definition, and checks every rebuilt array with
+`ca_verify`, itself compared with a Python brute force. For a fault in S or T the certificate's
+expected values are those of the array the checker builds anyway, so that the planted fault is the
+only failure, and the test counts how many of those arrays are not covering arrays. Then each check
+is disabled in turn, and two boundary mutants are applied (|S| + |T| <= v + 1, and S compared
+without its last column). symbols and alphabet are implied for this kind by shape and ctj_budget
+(a leaf over 0..v-1, exchanged within 0..v-1), so their mutants are reported but not required to
+die.
+
+#### Results (2026-11-11)
+
+| | seed 20261110 | seed 777 |
+|---|---|---|
+| certificates / with a nested product | 300 / 152 | 300 / 159 |
+| valid certificates accepted | 100 of 100 | 100 of 100 |
+| faulted certificates accepted | 0 of 200 | 0 of 200 |
+| certificates satisfying every hypothesis / of these not covering (A4) | 100 / 0 | 100 / 0 |
+| ca_verify vs brute force | 174 arrays, 0 disagreements | 171 arrays, 0 disagreements |
+| arrays built anyway with \|S\| + \|T\| = v + 1 / not covering | 14 / 14 | 13 / 13 |
+| arrays built anyway with two rows of S or T agreeing / not covering | 14 / 4 | 21 / 11 |
+| A1, A2, A3, A4 violations | 0 | 0 |
+| mutants surviving (15 required) | 0 | 0 |
+
+Mutants (seed 20261110), the cases that kill each and the non-covering arrays each accepts: disable
+shape 18 / 0, ingredient_hash 12 / 0, ingredient_ca 13 / 7, ctj_strength 14 / 0, ctj_columns 19 / 0,
+ctj_rows 16 / 0, ctj_constant 14 / 4, ctj_budget 19 / 0, ctj_nested 13 / 0, ingredient_table 15 / 0,
+N 22 / 0, k 14 / 0, sha256 11 / 0; ctj_budget with v + 1 19 / 0; ctj_constant without the last
+column 7 / 1. Disabling symbols or alphabet changes no result (0 / 0). With ctj_budget disabled the
+arrays with |S| + |T| = v + 1 are still refused, by alphabet (they use the symbol v), which is why
+that mutant accepts no non-covering array. ctj_rows and ctj_columns guard the recording (a row
+number out of range is skipped by the rebuild, a `columns` of 1 or above k changes the array) and
+are each reported by the check itself. The suites of the other kinds (`test_kinds.py`,
+`test_route.py`, `test_real_certs.py`) pass unchanged with the new code.
+
+    python3 tools/tests_construction/test_ctj.py --cases 300 --seed 20261110
+    python3 tools/tests_construction/test_ctj.py --cases 300 --seed 777
 
 ## Shokri, Moura and Stevens: sms51-1 and sms65-1
 

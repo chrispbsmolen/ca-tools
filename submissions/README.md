@@ -421,11 +421,13 @@ claim fails. Anyone can rebuild an array from its family with
 A construction certificate records how an array is built from smaller
 arrays by a published construction, and `../tools/construction_cert.py`
 checks every hypothesis of the construction's theorem exactly and
-rebuilds the array. The format, the eight constructions it knows
+rebuilds the array. The format, the nine constructions it knows
 (`powercz-1`, `powercz-2`, `fuse-1`, `derive-1`, `product-1`, the
 strength-4 constructions `sms51-1` and `sms65-1` of Shokri, Moura and
-Stevens, and the strength-3 x-plications `sm-xplication-1` of Shokri and
-Moura), the theorems and their proofs are in
+Stevens, the strength-3 x-plications `sm-xplication-1` of Shokri and
+Moura, and `product-ctj-1`, the product of Colbourn and Torres-Jimenez
+2013 that saves one row for each constant row of either ingredient), the
+theorems and their proofs are in
 `../tools/CONSTRUCTION_CERT.md`.
 `powercz-2` is Power CZ for binary arrays with a column relabelling per
 block, where the all-0 and all-1 tuples may be proved by an exact
@@ -446,7 +448,7 @@ VERIFIED row of the table whose array is stored in `../table/arrays/`
 `builds_on` may not be empty. The reference of the construction's theorem
 (`power-cz2012` for both Power CZ kinds, `fuse-ckrs2010` for fusing, none for the derived array, which has no single source,
 `product-cmmssy2006` for the product, `mobius-sms2025` for both sms kinds, `lfsr-sm2025` for
-`sm-xplication-1`) is added when it is missing. For
+`sm-xplication-1`, `pca-ct2013` for `product-ctj-1`) is added when it is missing. For
 example, an array that fuses one symbol of an array of the table is
 
     t,v,k,N,file,source_detail,construction,builds_on,credit,notes
