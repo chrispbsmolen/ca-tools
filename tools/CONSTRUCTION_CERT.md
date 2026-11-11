@@ -722,7 +722,7 @@ larger array.
 
 The rows S and T are not searched for by the checker. The certificate names them; a largest such
 set is a largest clique of the graph whose vertices are the rows and whose edges join rows that
-differ in every column (`tools/constant_rows`, the count the table records for its arrays).
+differ in every column (`tools/constant_rows.c`, the count the table records for its arrays).
 
 ### Tests of product-ctj-1
 

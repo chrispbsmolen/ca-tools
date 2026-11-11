@@ -30,7 +30,7 @@ Program, standard library only:
 
 It writes `CA_341_2_1705_11.txt` with sha256 dddae14c654ca9ffab3b7632f29ff6606676b91bc858c5c7652ad511c79216f6,
 the file here. `ca_verify` (repository root) at t = 2, v = 11 verified it on every pair of columns on
-2026-11-11 (1,452,660 pairs). `tools/constant_rows` finds 1 constant row (rows pairwise different in every
+2026-11-11 (1,452,660 pairs). `tools/constant_rows.c` finds 1 constant row (rows pairwise different in every
 column) in the whole array.
 
 Why. The array is the same size as Colbourn's CITED row, so the frame does not change when it enters. It is

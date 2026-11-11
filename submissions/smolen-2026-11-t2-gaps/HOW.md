@@ -22,7 +22,7 @@ Built from: small arrays over 11, 23 and 25 symbols, all from published construc
 | CA_171_2_17_11.txt, CA_181_2_18_11.txt, CA_191_2_19_11.txt, CA_201_2_20_11.txt | the all-zero row and the cyclic shifts of a starter vector under the cyclic group on the 10 nonzero symbols | Meagher and Stevens 2005 (starters as listed in CAs, data MeagherStevensStarters) | 1, or 11 with the last column cut off |
 | CA_157_2_14_11.txt | the array CA(157; 2, 14, 11) | Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, taken from CAs (data CKRS_CAs) | 5 |
 
-The counts are exact maximum cliques of the graph "two rows differ in every column" (`tools/constant_rows`).
+The counts are exact maximum cliques of the graph "two rows differ in every column" (`tools/constant_rows.c`).
 Every leaf was checked with `ca_verify` at t = 2, and the checker checks each again exhaustively. No
 Torres-Jimenez array, and no array found by search, is an ingredient.
 
