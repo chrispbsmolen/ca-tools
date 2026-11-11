@@ -1,0 +1,58 @@
+[build] $ cc -O3 -o orbfree3 programs/orbfree3.c
+[build] $ ./orbfree3 20 4 a 6 6 3 3 1 1
+----- [build] stdout of orbfree3 20 4 a 6 6 3 3 1 1 -----
+N 20 L 6: 19140 orbits, normaliser 648, 701 representatives (0.0 s)
+NEW BEST total 28 columns = 24 orbit columns + 4 free (of 4 free candidates)
+shape 6 6 3 3 1 1: avg degree of reps 162.1; cliques through reps by size: 1:701 2:113622 3:512 4:8; MAX full orbits 4 = 24 columns (0.5 s)
+[build] sha256 a_ext_20_28.txt bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+[build] IDENTICAL to CA_20_3_28_2.txt
+[build] $ ./orbfree3 21 3 b 9 9 3
+----- [build] stdout of orbfree3 21 3 b 9 9 3 -----
+N 21 L 9: 19368 orbits, normaliser 1458, 184 representatives (0.0 s)
+NEW BEST total 32 columns = 27 orbit columns + 5 free (of 204 free candidates)
+shape 9 9 3: avg degree of reps 22.4; cliques through reps by size: 1:184 2:4116 3:2; MAX full orbits 3 = 27 columns (0.2 s)
+[build] sha256 b_ext_21_32.txt be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+[build] IDENTICAL to CA_21_3_32_2.txt
+[build] $ ./orbfree3 24 4 c 8 8 4 4
+----- [build] stdout of orbfree3 24 4 c 8 8 4 4 -----
+N 24 L 8: 317384 orbits, normaliser 4096, 2336 representatives (0.6 s)
+NEW BEST total 34 columns = 32 orbit columns + 2 free (of 2 free candidates)
+NEW BEST total 36 columns = 32 orbit columns + 4 free (of 33 free candidates)
+NEW BEST total 37 columns = 32 orbit columns + 5 free (of 236 free candidates)
+NEW BEST total 42 columns = 32 orbit columns + 10 free (of 244 free candidates)
+bases done 500; extra-column histogram: 0:358 1:70 2:28 3:4 4:32 5:2 6:0 7:0 8:0 9:0 10:6 11:0
+bases done 1000; extra-column histogram: 0:705 1:96 2:99 3:8 4:80 5:4 6:0 7:0 8:0 9:0 10:8 11:0
+shape 8 8 4 4: avg degree of reps 2589.4; cliques through reps by size: 1:2336 2:6048896 3:3810112 4:1304; MAX full orbits 4 = 32 columns (525.8 s)
+[build] sha256 c_ext_24_42.txt e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+[build] IDENTICAL to CA_24_3_42_2.txt
+[replay] $ cc -O3 -o orbfree3 programs/orbfree3.c
+[replay] $ ./orbfree3 20 4 a 6 6 3 3 1 1
+----- [replay] stdout of orbfree3 20 4 a 6 6 3 3 1 1 -----
+N 20 L 6: 19140 orbits, normaliser 648, 701 representatives (0.0 s)
+NEW BEST total 28 columns = 24 orbit columns + 4 free (of 4 free candidates)
+shape 6 6 3 3 1 1: avg degree of reps 162.1; cliques through reps by size: 1:701 2:113622 3:512 4:8; MAX full orbits 4 = 24 columns (0.5 s)
+[replay] sha256 a_ext_20_28.txt bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+[replay] IDENTICAL to CA_20_3_28_2.txt
+[replay] $ ./orbfree3 21 3 b 9 9 3
+----- [replay] stdout of orbfree3 21 3 b 9 9 3 -----
+N 21 L 9: 19368 orbits, normaliser 1458, 184 representatives (0.0 s)
+NEW BEST total 32 columns = 27 orbit columns + 5 free (of 204 free candidates)
+shape 9 9 3: avg degree of reps 22.4; cliques through reps by size: 1:184 2:4116 3:2; MAX full orbits 3 = 27 columns (0.2 s)
+[replay] sha256 b_ext_21_32.txt be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+[replay] IDENTICAL to CA_21_3_32_2.txt
+[replay] $ ./orbfree3 24 4 c 8 8 4 4
+----- [replay] stdout of orbfree3 24 4 c 8 8 4 4 -----
+N 24 L 8: 317384 orbits, normaliser 4096, 2336 representatives (0.4 s)
+NEW BEST total 34 columns = 32 orbit columns + 2 free (of 2 free candidates)
+NEW BEST total 36 columns = 32 orbit columns + 4 free (of 33 free candidates)
+NEW BEST total 37 columns = 32 orbit columns + 5 free (of 236 free candidates)
+NEW BEST total 42 columns = 32 orbit columns + 10 free (of 244 free candidates)
+bases done 500; extra-column histogram: 0:358 1:70 2:28 3:4 4:32 5:2 6:0 7:0 8:0 9:0 10:6 11:0
+bases done 1000; extra-column histogram: 0:705 1:96 2:99 3:8 4:80 5:4 6:0 7:0 8:0 9:0 10:8 11:0
+shape 8 8 4 4: avg degree of reps 2589.4; cliques through reps by size: 1:2336 2:6048896 3:3810112 4:1304; MAX full orbits 4 = 32 columns (520.6 s)
+[replay] sha256 c_ext_24_42.txt e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+[replay] IDENTICAL to CA_24_3_42_2.txt
+sha256 CA_20_3_28_2.txt (submitted) bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+sha256 CA_21_3_32_2.txt (submitted) be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+sha256 CA_24_3_42_2.txt (submitted) e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+RESULT: build and replay both IDENTICAL to the submitted files

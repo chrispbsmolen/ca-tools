@@ -1,0 +1,30 @@
+RECIPE for CA_20_3_28_2.txt, CA_21_3_32_2.txt, CA_24_3_42_2.txt, written by programs/recipe.sh
+date (UTC): 2026-11-11T12:24:20Z
+machine: Linux x86_64; compiler: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+seeds: none (exhaustive search, no random numbers); stop rule: search runs to completion, no clock
+inputs: none (no input array)
+sha256 programs/orbfree3.c 3c18743e154d489dba4da1654744d6c8805ec8b76e19efe45a419120389475fe
+[build] $ cc -O3 -o orbfree3 programs/orbfree3.c
+[build] $ ./orbfree3 20 4 a 6 6 3 3 1 1
+[build] sha256 a_ext_20_28.txt bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+[build] IDENTICAL to CA_20_3_28_2.txt
+[build] $ ./orbfree3 21 3 b 9 9 3
+[build] sha256 b_ext_21_32.txt be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+[build] IDENTICAL to CA_21_3_32_2.txt
+[build] $ ./orbfree3 24 4 c 8 8 4 4
+[build] sha256 c_ext_24_42.txt e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+[build] IDENTICAL to CA_24_3_42_2.txt
+[replay] $ cc -O3 -o orbfree3 programs/orbfree3.c
+[replay] $ ./orbfree3 20 4 a 6 6 3 3 1 1
+[replay] sha256 a_ext_20_28.txt bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+[replay] IDENTICAL to CA_20_3_28_2.txt
+[replay] $ ./orbfree3 21 3 b 9 9 3
+[replay] sha256 b_ext_21_32.txt be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+[replay] IDENTICAL to CA_21_3_32_2.txt
+[replay] $ ./orbfree3 24 4 c 8 8 4 4
+[replay] sha256 c_ext_24_42.txt e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+[replay] IDENTICAL to CA_24_3_42_2.txt
+sha256 CA_20_3_28_2.txt (submitted) bc0503266e4cbe9f307a7334b41263afbe092fb27b14c23497459728e3bb55f2
+sha256 CA_21_3_32_2.txt (submitted) be92010d934e66f07e9e7d54b79627c3881c22292cd31fface47b80eebb5f68e
+sha256 CA_24_3_42_2.txt (submitted) e0fcca7ee6c5d224106ad5c3cc620064f3297711b4f63668363fc130d44387bd
+RESULT: build and replay both IDENTICAL to the submitted files
