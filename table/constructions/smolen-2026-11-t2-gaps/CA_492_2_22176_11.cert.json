@@ -1,0 +1,85 @@
+{
+ "format": "construction-cert-1",
+ "construction": "product-ctj-1",
+ "t": 2,
+ "v": 11,
+ "first": {
+  "product": {
+   "first": {
+    "file": "OA_121_2_12_11.txt",
+    "sha256": "bfd07a6f5d49a75cae3248667080c821b3733aa337f1e81d727ac106e52eb6eb"
+   },
+   "second": {
+    "file": "OA_121_2_12_11.txt",
+    "sha256": "bfd07a6f5d49a75cae3248667080c821b3733aa337f1e81d727ac106e52eb6eb",
+    "columns": 11
+   },
+   "constant": [
+    [
+     0
+    ],
+    [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   ]
+  },
+  "N": 231,
+  "k": 132
+ },
+ "second": {
+  "product": {
+   "first": {
+    "file": "OA_121_2_12_11.txt",
+    "sha256": "bfd07a6f5d49a75cae3248667080c821b3733aa337f1e81d727ac106e52eb6eb"
+   },
+   "second": {
+    "file": "CA_157_2_14_11.txt",
+    "sha256": "b873f19e26edfefc369ae540822483ac074812611e7cedfc62eb412c8f417b18"
+   },
+   "constant": [
+    [
+     0
+    ],
+    [
+     4,
+     27,
+     45,
+     68,
+     91
+    ]
+   ]
+  },
+  "N": 272,
+  "k": 168
+ },
+ "constant": [
+  [
+   121,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   128,
+   129,
+   130,
+   131
+  ],
+  []
+ ],
+ "expected": {
+  "N": 492,
+  "k": 22176,
+  "array_sha256": "35b39fb0f44e11c3bdf96a499b3464837e908d4820683d32c84c60099308ecc7"
+ }
+}

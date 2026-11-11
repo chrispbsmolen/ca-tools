@@ -1,0 +1,61 @@
+{
+ "format": "construction-cert-1",
+ "construction": "product-ctj-1",
+ "t": 2,
+ "v": 11,
+ "first": {
+  "file": "OA_121_2_12_11.txt",
+  "sha256": "bfd07a6f5d49a75cae3248667080c821b3733aa337f1e81d727ac106e52eb6eb"
+ },
+ "second": {
+  "product": {
+   "first": {
+    "file": "CA_167_2_16_11.txt",
+    "sha256": "1a1120593abdfc5bdd86bac21d79eed0570ab7cdecb17b8a983a895e5b1ca456"
+   },
+   "second": {
+    "file": "CA_231_2_143_11.txt",
+    "sha256": "4e5d9f7a15891f51d990f3f9a40770694fef0e2df5ffece5db68350ffa0e96b9"
+   },
+   "constant": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    []
+   ]
+  },
+  "N": 387,
+  "k": 2288
+ },
+ "constant": [
+  [],
+  [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ]
+ ],
+ "expected": {
+  "N": 497,
+  "k": 27456,
+  "array_sha256": "9adef9e29fe0c6e7fd9249b0974e5b4c778ee91b7b8e667cd2b84c070235041b"
+ }
+}

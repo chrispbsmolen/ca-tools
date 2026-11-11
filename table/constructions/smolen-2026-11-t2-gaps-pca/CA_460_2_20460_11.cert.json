@@ -1,0 +1,26 @@
+{
+ "format": "construction-cert-1",
+ "construction": "product-ctj-1",
+ "t": 2,
+ "v": 11,
+ "first": {
+  "file": "OA_121_2_12_11.txt",
+  "sha256": "bfd07a6f5d49a75cae3248667080c821b3733aa337f1e81d727ac106e52eb6eb"
+ },
+ "second": {
+  "table": "dddae14c654ca9ffab3b7632f29ff6606676b91bc858c5c7652ad511c79216f6"
+ },
+ "constant": [
+  [
+   0
+  ],
+  [
+   0
+  ]
+ ],
+ "expected": {
+  "N": 460,
+  "k": 20460,
+  "array_sha256": "83c8284188d8aa0cf0a142438f0ee6009e23379381c05dd3d47055b41fdd276d"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "format": "construction-cert-1",
+ "construction": "product-ctj-1",
+ "t": 2,
+ "v": 11,
+ "first": {
+  "file": "CA_231_2_143_11.txt",
+  "sha256": "4e5d9f7a15891f51d990f3f9a40770694fef0e2df5ffece5db68350ffa0e96b9"
+ },
+ "second": {
+  "file": "CA_231_2_143_11.txt",
+  "sha256": "4e5d9f7a15891f51d990f3f9a40770694fef0e2df5ffece5db68350ffa0e96b9"
+ },
+ "constant": [
+  [
+   0
+  ],
+  [
+   0
+  ]
+ ],
+ "expected": {
+  "N": 460,
+  "k": 20449,
+  "array_sha256": "a042e5474df095e72ea9a6e3a08f03b795583b4902b3abd0670338e2aa1f15fb"
+ }
+}
