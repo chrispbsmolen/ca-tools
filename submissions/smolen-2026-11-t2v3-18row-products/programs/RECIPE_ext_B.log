@@ -1,0 +1,14 @@
+recipe_ext tag B rows 33 36 on Linux x86_64; cc: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; python: Python 3.13.18; 2026-11-11T14:37:19Z
+sha256 recipe_ext.sh 20b273ca39d8774e6e9f13a5fbafb823f708db09bd86b006d73cf62e3280040b
+sha256 pprod.py 76c9dc83ca65a9289de94a734ece5ff2f1eeb1b796bfef7839d0920b7ac0cb21
+sha256 ext2t.c 39d0e5ab01803e6b7ad2e0cf6580837bcbffe5c6212c3c80590ad6d079c6e95e
+sha256 CA_18_2_52_3.txt 219977d44260bce42019d2acf50cb5020f2b29e6483ba76721f51e4dc36f5414
+sha256 CA_16_2_21_3_81545e9f.txt 81545e9fe99a5878c769940948faeeb01023a99e0ae7fd2eca050cc9bd0d3d37
+sha256 CA_20_2_61_3_b108f1a5.txt 1a8a40c5242a654535d2dbac132472d9eedd9d127dcd87e1e78fb7ad0d1e60ee
+sha256 CA_21_2_93_3.txt 2a3647eba0d480c14ced4fcf2e44993bddabc349cb8833fe0ac417d75fce9315
+sha256 CA_22_2_107_3_eed6545c.txt eed6545c9d415aea6be7a55ac7a212c2d22d5994ae8478192a0587b4bd610bc4
+rows 33 step 1 | python3 pprod.py CA_18_2_52_3.txt 0 1 CA_18_2_52_3.txt 0 1 run_ext_B/p33_2535.txt | rows 33 cols 2535 d1 13 d2 13 | out p33_2535.txt 62fe763600861d30b8648a34da11095248501b2509108fd82bf3b36e1bc961ba
+rows 33 step 2 | ./ext2t p33_2535.txt 33 2535 0 0 13 1000000 0.7 out/t33 -chain 900 -ntry 200 -kick 200000 | seed 13, stopped after the array at 2637 columns was saved | FOUND out/t33_33_2637.txt t=1143.5 (leg 0.2 s) it=10840043 | out CA_33_2_2637_3.txt 0430aae1f20bfe6f79eee086694bcf96281a0fecf51dadb033e6277d41b32cc9
+rows 36 step 1 | python3 pprod.py CA_18_2_52_3.txt 0 1 CA_21_2_93_3.txt 14 20 run_ext_B/p36_4563.txt | rows 36 cols 4563 d1 13 d2 21 | out p36_4563.txt 7c9346fa3084c0527040dccdd8458d03406a3eac018833f3a5d49b5af322478f
+rows 36 step 2 | ./ext2t p36_4563.txt 36 4563 0 0 13 1000000 0.7 out/t36 -chain 1500 -ntry 200 -kick 200000 | seed 13, stopped after the array at 4914 columns was saved | FOUND out/t36_36_4914.txt t=1442.7 (leg 0.3 s) it=4930914 | out CA_36_2_4914_3.txt 92fa2c914dc14a9c7548ca76f1afdc774d872d125051ebb6ef697077fda0af83
+recipe_ext tag B finished 2026-11-11T15:43:42Z

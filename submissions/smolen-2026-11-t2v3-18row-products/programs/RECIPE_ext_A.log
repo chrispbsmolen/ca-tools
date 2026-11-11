@@ -1,0 +1,16 @@
+recipe_ext tag A rows 31 35 37 on Linux x86_64; cc: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; python: Python 3.13.18; 2026-11-11T14:37:19Z
+sha256 recipe_ext.sh 20b273ca39d8774e6e9f13a5fbafb823f708db09bd86b006d73cf62e3280040b
+sha256 pprod.py 76c9dc83ca65a9289de94a734ece5ff2f1eeb1b796bfef7839d0920b7ac0cb21
+sha256 ext2t.c 39d0e5ab01803e6b7ad2e0cf6580837bcbffe5c6212c3c80590ad6d079c6e95e
+sha256 CA_18_2_52_3.txt 219977d44260bce42019d2acf50cb5020f2b29e6483ba76721f51e4dc36f5414
+sha256 CA_16_2_21_3_81545e9f.txt 81545e9fe99a5878c769940948faeeb01023a99e0ae7fd2eca050cc9bd0d3d37
+sha256 CA_20_2_61_3_b108f1a5.txt 1a8a40c5242a654535d2dbac132472d9eedd9d127dcd87e1e78fb7ad0d1e60ee
+sha256 CA_21_2_93_3.txt 2a3647eba0d480c14ced4fcf2e44993bddabc349cb8833fe0ac417d75fce9315
+sha256 CA_22_2_107_3_eed6545c.txt eed6545c9d415aea6be7a55ac7a212c2d22d5994ae8478192a0587b4bd610bc4
+rows 31 step 1 | python3 pprod.py CA_18_2_52_3.txt 0 1 CA_16_2_21_3_81545e9f.txt 0 8 run_ext_A/p31_1066.txt | rows 31 cols 1066 d1 13 d2 2 | out p31_1066.txt 9955b264b4c79e301fa30977ec9d4671a3b4c8ed3f4c77b5c11e0acdf0657278
+rows 31 step 2 | ./ext2t p31_1066.txt 31 1066 0 0 13 1000000 0.7 out/t31 -chain 600 -ntry 200 -kick 200000 | seed 13, stopped after the array at 1252 columns was saved | FOUND out/t31_31_1252.txt t=1432.4 (leg 5.1 s) it=52664081 | out CA_31_2_1252_3.txt 2a1e0bbf549e9f9a9938abaa6e120dc8fd55d5fbb7d3e9dd12118c39a7e0d5a3
+rows 35 step 1 | python3 pprod.py CA_18_2_52_3.txt 0 1 CA_20_2_61_3_b108f1a5.txt 0 3 run_ext_A/p35_3003.txt | rows 35 cols 3003 d1 13 d2 13 | out p35_3003.txt 74e37dbd095ba5ee884741c2344d0cbbc0136f59b6a942d7d8ae48f93534982c
+rows 35 step 2 | ./ext2t p35_3003.txt 35 3003 0 0 13 1000000 0.7 out/t35 -chain 900 -ntry 200 -kick 200000 | seed 13, stopped after the array at 3355 columns was saved | FOUND out/t35_35_3355.txt t=1572.7 (leg 2.5 s) it=8760971 | out CA_35_2_3355_3.txt 082347a26af245c7ac80d410ff0272e6899729256953f3f43fa3815fcdbaa82f
+rows 37 step 1 | python3 pprod.py CA_18_2_52_3.txt 0 1 CA_22_2_107_3_eed6545c.txt 15 16 run_ext_A/p37_5252.txt | rows 37 cols 5252 d1 13 d2 24 | out p37_5252.txt 4c64d5c0b824c917caad8194b59aec0d68a1d30af0dedd4a306af12fb67af457
+rows 37 step 2 | ./ext2t p37_5252.txt 37 5252 0 0 13 1000000 0.7 out/t37 -chain 1500 -ntry 200 -kick 200000 | seed 13, stopped after the array at 5730 columns was saved | FOUND out/t37_37_5730.txt t=1656.1 (leg 2.4 s) it=4793497 | out CA_37_2_5730_3.txt 6a30b06edecfd6511890bb5781ffe51e367e26bd17ccd3a4b99474f603e7ced4
+recipe_ext tag A finished 2026-11-11T16:22:00Z
