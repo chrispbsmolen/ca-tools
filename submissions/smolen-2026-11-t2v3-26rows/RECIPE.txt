@@ -1,0 +1,22 @@
+RECIPE for CA_26_2_296_3.txt, written by programs/recipe.sh
+date (UTC): 2026-11-11T18:10:01Z
+machine: Linux x86_64; compiler: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; python: Python 3.13.18
+seed: 13 (ext2t); temperature 0.7; stop rule: the run is stopped when the array with 296 columns has been saved
+inputs: table/arrays/CA_18_2_52_3.txt 06d0eeac0f50659b1c4d909852bf833867eceb07e9b4ed1fab31c301f7621dbd
+inputs: table/arrays/CA_11_2_5_3_c33e3aff.txt c33e3affe9fb0e86bb845caac2760b9e701c604dc6458ae8310ca9a2ac278d3d
+sha256 programs/pprod.py 76c9dc83ca65a9289de94a734ece5ff2f1eeb1b796bfef7839d0920b7ac0cb21
+sha256 programs/ext2t.c 39d0e5ab01803e6b7ad2e0cf6580837bcbffe5c6212c3c80590ad6d079c6e95e
+[build] $ cc -O3 -o ext2t programs/ext2t.c -lm
+[build] $ python3 programs/pprod.py table/arrays/CA_18_2_52_3.txt 0 1 table/arrays/CA_11_2_5_3_c33e3aff.txt 0 4 p26_247.txt
+[build] rows 26 cols 247 d1 13 d2 1 | sha256 p26_247.txt 9d1946a3c896a7d4e6601416308f05ec5282a2d39612cb4fca5f18ae61d3bc20
+[build] $ ./ext2t p26_247.txt 26 247 0 0 13 1000000 0.7 out/t26 -chain 80 -ntry 200 -kick 200000
+[build] sha256 out/t26_26_296.txt c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+[build] IDENTICAL to CA_26_2_296_3.txt
+[replay] $ cc -O3 -o ext2t programs/ext2t.c -lm
+[replay] $ python3 programs/pprod.py table/arrays/CA_18_2_52_3.txt 0 1 table/arrays/CA_11_2_5_3_c33e3aff.txt 0 4 p26_247.txt
+[replay] rows 26 cols 247 d1 13 d2 1 | sha256 p26_247.txt 9d1946a3c896a7d4e6601416308f05ec5282a2d39612cb4fca5f18ae61d3bc20
+[replay] $ ./ext2t p26_247.txt 26 247 0 0 13 1000000 0.7 out/t26 -chain 80 -ntry 200 -kick 200000
+[replay] sha256 out/t26_26_296.txt c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+[replay] IDENTICAL to CA_26_2_296_3.txt
+sha256 CA_26_2_296_3.txt (submitted) c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+RESULT: build and replay both IDENTICAL to the submitted file

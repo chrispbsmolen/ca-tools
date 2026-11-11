@@ -1,0 +1,116 @@
+[build] $ cc -O3 -o ext2t programs/ext2t.c -lm
+[build] $ python3 programs/pprod.py table/arrays/CA_18_2_52_3.txt 0 1 table/arrays/CA_11_2_5_3_c33e3aff.txt 0 4 p26_247.txt
+[build] rows 26 cols 247 d1 13 d2 1 | sha256 p26_247.txt 9d1946a3c896a7d4e6601416308f05ec5282a2d39612cb4fca5f18ae61d3bc20
+[build] $ ./ext2t p26_247.txt 26 247 0 0 13 1000000 0.7 out/t26 -chain 80 -ntry 200 -kick 200000
+----- [build] FOUND lines of ext2t -----
+FOUND out/t26_26_247.txt t=0.0 (leg 0.0 s) it=0
+FOUND out/t26_26_248.txt t=0.0 (leg 0.0 s) it=17
+FOUND out/t26_26_249.txt t=0.0 (leg 0.0 s) it=373
+FOUND out/t26_26_250.txt t=0.0 (leg 0.0 s) it=379
+FOUND out/t26_26_251.txt t=0.0 (leg 0.0 s) it=1306
+FOUND out/t26_26_252.txt t=0.0 (leg 0.0 s) it=1309
+FOUND out/t26_26_253.txt t=0.0 (leg 0.0 s) it=1330
+FOUND out/t26_26_254.txt t=0.0 (leg 0.0 s) it=1336
+FOUND out/t26_26_255.txt t=0.2 (leg 0.2 s) it=60072
+FOUND out/t26_26_256.txt t=0.2 (leg 0.0 s) it=60131
+FOUND out/t26_26_257.txt t=0.3 (leg 0.1 s) it=78531
+FOUND out/t26_26_258.txt t=0.3 (leg 0.0 s) it=80756
+FOUND out/t26_26_259.txt t=0.3 (leg 0.0 s) it=80913
+FOUND out/t26_26_260.txt t=0.3 (leg 0.0 s) it=80960
+FOUND out/t26_26_261.txt t=0.3 (leg 0.0 s) it=81011
+FOUND out/t26_26_262.txt t=0.4 (leg 0.1 s) it=116493
+FOUND out/t26_26_263.txt t=0.4 (leg 0.0 s) it=116605
+FOUND out/t26_26_264.txt t=0.4 (leg 0.0 s) it=116752
+FOUND out/t26_26_265.txt t=0.4 (leg 0.0 s) it=116807
+FOUND out/t26_26_266.txt t=0.4 (leg 0.0 s) it=118097
+FOUND out/t26_26_267.txt t=0.5 (leg 0.0 s) it=127461
+FOUND out/t26_26_268.txt t=0.5 (leg 0.0 s) it=129626
+FOUND out/t26_26_269.txt t=0.6 (leg 0.2 s) it=171056
+FOUND out/t26_26_270.txt t=0.6 (leg 0.0 s) it=171165
+FOUND out/t26_26_271.txt t=0.7 (leg 0.0 s) it=172022
+FOUND out/t26_26_272.txt t=0.7 (leg 0.0 s) it=172147
+FOUND out/t26_26_273.txt t=0.7 (leg 0.0 s) it=172441
+FOUND out/t26_26_274.txt t=0.7 (leg 0.0 s) it=177301
+FOUND out/t26_26_275.txt t=0.7 (leg 0.0 s) it=185581
+FOUND out/t26_26_276.txt t=0.9 (leg 0.2 s) it=228435
+FOUND out/t26_26_277.txt t=1.3 (leg 0.3 s) it=317453
+FOUND out/t26_26_278.txt t=1.3 (leg 0.0 s) it=320569
+FOUND out/t26_26_279.txt t=1.3 (leg 0.0 s) it=321343
+FOUND out/t26_26_280.txt t=1.4 (leg 0.1 s) it=339536
+FOUND out/t26_26_281.txt t=1.4 (leg 0.0 s) it=342846
+FOUND out/t26_26_282.txt t=3.9 (leg 2.5 s) it=925902
+FOUND out/t26_26_283.txt t=4.0 (leg 0.2 s) it=964348
+FOUND out/t26_26_284.txt t=4.1 (leg 0.0 s) it=970567
+FOUND out/t26_26_285.txt t=4.1 (leg 0.0 s) it=976821
+FOUND out/t26_26_286.txt t=4.3 (leg 0.2 s) it=1012508
+FOUND out/t26_26_287.txt t=4.4 (leg 0.1 s) it=1039299
+FOUND out/t26_26_288.txt t=5.2 (leg 0.8 s) it=1240165
+FOUND out/t26_26_289.txt t=5.5 (leg 0.2 s) it=1286681
+FOUND out/t26_26_290.txt t=5.5 (leg 0.0 s) it=1290757
+FOUND out/t26_26_291.txt t=6.8 (leg 1.3 s) it=1581996
+FOUND out/t26_26_292.txt t=13.3 (leg 6.5 s) it=2879353
+FOUND out/t26_26_293.txt t=20.9 (leg 7.6 s) it=4367341
+FOUND out/t26_26_294.txt t=366.1 (leg 345.3 s) it=72553484
+FOUND out/t26_26_295.txt t=469.4 (leg 103.3 s) it=93015255
+FOUND out/t26_26_296.txt t=636.7 (leg 167.3 s) it=125556965
+[build] sha256 out/t26_26_296.txt c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+[build] IDENTICAL to CA_26_2_296_3.txt
+[replay] $ cc -O3 -o ext2t programs/ext2t.c -lm
+[replay] $ python3 programs/pprod.py table/arrays/CA_18_2_52_3.txt 0 1 table/arrays/CA_11_2_5_3_c33e3aff.txt 0 4 p26_247.txt
+[replay] rows 26 cols 247 d1 13 d2 1 | sha256 p26_247.txt 9d1946a3c896a7d4e6601416308f05ec5282a2d39612cb4fca5f18ae61d3bc20
+[replay] $ ./ext2t p26_247.txt 26 247 0 0 13 1000000 0.7 out/t26 -chain 80 -ntry 200 -kick 200000
+----- [replay] FOUND lines of ext2t -----
+FOUND out/t26_26_247.txt t=0.0 (leg 0.0 s) it=0
+FOUND out/t26_26_248.txt t=0.0 (leg 0.0 s) it=17
+FOUND out/t26_26_249.txt t=0.0 (leg 0.0 s) it=373
+FOUND out/t26_26_250.txt t=0.0 (leg 0.0 s) it=379
+FOUND out/t26_26_251.txt t=0.0 (leg 0.0 s) it=1306
+FOUND out/t26_26_252.txt t=0.0 (leg 0.0 s) it=1309
+FOUND out/t26_26_253.txt t=0.0 (leg 0.0 s) it=1330
+FOUND out/t26_26_254.txt t=0.0 (leg 0.0 s) it=1336
+FOUND out/t26_26_255.txt t=0.2 (leg 0.2 s) it=60072
+FOUND out/t26_26_256.txt t=0.2 (leg 0.0 s) it=60131
+FOUND out/t26_26_257.txt t=0.3 (leg 0.1 s) it=78531
+FOUND out/t26_26_258.txt t=0.3 (leg 0.0 s) it=80756
+FOUND out/t26_26_259.txt t=0.3 (leg 0.0 s) it=80913
+FOUND out/t26_26_260.txt t=0.3 (leg 0.0 s) it=80960
+FOUND out/t26_26_261.txt t=0.3 (leg 0.0 s) it=81011
+FOUND out/t26_26_262.txt t=0.4 (leg 0.1 s) it=116493
+FOUND out/t26_26_263.txt t=0.4 (leg 0.0 s) it=116605
+FOUND out/t26_26_264.txt t=0.4 (leg 0.0 s) it=116752
+FOUND out/t26_26_265.txt t=0.4 (leg 0.0 s) it=116807
+FOUND out/t26_26_266.txt t=0.4 (leg 0.0 s) it=118097
+FOUND out/t26_26_267.txt t=0.5 (leg 0.0 s) it=127461
+FOUND out/t26_26_268.txt t=0.5 (leg 0.0 s) it=129626
+FOUND out/t26_26_269.txt t=0.6 (leg 0.2 s) it=171056
+FOUND out/t26_26_270.txt t=0.6 (leg 0.0 s) it=171165
+FOUND out/t26_26_271.txt t=0.6 (leg 0.0 s) it=172022
+FOUND out/t26_26_272.txt t=0.7 (leg 0.0 s) it=172147
+FOUND out/t26_26_273.txt t=0.7 (leg 0.0 s) it=172441
+FOUND out/t26_26_274.txt t=0.7 (leg 0.0 s) it=177301
+FOUND out/t26_26_275.txt t=0.7 (leg 0.0 s) it=185581
+FOUND out/t26_26_276.txt t=0.9 (leg 0.2 s) it=228435
+FOUND out/t26_26_277.txt t=1.3 (leg 0.3 s) it=317453
+FOUND out/t26_26_278.txt t=1.3 (leg 0.0 s) it=320569
+FOUND out/t26_26_279.txt t=1.3 (leg 0.0 s) it=321343
+FOUND out/t26_26_280.txt t=1.4 (leg 0.1 s) it=339536
+FOUND out/t26_26_281.txt t=1.4 (leg 0.0 s) it=342846
+FOUND out/t26_26_282.txt t=3.9 (leg 2.5 s) it=925902
+FOUND out/t26_26_283.txt t=4.0 (leg 0.2 s) it=964348
+FOUND out/t26_26_284.txt t=4.1 (leg 0.0 s) it=970567
+FOUND out/t26_26_285.txt t=4.1 (leg 0.0 s) it=976821
+FOUND out/t26_26_286.txt t=4.3 (leg 0.2 s) it=1012508
+FOUND out/t26_26_287.txt t=4.4 (leg 0.1 s) it=1039299
+FOUND out/t26_26_288.txt t=5.2 (leg 0.9 s) it=1240165
+FOUND out/t26_26_289.txt t=5.5 (leg 0.2 s) it=1286681
+FOUND out/t26_26_290.txt t=5.5 (leg 0.0 s) it=1290757
+FOUND out/t26_26_291.txt t=6.8 (leg 1.3 s) it=1581996
+FOUND out/t26_26_292.txt t=13.3 (leg 6.5 s) it=2879353
+FOUND out/t26_26_293.txt t=20.8 (leg 7.5 s) it=4367341
+FOUND out/t26_26_294.txt t=364.6 (leg 343.8 s) it=72553484
+FOUND out/t26_26_295.txt t=468.0 (leg 103.5 s) it=93015255
+FOUND out/t26_26_296.txt t=634.8 (leg 166.8 s) it=125556965
+[replay] sha256 out/t26_26_296.txt c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+[replay] IDENTICAL to CA_26_2_296_3.txt
+sha256 CA_26_2_296_3.txt (submitted) c7255d14ce7c9856d9822f36c8eb3f2849970bc72339e07567af31937a21ae81
+RESULT: build and replay both IDENTICAL to the submitted file
