@@ -24,6 +24,7 @@ import io
 import json
 import os
 import random
+import re
 import shutil
 import subprocess
 import sys
@@ -79,8 +80,23 @@ def make_repo(T):
             shutil.copytree(p, os.path.join(T, "table", name))
         elif not name.endswith(".md"):
             shutil.copyfile(p, os.path.join(T, "table", name))
+    # The copy stores only the arrays that a construction certificate of table/constructions names as a
+    # table ingredient ({"table": sha256}, since 2026-11-11 smolen-2026-11-t2-gaps-pca), with their
+    # MANIFEST.csv rows: the certificate is checked against the table, so its ingredient must be there.
+    need = set()
+    for root, _, names in os.walk(os.path.join(src, "constructions")):
+        for n in names:
+            if n.endswith(".cert.json"):
+                need |= set(re.findall(r'"table"\s*:\s*"([0-9a-f]{64})"', open(os.path.join(root, n), encoding="utf-8").read()))
+    man = list(csv.DictReader(open(os.path.join(src, "MANIFEST.csv"), newline="", encoding="utf-8")))
+    keep = [m for m in man if m["sha256"] in need]
+    for m in keep:
+        shutil.copyfile(os.path.join(src, "arrays", m["file"]), os.path.join(T, "table", "arrays", m["file"]))
     with open(os.path.join(T, "table", "MANIFEST.csv"), "w", encoding="utf-8", newline="") as f:
         f.write(",".join('"%s"' % h for h in cs.MANIFEST_HEADER) + "\n")
+        if keep:
+            f.write(cs.manifest_csv_text([[int(m[c]) if c in ("t", "v", "k", "N") else m[c] for c in cs.MANIFEST_HEADER]
+                                          for m in keep]))
     # the copy holds no stored arrays (MANIFEST.csv above is empty), so no listing of
     # table/constructions/CONSTRUCTIONS.csv may name one: its "stored" column is emptied the same way.
     # Without this, every listing with a stored array (11 since 2026-11-02, smolen-2026-11-powercz-round2
