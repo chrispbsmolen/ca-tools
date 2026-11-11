@@ -1,0 +1,19 @@
+N=24 k=195 free cells=0 start holes=0 T=0.7
+FOUND out/t24a_24_195.txt t=0.0 (leg 0.0 s) it=0
+FOUND out/t24a_24_196.txt t=0.0 (leg 0.0 s) it=14
+FOUND out/t24a_24_197.txt t=0.0 (leg 0.0 s) it=107
+FOUND out/t24a_24_198.txt t=0.0 (leg 0.0 s) it=211
+FOUND out/t24a_24_199.txt t=0.0 (leg 0.0 s) it=3653
+FOUND out/t24a_24_200.txt t=0.0 (leg 0.0 s) it=3700
+FOUND out/t24a_24_201.txt t=0.0 (leg 0.0 s) it=6782
+FOUND out/t24a_24_202.txt t=0.1 (leg 0.0 s) it=9645
+FOUND out/t24a_24_203.txt t=0.1 (leg 0.0 s) it=10943
+FOUND out/t24a_24_204.txt t=0.1 (leg 0.0 s) it=10976
+FOUND out/t24a_24_205.txt t=0.7 (leg 0.7 s) it=211006
+FOUND out/t24a_24_206.txt t=5.8 (leg 5.1 s) it=1521021
+FOUND out/t24a_24_207.txt t=7.5 (leg 1.7 s) it=1915895
+FOUND out/t24a_24_208.txt t=27.9 (leg 20.4 s) it=6486112
+t=30 it=6934016 k=209 holes=10 best=7
+t=60 it=13362176 k=209 holes=17 best=10
+FOUND out/t24a_24_209.txt t=89.8 (leg 61.8 s) it=19751928
+t=90 it=19798272 k=210 holes=7 best=4

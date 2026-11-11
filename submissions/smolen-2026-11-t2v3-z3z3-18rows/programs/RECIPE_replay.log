@@ -1,0 +1,20 @@
+recipe_item123 tag replay on Linux x86_64; cc: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; python: Python 3.13.18
+sha256 recipe_item123.sh 9c45703866577f8e20adc07aa7988c0a935a9d14c965356462994ac2d66b3376
+sha256 orbq7.c 45a44c332cbbe25f466f1d74b4c9d9af69680097fec56b44e796076f41a0bcd9
+sha256 mkgrp.py 45051ad07e72a92061b2809ad57cd0c375832b9bdaa8577576598ab962664c02
+sha256 pprod.py 76c9dc83ca65a9289de94a734ece5ff2f1eeb1b796bfef7839d0920b7ac0cb21
+sha256 ext2t.c 39d0e5ab01803e6b7ad2e0cf6580837bcbffe5c6212c3c80590ad6d079c6e95e
+sha256 chk.py e26c9f2f34df6c814274345e26c61c768f64c89b72c0926ea96af999cfa8e766
+sha256 CA_15_2_20_3_fd13075b.txt fd13075ba34ec8dc33a01976f7059b7bc9798c5d119f110e287105e775a68b31
+step1 | python3 ../mkgrp.py z3z3 a,a,b,b,c,c 0 > z_18_aabbcc_f0.txt | out z_18_aabbcc_f0.txt 123a40ed5a48ce09cb6be3b20679d0827bcc85e73d869ac544692936a7d3a2aa
+step2 | ./orbq7 z_18_aabbcc_f0.txt 4 20 w18 | no seed, runs to completion | out w18_dump_18_52.txt 219977d44260bce42019d2acf50cb5020f2b29e6483ba76721f51e4dc36f5414 | EXACT COMPLETE: m-cliques (up to normaliser, as enumerated) 27, largest clique seen 4, best columns 52 | free-column histogram: 1:16 4:9 16:2
+check | N=18 k=52 t=2 v=3 missing=0 VERIFIED
+step3 | python3 ../pprod.py CA_18_2_52_3.txt 0 1 ../CA_15_2_20_3_fd13075b.txt 0 3 CA_30_2_975_3.txt | out CA_30_2_975_3.txt 2ba16ae457fbcab3e610f605446e2b826a409bc1c65a9cf4eb7404e66924a870 | rows 30 cols 975 d1 13 d2 5
+check | N=30 k=975 t=2 v=3 missing=0 VERIFIED
+step4 | rows (i, j, i+j, i+2j) mod 3 for i, j in 0..2 | out oa9.txt 9133df9583a3153737a1e00b5cd8ddf25ede3dd6f5e66d9156113d12ffe07a44 | N=9 k=4 t=2 v=3 missing=0 VERIFIED
+step5 | python3 ../pprod.py CA_18_2_52_3.txt 0 1 oa9.txt 0 1 p24_195.txt | out p24_195.txt 11a770950b2fc13db5aa5689455307798bcb96e4226c234dfd778bc4321443ee | rows 24 cols 195 d1 13 d2 1
+step6 | ./ext2t p24_195.txt 24 195 0 0 13 100000 0.7 out/t24a -chain 30 -ntry 200 -kick 200000 | seed 13, stopped after the array at 209 columns was saved | in p24_195.txt 11a770950b2fc13db5aa5689455307798bcb96e4226c234dfd778bc4321443ee | out out/t24a_24_209.txt 47c88f55453517431e920ee88665baf2be34dea370a02481fad9bdbcdc2e70f3 | FOUND out/t24a_24_209.txt t=89.2 (leg 61.6 s) it=19751928
+check | N=24 k=209 t=2 v=3 missing=0 VERIFIED
+DONE CA_18_2_52_3.txt sha256 219977d44260bce42019d2acf50cb5020f2b29e6483ba76721f51e4dc36f5414
+DONE CA_30_2_975_3.txt sha256 2ba16ae457fbcab3e610f605446e2b826a409bc1c65a9cf4eb7404e66924a870
+DONE CA_24_2_209_3.txt sha256 47c88f55453517431e920ee88665baf2be34dea370a02481fad9bdbcdc2e70f3
