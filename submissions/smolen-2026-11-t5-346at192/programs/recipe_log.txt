@@ -1,0 +1,32 @@
+RECIPE CA(346;5,192,2) started 2026-11-12T18:56:55Z
+source need5s.c sha256 157fa0a4bfec62d7c52006d6ba92a0c0d848c52a388e0a54b6a7725ee411c5d5
+source expand.py sha256 8d5ce2c38d9c6140a4d35ddb8e489d40e2309e80724905ee9a96d41c0d72d7c5
+source subsel.c sha256 a793c162286f9ba85f04810a18398ab87f21082fa13e7060a9a20bd0ca7d6ea5
+source mklist.py sha256 ab39aeec9817d06cf47c8ba1ca88bd70fea3d5dbd11c1b8cf371334ee38de9e0
+source build.py sha256 b564d3861f439e8e8b882cbbc56b7be91ebee19f0a9ffe9e138102a101fc8370
+source ls2m.c sha256 2d47935aa9032acc2028eaeb8e89572a596108ee81fcc3187fbe022c502e0db5
+source repcm.c sha256 27b3808c89b91422543562cba0dfa645ab4d2042a7156763a83b10298b523698
+cmd: ./need5s 337 > need337.txt
+need337.txt sha256 0a001fc0fba02f4e4403f37e8c9cc7d30cacd5506a49a75c7ffa11c52a8c60e0 lines 3360
+cmd: python3 expand.py (writes need337_full.npz) then pairs_cols.txt
+226464
+pairs 226464 options hist [     0  56616 113232      0      0  56616]
+pairs_cols.txt sha256 ce146032abd29d6eb836fdcabd773211cbfafd9837855e5a46a401e880e6b808
+cmd: ./subsel 337 192 pairs_cols.txt 1500000 1 1.0 sub_T1.0.txt
+best 10415
+sub_T1.0.txt sha256 6c69d36da07804e6a7464c13b2f9e5b26a37c528a778552a2c868355c3539b8e
+cmd: python3 mklist.py sub_T1.0.txt need_sub.txt
+10415
+need_sub.txt sha256 1901dd3c8db681fbcb8f5a19431b34a14205d471bc99f9f37ffe8ddc6b67c80f
+cmd: ./ls2m 337 9 need_sub.txt 0.35 -35363840 1 > ls2_a.out   (negative secs = move count 35363840)
+ls2_a.out sha256 bba675cf0be4f8686c26f0d52180304e18352ee2f3703b83f15c8d017f336c0f first line: final 123 best 113 moves 35363840
+cmd: python3 build.py sub_T1.0.txt ls2_a.out A346_start.txt
+346 192
+A346_start.txt sha256 4c66937d225085b7060763878adb91c50cf4f9923208212d3dcade35e25aa964
+cmd: MAXIT=99 ./repcm A346_start.txt 0 1 0 0.5 r1
+r1_cur_346.txt sha256 1353d7b72b398c5841b225a85c7f6fcb37b9fd792f2bb72724aa1fc34a8b3cfc (end it=99 holes=20 best=20)
+cmd: MAXIT=100000 ./repcm s2_in.txt 0 2 0 0.5 r2
+r2_346.txt sha256 1c304d397c3de1576eb7380fc8e68a8aa024fe995bd98fbf7b8ced58df2edd83 (it=62 t=265.0 holes=0 events=76127)
+expected original sha256 1c304d397c3de1576eb7380fc8e68a8aa024fe995bd98fbf7b8ced58df2edd83
+REPRODUCED EXACTLY
+finished 2026-11-12T19:20:52Z
