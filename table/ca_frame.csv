@@ -323,7 +323,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,71,101,row,CITED,t2-v7-k71-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k71-1,,2026-08-23,2026-11-12
 2,7,72,102,row,CITED,t2-v7-k72-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k72-1,,2026-08-23,2026-11-12
 2,7,79,103,row,CITED,t2-v7-k79-1,,,file,table/arrays/CA_103_2_79_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013, profiles of covering arrays)",t2-v7-k79-1;t2-v7-k79-2,,2026-08-23,2026-11-12
-2,7,80,105,row,CITED,t2-v7-k80-1,,,none,,Direct product,,Direct product,t2-v7-k80-1,,2026-08-23,2026-11-12
+2,7,80,105,row,CITED,t2-v7-k80-1,,,file,table/arrays/CA_105_2_80_7.txt,Direct product,,"Direct product || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 79 columns",t2-v7-k80-1;t2-v7-k80-2,,2026-08-23,2026-11-12
 2,7,87,107,row,CITED,t2-v7-k87-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k87-1,,2026-08-23,2026-11-12
 2,7,88,109,row,CITED,t2-v7-k88-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k88-1,,2026-08-23,2026-11-12
 2,7,91,111,row,CITED,t2-v7-k91-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k91-1,,2026-08-23,2026-11-12
@@ -345,7 +345,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,176,129,row,CITED,t2-v7-k176-1,,,none,,Direct product,,Direct product,t2-v7-k176-1,,2026-08-23,2026-11-12
 2,7,219,130,row,CITED,t2-v7-k219-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k219-1,,2026-08-23,2026-11-12
 2,7,497,133,row,CITED,t2-v7-k497-1,,,file,table/arrays/CA_133_2_497_7.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v7-k497-1;t2-v7-k497-2,,2026-08-23,2026-11-12
-2,7,504,138,row,CITED,t2-v7-k504-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k504-1,,2026-08-23,2026-11-12
+2,7,504,138,row,CITED,t2-v7-k504-1,,,file,table/arrays/CA_138_2_504_7.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(49; 2, 8, 7) and CA(91; 2, 63, 7); found by the construction closure of the table's real arrays",t2-v7-k504-1;t2-v7-k504-2,,2026-08-23,2026-11-12
 2,7,521,140,row,CITED,t2-v7-k521-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k521-1,,2026-08-23,2026-11-12
 2,7,560,143,row,CITED,t2-v7-k560-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k560-1,,2026-08-23,2026-11-12
 2,7,568,144,row,CITED,t2-v7-k568-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k568-1,,2026-08-23,2026-11-12
@@ -442,7 +442,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,8,252,174,row,CITED,t2-v8-k252-1,,,none,,Direct product,,Direct product,t2-v8-k252-1,,2026-08-23,2026-11-12
 2,8,270,175,row,CITED,t2-v8-k270-1,,,none,,Direct product,,Direct product,t2-v8-k270-1,,2026-08-23,2026-11-12
 2,8,712,176,row,CITED,t2-v8-k712-1,,,file,table/arrays/CA_176_2_712_8.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v8-k712-1;t2-v8-k712-2,,2026-08-23,2026-11-12
-2,8,720,182,row,CITED,t2-v8-k720-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k720-1,,2026-08-23,2026-11-12
+2,8,720,182,row,CITED,t2-v8-k720-1,,,file,table/arrays/CA_182_2_720_8.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(64; 2, 9, 8) and CA(120; 2, 80, 8); found by the construction closure of the table's real arrays",t2-v8-k720-1;t2-v8-k720-2,,2026-08-23,2026-11-12
 2,8,730,184,row,CITED,t2-v8-k730-1,,,none,,Direct product,,Direct product,t2-v8-k730-1,,2026-08-23,2026-11-12
 2,8,740,185,row,CITED,t2-v8-k740-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k740-1,,2026-08-23,2026-11-12
 2,8,792,188,row,CITED,t2-v8-k792-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k792-1,,2026-08-23,2026-11-12
@@ -540,7 +540,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,9,300,223,row,CITED,t2-v9-k300-1,,,none,,Direct product,,Direct product,t2-v9-k300-1,,2026-08-23,2026-11-12
 2,9,307,224,row,CITED,t2-v9-k307-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k307-1,,2026-08-23,2026-11-12
 2,9,981,225,row,CITED,t2-v9-k981-1,,,file,table/arrays/CA_225_2_981_9.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v9-k981-1;t2-v9-k981-2,,2026-08-23,2026-11-12
-2,9,990,232,row,CITED,t2-v9-k990-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k990-1,,2026-08-23,2026-11-12
+2,9,990,232,row,CITED,t2-v9-k990-1,,,file,table/arrays/CA_232_2_990_9.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(81; 2, 10, 9) and CA(153; 2, 99, 9); found by the construction closure of the table's real arrays",t2-v9-k990-1;t2-v9-k990-2,,2026-08-23,2026-11-12
 2,9,1000,238,row,CITED,t2-v9-k1000-1,,,none,,Direct product,,Direct product,t2-v9-k1000-1,,2026-08-23,2026-11-12
 2,9,1092,242,row,CITED,t2-v9-k1092-1,,,none,,Direct product,,Direct product,t2-v9-k1092-1,,2026-08-23,2026-11-12
 2,9,1278,249,row,CITED,t2-v9-k1278-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k1278-1,,2026-08-23,2026-11-12
