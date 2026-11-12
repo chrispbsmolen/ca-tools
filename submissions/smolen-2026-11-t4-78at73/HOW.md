@@ -31,9 +31,10 @@ stopped with 19 patterns uncovered.
 
 The array was checked exactly with ca_verify on all 1,088,430 sets of four columns.
 
-Built from the quadratic character of GF(73) only. No array of Torres-Jimenez is an ingredient or start.
+Built from: the quadratic character of GF(73) only. No array of Torres-Jimenez is an ingredient or start.
 
-To rebuild:
+Program: programs/need.c (the list of patterns), programs/ls.c (the annealing) and programs/build.py (writes the
+array), all in this folder. To rebuild:
     cc -O2 -o need programs/need.c
     cc -O2 -o ls programs/ls.c -lm
     ./need 73 > need73.txt
