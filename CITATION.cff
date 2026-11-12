@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this table, its arrays or its tools, please cite it as below, with the version or commit you used. Each row of the table names its own source; please also cite the authors of the rows you use."
+title: "ca-tools: a living table of covering arrays, with checked arrays and the tools that verify them"
+type: dataset
+authors:
+  - family-names: Smolen
+    given-names: Christopher
+    orcid: "https://orcid.org/0009-0002-9537-7961"
+repository-code: "https://github.com/chrispbsmolen/ca-tools"
+url: "https://chrispbsmolen.github.io/ca-tools/"
+license: MIT
+keywords:
+  - covering arrays
+  - combinatorial testing
+  - combinatorial design
+  - best known sizes
+  - verified arrays
+references:
+  - type: report
+    title: "Cyclic covering perfect hash families: new covering arrays of strength five and six with exact certificates"
+    authors:
+      - family-names: Smolen
+        given-names: Christopher
+    doi: "10.5281/zenodo.23751687"

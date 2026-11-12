@@ -1,0 +1,14 @@
+{
+  "title": "ca-tools: a living table of covering arrays, with checked arrays and the tools that verify them",
+  "upload_type": "dataset",
+  "creators": [
+    {"name": "Smolen, Christopher", "orcid": "0009-0002-9537-7961"}
+  ],
+  "description": "<p>A maintained table of best known covering array sizes CA(N; t, k, v) for strengths 2 to 6, starting from the November 2024 status of Colbourn's tables, with every array the table can give checked exactly (ca_verify) or through a construction certificate, a frame file of the best known value at every step, and the tools that build and check them. Every row names its source and credits its authors; results of other authors should be cited to them.</p><p>The code is under the MIT license. The arrays and certificates built by this project (source S8) are by Christopher Smolen under CC BY 4.0. Data from other sources remains under those sources' terms (table/README.md, Attribution).</p>",
+  "license": "MIT",
+  "keywords": ["covering arrays", "combinatorial testing", "combinatorial design", "best known sizes", "verified arrays"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/chrispbsmolen/ca-tools", "relation": "isSupplementTo", "scheme": "url"},
+    {"identifier": "10.5281/zenodo.23751687", "relation": "isSupplementedBy", "scheme": "doi"}
+  ]
+}
