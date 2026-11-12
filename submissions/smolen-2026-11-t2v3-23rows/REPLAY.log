@@ -1,0 +1,36 @@
+[build] $ cc -O3 -o ext2t programs/ext2t.c -lm ; cc -O3 -o drop1 programs/drop1.c
+[build] $ python3 programs/pprod.py programs/CA_17_2_29_3_16af2149.txt 7 16 programs/OA_9_2_4_3.txt 0 1 p23a.txt
+[build] rows 23 cols 110 d1 6 d2 1 | sha256 p23a.txt 67c4386eefb52677163b0cb2aa84fe265f44b1a4f92d28623da4d1d821e0ef48
+[build] $ ./ext2t p23a.txt 23 110 0 0 2003 1000000 0.65 out/a2003 -chain 40 -fr 15,16,17,18,19,20,21,22 -ntry 200 -kick 200000   (stopped when out/a2003_23_136.txt is saved)
+FOUND out/a2003_23_135.txt t=38.8 (leg 0.7 s) it=15417106
+FOUND out/a2003_23_136.txt t=1075.9 (leg 1037.1 s) it=402147672
+[build] sha256 out/a2003_23_136.txt d2c5838d0d63a50a48a4184adaf4de97f1bd0da58242549ff02ddcac3578594e
+[build] $ ./ext2t out/a2003_23_136.txt 23 136 0 0 2003 1000000 0.40 out/b2003 -chain 4 -frl 23 -ntry 200   (stopped when out/b2003_23_137.txt is saved)
+FOUND out/b2003_23_136.txt t=0.0 (leg 0.0 s) it=0
+FOUND out/b2003_23_137.txt t=32.8 (leg 32.8 s) it=12900846
+[build] sha256 out/b2003_23_137.txt 34ab2f4e8bf8a57b917452cb2ed7baa684da22a6097a86b1e29410d956a11566
+[build] $ ./drop1 out/b2003_23_137.txt
+out/b2003_23_137.txt: drop column 48 -> 3 free columns, 2 compatible: 138 columns total
+out/b2003_23_137.txt: N 23 k 137 drop-one result 2
+[build] out/b2003_23_137.txt: drop column 48 -> 3 free columns, 2 compatible: 138 columns total
+[build] sha256 out/b2003_23_137.txt.plus1 c2d1687e650be246e5f183d4108ccae6b6dd2989178946a37a06e9c4d4a6809d
+[build] IDENTICAL to CA_23_2_138_3.txt
+[replay] $ cc -O3 -o ext2t programs/ext2t.c -lm ; cc -O3 -o drop1 programs/drop1.c
+[replay] $ python3 programs/pprod.py programs/CA_17_2_29_3_16af2149.txt 7 16 programs/OA_9_2_4_3.txt 0 1 p23a.txt
+[replay] rows 23 cols 110 d1 6 d2 1 | sha256 p23a.txt 67c4386eefb52677163b0cb2aa84fe265f44b1a4f92d28623da4d1d821e0ef48
+[replay] $ ./ext2t p23a.txt 23 110 0 0 2003 1000000 0.65 out/a2003 -chain 40 -fr 15,16,17,18,19,20,21,22 -ntry 200 -kick 200000   (stopped when out/a2003_23_136.txt is saved)
+FOUND out/a2003_23_135.txt t=38.2 (leg 0.8 s) it=15417106
+FOUND out/a2003_23_136.txt t=1070.8 (leg 1032.6 s) it=402147672
+[replay] sha256 out/a2003_23_136.txt d2c5838d0d63a50a48a4184adaf4de97f1bd0da58242549ff02ddcac3578594e
+[replay] $ ./ext2t out/a2003_23_136.txt 23 136 0 0 2003 1000000 0.40 out/b2003 -chain 4 -frl 23 -ntry 200   (stopped when out/b2003_23_137.txt is saved)
+FOUND out/b2003_23_136.txt t=0.0 (leg 0.0 s) it=0
+FOUND out/b2003_23_137.txt t=31.0 (leg 31.0 s) it=12900846
+[replay] sha256 out/b2003_23_137.txt 34ab2f4e8bf8a57b917452cb2ed7baa684da22a6097a86b1e29410d956a11566
+[replay] $ ./drop1 out/b2003_23_137.txt
+out/b2003_23_137.txt: drop column 48 -> 3 free columns, 2 compatible: 138 columns total
+out/b2003_23_137.txt: N 23 k 137 drop-one result 2
+[replay] out/b2003_23_137.txt: drop column 48 -> 3 free columns, 2 compatible: 138 columns total
+[replay] sha256 out/b2003_23_137.txt.plus1 c2d1687e650be246e5f183d4108ccae6b6dd2989178946a37a06e9c4d4a6809d
+[replay] IDENTICAL to CA_23_2_138_3.txt
+sha256 CA_23_2_138_3.txt (submitted) c2d1687e650be246e5f183d4108ccae6b6dd2989178946a37a06e9c4d4a6809d
+RESULT: build and replay both IDENTICAL to the submitted file
