@@ -1,0 +1,25 @@
+{
+ "format": "construction-cert-1",
+ "construction": "product-ctj-1",
+ "t": 2,
+ "v": 8,
+ "first": {
+  "table": "e6f4a2c0e4323c86a0f30e463db7d892c09330a02dbdfcf86955f2f1c961e0f3"
+ },
+ "second": {
+  "table": "0cf32aa7c56a3381c8b9b907eecef376e3825e2b0bb777d3ca599a2486ed8cbe"
+ },
+ "constant": [
+  [
+   0
+  ],
+  [
+   0
+  ]
+ ],
+ "expected": {
+  "N": 182,
+  "k": 720,
+  "array_sha256": "2b65c5f65bfd4244f9c1e2738d7025ff030647801bb8136ac908addc9d47e416"
+ }
+}
