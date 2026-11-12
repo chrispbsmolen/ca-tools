@@ -334,7 +334,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,108,118,row,CITED,t2-v7-k108-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k108-1,,2026-08-23,2026-11-12
 2,7,109,119,row,CITED,t2-v7-k109-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k109-1,,2026-08-23,2026-11-12
 2,7,111,120,row,CITED,t2-v7-k111-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k111-1,,2026-08-23,2026-11-12
-2,7,114,121,row,CITED,t2-v7-k114-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k114-1,,2026-08-23,2026-11-12
+2,7,114,121,row,CITED,t2-v7-k114-1,,,file,table/arrays/CA_121_2_114_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 109 columns",t2-v7-k114-1;t2-v7-k114-2,,2026-08-23,2026-11-12
 2,7,115,122,row,CITED,t2-v7-k115-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k115-1,,2026-08-23,2026-11-12
 2,7,120,123,row,CITED,t2-v7-k120-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k120-1,,2026-08-23,2026-11-12
 2,7,128,124,row,CITED,t2-v7-k128-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k128-1,,2026-08-23,2026-11-12
