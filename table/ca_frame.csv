@@ -51,14 +51,14 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,3,20000,43,row,CITED,t2-v3-k20000-1,,,file,table/arrays/CA_43_2_20000_3.txt.gz,CA Extender (TJ-AJ-AG),,"CA Extender (TJ-AJ-AG) || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v3-k20000-1;t2-v3-k20000-2,,2026-08-23,2026-11-12
 2,4,5,16,row,CITED,t2-v4-k5-1,,,file,table/arrays/CA_16_2_5_4.txt,Derive from strength 3,,"Derive from strength 3 || Dwyer CA_Database source code ""OA"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t2-v4-k5-1;t2-v4-k5-2,,2026-08-23,2026-11-12
 2,4,6,19,row,CITED,t2-v4-k6-1,,,file,table/arrays/CA_19_2_6_4.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || cover starter of Meagher and Stevens 2005 developed cyclically,t2-v4-k6-1;t2-v4-k6-2,,2026-08-23,2026-11-12
-2,4,7,21,row,CITED,t2-v4-k7-1,,,none,,simulated annealing (Cohen),,simulated annealing (Cohen),t2-v4-k7-1,,2026-08-23,2026-11-12
+2,4,7,21,row,CITED,t2-v4-k7-1,,,file,table/arrays/CA_21_2_7_4.txt,simulated annealing (Cohen),,"simulated annealing (Cohen) || Column extension at fixed N by simulated annealing, starting from the cover starter of Meagher and Stevens 2005 at 6 columns",t2-v4-k7-1;t2-v4-k7-2,,2026-08-23,2026-11-12
 2,4,9,22,row,CITED,t2-v4-k9-1,,,none,,Fix 2 symbols (LCDST) postop TJ-SA,,Fix 2 symbols (LCDST) postop TJ-SA,t2-v4-k9-1,,2026-08-23,2026-11-12
 2,4,12,24,row,CITED,t2-v4-k12-1,,,file,table/arrays/CA_24_2_12_4.txt,simulated annealing (CKRS),,"simulated annealing (CKRS) || array of Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, as published in the CKRS_CAs data of CAs",t2-v4-k12-1;t2-v4-k12-2,,2026-08-23,2026-11-12
 2,4,13,25,row,CITED,t2-v4-k13-1,,,file,table/arrays/CA_25_2_13_4.txt,simulated annealing (CKRS),,"simulated annealing (CKRS) || array of Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, as published in the CKRS_CAs data of CAs",t2-v4-k13-1;t2-v4-k13-2,,2026-08-23,2026-11-12
 2,4,15,26,row,CITED,t2-v4-k15-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k15-1,,2026-08-23,2026-11-12
 2,4,17,27,row,CITED,t2-v4-k17-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k17-1,,2026-08-23,2026-11-12
 2,4,24,28,row,CITED,t2-v4-k24-1,,,file,table/arrays/CA_28_2_24_4.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v4-k24-1;t2-v4-k24-2,,2026-08-23,2026-11-12
-2,4,27,29,row,CITED,t2-v4-k27-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k27-1,,2026-08-23,2026-11-12
+2,4,27,29,row,CITED,t2-v4-k27-1,,,file,table/arrays/CA_29_2_27_4.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Column extension at fixed N by simulated annealing, starting from the table array CA_28_2_24_4.txt (Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)) at 24 columns",t2-v4-k27-1;t2-v4-k27-2,,2026-08-23,2026-11-12
 2,4,30,30,row,CITED,t2-v4-k30-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k30-1,,2026-08-23,2026-11-12
 2,4,35,31,row,CITED,t2-v4-k35-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k35-1,,2026-08-23,2026-11-12
 2,4,48,32,row,CITED,t2-v4-k48-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k48-1,,2026-08-23,2026-11-12
@@ -136,7 +136,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,5,146,64,row,CITED,t2-v5-k146-1,,,none,,PCAxPCA,,PCAxPCA,t2-v5-k146-1,,2026-08-23,2026-11-12
 2,5,220,65,row,CITED,t2-v5-k220-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k220-1,,2026-08-23,2026-11-12
 2,5,224,68,row,CITED,t2-v5-k224-1,,,none,,PCAxPCA postop TJ-SA,,PCAxPCA postop TJ-SA,t2-v5-k224-1,,2026-08-23,2026-11-12
-2,5,252,69,row,CITED,t2-v5-k252-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k252-1,,2026-08-23,2026-11-12
+2,5,252,69,row,CITED,t2-v5-k252-1,,,file,table/arrays/CA_69_2_252_5.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 224 columns",t2-v5-k252-1;t2-v5-k252-2,,2026-08-23,2026-11-12
 2,5,262,70,row,CITED,t2-v5-k262-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k262-1,,2026-08-23,2026-11-12
 2,5,273,71,row,CITED,t2-v5-k273-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k273-1,,2026-08-23,2026-11-12
 2,5,301,73,row,CITED,t2-v5-k301-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k301-1,,2026-08-23,2026-11-12
@@ -328,19 +328,19 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,88,109,row,CITED,t2-v7-k88-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k88-1,,2026-08-23,2026-11-12
 2,7,91,111,row,CITED,t2-v7-k91-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k91-1,,2026-08-23,2026-11-12
 2,7,100,113,row,CITED,t2-v7-k100-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k100-1,,2026-08-23,2026-11-12
-2,7,101,115,row,CITED,t2-v7-k101-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k101-1,,2026-08-23,2026-11-12
-2,7,103,116,row,CITED,t2-v7-k103-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k103-1,,2026-08-23,2026-11-12
-2,7,104,117,row,CITED,t2-v7-k104-1,,,none,,Direct product,,Direct product,t2-v7-k104-1,,2026-08-23,2026-11-12
-2,7,108,118,row,CITED,t2-v7-k108-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k108-1,,2026-08-23,2026-11-12
-2,7,109,119,row,CITED,t2-v7-k109-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k109-1,,2026-08-23,2026-11-12
+2,7,101,115,row,CITED,t2-v7-k101-1,,,file,table/arrays/CA_115_2_101_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k101-1;t2-v7-k101-2,,2026-08-23,2026-11-12
+2,7,103,116,row,CITED,t2-v7-k103-1,,,file,table/arrays/CA_116_2_103_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k103-1;t2-v7-k103-2,,2026-08-23,2026-11-12
+2,7,104,117,row,CITED,t2-v7-k104-1,,,file,table/arrays/CA_117_2_104_7.txt,Direct product,,"Direct product || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k104-1;t2-v7-k104-2,,2026-08-23,2026-11-12
+2,7,108,118,row,CITED,t2-v7-k108-1,,,file,table/arrays/CA_118_2_108_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k108-1;t2-v7-k108-2,,2026-08-23,2026-11-12
+2,7,109,119,row,CITED,t2-v7-k109-1,,,file,table/arrays/CA_119_2_109_7.txt,PCAxPCA,,"PCAxPCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k109-1;t2-v7-k109-2,,2026-08-23,2026-11-12
 2,7,111,120,row,CITED,t2-v7-k111-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k111-1,,2026-08-23,2026-11-12
 2,7,114,121,row,CITED,t2-v7-k114-1,,,file,table/arrays/CA_121_2_114_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 109 columns",t2-v7-k114-1;t2-v7-k114-2,,2026-08-23,2026-11-12
 2,7,115,122,row,CITED,t2-v7-k115-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k115-1,,2026-08-23,2026-11-12
-2,7,120,123,row,CITED,t2-v7-k120-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k120-1,,2026-08-23,2026-11-12
-2,7,128,124,row,CITED,t2-v7-k128-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k128-1,,2026-08-23,2026-11-12
+2,7,120,123,row,CITED,t2-v7-k120-1,,,file,table/arrays/CA_123_2_120_7.txt,PCAxPCA,,"PCAxPCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 109 columns",t2-v7-k120-1;t2-v7-k120-2,,2026-08-23,2026-11-12
+2,7,128,124,row,CITED,t2-v7-k128-1,,,file,table/arrays/CA_124_2_128_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 109 columns",t2-v7-k128-1;t2-v7-k128-2,,2026-08-23,2026-11-12
 2,7,130,125,row,CITED,t2-v7-k130-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k130-1,,2026-08-23,2026-11-12
 2,7,131,126,row,CITED,t2-v7-k131-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k131-1,,2026-08-23,2026-11-12
-2,7,135,127,row,CITED,t2-v7-k135-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k135-1,,2026-08-23,2026-11-12
+2,7,135,127,row,CITED,t2-v7-k135-1,,,file,table/arrays/CA_127_2_135_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 120 columns",t2-v7-k135-1;t2-v7-k135-2,,2026-08-23,2026-11-12
 2,7,142,128,row,CITED,t2-v7-k142-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k142-1,,2026-08-23,2026-11-12
 2,7,176,129,row,CITED,t2-v7-k176-1,,,none,,Direct product,,Direct product,t2-v7-k176-1,,2026-08-23,2026-11-12
 2,7,219,130,row,CITED,t2-v7-k219-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k219-1,,2026-08-23,2026-11-12
@@ -3485,7 +3485,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,3,10000,366,row,CITED,t3-v3-k10000-1,,,none,,Colbourn-Martirosyan-TVT-Walker,,Colbourn-Martirosyan-TVT-Walker,t3-v3-k10000-1,,2026-08-23,2026-11-12
 3,4,6,64,row,CITED,t3-v4-k6-1,,,file,table/arrays/CA_64_3_6_4.txt,orthogonal array,,"orthogonal array || Dwyer CA_Database source code ""OA"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v4-k6-1;t3-v4-k6-2,,2026-08-23,2026-11-12
 3,4,8,88,row,CITED,t3-v4-k8-1,,,file,table/arrays/CA_88_3_8_4.txt,Chateauneuf-Kreher NRB,,Chateauneuf-Kreher NRB || Chateauneuf-Colbourn-Kreher construction from a starter (CK_NRB),t3-v4-k8-1;t3-v4-k8-2,,2026-08-23,2026-11-12
-3,4,10,100,row,CITED,t3-v4-k10-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k10-1,,2026-08-23,2026-11-12
+3,4,10,100,row,CITED,t3-v4-k10-1,,,file,table/arrays/CA_100_3_10_4.txt,Torres Jimenez,,"Torres Jimenez || Column extension at fixed N by simulated annealing, starting from the table array CA_88_3_8_4.txt (Chateauneuf-Colbourn-Kreher construction from a starter (CK_NRB)) at 8 columns",t3-v4-k10-1;t3-v4-k10-2,,2026-08-23,2026-11-12
 3,4,11,110,row,CITED,t3-v4-k11-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k11-1,,2026-08-23,2026-11-12
 3,4,12,120,row,CITED,t3-v4-k12-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k12-1,,2026-08-23,2026-11-12
 3,4,18,124,row,CITED,t3-v4-k18-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k18-1,,2026-08-23,2026-11-12
@@ -3766,7 +3766,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,6,6,258,row,CITED,t3-v6-k6-1,,,file,table/arrays/CA_258_3_6_6.txt,cross-sum (CKRS),,"cross-sum (CKRS) || Dwyer CA_Database source code ""CrossSum"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v6-k6-1;t3-v6-k6-2,,2026-08-23,2026-11-12
 3,6,7,290,row,CITED,t3-v6-k7-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v6-k7-1,,2026-08-23,2026-11-12
 3,6,8,301,row,CITED,t3-v6-k8-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v6-k8-1,,2026-08-23,2026-11-12
-3,6,9,361,row,CITED,t3-v6-k9-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v6-k9-1,,2026-08-23,2026-11-12
+3,6,9,361,row,CITED,t3-v6-k9-1,,,file,table/arrays/CA_361_3_9_6.txt,Torres Jimenez,,"Torres Jimenez || Column extension at fixed N by simulated annealing, starting from the fusion of a Bose orthogonal array (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010) at 8 columns",t3-v6-k9-1;t3-v6-k9-2,,2026-08-23,2026-11-12
 3,6,10,366,row,VERIFIED,t3-v6-k10-2,6,exact,file,table/arrays/CA_366_3_10_6.txt,"Iterative row deletion with Nurmela-style tabu single-cell post-optimization from a 396-row PSL(2,5) group-orbit cover on P^1(F_5) (1 constant 6-row orbit + 4 generic 60-row orbits + 5 binary-stabilizer {0,inf}^10 30-row orbits)",,"Iterative row deletion with Nurmela-style tabu single-cell post-optimization from a 396-row PSL(2,5) group-orbit cover on P^1(F_5) (1 constant 6-row orbit + 4 generic 60-row orbits + 5 binary-stabilizer {0,inf}^10 30-row orbits)",t3-v6-k10-2,t3-v6-k10-1,2026-11-02,2026-11-12
 3,6,11,411,row,VERIFIED,t3-v6-k11-4,6,exact,file,table/arrays/CA_411_3_11_6.txt,"Iterative row deletion followed by single-cell local repair: unweighted conflict-tabu search (418->412) and WalkTabu + Bounded-Excursion Weighted-Tabu (BE-PAWS, 412->411) starting from table/arrays/CA_418_3_11_6.txt (pr-21; obtained by tabu repair and row deletion from a 426-row mixed-(30,60) PSL(2,5) orbit union on P^1(F_5))",,"Iterative row deletion followed by single-cell local repair: unweighted conflict-tabu search (418->412) and WalkTabu + Bounded-Excursion Weighted-Tabu (BE-PAWS, 412->411) starting from table/arrays/CA_418_3_11_6.txt (pr-21; obtained by tabu repair and row deletion from a 426-row mixed-(30,60) PSL(2,5) orbit union on P^1(F_5))",t3-v6-k11-4,t3-v6-k11-3,2026-11-10,2026-11-12
 3,6,12,456,row,VERIFIED,t3-v6-k12-2,6,exact,file,table/arrays/CA_456_3_12_6.txt,"Pure PSL(2,5) group-orbit covering array on P^1(F_5) (1 constant 6-row orbit + 5 generic 60-row orbits + 5 binary-stabilizer {0,inf}^12 30-row orbits = 456 rows)",,"Pure PSL(2,5) group-orbit covering array on P^1(F_5) (1 constant 6-row orbit + 5 generic 60-row orbits + 5 binary-stabilizer {0,inf}^12 30-row orbits = 456 rows)",t3-v6-k12-2,t3-v6-k12-1,2026-11-02,2026-11-12
