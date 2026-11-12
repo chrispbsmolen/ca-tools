@@ -44,11 +44,11 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,3,4914,36,row,VERIFIED,t2-v3-k4914-1,1,exact,file,table/arrays/CA_36_2_4914_3.txt,"Profile product of the table's CA(18; 2, 52, 3) with an own array, CA(36; 2, 4563, 3), then column extension by simulated annealing to 4914 columns",,"Profile product of the table's CA(18; 2, 52, 3) with an own array, CA(36; 2, 4563, 3), then column extension by simulated annealing to 4914 columns",t2-v3-k4914-1,t2-v3-k5763-1,2026-11-11,2026-11-12
 2,3,5730,37,row,VERIFIED,t2-v3-k5730-1,1,exact,file,table/arrays/CA_37_2_5730_3.txt,"Profile product of the table's CA(18; 2, 52, 3) with an own array, CA(37; 2, 5252, 3), then column extension by simulated annealing to 5730 columns",,"Profile product of the table's CA(18; 2, 52, 3) with an own array, CA(37; 2, 5252, 3), then column extension by simulated annealing to 5730 columns",t2-v3-k5730-1,t2-v3-k5763-1,2026-11-11,2026-11-12
 2,3,5763,38,row,CITED,t2-v3-k5763-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k5763-1,,2026-08-23,2026-11-12
-2,3,8329,39,row,CITED,t2-v3-k8329-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k8329-1,,2026-08-23,2026-11-12
-2,3,9207,40,row,CITED,t2-v3-k9207-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k9207-1,,2026-08-23,2026-11-12
+2,3,8329,39,row,CITED,t2-v3-k8329-1,,,file,table/arrays/CA_39_2_8329_3.txt,CA Extender (TJ-AJ-AG),,"CA Extender (TJ-AJ-AG) || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v3-k8329-1;t2-v3-k8329-2,,2026-08-23,2026-11-12
+2,3,9207,40,row,CITED,t2-v3-k9207-1,,,file,table/arrays/CA_40_2_9207_3.txt,CA Extender (TJ-AJ-AG),,"CA Extender (TJ-AJ-AG) || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v3-k9207-1;t2-v3-k9207-2,,2026-08-23,2026-11-12
 2,3,11898,41,row,CITED,t2-v3-k11898-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k11898-1,,2026-08-23,2026-11-12
 2,3,17895,42,row,CITED,t2-v3-k17895-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k17895-1,,2026-08-23,2026-11-12
-2,3,20000,43,row,CITED,t2-v3-k20000-1,,,none,,CA Extender (TJ-AJ-AG),,CA Extender (TJ-AJ-AG),t2-v3-k20000-1,,2026-08-23,2026-11-12
+2,3,20000,43,row,CITED,t2-v3-k20000-1,,,file,table/arrays/CA_43_2_20000_3.txt.gz,CA Extender (TJ-AJ-AG),,"CA Extender (TJ-AJ-AG) || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v3-k20000-1;t2-v3-k20000-2,,2026-08-23,2026-11-12
 2,4,5,16,row,CITED,t2-v4-k5-1,,,file,table/arrays/CA_16_2_5_4.txt,Derive from strength 3,,"Derive from strength 3 || Dwyer CA_Database source code ""OA"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t2-v4-k5-1;t2-v4-k5-2,,2026-08-23,2026-11-12
 2,4,6,19,row,CITED,t2-v4-k6-1,,,file,table/arrays/CA_19_2_6_4.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || cover starter of Meagher and Stevens 2005 developed cyclically,t2-v4-k6-1;t2-v4-k6-2,,2026-08-23,2026-11-12
 2,4,7,21,row,CITED,t2-v4-k7-1,,,none,,simulated annealing (Cohen),,simulated annealing (Cohen),t2-v4-k7-1,,2026-08-23,2026-11-12
@@ -320,7 +320,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,29,88,row,CITED,t2-v7-k29-1,,,none,,"cover starter (Colbourn,Torres-Jimenez)",,"cover starter (Colbourn,Torres-Jimenez)",t2-v7-k29-1,,2026-08-23,2026-11-12
 2,7,63,91,row,CITED,t2-v7-k63-1,,,file,table/arrays/CA_91_2_63_7.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v7-k63-1;t2-v7-k63-2,,2026-08-23,2026-11-12
 2,7,64,96,row,CITED,t2-v7-k64-1,,,file,table/arrays/CA_96_2_64_7.txt,Direct product,,Direct product || Recursive Bose construction (product of Bose orthogonal arrays),t2-v7-k64-1;t2-v7-k64-2,,2026-08-23,2026-11-12
-2,7,71,101,row,CITED,t2-v7-k71-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k71-1,,2026-08-23,2026-11-12
+2,7,71,101,row,CITED,t2-v7-k71-1,,,file,table/arrays/CA_101_2_71_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k71-1;t2-v7-k71-2,,2026-08-23,2026-11-12
 2,7,72,102,row,CITED,t2-v7-k72-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k72-1,,2026-08-23,2026-11-12
 2,7,79,103,row,CITED,t2-v7-k79-1,,,file,table/arrays/CA_103_2_79_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013, profiles of covering arrays)",t2-v7-k79-1;t2-v7-k79-2,,2026-08-23,2026-11-12
 2,7,80,105,row,CITED,t2-v7-k80-1,,,file,table/arrays/CA_105_2_80_7.txt,Direct product,,"Direct product || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 79 columns",t2-v7-k80-1;t2-v7-k80-2,,2026-08-23,2026-11-12
@@ -347,7 +347,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,497,133,row,CITED,t2-v7-k497-1,,,file,table/arrays/CA_133_2_497_7.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v7-k497-1;t2-v7-k497-2,,2026-08-23,2026-11-12
 2,7,504,138,row,CITED,t2-v7-k504-1,,,file,table/arrays/CA_138_2_504_7.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(49; 2, 8, 7) and CA(91; 2, 63, 7); found by the construction closure of the table's real arrays",t2-v7-k504-1;t2-v7-k504-2,,2026-08-23,2026-11-12
 2,7,521,140,row,CITED,t2-v7-k521-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k521-1,,2026-08-23,2026-11-12
-2,7,560,143,row,CITED,t2-v7-k560-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k560-1,,2026-08-23,2026-11-12
+2,7,560,143,row,CITED,t2-v7-k560-1,,,file,table/arrays/CA_143_2_560_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k560-1;t2-v7-k560-2,,2026-08-23,2026-11-12
 2,7,568,144,row,CITED,t2-v7-k568-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k568-1,,2026-08-23,2026-11-12
 2,7,625,145,row,CITED,t2-v7-k625-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k625-1,,2026-08-23,2026-11-12
 2,7,632,146,row,CITED,t2-v7-k632-1,,,none,,Direct product,,Direct product,t2-v7-k632-1,,2026-08-23,2026-11-12
@@ -371,10 +371,10 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,1136,170,row,CITED,t2-v7-k1136-1,,,none,,Direct product,,Direct product,t2-v7-k1136-1,,2026-08-23,2026-11-12
 2,7,1386,171,row,CITED,t2-v7-k1386-1,,,none,,Direct product,,Direct product,t2-v7-k1386-1,,2026-08-23,2026-11-12
 2,7,1736,172,row,CITED,t2-v7-k1736-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k1736-1,,2026-08-23,2026-11-12
-2,7,3927,175,row,CITED,t2-v7-k3927-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k3927-1,,2026-08-23,2026-11-12
-2,7,3976,180,row,CITED,t2-v7-k3976-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k3976-1,,2026-08-23,2026-11-12
+2,7,3927,175,row,CITED,t2-v7-k3927-1,,,file,table/arrays/CA_175_2_3927_7.txt.gz,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k3927-1;t2-v7-k3927-2,,2026-08-23,2026-11-12
+2,7,3976,180,row,CITED,t2-v7-k3976-1,,,file,table/arrays/CA_180_2_3976_7.txt.gz,PCAx2PCA,,"PCAx2PCA || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v7-k3976-1;t2-v7-k3976-2,,2026-08-23,2026-11-12
 2,7,4154,182,row,CITED,t2-v7-k4154-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k4154-1,,2026-08-23,2026-11-12
-2,7,4424,185,row,CITED,t2-v7-k4424-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k4424-1,,2026-08-23,2026-11-12
+2,7,4424,185,row,CITED,t2-v7-k4424-1,,,file,table/arrays/CA_185_2_4424_7.txt.gz,PCAxPCA,,"PCAxPCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k4424-1;t2-v7-k4424-2,,2026-08-23,2026-11-12
 2,7,4480,186,row,CITED,t2-v7-k4480-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k4480-1,,2026-08-23,2026-11-12
 2,7,4928,187,row,CITED,t2-v7-k4928-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k4928-1,,2026-08-23,2026-11-12
 2,7,4984,188,row,CITED,t2-v7-k4984-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k4984-1,,2026-08-23,2026-11-12
@@ -399,7 +399,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,9016,212,row,CITED,t2-v7-k9016-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k9016-1,,2026-08-23,2026-11-12
 2,7,10934,213,row,CITED,t2-v7-k10934-1,,,none,,Direct product,,Direct product,t2-v7-k10934-1,,2026-08-23,2026-11-12
 2,7,13776,214,row,CITED,t2-v7-k13776-1,,,none,,PCAxPCA,,PCAxPCA,t2-v7-k13776-1,,2026-08-23,2026-11-12
-2,7,20000,217,row,CITED,t2-v7-k20000-1,,,none,,Direct product,,Direct product,t2-v7-k20000-1,,2026-08-23,2026-11-12
+2,7,20000,217,row,CITED,t2-v7-k20000-1,,,file,table/arrays/CA_217_2_20000_7.txt.gz,Direct product,,"Direct product || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k20000-1;t2-v7-k20000-2,,2026-08-23,2026-11-12
 2,8,9,64,row,CITED,t2-v8-k9-1,,,file,table/arrays/CA_64_2_9_8.txt,Derive from strength 3,,"Derive from strength 3 || Dwyer CA_Database source code ""OA"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t2-v8-k9-1;t2-v8-k9-2,,2026-08-23,2026-11-12
 2,8,10,76,row,CITED,t2-v8-k10-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k10-1,,2026-08-23,2026-11-12
 2,8,11,78,row,CITED,t2-v8-k11-1,,,file,table/arrays/CA_78_2_11_8.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || cover starter of Meagher and Stevens 2005 developed cyclically,t2-v8-k11-1;t2-v8-k11-2,,2026-08-23,2026-11-12
@@ -418,7 +418,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,8,81,126,row,CITED,t2-v8-k81-1,,,file,table/arrays/CA_126_2_81_8.txt,Direct product,,Direct product || Recursive Bose construction (product of Bose orthogonal arrays),t2-v8-k81-1;t2-v8-k81-2,,2026-08-23,2026-11-12
 2,8,89,132,row,CITED,t2-v8-k89-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k89-1,,2026-08-23,2026-11-12
 2,8,90,133,row,CITED,t2-v8-k90-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k90-1,,2026-08-23,2026-11-12
-2,8,98,134,row,CITED,t2-v8-k98-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k98-1,,2026-08-23,2026-11-12
+2,8,98,134,row,CITED,t2-v8-k98-1,,,file,table/arrays/CA_134_2_98_8.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v8-k98-1;t2-v8-k98-2,,2026-08-23,2026-11-12
 2,8,99,135,row,CITED,t2-v8-k99-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k99-1,,2026-08-23,2026-11-12
 2,8,113,140,row,CITED,t2-v8-k113-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k113-1,,2026-08-23,2026-11-12
 2,8,115,143,row,CITED,t2-v8-k115-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k115-1,,2026-08-23,2026-11-12
@@ -471,8 +471,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,8,2242,227,row,CITED,t2-v8-k2242-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k2242-1,,2026-08-23,2026-11-12
 2,8,2258,229,row,CITED,t2-v8-k2258-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k2258-1,,2026-08-23,2026-11-12
 2,8,2430,231,row,CITED,t2-v8-k2430-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k2430-1,,2026-08-23,2026-11-12
-2,8,6344,232,row,CITED,t2-v8-k6344-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k6344-1,,2026-08-23,2026-11-12
-2,8,6408,238,row,CITED,t2-v8-k6408-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k6408-1,,2026-08-23,2026-11-12
+2,8,6344,232,row,CITED,t2-v8-k6344-1,,,file,table/arrays/CA_232_2_6344_8.txt.gz,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v8-k6344-1;t2-v8-k6344-2,,2026-08-23,2026-11-12
+2,8,6408,238,row,CITED,t2-v8-k6408-1,,,file,table/arrays/CA_238_2_6408_8.txt.gz,PCAx2PCA,,"PCAx2PCA || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v8-k6408-1;t2-v8-k6408-2,,2026-08-23,2026-11-12
 2,8,6588,240,row,CITED,t2-v8-k6588-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k6588-1,,2026-08-23,2026-11-12
 2,8,6612,241,row,CITED,t2-v8-k6612-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k6612-1,,2026-08-23,2026-11-12
 2,8,7056,244,row,CITED,t2-v8-k7056-1,,,none,,PCAxPCA,,PCAxPCA,t2-v8-k7056-1,,2026-08-23,2026-11-12
@@ -520,7 +520,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,9,100,160,row,CITED,t2-v9-k100-1,,,file,table/arrays/CA_160_2_100_9.txt,Direct product,,Direct product || Recursive Bose construction (product of Bose orthogonal arrays),t2-v9-k100-1;t2-v9-k100-2,,2026-08-23,2026-11-12
 2,9,108,170,row,CITED,t2-v9-k108-1,,,none,,Direct product,,Direct product,t2-v9-k108-1,,2026-08-23,2026-11-12
 2,9,110,174,row,CITED,t2-v9-k110-1,,,none,,Direct product,,Direct product,t2-v9-k110-1,,2026-08-23,2026-11-12
-2,9,129,177,row,CITED,t2-v9-k129-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k129-1,,2026-08-23,2026-11-12
+2,9,129,177,row,CITED,t2-v9-k129-1,,,file,table/arrays/CA_177_2_129_9.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v9-k129-1;t2-v9-k129-2,,2026-08-23,2026-11-12
 2,9,130,182,row,CITED,t2-v9-k130-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k130-1,,2026-08-23,2026-11-12
 2,9,140,184,row,CITED,t2-v9-k140-1,,,none,,Direct product,,Direct product,t2-v9-k140-1,,2026-08-23,2026-11-12
 2,9,156,190,row,CITED,t2-v9-k156-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k156-1,,2026-08-23,2026-11-12
@@ -541,9 +541,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,9,307,224,row,CITED,t2-v9-k307-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k307-1,,2026-08-23,2026-11-12
 2,9,981,225,row,CITED,t2-v9-k981-1,,,file,table/arrays/CA_225_2_981_9.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v9-k981-1;t2-v9-k981-2,,2026-08-23,2026-11-12
 2,9,990,232,row,CITED,t2-v9-k990-1,,,file,table/arrays/CA_232_2_990_9.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(81; 2, 10, 9) and CA(153; 2, 99, 9); found by the construction closure of the table's real arrays",t2-v9-k990-1;t2-v9-k990-2,,2026-08-23,2026-11-12
-2,9,1000,238,row,CITED,t2-v9-k1000-1,,,none,,Direct product,,Direct product,t2-v9-k1000-1,,2026-08-23,2026-11-12
+2,9,1000,238,row,CITED,t2-v9-k1000-1,,,file,table/arrays/CA_238_2_1000_9.txt,Direct product,,"Direct product || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v9-k1000-1;t2-v9-k1000-2,,2026-08-23,2026-11-12
 2,9,1092,242,row,CITED,t2-v9-k1092-1,,,none,,Direct product,,Direct product,t2-v9-k1092-1,,2026-08-23,2026-11-12
-2,9,1278,249,row,CITED,t2-v9-k1278-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k1278-1,,2026-08-23,2026-11-12
+2,9,1278,249,row,CITED,t2-v9-k1278-1,,,file,table/arrays/CA_249_2_1278_9.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v9-k1278-1;t2-v9-k1278-2,,2026-08-23,2026-11-12
 2,9,1287,254,row,CITED,t2-v9-k1287-1,,,none,,Direct product,,Direct product,t2-v9-k1287-1,,2026-08-23,2026-11-12
 2,9,1300,255,row,CITED,t2-v9-k1300-1,,,none,,Direct product,,Direct product,t2-v9-k1300-1,,2026-08-23,2026-11-12
 2,9,1386,256,row,CITED,t2-v9-k1386-1,,,none,,Direct product,,Direct product,t2-v9-k1386-1,,2026-08-23,2026-11-12
@@ -565,9 +565,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,9,2943,292,row,CITED,t2-v9-k2943-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k2943-1,,2026-08-23,2026-11-12
 2,9,2970,295,row,CITED,t2-v9-k2970-1,,,none,,Direct product,,Direct product,t2-v9-k2970-1,,2026-08-23,2026-11-12
 2,9,3042,296,row,CITED,t2-v9-k3042-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k3042-1,,2026-08-23,2026-11-12
-2,9,9729,297,row,CITED,t2-v9-k9729-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k9729-1,,2026-08-23,2026-11-12
-2,9,9810,304,row,CITED,t2-v9-k9810-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k9810-1,,2026-08-23,2026-11-12
-2,9,9900,310,row,CITED,t2-v9-k9900-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k9900-1,,2026-08-23,2026-11-12
+2,9,9729,297,row,CITED,t2-v9-k9729-1,,,file,table/arrays/CA_297_2_9729_9.txt.gz,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v9-k9729-1;t2-v9-k9729-2,,2026-08-23,2026-11-12
+2,9,9810,304,row,CITED,t2-v9-k9810-1,,,file,table/arrays/CA_304_2_9810_9.txt.gz,PCAx2PCA,,"PCAx2PCA || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v9-k9810-1;t2-v9-k9810-2,,2026-08-23,2026-11-12
+2,9,9900,310,row,CITED,t2-v9-k9900-1,,,file,table/arrays/CA_310_2_9900_9.txt.gz,PCAx2PCA,,"PCAx2PCA || Generalized direct product (Colbourn and Torres-Jimenez 2013, Corollary 4.3) using rows that differ in every column",t2-v9-k9900-1;t2-v9-k9900-2,,2026-08-23,2026-11-12
 2,9,10831,314,row,CITED,t2-v9-k10831-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k10831-1,,2026-08-23,2026-11-12
 2,9,12681,321,row,CITED,t2-v9-k12681-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v9-k12681-1,,2026-08-23,2026-11-12
 2,9,12753,326,row,CITED,t2-v9-k12753-1,,,none,,Direct product,,Direct product,t2-v9-k12753-1,,2026-08-23,2026-11-12
@@ -734,7 +734,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,11,14,155,row,CITED,t2-v11-k14-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k14-1,,2026-08-23,2026-11-12
 2,11,15,158,row,CITED,t2-v11-k15-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v11-k15-1,,2026-08-23,2026-11-12
 2,11,16,161,row,CITED,t2-v11-k16-1,,,none,,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn),t2-v11-k16-1,,2026-08-23,2026-11-12
-2,11,17,171,row,CITED,t2-v11-k17-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v11-k17-1,,2026-08-23,2026-11-12
+2,11,17,171,row,CITED,t2-v11-k17-1,,,file,table/arrays/CA_171_2_17_11.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Cover starter of Meagher and Stevens 2005,t2-v11-k17-1;t2-v11-k17-2,,2026-08-23,2026-11-12
 2,11,18,177,row,CITED,t2-v11-k18-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k18-1,,2026-08-23,2026-11-12
 2,11,19,178,row,CITED,t2-v11-k19-1,,,none,,Fix 2 symbols (LCDST) postop NCK,,Fix 2 symbols (LCDST) postop NCK,t2-v11-k19-1,,2026-08-23,2026-11-12
 2,11,20,186,row,CITED,t2-v11-k20-1,,,none,,Fix 2 symbols (LCDST) postop TJ-SA,,Fix 2 symbols (LCDST) postop TJ-SA,t2-v11-k20-1,,2026-08-23,2026-11-12
@@ -750,8 +750,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,11,32,226,row,CITED,t2-v11-k32-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k32-1,,2026-08-23,2026-11-12
 2,11,33,227,row,CITED,t2-v11-k33-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k33-1,,2026-08-23,2026-11-12
 2,11,35,229,row,CITED,t2-v11-k35-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k35-1,,2026-08-23,2026-11-12
-2,11,143,231,row,CITED,t2-v11-k143-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v11-k143-1,,2026-08-23,2026-11-12
-2,11,144,240,row,CITED,t2-v11-k144-1,,,none,,Direct product,,Direct product,t2-v11-k144-1,,2026-08-23,2026-11-12
+2,11,143,231,row,CITED,t2-v11-k143-1,,,file,table/arrays/CA_231_2_143_11.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction, partitioned form (Colbourn et al. 2006)",t2-v11-k143-1;t2-v11-k143-2,,2026-08-23,2026-11-12
+2,11,144,240,row,CITED,t2-v11-k144-1,,,file,table/arrays/CA_240_2_144_11.txt,Direct product,,Direct product || Recursive Bose construction (Colbourn et al. 2006),t2-v11-k144-1;t2-v11-k144-2,,2026-08-23,2026-11-12
 2,11,154,252,row,CITED,t2-v11-k154-1,,,none,,Direct product,,Direct product,t2-v11-k154-1,,2026-08-23,2026-11-12
 2,11,155,261,row,CITED,t2-v11-k155-1,,,none,,Direct product generalized,,Direct product generalized,t2-v11-k155-1,,2026-08-23,2026-11-12
 2,11,168,262,row,CITED,t2-v11-k168-1,,,none,,Direct product,,Direct product,t2-v11-k168-1,,2026-08-23,2026-11-12
@@ -862,12 +862,12 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,12,10,160,row,CITED,t2-v12-k10-1,,,none,,Add Factor SO (AG-TJ-IM),,Add Factor SO (AG-TJ-IM),t2-v12-k10-1,,2026-08-23,2026-11-12
 2,12,11,162,row,CITED,t2-v12-k11-1,,,none,,Add Factor SO (AG-TJ-IM),,Add Factor SO (AG-TJ-IM),t2-v12-k11-1,,2026-08-23,2026-11-12
 2,12,13,164,row,CITED,t2-v12-k13-1,,,none,,orthogonal array fuse postop TJ-SA,,orthogonal array fuse postop TJ-SA,t2-v12-k13-1,,2026-08-23,2026-11-12
-2,12,14,165,row,CITED,t2-v12-k14-1,,,none,,simulated annealing (CKRS),,simulated annealing (CKRS),t2-v12-k14-1,,2026-08-23,2026-11-12
-2,12,15,168,row,CITED,t2-v12-k15-1,,,none,,projection (C),,projection (C),t2-v12-k15-1,,2026-08-23,2026-11-12
+2,12,14,165,row,CITED,t2-v12-k14-1,,,file,table/arrays/CA_165_2_14_12.txt,simulated annealing (CKRS),,"simulated annealing (CKRS) || Fusion of a Bose orthogonal array (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t2-v12-k14-1;t2-v12-k14-2,,2026-08-23,2026-11-12
+2,12,15,168,row,CITED,t2-v12-k15-1,,,file,table/arrays/CA_168_2_15_12.txt,projection (C),,projection (C) || Projection of a Bose orthogonal array (Colbourn 2008),t2-v12-k15-1;t2-v12-k15-2,,2026-08-23,2026-11-12
 2,12,17,188,row,CITED,t2-v12-k17-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v12-k17-1,,2026-08-23,2026-11-12
-2,12,18,199,row,CITED,t2-v12-k18-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v12-k18-1,,2026-08-23,2026-11-12
-2,12,19,210,row,CITED,t2-v12-k19-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v12-k19-1,,2026-08-23,2026-11-12
-2,12,20,221,row,CITED,t2-v12-k20-1,,,none,,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn),t2-v12-k20-1,,2026-08-23,2026-11-12
+2,12,18,199,row,CITED,t2-v12-k18-1,,,file,table/arrays/CA_199_2_18_12.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Cover starter of Meagher and Stevens 2005,t2-v12-k18-1;t2-v12-k18-2,,2026-08-23,2026-11-12
+2,12,19,210,row,CITED,t2-v12-k19-1,,,file,table/arrays/CA_210_2_19_12.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Cover starter of Meagher and Stevens 2005,t2-v12-k19-1;t2-v12-k19-2,,2026-08-23,2026-11-12
+2,12,20,221,row,CITED,t2-v12-k20-1,,,file,table/arrays/CA_221_2_20_12.txt,Fix 1 symbols (Colbourn),,"Fix 1 symbols (Colbourn) || Cover starter of Colbourn, Martirosyan, Mullen, Shasha, Sherwood and Yucas 2006",t2-v12-k20-1;t2-v12-k20-2,,2026-08-23,2026-11-12
 2,12,22,227,row,CITED,t2-v12-k22-1,,,none,,Fix 2 symbols (LCDST) postop NCK,,Fix 2 symbols (LCDST) postop NCK,t2-v12-k22-1,,2026-08-23,2026-11-12
 2,12,24,232,row,CITED,t2-v12-k24-1,,,none,,Fix 3 symbols (LCDST) postop TJ-SA,,Fix 3 symbols (LCDST) postop TJ-SA,t2-v12-k24-1,,2026-08-23,2026-11-12
 2,12,25,242,row,CITED,t2-v12-k25-1,,,none,,Fix 3 symbols (LCDST),,Fix 3 symbols (LCDST),t2-v12-k25-1,,2026-08-23,2026-11-12
@@ -1007,10 +1007,10 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,12,20000,583,row,CITED,t2-v12-k20000-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k20000-1,,2026-08-23,2026-11-12
 2,13,14,169,row,CITED,t2-v13-k14-1,,,none,,orthogonal array,,orthogonal array,t2-v13-k14-1,,2026-08-23,2026-11-12
 2,13,15,215,row,CITED,t2-v13-k15-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v13-k15-1,,2026-08-23,2026-11-12
-2,13,18,217,row,CITED,t2-v13-k18-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v13-k18-1,,2026-08-23,2026-11-12
+2,13,18,217,row,CITED,t2-v13-k18-1,,,file,table/arrays/CA_217_2_18_13.txt,Fix 1 symbols (LCDST),,"Fix 1 symbols (LCDST) || Cover starter of Colbourn, Martirosyan, Mullen, Shasha, Sherwood and Yucas 2006",t2-v13-k18-1;t2-v13-k18-2,,2026-08-23,2026-11-12
 2,13,19,229,row,CITED,t2-v13-k19-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v13-k19-1,,2026-08-23,2026-11-12
 2,13,20,241,row,CITED,t2-v13-k20-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v13-k20-1,,2026-08-23,2026-11-12
-2,13,21,253,row,CITED,t2-v13-k21-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v13-k21-1,,2026-08-23,2026-11-12
+2,13,21,253,row,CITED,t2-v13-k21-1,,,file,table/arrays/CA_253_2_21_13.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Cover starter of Meagher and Stevens 2005,t2-v13-k21-1;t2-v13-k21-2,,2026-08-23,2026-11-12
 2,13,22,262,row,CITED,t2-v13-k22-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v13-k22-1,,2026-08-23,2026-11-12
 2,13,24,271,row,CITED,t2-v13-k24-1,,,none,,Fix 2 symbols (LCDST) postop NCK,,Fix 2 symbols (LCDST) postop NCK,t2-v13-k24-1,,2026-08-23,2026-11-12
 2,13,25,280,row,CITED,t2-v13-k25-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v13-k25-1,,2026-08-23,2026-11-12
