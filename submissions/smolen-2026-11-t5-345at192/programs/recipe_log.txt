@@ -1,0 +1,40 @@
+RECIPE CA(345;5,192,2) started 2026-11-12T23:12:34Z
+source need5s.c sha256 157fa0a4bfec62d7c52006d6ba92a0c0d848c52a388e0a54b6a7725ee411c5d5
+source expand.py sha256 8d5ce2c38d9c6140a4d35ddb8e489d40e2309e80724905ee9a96d41c0d72d7c5
+source genpw.py sha256 824144e1b685484f5d5efaee96028cb62966dfd03a3fb3a9b7cda0ab0c4cffa5
+source subselw.c sha256 48e44e2601087ec6d788868ff11872c0a87e9f1e8bab6c0327d6a04bcbbbab5e
+source mklist.py sha256 ab39aeec9817d06cf47c8ba1ca88bd70fea3d5dbd11c1b8cf371334ee38de9e0
+source build.py sha256 b564d3861f439e8e8b882cbbc56b7be91ebee19f0a9ffe9e138102a101fc8370
+source ls2m.c sha256 2d47935aa9032acc2028eaeb8e89572a596108ee81fcc3187fbe022c502e0db5
+source repi.c sha256 a3bf2396356a0f5023e3646264a323852245ff071039a92511f20ad460428d79
+cmd: ./need5s 337 > need337.txt
+need337.txt sha256 0a001fc0fba02f4e4403f37e8c9cc7d30cacd5506a49a75c7ffa11c52a8c60e0 lines 3360
+cmd: python3 expand.py (need337_full.npz, 226464 pairs)
+226464
+pairs 226464 options hist [     0  56616 113232      0      0  56616]
+pw_winv.txt sha256 2b4bcf07d90d825a5b11b3262f57937b1e7fd27e9aae6d194da7776a69129b5b
+cmd: ./subselw 337 192 pw_winv.txt 1500000 2 0.5 sub_A.txt   (swarm: lineage A, weighted cost 1/nopt, seed 2, T 0.5)
+best 5627.000
+sub_A.txt sha256 4cc169e27e4115055c03defc9a284e3e8c459f0e855a4c1763cb8ee2e533cbca
+cmd: python3 mklist.py sub_A.txt need_A.txt
+10492
+need_A.txt sha256 fa4ce9a8fbb3516ed479fc90f579db7f0fa562aee4f55c5ea961f93b0f20790e
+cmd: ./ls2m 337 8 need_A.txt 0.35 -35363840 1 > A_ls2.out   (negative secs = move count)
+A_ls2.out sha256 52233414d6ad4bc25a26f8bc85e908545f6e66735f9c3b2bdf61eb63cf6514aa first line: final 163 best 160 moves 35363840
+345 192
+A_start.txt sha256 e7637382f7eaa23d3132dfba185e3e1b1a227382b7b7c32217587952cfa35128 (345 rows, 163 holes)
+  MATCH original A_start.txt e7637382f7eaa23d3132dfba185e3e1b1a227382b7b7c32217587952cfa35128
+STAGE 1: THREADS=1 ./repi A_start.txt 21 0.35 400 r1   (best state at acc 353, 4 holes)
+r1_best.txt sha256 d0b3bc1360f87f1db0300626a4093dd2a2560943ee0d2dd112249adf5b9b9a32 (acc=353 it=658 wall=308.3 holes=4 unique=98517)
+  MATCH original r1_best.txt d0b3bc1360f87f1db0300626a4093dd2a2560943ee0d2dd112249adf5b9b9a32
+STAGE 2: THREADS=1 ./repi r1_best.txt 31 0.22 400 r2   (3 holes)
+r2_best.txt sha256 fa4ae57105f51e592372c469105916e7993ef87bb4d62f12cc711e141928743d (acc=111 it=1419 wall=257.5 holes=3 unique=98821)
+  MATCH original r2_best.txt fa4ae57105f51e592372c469105916e7993ef87bb4d62f12cc711e141928743d
+STAGE 3: THREADS=2 ./repi r2_best.txt 41 0.2 200 r3   (1 hole at acc 186)
+r3_best.txt sha256 6a28139e0fd78aaaae8bfeb782ed90654b7d6b00ecf189448d6d413c6476b4cc (acc=186 it=1737 wall=275.0 holes=1 unique=101193)
+  MATCH original r3_best.txt 6a28139e0fd78aaaae8bfeb782ed90654b7d6b00ecf189448d6d413c6476b4cc
+STAGE 4: THREADS=2 ./repi r3_best.txt 77 0.2 3000 r4   (zero)
+r4 end: end acc=207 it=2476 holes=0 best=0
+r4_345.txt sha256 00b38ecd6c3734d069e291c060c81e57d94511c27001ae042d63fe41a964a518
+  MATCH original r4_345.txt 00b38ecd6c3734d069e291c060c81e57d94511c27001ae042d63fe41a964a518
+finished 2026-11-12T23:39:51Z

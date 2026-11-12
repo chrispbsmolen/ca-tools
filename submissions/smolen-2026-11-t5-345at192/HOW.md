@@ -40,5 +40,5 @@ Program: programs/run_recipe.sh runs every step in an empty directory with the s
 and flip counts only, logs the sha256 of every source and output, and compares each stage with the original files:
     bash run_recipe.sh
 Sources: programs/need5s.c, expand.py, genpw.py, subselw.c, mklist.py, ls2m.c, build.py, repi.c (gcc -O3; Python 3
-with numpy). Each stage was replayed separately and matched the original file. The log of a complete run from
-scratch will be added as programs/recipe_log.txt.
+with numpy). A complete run from scratch reproduced every stage and the final array exactly
+(programs/recipe_log.txt).
