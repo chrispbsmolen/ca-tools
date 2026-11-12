@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this table, its arrays or its tools, please cite it as below, with the version or commit you used. Each row of the table names its own source; please also cite the authors of the rows you use."
-title: "ca-tools: a living table of covering arrays, with checked arrays and the tools that verify them"
+title: "ca-tools: a maintained table of covering arrays, with checked arrays and the tools that verify them"
 type: dataset
 authors:
   - family-names: Smolen

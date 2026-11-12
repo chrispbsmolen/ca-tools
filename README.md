@@ -183,7 +183,7 @@ repositories routinely, e.g. in CI on every submission.
 
 ## How to cite
 
-Cite the table as C. Smolen, ca-tools: a living table of covering arrays, with checked
+Cite the table as C. Smolen, ca-tools: a maintained table of covering arrays, with checked
 arrays and the tools that verify them, Zenodo, doi:10.5281/zenodo.24168008 (all
 versions; each release has its own DOI, the first, table-2026.11, is
 doi:10.5281/zenodo.24168009), or the repository,
