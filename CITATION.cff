@@ -6,6 +6,14 @@ authors:
   - family-names: Smolen
     given-names: Christopher
     orcid: "https://orcid.org/0009-0002-9537-7961"
+doi: "10.5281/zenodo.24168008"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24168008"
+    description: "All versions of the table on Zenodo"
+  - type: doi
+    value: "10.5281/zenodo.24168009"
+    description: "Release table-2026.11"
 repository-code: "https://github.com/chrispbsmolen/ca-tools"
 url: "https://chrispbsmolen.github.io/ca-tools/"
 license: MIT
