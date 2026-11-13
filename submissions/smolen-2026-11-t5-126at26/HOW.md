@@ -12,7 +12,11 @@ CA(126; 5, 28, 2), and with 26 of the shifts, CA(126; 5, 26, 2).
    f = 011011011010001111001100000010111011000110100001010100011101111.
 
 2. The rows. For x in Z63 and a shift d, the entry in row x and column d is f(x + d). The 63 rows and their 63
-   complements give 126 rows. A set of five shifts is good when these 126 rows show all 32 patterns on it.
+   complements give 126 rows. Taking the cyclic shifts of one binary vector together with their complements is the
+   cyclic construction of Colbourn and Keri (Binary covering arrays and existentially closed graphs, LNCS 5557
+   (2009) 22-33), who used searched vectors at strength 4 and quadratic residue vectors of prime length at
+   strengths 5 and 6. What is chosen here is the vector, of length 63 and constant on the orbits of x -> 2x, and
+   the use of only some of the shifts as columns. A set of five shifts is good when these 126 rows show all 32 patterns on it.
    programs/gdev.c lists the bad sets exactly. 7,245 of the 7,028,847 sets of five shifts are bad (0.103 percent).
 
 3. The columns. programs/palsub.c looks for a set of shifts containing no bad 5-set. With seed 1 it finds 28 shifts

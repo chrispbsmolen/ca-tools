@@ -15,7 +15,10 @@ CA(49; 3, 374, 2), and its first 359 columns, CA(49; 3, 359, 2).
    set of words gives a strength-3 covering array if and only if no word agrees, coordinate by coordinate, with one
    of two other words in each coordinate. For a split of the five coordinates into S and T this asks that every
    word be the only one with its S part or the only one with its T part. programs/alg2.py checks all splits for the
-   352 words and finds no violation.
+   352 words and finds no violation. The construction is the column replacement of Colbourn and Torres-Jimenez
+   (2010) and Colbourn and Zhou (2012), and the condition on the words is that of a 2-frameproof code (Blackburn,
+   SIAM J. Discrete Math. 16 (2003) 499-510), also called a separating hash family of type {1,2}. The 352 words
+   are their truncated polynomial code.
 
 3. Why the 352 could not be extended. The 352 words hold one word for every (c, x, y), so a new word always repeats
    some (c, x, y) and some (a, b) pair, and the condition fails.
