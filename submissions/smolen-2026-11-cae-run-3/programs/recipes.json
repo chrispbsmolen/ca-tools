@@ -1,0 +1,437 @@
+{
+ "CA_255_2_18_15.txt": {
+  "kind": "cas",
+  "src": "projBoseCA",
+  "N": 255,
+  "k": 18,
+  "t": 2,
+  "v": 15,
+  "text": "CAs 0.24.4 construction projBoseCA (CAs:::labelToCode(\"projBoseCA\", 2, 18, 15))"
+ },
+ "CA_256_2_17_16.txt": {
+  "kind": "cas",
+  "src": "fuseBushtCA",
+  "N": 256,
+  "k": 17,
+  "t": 2,
+  "v": 16,
+  "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 17, 16))"
+ },
+ "CA_2744_3_4_14.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 2
+  },
+  "N": 2744,
+  "k": 4,
+  "t": 3,
+  "v": 14,
+  "ing": [
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_8_3_4_2.txt",
+    "N": 8,
+    "k": 4,
+    "t": 3,
+    "v": 2,
+    "text": "table array CA_8_3_4_2.txt (Chateauneuf-Kreher doubling: a strength-3 array on ceil(k/2) columns doubled with a streng)"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_343_3_8_7.txt",
+    "N": 343,
+    "k": 8,
+    "t": 3,
+    "v": 7,
+    "text": "table array CA_343_3_8_7.txt (Dwyer CA_Database source code \"OA\" (Aaron Dwyer's abbreviation for the method; many of his)"
+   }
+  ]
+ },
+ "CA_28561_4_14_13.txt": {
+  "kind": "direct",
+  "src": "('bush', 13, 4)",
+  "N": 28561,
+  "k": 14,
+  "t": 4,
+  "v": 13,
+  "text": "Bush / Bose orthogonal array OA(13^4; 4, 14, 13)"
+ },
+ "CA_288_2_19_16.txt": {
+  "kind": "cas",
+  "src": "projBoseCA",
+  "N": 288,
+  "k": 19,
+  "t": 2,
+  "v": 16,
+  "text": "CAs 0.24.4 construction projBoseCA (CAs:::labelToCode(\"projBoseCA\", 2, 19, 16))"
+ },
+ "CA_289_2_18_17.txt": {
+  "kind": "cas",
+  "src": "fuseBushtCA",
+  "N": 289,
+  "k": 18,
+  "t": 2,
+  "v": 17,
+  "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 18, 17))"
+ },
+ "CA_300_2_23_14.txt": {
+  "kind": "cas",
+  "src": "CS_MS",
+  "N": 300,
+  "k": 23,
+  "t": 2,
+  "v": 14,
+  "text": "CAs 0.24.4 construction CS_MS (CAs:::labelToCode(\"CS_MS\", 2, 23, 14))"
+ },
+ "CA_3185_3_11_14.txt": {
+  "kind": "law",
+  "law": "od",
+  "params": {},
+  "N": 3185,
+  "k": 11,
+  "t": 3,
+  "v": 14,
+  "ing": [
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_12_3_11_2.txt",
+    "N": 12,
+    "k": 11,
+    "t": 3,
+    "v": 2,
+    "text": "table array CA_12_3_11_2.txt (Paley construction from the quadratic residues of GF(q))"
+   }
+  ]
+ },
+ "CA_3549_3_14_14.txt": {
+  "kind": "law",
+  "law": "od",
+  "params": {},
+  "N": 3549,
+  "k": 14,
+  "t": 3,
+  "v": 14,
+  "ing": [
+   {
+    "kind": "cmd",
+    "src": "python3 tools/sm_xplication.py 2 2 > CA.txt",
+    "N": 16,
+    "k": 14,
+    "t": 3,
+    "v": 2,
+    "text": "Shokri-Moura x-plication, theorem 2, q = 2 (tools/sm_xplication.py)"
+   }
+  ]
+ },
+ "CA_38416_4_5_14.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 2
+  },
+  "N": 38416,
+  "k": 5,
+  "t": 4,
+  "v": 14,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('weight', 5, 4)",
+    "N": 16,
+    "k": 5,
+    "t": 4,
+    "v": 2,
+    "text": "binary weight-class array, weights [0, 2, 4] on 5 columns"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_2401_4_8_7.txt",
+    "N": 2401,
+    "k": 8,
+    "t": 4,
+    "v": 7,
+    "text": "table array CA_2401_4_8_7.txt (Dwyer CA_Database source code \"OA\" (Aaron Dwyer's abbreviation for the method; many of his)"
+   }
+  ]
+ },
+ "CA_421_2_323_13.txt": {
+  "kind": "cas",
+  "src": "pcaCA",
+  "N": 421,
+  "k": 323,
+  "t": 2,
+  "v": 13,
+  "text": "CAs 0.24.4 construction pcaCA (CAs:::labelToCode(\"pcaCA\", 2, 323, 13))"
+ },
+ "CA_433_2_341_13.txt": {
+  "kind": "cas",
+  "src": "pcaCA",
+  "N": 433,
+  "k": 341,
+  "t": 2,
+  "v": 13,
+  "text": "CAs 0.24.4 construction pcaCA (CAs:::labelToCode(\"pcaCA\", 2, 341, 13))"
+ },
+ "CA_436_2_29_16.txt": {
+  "kind": "cas",
+  "src": "CS_MS",
+  "N": 436,
+  "k": 29,
+  "t": 2,
+  "v": 16,
+  "text": "CAs 0.24.4 construction CS_MS (CAs:::labelToCode(\"CS_MS\", 2, 29, 16))"
+ },
+ "CA_4393_3_183_13.txt": {
+  "kind": "direct",
+  "src": "('rms', 13)",
+  "N": 4393,
+  "k": 183,
+  "t": 3,
+  "v": 13,
+  "text": "Raaphorst-Moura-Stevens array CA(4393; 3, 183, 13)"
+ },
+ "CA_481_2_2717_13.txt": {
+  "kind": "cas",
+  "src": "recBoseCA_PCA",
+  "N": 481,
+  "k": 2717,
+  "t": 2,
+  "v": 13,
+  "text": "CAs 0.24.4 construction recBoseCA_PCA (CAs:::labelToCode(\"recBoseCA_PCA\", 2, 2717, 13))"
+ },
+ "CA_4913_3_18_17.txt": {
+  "kind": "direct",
+  "src": "('bush', 17, 3)",
+  "N": 4913,
+  "k": 18,
+  "t": 3,
+  "v": 17,
+  "text": "Bush / Bose orthogonal array OA(17^3; 3, 18, 17)"
+ },
+ "CA_492_2_2730_13.txt": {
+  "kind": "law",
+  "law": "ctj",
+  "params": {
+   "s": 1,
+   "r": 1
+  },
+  "N": 492,
+  "k": 2730,
+  "t": 2,
+  "v": 13,
+  "ing": [
+   {
+    "kind": "cas",
+    "src": "fuseBushtCA",
+    "N": 169,
+    "k": 14,
+    "t": 2,
+    "v": 13,
+    "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 14, 13))"
+   },
+   {
+    "kind": "cas",
+    "src": "recBoseCA_PCA",
+    "N": 325,
+    "k": 195,
+    "t": 2,
+    "v": 13,
+    "text": "CAs 0.24.4 construction recBoseCA_PCA (CAs:::labelToCode(\"recBoseCA_PCA\", 2, 195, 13))"
+   }
+  ]
+ },
+ "CA_496_2_288_16.txt": {
+  "kind": "cas",
+  "src": "recBoseCA_PCA",
+  "N": 496,
+  "k": 288,
+  "t": 2,
+  "v": 16,
+  "text": "CAs 0.24.4 construction recBoseCA_PCA (CAs:::labelToCode(\"recBoseCA_PCA\", 2, 288, 16))"
+ },
+ "CA_50625_4_5_15.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 3
+  },
+  "N": 50625,
+  "k": 5,
+  "t": 4,
+  "v": 15,
+  "ing": [
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_81_4_5_3.txt",
+    "N": 81,
+    "k": 5,
+    "t": 4,
+    "v": 3,
+    "text": "table array CA_81_4_5_3.txt (Dwyer CA_Database source code \"OA\" (Aaron Dwyer's abbreviation for the method; many of his)"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_625_4_6_5.txt",
+    "N": 625,
+    "k": 6,
+    "t": 4,
+    "v": 5,
+    "text": "table array CA_625_4_6_5.txt (Dwyer CA_Database source code \"OA\" (Aaron Dwyer's abbreviation for the method; many of his)"
+   }
+  ]
+ },
+ "CA_510_2_289_16.txt": {
+  "kind": "cas",
+  "src": "recBoseCA_CA",
+  "N": 510,
+  "k": 289,
+  "t": 2,
+  "v": 16,
+  "text": "CAs 0.24.4 construction recBoseCA_CA (CAs:::labelToCode(\"recBoseCA_CA\", 2, 289, 16))"
+ },
+ "CA_513_2_32_17.txt": {
+  "kind": "cas",
+  "src": "CS_CMMSSY",
+  "N": 513,
+  "k": 32,
+  "t": 2,
+  "v": 17,
+  "text": "CAs 0.24.4 construction CS_CMMSSY (CAs:::labelToCode(\"CS_CMMSSY\", 2, 32, 17))"
+ },
+ "CA_534_2_440_14.txt": {
+  "kind": "cas",
+  "src": "pcaCA",
+  "N": 534,
+  "k": 440,
+  "t": 2,
+  "v": 14,
+  "text": "CAs 0.24.4 construction pcaCA (CAs:::labelToCode(\"pcaCA\", 2, 440, 14))"
+ },
+ "CA_65534_4_17_15.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 16
+  },
+  "N": 65534,
+  "k": 17,
+  "t": 4,
+  "v": 15,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 16, 4)",
+    "N": 65536,
+    "k": 17,
+    "t": 4,
+    "v": 16,
+    "text": "Bush / Bose orthogonal array OA(16^4; 4, 17, 16)"
+   }
+  ]
+ },
+ "CA_65536_4_17_16.txt": {
+  "kind": "direct",
+  "src": "('bush', 16, 4)",
+  "N": 65536,
+  "k": 17,
+  "t": 4,
+  "v": 16,
+  "text": "Bush / Bose orthogonal array OA(16^4; 4, 17, 16)"
+ },
+ "CA_7936_3_34_16.txt": {
+  "kind": "law",
+  "law": "ck",
+  "params": {},
+  "N": 7936,
+  "k": 34,
+  "t": 3,
+  "v": 16,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 16, 3)",
+    "N": 4096,
+    "k": 17,
+    "t": 3,
+    "v": 16,
+    "text": "Bush / Bose orthogonal array OA(16^3; 3, 17, 16)"
+   },
+   {
+    "kind": "cas",
+    "src": "fuseBushtCA",
+    "N": 256,
+    "k": 17,
+    "t": 2,
+    "v": 16,
+    "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 17, 16))"
+   }
+  ]
+ },
+ "CA_8187_3_273_14.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 16
+  },
+  "N": 8187,
+  "k": 273,
+  "t": 3,
+  "v": 14,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('rms', 16)",
+    "N": 8191,
+    "k": 273,
+    "t": 3,
+    "v": 16,
+    "text": "Raaphorst-Moura-Stevens array CA(8191; 3, 273, 16)"
+   }
+  ]
+ },
+ "CA_8189_3_273_15.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 16
+  },
+  "N": 8189,
+  "k": 273,
+  "t": 3,
+  "v": 15,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('rms', 16)",
+    "N": 8191,
+    "k": 273,
+    "t": 3,
+    "v": 16,
+    "text": "Raaphorst-Moura-Stevens array CA(8191; 3, 273, 16)"
+   }
+  ]
+ },
+ "CA_83519_4_18_16.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 17
+  },
+  "N": 83519,
+  "k": 18,
+  "t": 4,
+  "v": 16,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 17, 4)",
+    "N": 83521,
+    "k": 18,
+    "t": 4,
+    "v": 17,
+    "text": "Bush / Bose orthogonal array OA(17^4; 4, 18, 17)"
+   }
+  ]
+ }
+}
