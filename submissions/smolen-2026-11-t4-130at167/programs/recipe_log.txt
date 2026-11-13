@@ -1,0 +1,21 @@
+RECIPE CA(130;4,167,2) started 2026-11-13T00:22:44Z
+source greedy.c sha256 be7bdd46848e735e1e95311bfd42f8a8f57934c3b03741b37d143e1a41aa1181
+source holes4w.c sha256 a65dbe83654574d89fc0a5bf0c74e33ee1b3d67788e3a57ce9b09a801aff59cf
+source ls2m.c sha256 2d47935aa9032acc2028eaeb8e89572a596108ee81fcc3187fbe022c502e0db5
+source build4.py sha256 47529622e23644a779ebf6a870bf1db254d93cad720823270667eb32b1c5695c
+source repi4.c sha256 ea6ee7f5890fd1a2a341bcb242a8587bd6204c8be69fd081a1b62f5e4ea888f0
+cmd: ./greedy 167 114 (deterministic row elimination, fixed diagonal 0)
+mask_114.txt sha256 f5472d8bff7805e20d56ad8a50005c85d3cb3ee1d8aea98694d296283f0ab531
+cmd: ./holes4w 167 mask_114.txt need_114.txt
+holes 22770 noopt 12900
+need_114.txt sha256 a175d114d3f38d3f74df65c03dc5886fa2a6a133b78f7387c5fe3375b0d15d0c
+cmd: ./ls2m 167 16 need_114.txt 0.35 -8000000 1 > p16.out   (negative secs = move count 8,000,000)
+p16.out sha256 6501d58de3cc8b4278d1fb05d4aa4a977b7b0e95d418bbb253fe29d9c081ef5e first line: final 33 best 32 moves 8000512
+130 167
+p16_start.txt sha256 1b52bf6ef688aed0e4612a774a705736bcd88ded7ade178325a6f5c61f358dad
+cmd: THREADS=1 ./repi4 p16_start.txt 1 0.25 3000 p16r
+repi4 end: end acc=94 it=388 holes=0 best=0
+p16r_130.txt sha256 3488ce29cad2349d27d23416623deb8c4f6d5e1e17d088d2590bf6ef0579754c
+expected original sha256 3488ce29cad2349d27d23416623deb8c4f6d5e1e17d088d2590bf6ef0579754c
+REPRODUCED EXACTLY
+finished 2026-11-13T00:26:05Z
