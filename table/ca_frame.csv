@@ -66,7 +66,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,4,50,34,row,CITED,t2-v4-k50-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k50-1,,2026-08-23,2026-11-13
 2,4,57,35,row,CITED,t2-v4-k57-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k57-1,,2026-08-23,2026-11-13
 2,4,66,36,row,CITED,t2-v4-k66-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k66-1,,2026-08-23,2026-11-13
-2,4,72,37,row,CITED,t2-v4-k72-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k72-1,,2026-08-23,2026-11-13
+2,4,72,37,row,CITED,t2-v4-k72-1,,,file,table/arrays/CA_37_2_72_4.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v4-k72-1;t2-v4-k72-2,,2026-08-23,2026-11-13
 2,4,83,38,row,CITED,t2-v4-k83-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k83-1,,2026-08-23,2026-11-13
 2,4,103,39,row,CITED,t2-v4-k103-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k103-1,,2026-08-23,2026-11-13
 2,4,133,40,row,CITED,t2-v4-k133-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v4-k133-1,,2026-08-23,2026-11-13
@@ -119,17 +119,17 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,5,14,39,row,CITED,t2-v5-k14-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k14-1,,2026-08-23,2026-11-13
 2,5,21,40,row,CITED,t2-v5-k21-1,,,none,,"cover starter (Colbourn,Torres-Jimenez)",,"cover starter (Colbourn,Torres-Jimenez)",t2-v5-k21-1,,2026-08-23,2026-11-13
 2,5,35,45,row,CITED,t2-v5-k35-1,,,file,table/arrays/CA_45_2_35_5.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v5-k35-1;t2-v5-k35-2,,2026-08-23,2026-11-13
-2,5,36,46,row,CITED,t2-v5-k36-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k36-1,,2026-08-23,2026-11-13
+2,5,36,46,row,CITED,t2-v5-k36-1,,,file,table/arrays/CA_46_2_36_5.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v5-k36-1;t2-v5-k36-2,,2026-08-23,2026-11-13
 2,5,38,48,row,CITED,t2-v5-k38-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k38-1,,2026-08-23,2026-11-13
 2,5,43,49,row,CITED,t2-v5-k43-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k43-1,,2026-08-23,2026-11-13
 2,5,45,50,row,CITED,t2-v5-k45-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k45-1,,2026-08-23,2026-11-13
 2,5,47,51,row,CITED,t2-v5-k47-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k47-1,,2026-08-23,2026-11-13
-2,5,52,53,row,CITED,t2-v5-k52-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k52-1,,2026-08-23,2026-11-13
-2,5,54,54,row,CITED,t2-v5-k54-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k54-1,,2026-08-23,2026-11-13
-2,5,55,55,row,CITED,t2-v5-k55-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k55-1,,2026-08-23,2026-11-13
+2,5,52,53,row,CITED,t2-v5-k52-1,,,file,table/arrays/CA_53_2_52_5.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v5-k52-1;t2-v5-k52-2,,2026-08-23,2026-11-13
+2,5,54,54,row,CITED,t2-v5-k54-1,,,file,table/arrays/CA_54_2_54_5.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v5-k54-1;t2-v5-k54-2,,2026-08-23,2026-11-13
+2,5,55,55,row,CITED,t2-v5-k55-1,,,file,table/arrays/CA_55_2_55_5.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v5-k55-1;t2-v5-k55-2,,2026-08-23,2026-11-13
 2,5,61,56,row,CITED,t2-v5-k61-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k61-1,,2026-08-23,2026-11-13
 2,5,69,57,row,CITED,t2-v5-k69-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v5-k69-1,,2026-08-23,2026-11-13
-2,5,77,58,row,CITED,t2-v5-k77-1,,,none,,PCAxPCA postop TJ-SA,,PCAxPCA postop TJ-SA,t2-v5-k77-1,,2026-08-23,2026-11-13
+2,5,77,58,row,CITED,t2-v5-k77-1,,,file,table/arrays/CA_58_2_77_5.txt,PCAxPCA postop TJ-SA,,"PCAxPCA postop TJ-SA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v5-k77-1;t2-v5-k77-2,,2026-08-23,2026-11-13
 2,5,83,59,row,CITED,t2-v5-k83-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k83-1,,2026-08-23,2026-11-13
 2,5,125,60,row,CITED,t2-v5-k125-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k125-1,,2026-08-23,2026-11-13
 2,5,126,62,row,CITED,t2-v5-k126-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v5-k126-1,,2026-08-23,2026-11-13
@@ -321,12 +321,12 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,63,91,row,CITED,t2-v7-k63-1,,,file,table/arrays/CA_91_2_63_7.txt,PCAx2PCA,,"PCAx2PCA || Recursive Bose construction (product of Bose orthogonal arrays, partitioned form)",t2-v7-k63-1;t2-v7-k63-2,,2026-08-23,2026-11-13
 2,7,64,96,row,CITED,t2-v7-k64-1,,,file,table/arrays/CA_96_2_64_7.txt,Direct product,,Direct product || Recursive Bose construction (product of Bose orthogonal arrays),t2-v7-k64-1;t2-v7-k64-2,,2026-08-23,2026-11-13
 2,7,71,101,row,CITED,t2-v7-k71-1,,,file,table/arrays/CA_101_2_71_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k71-1;t2-v7-k71-2,,2026-08-23,2026-11-13
-2,7,72,102,row,CITED,t2-v7-k72-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k72-1,,2026-08-23,2026-11-13
+2,7,72,102,row,CITED,t2-v7-k72-1,,,file,table/arrays/CA_102_2_72_7.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k72-1;t2-v7-k72-2,,2026-08-23,2026-11-13
 2,7,79,103,row,CITED,t2-v7-k79-1,,,file,table/arrays/CA_103_2_79_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013, profiles of covering arrays)",t2-v7-k79-1;t2-v7-k79-2,,2026-08-23,2026-11-13
 2,7,80,105,row,CITED,t2-v7-k80-1,,,file,table/arrays/CA_105_2_80_7.txt,Direct product,,"Direct product || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 79 columns",t2-v7-k80-1;t2-v7-k80-2,,2026-08-23,2026-11-13
 2,7,87,107,row,CITED,t2-v7-k87-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k87-1,,2026-08-23,2026-11-13
-2,7,88,109,row,CITED,t2-v7-k88-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k88-1,,2026-08-23,2026-11-13
-2,7,91,111,row,CITED,t2-v7-k91-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k91-1,,2026-08-23,2026-11-13
+2,7,88,109,row,CITED,t2-v7-k88-1,,,file,table/arrays/CA_109_2_88_7.txt,PCAx2PCA,,"PCAx2PCA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k88-1;t2-v7-k88-2,,2026-08-23,2026-11-13
+2,7,91,111,row,CITED,t2-v7-k91-1,,,file,table/arrays/CA_111_2_91_7.txt,Direct product generalized,,"Direct product generalized || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k91-1;t2-v7-k91-2,,2026-08-23,2026-11-13
 2,7,100,113,row,CITED,t2-v7-k100-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k100-1,,2026-08-23,2026-11-13
 2,7,101,115,row,CITED,t2-v7-k101-1,,,file,table/arrays/CA_115_2_101_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k101-1;t2-v7-k101-2,,2026-08-23,2026-11-13
 2,7,103,116,row,CITED,t2-v7-k103-1,,,file,table/arrays/CA_116_2_103_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k103-1;t2-v7-k103-2,,2026-08-23,2026-11-13
@@ -335,7 +335,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,109,119,row,CITED,t2-v7-k109-1,,,file,table/arrays/CA_119_2_109_7.txt,PCAxPCA,,"PCAxPCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 91 columns",t2-v7-k109-1;t2-v7-k109-2,,2026-08-23,2026-11-13
 2,7,111,120,row,CITED,t2-v7-k111-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k111-1,,2026-08-23,2026-11-13
 2,7,114,121,row,CITED,t2-v7-k114-1,,,file,table/arrays/CA_121_2_114_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays at 109 columns",t2-v7-k114-1;t2-v7-k114-2,,2026-08-23,2026-11-13
-2,7,115,122,row,CITED,t2-v7-k115-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k115-1,,2026-08-23,2026-11-13
+2,7,115,122,row,CITED,t2-v7-k115-1,,,file,table/arrays/CA_122_2_115_7.txt,PCAx2PCA,,"PCAx2PCA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k115-1;t2-v7-k115-2,,2026-08-23,2026-11-13
 2,7,120,123,row,CITED,t2-v7-k120-1,,,file,table/arrays/CA_123_2_120_7.txt,PCAxPCA,,"PCAxPCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 109 columns",t2-v7-k120-1;t2-v7-k120-2,,2026-08-23,2026-11-13
 2,7,128,124,row,CITED,t2-v7-k128-1,,,file,table/arrays/CA_124_2_128_7.txt,PCAx2PCA,,"PCAx2PCA || Column extension at fixed N by simulated annealing, starting from the PCA product of Bose orthogonal arrays (Colbourn and Torres-Jimenez 2013) at 109 columns",t2-v7-k128-1;t2-v7-k128-2,,2026-08-23,2026-11-13
 2,7,130,125,row,CITED,t2-v7-k130-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k130-1,,2026-08-23,2026-11-13
@@ -348,12 +348,12 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,7,504,138,row,CITED,t2-v7-k504-1,,,file,table/arrays/CA_138_2_504_7.txt,PCAx2PCA,,"PCAx2PCA || product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient), of the table's CA(49; 2, 8, 7) and CA(91; 2, 63, 7); found by the construction closure of the table's real arrays",t2-v7-k504-1;t2-v7-k504-2,,2026-08-23,2026-11-13
 2,7,521,140,row,CITED,t2-v7-k521-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k521-1,,2026-08-23,2026-11-13
 2,7,560,143,row,CITED,t2-v7-k560-1,,,file,table/arrays/CA_143_2_560_7.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v7-k560-1;t2-v7-k560-2,,2026-08-23,2026-11-13
-2,7,568,144,row,CITED,t2-v7-k568-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k568-1,,2026-08-23,2026-11-13
-2,7,625,145,row,CITED,t2-v7-k625-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k625-1,,2026-08-23,2026-11-13
+2,7,568,144,row,CITED,t2-v7-k568-1,,,file,table/arrays/CA_144_2_568_7.txt,PCAx2PCA,,"PCAx2PCA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k568-1;t2-v7-k568-2,,2026-08-23,2026-11-13
+2,7,625,145,row,CITED,t2-v7-k625-1,,,file,table/arrays/CA_145_2_625_7.txt,PCAx2PCA,,"PCAx2PCA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k625-1;t2-v7-k625-2,,2026-08-23,2026-11-13
 2,7,632,146,row,CITED,t2-v7-k632-1,,,none,,Direct product,,Direct product,t2-v7-k632-1,,2026-08-23,2026-11-13
 2,7,640,147,row,CITED,t2-v7-k640-1,,,none,,Direct product,,Direct product,t2-v7-k640-1,,2026-08-23,2026-11-13
 2,7,689,149,row,CITED,t2-v7-k689-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v7-k689-1,,2026-08-23,2026-11-13
-2,7,693,151,row,CITED,t2-v7-k693-1,,,none,,Direct product,,Direct product,t2-v7-k693-1,,2026-08-23,2026-11-13
+2,7,693,151,row,CITED,t2-v7-k693-1,,,file,table/arrays/CA_151_2_693_7.txt,Direct product,,"Direct product || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v7-k693-1;t2-v7-k693-2,,2026-08-23,2026-11-13
 2,7,696,152,row,CITED,t2-v7-k696-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v7-k696-1,,2026-08-23,2026-11-13
 2,7,728,153,row,CITED,t2-v7-k728-1,,,none,,Direct product generalized,,Direct product generalized,t2-v7-k728-1,,2026-08-23,2026-11-13
 2,7,800,155,row,CITED,t2-v7-k800-1,,,none,,Direct product,,Direct product,t2-v7-k800-1,,2026-08-23,2026-11-13
@@ -419,12 +419,12 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,8,89,132,row,CITED,t2-v8-k89-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k89-1,,2026-08-23,2026-11-13
 2,8,90,133,row,CITED,t2-v8-k90-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k90-1,,2026-08-23,2026-11-13
 2,8,98,134,row,CITED,t2-v8-k98-1,,,file,table/arrays/CA_134_2_98_8.txt,PCAx2PCA,,"PCAx2PCA || PCA product (Colbourn et al. 2006, Colbourn and Torres-Jimenez 2013) of two partitioned covering arrays",t2-v8-k98-1;t2-v8-k98-2,,2026-08-23,2026-11-13
-2,8,99,135,row,CITED,t2-v8-k99-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k99-1,,2026-08-23,2026-11-13
+2,8,99,135,row,CITED,t2-v8-k99-1,,,file,table/arrays/CA_135_2_99_8.txt,PCAx2PCA,,"PCAx2PCA || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v8-k99-1;t2-v8-k99-2,,2026-08-23,2026-11-13
 2,8,113,140,row,CITED,t2-v8-k113-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k113-1,,2026-08-23,2026-11-13
 2,8,115,143,row,CITED,t2-v8-k115-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k115-1,,2026-08-23,2026-11-13
 2,8,117,144,row,CITED,t2-v8-k117-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k117-1,,2026-08-23,2026-11-13
-2,8,121,148,row,CITED,t2-v8-k121-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v8-k121-1,,2026-08-23,2026-11-13
-2,8,123,151,row,CITED,t2-v8-k123-1,,,none,,Direct product generalized,,Direct product generalized,t2-v8-k123-1,,2026-08-23,2026-11-13
+2,8,121,148,row,CITED,t2-v8-k121-1,,,file,table/arrays/CA_148_2_121_8.txt,simulated annealing (Torres-Jimenez),,"simulated annealing (Torres-Jimenez) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v8-k121-1;t2-v8-k121-2,,2026-08-23,2026-11-13
+2,8,123,151,row,CITED,t2-v8-k123-1,,,file,table/arrays/CA_151_2_123_8.txt,Direct product generalized,,"Direct product generalized || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v8-k123-1;t2-v8-k123-2,,2026-08-23,2026-11-13
 2,8,131,152,row,CITED,t2-v8-k131-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v8-k131-1,,2026-08-23,2026-11-13
 2,8,138,154,row,CITED,t2-v8-k138-1,,,none,,PCAxPCA,,PCAxPCA,t2-v8-k138-1,,2026-08-23,2026-11-13
 2,8,143,155,row,CITED,t2-v8-k143-1,,,none,,PCAxPCA,,PCAxPCA,t2-v8-k143-1,,2026-08-23,2026-11-13
@@ -620,7 +620,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,10,154,219,row,CITED,t2-v10-k154-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v10-k154-1,,2026-08-23,2026-11-13
 2,10,167,220,row,CITED,t2-v10-k167-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v10-k167-1,,2026-08-23,2026-11-13
 2,10,169,221,row,CITED,t2-v10-k169-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v10-k169-1,,2026-08-23,2026-11-13
-2,10,170,230,row,CITED,t2-v10-k170-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k170-1,,2026-08-23,2026-11-13
+2,10,170,230,row,CITED,t2-v10-k170-1,,,file,table/arrays/CA_230_2_170_10.txt,Direct product generalized,,"Direct product generalized || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v10-k170-1;t2-v10-k170-2,,2026-08-23,2026-11-13
 2,10,171,235,row,CITED,t2-v10-k171-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k171-1,,2026-08-23,2026-11-13
 2,10,173,236,row,CITED,t2-v10-k173-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k173-1,,2026-08-23,2026-11-13
 2,10,182,237,row,CITED,t2-v10-k182-1,,,none,,Direct product,,Direct product,t2-v10-k182-1,,2026-08-23,2026-11-13
@@ -729,7 +729,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,10,17160,416,row,CITED,t2-v10-k17160-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k17160-1,,2026-08-23,2026-11-13
 2,10,18997,417,row,CITED,t2-v10-k18997-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k18997-1,,2026-08-23,2026-11-13
 2,10,20000,418,row,CITED,t2-v10-k20000-1,,,none,,Direct product generalized,,Direct product generalized,t2-v10-k20000-1,,2026-08-23,2026-11-13
-2,11,12,121,row,CITED,t2-v11-k12-1,,,none,,orthogonal array,,orthogonal array,t2-v11-k12-1,,2026-08-23,2026-11-13
+2,11,12,121,row,CITED,t2-v11-k12-1,,,file,table/arrays/CA_121_2_12_11.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t2-v11-k12-1;t2-v11-k12-2,,2026-08-23,2026-11-13
 2,11,13,153,row,CITED,t2-v11-k13-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k13-1,,2026-08-23,2026-11-13
 2,11,14,155,row,CITED,t2-v11-k14-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v11-k14-1,,2026-08-23,2026-11-13
 2,11,15,158,row,CITED,t2-v11-k15-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v11-k15-1,,2026-08-23,2026-11-13
@@ -792,7 +792,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,11,412,339,row,CITED,t2-v11-k412-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v11-k412-1,,2026-08-23,2026-11-13
 2,11,416,340,row,CITED,t2-v11-k416-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v11-k416-1,,2026-08-23,2026-11-13
 2,11,1705,341,row,CITED,t2-v11-k1705-1,,,file,table/arrays/CA_341_2_1705_11.txt.gz,PCAx2PCA,,"PCAx2PCA || product of partitioned covering arrays of Colbourn and Torres-Jimenez 2013 (PCA x PCA), applied twice to the Bose array OA(121; 2, 12, 11): OA x OA = CA(231; 2, 143, 11), then that x OA = CA(341; 2, 1705, 11)",t2-v11-k1705-1;t2-v11-k1705-2,,2026-08-23,2026-11-13
-2,11,1716,350,row,CITED,t2-v11-k1716-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v11-k1716-1,,2026-08-23,2026-11-13
+2,11,1716,350,row,CITED,t2-v11-k1716-1,,,file,table/arrays/CA_350_2_1716_11.txt.gz,PCAx2PCA,,PCAx2PCA || Product of Colbourn and Torres-Jimenez 2013 (Cor 4.3): rows differing in every column removed,t2-v11-k1716-1;t2-v11-k1716-2,,2026-08-23,2026-11-13
 2,11,1728,358,row,VERIFIED,t2-v11-k1728-2,3,exact,file,table/arrays/CA_358_2_1728_11.txt,"generalized direct product (one row saved per constant row of either ingredient), applied twice to the Bose array OA(121; 2, 12, 11), as implemented in CAs (recBoseCA, type CA), the route chosen by CAs::bestCA",,"generalized direct product (one row saved per constant row of either ingredient), applied twice to the Bose array OA(121; 2, 12, 11), as implemented in CAs (recBoseCA, type CA), the route chosen by CAs::bestCA",t2-v11-k1728-2,t2-v11-k1728-1,2026-10-25,2026-11-13
 2,11,1848,362,row,CITED,t2-v11-k1848-1,,,none,,Direct product,,Direct product,t2-v11-k1848-1,,2026-08-23,2026-11-13
 2,11,1859,371,row,CITED,t2-v11-k1859-1,,,none,,Direct product generalized,,Direct product generalized,t2-v11-k1859-1,,2026-08-23,2026-11-13
@@ -894,7 +894,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,12,211,312,row,CITED,t2-v12-k211-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k211-1,,2026-08-23,2026-11-13
 2,12,224,320,row,CITED,t2-v12-k224-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v12-k224-1,,2026-08-23,2026-11-13
 2,12,225,323,row,CITED,t2-v12-k225-1,,,none,,Direct product postop TJ-SA,,Direct product postop TJ-SA,t2-v12-k225-1,,2026-08-23,2026-11-13
-2,12,226,324,row,CITED,t2-v12-k226-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k226-1,,2026-08-23,2026-11-13
+2,12,226,324,row,CITED,t2-v12-k226-1,,,file,table/arrays/CA_324_2_226_12.txt,Direct product generalized,,"Direct product generalized || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v12-k226-1;t2-v12-k226-2,,2026-08-23,2026-11-13
 2,12,227,331,row,CITED,t2-v12-k227-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k227-1,,2026-08-23,2026-11-13
 2,12,229,332,row,CITED,t2-v12-k229-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k229-1,,2026-08-23,2026-11-13
 2,12,237,341,row,CITED,t2-v12-k237-1,,,none,,PCAxPCA,,PCAxPCA,t2-v12-k237-1,,2026-08-23,2026-11-13
@@ -1005,7 +1005,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,12,19045,581,row,CITED,t2-v12-k19045-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k19045-1,,2026-08-23,2026-11-13
 2,12,19916,582,row,CITED,t2-v12-k19916-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k19916-1,,2026-08-23,2026-11-13
 2,12,20000,583,row,CITED,t2-v12-k20000-1,,,none,,Direct product generalized,,Direct product generalized,t2-v12-k20000-1,,2026-08-23,2026-11-13
-2,13,14,169,row,CITED,t2-v13-k14-1,,,none,,orthogonal array,,orthogonal array,t2-v13-k14-1,,2026-08-23,2026-11-13
+2,13,14,169,row,CITED,t2-v13-k14-1,,,file,table/arrays/CA_169_2_14_13.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t2-v13-k14-1;t2-v13-k14-2,,2026-08-23,2026-11-13
 2,13,15,215,row,CITED,t2-v13-k15-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v13-k15-1,,2026-08-23,2026-11-13
 2,13,18,217,row,CITED,t2-v13-k18-1,,,file,table/arrays/CA_217_2_18_13.txt,Fix 1 symbols (LCDST),,"Fix 1 symbols (LCDST) || Cover starter of Colbourn, Martirosyan, Mullen, Shasha, Sherwood and Yucas 2006",t2-v13-k18-1;t2-v13-k18-2,,2026-08-23,2026-11-13
 2,13,19,229,row,CITED,t2-v13-k19-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v13-k19-1,,2026-08-23,2026-11-13
@@ -1021,11 +1021,11 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,13,32,301,row,CITED,t2-v13-k32-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v13-k32-1,,2026-08-23,2026-11-13
 2,13,33,309,row,CITED,t2-v13-k33-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v13-k33-1,,2026-08-23,2026-11-13
 2,13,39,317,row,CITED,t2-v13-k39-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v13-k39-1,,2026-08-23,2026-11-13
-2,13,195,325,row,CITED,t2-v13-k195-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k195-1,,2026-08-23,2026-11-13
-2,13,196,336,row,CITED,t2-v13-k196-1,,,none,,Direct product,,Direct product,t2-v13-k196-1,,2026-08-23,2026-11-13
+2,13,195,325,row,CITED,t2-v13-k195-1,,,file,table/arrays/CA_325_2_195_13.txt,PCAx2PCA,,PCAx2PCA || Construction function of the R package CAs 0.24.4,t2-v13-k195-1;t2-v13-k195-2,,2026-08-23,2026-11-13
+2,13,196,336,row,CITED,t2-v13-k196-1,,,file,table/arrays/CA_336_2_196_13.txt,Direct product,,Direct product || Construction function of the R package CAs 0.24.4,t2-v13-k196-1;t2-v13-k196-2,,2026-08-23,2026-11-13
 2,13,221,362,row,CITED,t2-v13-k221-1,,,none,,Direct product,,Direct product,t2-v13-k221-1,,2026-08-23,2026-11-13
 2,13,251,373,row,CITED,t2-v13-k251-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k251-1,,2026-08-23,2026-11-13
-2,13,252,384,row,CITED,t2-v13-k252-1,,,none,,Direct product,,Direct product,t2-v13-k252-1,,2026-08-23,2026-11-13
+2,13,252,384,row,CITED,t2-v13-k252-1,,,file,table/arrays/CA_384_2_252_13.txt,Direct product,,Direct product || Product of Colbourn and Torres-Jimenez 2013 (Cor 4.3): rows differing in every column removed,t2-v13-k252-1;t2-v13-k252-2,,2026-08-23,2026-11-13
 2,13,265,385,row,CITED,t2-v13-k265-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k265-1,,2026-08-23,2026-11-13
 2,13,266,395,row,CITED,t2-v13-k266-1,,,none,,Direct product,,Direct product,t2-v13-k266-1,,2026-08-23,2026-11-13
 2,13,279,397,row,CITED,t2-v13-k279-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k279-1,,2026-08-23,2026-11-13
@@ -1035,9 +1035,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,13,298,412,row,CITED,t2-v13-k298-1,,,none,,Direct product generalized,,Direct product generalized,t2-v13-k298-1,,2026-08-23,2026-11-13
 2,13,304,415,row,CITED,t2-v13-k304-1,,,none,,Direct product generalized,,Direct product generalized,t2-v13-k304-1,,2026-08-23,2026-11-13
 2,13,308,418,row,CITED,t2-v13-k308-1,,,none,,Direct product,,Direct product,t2-v13-k308-1,,2026-08-23,2026-11-13
-2,13,323,421,row,CITED,t2-v13-k323-1,,,none,,PCAxPCA,,PCAxPCA,t2-v13-k323-1,,2026-08-23,2026-11-13
+2,13,323,421,row,CITED,t2-v13-k323-1,,,file,table/arrays/CA_421_2_323_13.txt,PCAxPCA,,PCAxPCA || Construction function of the R package CAs 0.24.4,t2-v13-k323-1;t2-v13-k323-2,,2026-08-23,2026-11-13
 2,13,332,428,row,CITED,t2-v13-k332-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k332-1,,2026-08-23,2026-11-13
-2,13,341,433,row,CITED,t2-v13-k341-1,,,none,,PCAxPCA,,PCAxPCA,t2-v13-k341-1,,2026-08-23,2026-11-13
+2,13,341,433,row,CITED,t2-v13-k341-1,,,file,table/arrays/CA_433_2_341_13.txt,PCAxPCA,,PCAxPCA || Construction function of the R package CAs 0.24.4,t2-v13-k341-1;t2-v13-k341-2,,2026-08-23,2026-11-13
 2,13,363,437,row,CITED,t2-v13-k363-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k363-1,,2026-08-23,2026-11-13
 2,13,384,438,row,CITED,t2-v13-k384-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k384-1,,2026-08-23,2026-11-13
 2,13,398,447,row,CITED,t2-v13-k398-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k398-1,,2026-08-23,2026-11-13
@@ -1046,8 +1046,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,13,438,458,row,CITED,t2-v13-k438-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k438-1,,2026-08-23,2026-11-13
 2,13,452,466,row,CITED,t2-v13-k452-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k452-1,,2026-08-23,2026-11-13
 2,13,511,473,row,CITED,t2-v13-k511-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k511-1,,2026-08-23,2026-11-13
-2,13,2717,481,row,CITED,t2-v13-k2717-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k2717-1,,2026-08-23,2026-11-13
-2,13,2730,492,row,CITED,t2-v13-k2730-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k2730-1,,2026-08-23,2026-11-13
+2,13,2717,481,row,CITED,t2-v13-k2717-1,,,file,table/arrays/CA_481_2_2717_13.txt.gz,PCAx2PCA,,PCAx2PCA || Construction function of the R package CAs 0.24.4,t2-v13-k2717-1;t2-v13-k2717-2,,2026-08-23,2026-11-13
+2,13,2730,492,row,CITED,t2-v13-k2730-1,,,file,table/arrays/CA_492_2_2730_13.txt.gz,PCAx2PCA,,PCAx2PCA || Product of Colbourn and Torres-Jimenez 2013 (Cor 4.3): rows differing in every column removed,t2-v13-k2730-1;t2-v13-k2730-2,,2026-08-23,2026-11-13
 2,13,2744,502,row,CITED,t2-v13-k2744-1,,,none,,Direct product,,Direct product,t2-v13-k2744-1,,2026-08-23,2026-11-13
 2,13,3111,518,row,CITED,t2-v13-k3111-1,,,none,,Direct product,,Direct product,t2-v13-k3111-1,,2026-08-23,2026-11-13
 2,13,3497,529,row,CITED,t2-v13-k3497-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v13-k3497-1,,2026-08-23,2026-11-13
@@ -1094,7 +1094,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,14,20,272,row,CITED,t2-v14-k20-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v14-k20-1,,2026-08-23,2026-11-13
 2,14,21,274,row,CITED,t2-v14-k21-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v14-k21-1,,2026-08-23,2026-11-13
 2,14,22,287,row,CITED,t2-v14-k22-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v14-k22-1,,2026-08-23,2026-11-13
-2,14,23,300,row,CITED,t2-v14-k23-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v14-k23-1,,2026-08-23,2026-11-13
+2,14,23,300,row,CITED,t2-v14-k23-1,,,file,table/arrays/CA_300_2_23_14.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Construction function of the R package CAs 0.24.4,t2-v14-k23-1;t2-v14-k23-2,,2026-08-23,2026-11-13
 2,14,24,306,row,CITED,t2-v14-k24-1,,,none,,double proj (C) postop NCK,,double proj (C) postop NCK,t2-v14-k24-1,,2026-08-23,2026-11-13
 2,14,25,322,row,CITED,t2-v14-k25-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v14-k25-1,,2026-08-23,2026-11-13
 2,14,27,329,row,CITED,t2-v14-k27-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v14-k27-1,,2026-08-23,2026-11-13
@@ -1147,8 +1147,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,14,425,517,row,CITED,t2-v14-k425-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k425-1,,2026-08-23,2026-11-13
 2,14,436,524,row,CITED,t2-v14-k436-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k436-1,,2026-08-23,2026-11-13
 2,14,439,532,row,CITED,t2-v14-k439-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k439-1,,2026-08-23,2026-11-13
-2,14,440,534,row,CITED,t2-v14-k440-1,,,none,,PCAxPCA,,PCAxPCA,t2-v14-k440-1,,2026-08-23,2026-11-13
-2,14,445,536,row,CITED,t2-v14-k445-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k445-1,,2026-08-23,2026-11-13
+2,14,440,534,row,CITED,t2-v14-k440-1,,,file,table/arrays/CA_534_2_440_14.txt,PCAxPCA,,PCAxPCA || Construction function of the R package CAs 0.24.4,t2-v14-k440-1;t2-v14-k440-2,,2026-08-23,2026-11-13
+2,14,445,536,row,CITED,t2-v14-k445-1,,,file,table/arrays/CA_536_2_445_14.txt,Direct product generalized,,"Direct product generalized || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t2-v14-k445-1;t2-v14-k445-2,,2026-08-23,2026-11-13
 2,14,457,538,row,CITED,t2-v14-k457-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k457-1,,2026-08-23,2026-11-13
 2,14,467,539,row,CITED,t2-v14-k467-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k467-1,,2026-08-23,2026-11-13
 2,14,471,542,row,CITED,t2-v14-k471-1,,,none,,Direct product generalized,,Direct product generalized,t2-v14-k471-1,,2026-08-23,2026-11-13
@@ -1290,7 +1290,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,15,12,250,row,CITED,t2-v15-k12-1,,,none,,Add Factor SO (AG-TJ-IM),,Add Factor SO (AG-TJ-IM),t2-v15-k12-1,,2026-08-23,2026-11-13
 2,15,15,251,row,CITED,t2-v15-k15-1,,,none,,Add Factor SO (AG-TJ-IM),,Add Factor SO (AG-TJ-IM),t2-v15-k15-1,,2026-08-23,2026-11-13
 2,15,17,252,row,CITED,t2-v15-k17-1,,,none,,Add Factor SO (AG-TJ-IM),,Add Factor SO (AG-TJ-IM),t2-v15-k17-1,,2026-08-23,2026-11-13
-2,15,18,255,row,CITED,t2-v15-k18-1,,,none,,projection (C),,projection (C),t2-v15-k18-1,,2026-08-23,2026-11-13
+2,15,18,255,row,CITED,t2-v15-k18-1,,,file,table/arrays/CA_255_2_18_15.txt,projection (C),,projection (C) || Construction function of the R package CAs 0.24.4,t2-v15-k18-1;t2-v15-k18-2,,2026-08-23,2026-11-13
 2,15,19,281,row,CITED,t2-v15-k19-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v15-k19-1,,2026-08-23,2026-11-13
 2,15,20,285,row,CITED,t2-v15-k20-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v15-k20-1,,2026-08-23,2026-11-13
 2,15,21,331,row,CITED,t2-v15-k21-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v15-k21-1,,2026-08-23,2026-11-13
@@ -1481,9 +1481,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,15,13130,898,row,CITED,t2-v15-k13130-1,,,none,,Direct product generalized,,Direct product generalized,t2-v15-k13130-1,,2026-08-23,2026-11-13
 2,15,13160,899,row,CITED,t2-v15-k13160-1,,,none,,Direct product generalized,,Direct product generalized,t2-v15-k13160-1,,2026-08-23,2026-11-13
 2,15,20000,900,row,CITED,t2-v15-k20000-1,,,none,,Direct product generalized,,Direct product generalized,t2-v15-k20000-1,,2026-08-23,2026-11-13
-2,16,17,256,row,CITED,t2-v16-k17-1,,,none,,Derive from strength 3,,Derive from strength 3,t2-v16-k17-1,,2026-08-23,2026-11-13
+2,16,17,256,row,CITED,t2-v16-k17-1,,,file,table/arrays/CA_256_2_17_16.txt,Derive from strength 3,,Derive from strength 3 || Construction function of the R package CAs 0.24.4,t2-v16-k17-1;t2-v16-k17-2,,2026-08-23,2026-11-13
 2,16,18,285,row,VERIFIED,t2-v16-k18-2,5,exact,file,table/arrays/CA_285_2_18_16.txt,"CA(285;2,18,16): row deletion + tabu repair starting from Bai XunDi's CA(286;2,18,16) (OA(17^2) fused, shortened by SA)",,"CA(285;2,18,16): row deletion + tabu repair starting from Bai XunDi's CA(286;2,18,16) (OA(17^2) fused, shortened by SA)",t2-v16-k18-2,t2-v16-k18-1,2026-11-01,2026-11-13
-2,16,19,288,row,CITED,t2-v16-k19-1,,,none,,projection (C),,projection (C),t2-v16-k19-1,,2026-08-23,2026-11-13
+2,16,19,288,row,CITED,t2-v16-k19-1,,,file,table/arrays/CA_288_2_19_16.txt,projection (C),,projection (C) || Construction function of the R package CAs 0.24.4,t2-v16-k19-1;t2-v16-k19-2,,2026-08-23,2026-11-13
 2,16,20,342,row,CITED,t2-v16-k20-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v16-k20-1,,2026-08-23,2026-11-13
 2,16,21,344,row,CITED,t2-v16-k21-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v16-k21-1,,2026-08-23,2026-11-13
 2,16,22,346,row,CITED,t2-v16-k22-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v16-k22-1,,2026-08-23,2026-11-13
@@ -1491,14 +1491,14 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,16,25,376,row,CITED,t2-v16-k25-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v16-k25-1,,2026-08-23,2026-11-13
 2,16,27,406,row,CITED,t2-v16-k27-1,,,none,,Fix 1 symbols (LCDST),,Fix 1 symbols (LCDST),t2-v16-k27-1,,2026-08-23,2026-11-13
 2,16,28,421,row,CITED,t2-v16-k28-1,,,none,,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn),t2-v16-k28-1,,2026-08-23,2026-11-13
-2,16,29,436,row,CITED,t2-v16-k29-1,,,none,,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens),t2-v16-k29-1,,2026-08-23,2026-11-13
+2,16,29,436,row,CITED,t2-v16-k29-1,,,file,table/arrays/CA_436_2_29_16.txt,Fix 1 symbols (Meagher-Stevens),,Fix 1 symbols (Meagher-Stevens) || Construction function of the R package CAs 0.24.4,t2-v16-k29-1;t2-v16-k29-2,,2026-08-23,2026-11-13
 2,16,36,442,row,CITED,t2-v16-k36-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v16-k36-1,,2026-08-23,2026-11-13
 2,16,38,466,row,CITED,t2-v16-k38-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v16-k38-1,,2026-08-23,2026-11-13
 2,16,39,478,row,CITED,t2-v16-k39-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v16-k39-1,,2026-08-23,2026-11-13
 2,16,40,483,row,CITED,t2-v16-k40-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v16-k40-1,,2026-08-23,2026-11-13
 2,16,45,490,row,CITED,t2-v16-k45-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v16-k45-1,,2026-08-23,2026-11-13
-2,16,288,496,row,CITED,t2-v16-k288-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v16-k288-1,,2026-08-23,2026-11-13
-2,16,289,510,row,CITED,t2-v16-k289-1,,,none,,Direct product,,Direct product,t2-v16-k289-1,,2026-08-23,2026-11-13
+2,16,288,496,row,CITED,t2-v16-k288-1,,,file,table/arrays/CA_496_2_288_16.txt,PCAx2PCA,,PCAx2PCA || Construction function of the R package CAs 0.24.4,t2-v16-k288-1;t2-v16-k288-2,,2026-08-23,2026-11-13
+2,16,289,510,row,CITED,t2-v16-k289-1,,,file,table/arrays/CA_510_2_289_16.txt,Direct product,,Direct product || Construction function of the R package CAs 0.24.4,t2-v16-k289-1;t2-v16-k289-2,,2026-08-23,2026-11-13
 2,16,306,526,row,CITED,t2-v16-k306-1,,,none,,Direct product generalized,,Direct product generalized,t2-v16-k306-1,,2026-08-23,2026-11-13
 2,16,323,528,row,CITED,t2-v16-k323-1,,,none,,Direct product,,Direct product,t2-v16-k323-1,,2026-08-23,2026-11-13
 2,16,327,543,row,CITED,t2-v16-k327-1,,,none,,Direct product generalized,,Direct product generalized,t2-v16-k327-1,,2026-08-23,2026-11-13
@@ -1603,7 +1603,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,16,11700,969,row,CITED,t2-v16-k11700-1,,,none,,PCAxPCA,,PCAxPCA,t2-v16-k11700-1,,2026-08-23,2026-11-13
 2,16,12960,970,row,CITED,t2-v16-k12960-1,,,none,,Direct product,,Direct product,t2-v16-k12960-1,,2026-08-23,2026-11-13
 2,16,65536,976,row,VERIFIED,t2-v16-k65536-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_4_65536_16_2.txt 2 16 expand CA.txt affine,"Sherwood covering perfect hash family (affine): all 4-tuples of GF(16), the 4-fold direct product of OA(256; 16, 16, 2)",,"Sherwood covering perfect hash family (affine): all 4-tuples of GF(16), the 4-fold direct product of OA(256; 16, 16, 2)",t2-v16-k65536-1,,2026-11-10,2026-11-13
-2,17,18,289,row,CITED,t2-v17-k18-1,,,none,,orthogonal array,,orthogonal array,t2-v17-k18-1,,2026-08-23,2026-11-13
+2,17,18,289,row,CITED,t2-v17-k18-1,,,file,table/arrays/CA_289_2_18_17.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t2-v17-k18-1;t2-v17-k18-2,,2026-08-23,2026-11-13
 2,17,20,350,row,VERIFIED,t2-v17-k20-2,7,exact,file,table/arrays/CA_350_2_20_17.txt,"CA(350;2,20,17): row deletion + tabu repair starting from OA(19^2;2,20,19) (Bush) fused twice (CKRS 2010 Lemma 3.1), 357 rows",,"CA(350;2,20,17): row deletion + tabu repair starting from OA(19^2;2,20,19) (Bush) fused twice (CKRS 2010 Lemma 3.1), 357 rows",t2-v17-k20-2,t2-v17-k20-1,2026-11-01,2026-11-13
 2,17,21,354,row,CITED,t2-v17-k21-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v17-k21-1,,2026-08-23,2026-11-13
 2,17,22,357,row,CITED,t2-v17-k22-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v17-k22-1,,2026-08-23,2026-11-13
@@ -1616,7 +1616,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,17,29,477,row,CITED,t2-v17-k29-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v17-k29-1,,2026-08-23,2026-11-13
 2,17,30,479,row,CITED,t2-v17-k30-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v17-k30-1,,2026-08-23,2026-11-13
 2,17,31,497,row,CITED,t2-v17-k31-1,,,none,,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn),t2-v17-k31-1,,2026-08-23,2026-11-13
-2,17,32,513,row,CITED,t2-v17-k32-1,,,none,,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn),t2-v17-k32-1,,2026-08-23,2026-11-13
+2,17,32,513,row,CITED,t2-v17-k32-1,,,file,table/arrays/CA_513_2_32_17.txt,Fix 1 symbols (Colbourn),,Fix 1 symbols (Colbourn) || Construction function of the R package CAs 0.24.4,t2-v17-k32-1;t2-v17-k32-2,,2026-08-23,2026-11-13
 2,17,39,517,row,CITED,t2-v17-k39-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v17-k39-1,,2026-08-23,2026-11-13
 2,17,40,529,row,CITED,t2-v17-k40-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v17-k40-1,,2026-08-23,2026-11-13
 2,17,41,541,row,CITED,t2-v17-k41-1,,,none,,Fix 5 symbols (LCDST),,Fix 5 symbols (LCDST),t2-v17-k41-1,,2026-08-23,2026-11-13
@@ -3489,7 +3489,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,4,11,110,row,CITED,t3-v4-k11-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k11-1,,2026-08-23,2026-11-13
 3,4,12,120,row,CITED,t3-v4-k12-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k12-1,,2026-08-23,2026-11-13
 3,4,18,124,row,CITED,t3-v4-k18-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v4-k18-1,,2026-08-23,2026-11-13
-3,4,21,127,row,CITED,t3-v4-k21-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v4-k21-1,,2026-08-23,2026-11-13
+3,4,21,127,row,CITED,t3-v4-k21-1,,,file,table/arrays/CA_127_3_21_4.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v4-k21-1;t3-v4-k21-2,,2026-08-23,2026-11-13
 3,4,22,136,row,CITED,t3-v4-k22-1,,,none,,CPHF 3-stage (IM-TJ-AJ-AG),,CPHF 3-stage (IM-TJ-AJ-AG),t3-v4-k22-1,,2026-08-23,2026-11-13
 3,4,38,152,row,CITED,t3-v4-k38-1,,,file,table/arrays/CA_152_3_38_4.txt,Cyclotomy (Colbourn),,Cyclotomy (Colbourn) || Cyclotomy: rows are translates of a cyclotomic vector over GF(q),t3-v4-k38-1;t3-v4-k38-3,,2026-08-23,2026-11-13
 3,4,42,184,row,VERIFIED,t3-v4-k42-1,1,exact,file,table/arrays/CA_184_3_42_4.txt,"Kianoosh Shokri, Lucia Moura, thesis Thm 5.2.7 (2-plication) with q=4",,"Kianoosh Shokri, Lucia Moura, thesis Thm 5.2.7 (2-plication) with q=4",t3-v4-k42-1,t3-v4-k46-1,2026-11-02,2026-11-13
@@ -3634,7 +3634,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,5,10,185,row,CITED,t3-v5-k10-1,,,file,table/arrays/CA_185_3_10_5.txt,Chateauneuf-Kreher NRB,,Chateauneuf-Kreher NRB || Chateauneuf-Colbourn-Kreher construction from a starter (CK_NRB),t3-v5-k10-1;t3-v5-k10-2,,2026-08-23,2026-11-13
 3,5,12,225,row,CITED,t3-v5-k12-1,,,file,table/arrays/CA_225_3_12_5.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling: a strength-3 array on ceil(k/2) columns doubled with a strength-2 array on the same columns,t3-v5-k12-1;t3-v5-k12-2,,2026-08-23,2026-11-13
 3,5,24,245,row,CITED,t3-v5-k24-1,,,file,table/arrays/CA_245_3_24_5.txt,SCPHF (Sherwood-Martirosyan-Colbourn),,"SCPHF (Sherwood-Martirosyan-Colbourn) || expansion of a sequence covering perfect hash family of Sherwood, Martirosyan and Colbourn 2006, from the CAs catalogue",t3-v5-k24-1;t3-v5-k24-2,,2026-08-23,2026-11-13
-3,5,31,249,row,CITED,t3-v5-k31-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v5-k31-1,,2026-08-23,2026-11-13
+3,5,31,249,row,CITED,t3-v5-k31-1,,,file,table/arrays/CA_249_3_31_5.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v5-k31-1;t3-v5-k31-2,,2026-08-23,2026-11-13
 3,5,32,323,row,VERIFIED,t3-v5-k32-2,5,exact,file,table/arrays/CA_323_3_32_5.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v5-k32-2,t3-v5-k32-1,2026-11-01,2026-11-13
 3,5,36,325,row,VERIFIED,t3-v5-k36-2,2,exact,file,table/arrays/CA_325_3_36_5.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v5-k36-2,t3-v5-k36-1,2026-10-18,2026-11-13
 3,5,37,350,row,VERIFIED,t3-v5-k37-1,5,exact,file,table/arrays/CA_350_3_37_5.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v5-k37-1,t3-v5-k52-1,2026-10-18,2026-11-13
@@ -3775,7 +3775,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,6,15,506,row,CITED,t3-v6-k15-1,,,none,,Chateauneuf-Kreher doubling postop NCK,,Chateauneuf-Kreher doubling postop NCK,t3-v6-k15-1,,2026-08-23,2026-11-13
 3,6,16,510,row,CITED,t3-v6-k16-1,,,none,,Chateauneuf-Kreher doubling postop NCK,,Chateauneuf-Kreher doubling postop NCK,t3-v6-k16-1,,2026-08-23,2026-11-13
 3,6,17,549,row,CITED,t3-v6-k17-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v6-k17-1,,2026-08-23,2026-11-13
-3,6,18,591,row,CITED,t3-v6-k18-1,,,none,,Torres Jimenez,,Torres Jimenez,t3-v6-k18-1,,2026-08-23,2026-11-13
+3,6,18,591,row,CITED,t3-v6-k18-1,,,file,table/arrays/CA_591_3_18_6.txt,Torres Jimenez,,Torres Jimenez || Chateauneuf-Kreher doubling,t3-v6-k18-1;t3-v6-k18-2,,2026-08-23,2026-11-13
 3,6,20,620,row,CITED,t3-v6-k20-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v6-k20-1,,2026-08-23,2026-11-13
 3,6,104,624,row,CITED,t3-v6-k104-1,,,file,table/arrays/CA_624_3_104_6.txt,Cyclotomy (Colbourn),,Cyclotomy (Colbourn) || Cyclotomy: rows are translates of a cyclotomic vector over GF(q),t3-v6-k104-1;t3-v6-k104-2,,2026-08-23,2026-11-13
 3,6,122,726,row,CITED,t3-v6-k122-1,,,file,table/arrays/CA_726_3_122_6.txt,Cyclotomy (Torres-Jimenez),,Cyclotomy (Torres-Jimenez) || Cyclotomy: rows are translates of a cyclotomic vector over GF(q),t3-v6-k122-1;t3-v6-k122-2,,2026-08-23,2026-11-13
@@ -3863,7 +3863,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,7,10,479,row,CITED,t3-v7-k10-1,,,file,table/arrays/CA_479_3_10_7.txt,simulated annealing (CKRS),,"simulated annealing (CKRS) || Dwyer CA_Database source code ""CKRSsa"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v7-k10-1;t3-v7-k10-2,,2026-08-23,2026-11-13
 3,7,16,637,row,CITED,t3-v7-k16-1,,,file,table/arrays/CA_637_3_16_7.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling: a strength-3 array on ceil(k/2) columns doubled with a strength-2 array on the same columns,t3-v7-k16-1;t3-v7-k16-2,,2026-08-23,2026-11-13
 3,7,45,679,row,CITED,t3-v7-k45-1,,,none,,SCPHF LFSR (TJ-IM),,SCPHF LFSR (TJ-IM),t3-v7-k45-1,,2026-08-23,2026-11-13
-3,7,57,685,row,CITED,t3-v7-k57-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v7-k57-1,,2026-08-23,2026-11-13
+3,7,57,685,row,CITED,t3-v7-k57-1,,,file,table/arrays/CA_685_3_57_7.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v7-k57-1;t3-v7-k57-2,,2026-08-23,2026-11-13
 3,7,58,929,row,VERIFIED,t3-v7-k58-3,7,exact,file,table/arrays/CA_929_3_58_7.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v7-k58-3,t3-v7-k58-2,2026-11-01,2026-11-13
 3,7,64,931,row,VERIFIED,t3-v7-k64-2,2,exact,file,table/arrays/CA_931_3_64_7.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v7-k64-2,t3-v7-k64-1,2026-10-18,2026-11-13
 3,7,65,980,row,VERIFIED,t3-v7-k65-1,7,exact,file,table/arrays/CA_980_3_65_7.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v7-k65-1,t3-v7-k90-1,2026-10-18,2026-11-13
@@ -3947,10 +3947,10 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,8,12,954,row,VERIFIED,t3-v8-k12-2,8,exact,file,table/arrays/CA_954_3_12_8.txt,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries) of the table's record array CA(955; 3, 12, 8)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries) of the table's record array CA(955; 3, 12, 8)",t3-v8-k12-2,t3-v8-k12-1,2026-11-02,2026-11-13
 3,8,18,960,row,CITED,t3-v8-k18-1,,,file,table/arrays/CA_960_3_18_8.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling: a strength-3 array on ceil(k/2) columns doubled with a strength-2 array on the same columns,t3-v8-k18-1;t3-v8-k18-2,,2026-08-23,2026-11-13
 3,8,66,1016,row,VERIFIED,t3-v8-k66-1,2,exact,file,table/arrays/CA_1016_3_66_8.txt,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it)",,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it)",t3-v8-k66-1,t3-v8-k73-1,2026-11-05,2026-11-13
-3,8,73,1023,row,CITED,t3-v8-k73-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v8-k73-1,,2026-08-23,2026-11-13
+3,8,73,1023,row,CITED,t3-v8-k73-1,,,file,table/arrays/CA_1023_3_73_8.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v8-k73-1;t3-v8-k73-2,,2026-08-23,2026-11-13
 3,8,74,1406,row,VERIFIED,t3-v8-k74-2,8,exact,file,table/arrays/CA_1406_3_74_8.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v8-k74-2,t3-v8-k74-1,2026-11-01,2026-11-13
 3,8,81,1408,row,VERIFIED,t3-v8-k81-1,1,exact,file,table/arrays/CA_1408_3_81_8.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v8-k81-1,t3-v8-k91-1,2026-10-18,2026-11-13
-3,8,91,1455,row,CITED,t3-v8-k91-1,,,none,,Raaphorst-Moura-Stevens fuse,,Raaphorst-Moura-Stevens fuse,t3-v8-k91-1,,2026-08-23,2026-11-13
+3,8,91,1455,row,CITED,t3-v8-k91-1,,,file,table/arrays/CA_1455_3_91_8.txt,Raaphorst-Moura-Stevens fuse,,"Raaphorst-Moura-Stevens fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v8-k91-1;t3-v8-k91-2,,2026-08-23,2026-11-13
 3,8,110,1520,row,CITED,t3-v8-k110-1,,,none,,SCPHF Conditional Expectation (CLS),,SCPHF Conditional Expectation (CLS),t3-v8-k110-1,,2026-08-23,2026-11-13
 3,8,117,1534,row,CITED,t3-v8-k117-1,,,none,,CPHF Sim Annealing (TJ-IM),,CPHF Sim Annealing (TJ-IM),t3-v8-k117-1,,2026-08-23,2026-11-13
 3,8,194,1552,row,CITED,t3-v8-k194-1,,,file,table/arrays/CA_1552_3_194_8.txt,Cyclotomy (Colbourn),,Cyclotomy (Colbourn) || Cyclotomy: rows are translates of a cyclotomic vector over GF(q),t3-v8-k194-1;t3-v8-k194-2,,2026-08-23,2026-11-13
@@ -4014,9 +4014,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,9,10,729,row,CITED,t3-v9-k10-1,,,file,table/arrays/CA_729_3_10_9.txt,orthogonal array,,"orthogonal array || Dwyer CA_Database source code ""OA"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v9-k10-1;t3-v9-k10-2,,2026-08-23,2026-11-13
 3,9,11,1089,row,VERIFIED,t3-v9-k11-3,6,exact,file,table/arrays/CA_1089_3_11_9.txt,degree-2 polynomial construction + block cover / SA post-processing,,degree-2 polynomial construction + block cover / SA post-processing,t3-v9-k11-3,t3-v9-k11-1,2026-11-01,2026-11-13
 3,9,12,1195,row,CITED,t3-v9-k12-1,,,file,table/arrays/CA_1195_3_12_9.txt,orthogonal array fuse fuse postop NCK,,"orthogonal array fuse fuse postop NCK || Dwyer CA_Database source code ""OA+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v9-k12-1;t3-v9-k12-2,,2026-08-23,2026-11-13
-3,9,20,1377,row,CITED,t3-v9-k20-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v9-k20-1,,2026-08-23,2026-11-13
+3,9,20,1377,row,CITED,t3-v9-k20-1,,,file,table/arrays/CA_1377_3_20_9.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v9-k20-1;t3-v9-k20-2,,2026-08-23,2026-11-13
 3,9,75,1449,row,CITED,t3-v9-k75-1,,,none,,SCPHF LFSR (TJ-IM),,SCPHF LFSR (TJ-IM),t3-v9-k75-1,,2026-08-23,2026-11-13
-3,9,91,1457,row,CITED,t3-v9-k91-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v9-k91-1,,2026-08-23,2026-11-13
+3,9,91,1457,row,CITED,t3-v9-k91-1,,,file,table/arrays/CA_1457_3_91_9.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v9-k91-1;t3-v9-k91-2,,2026-08-23,2026-11-13
 3,9,92,2023,row,VERIFIED,t3-v9-k92-3,9,exact,file,table/arrays/CA_2023_3_92_9.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v9-k92-3,t3-v9-k92-2,2026-11-01,2026-11-13
 3,9,100,2025,row,VERIFIED,t3-v9-k100-1,1,exact,file,table/arrays/CA_2025_3_100_9.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v9-k100-1,t3-v9-k134-1,2026-10-18,2026-11-13
 3,9,101,2106,row,VERIFIED,t3-v9-k101-1,9,exact,file,table/arrays/CA_2106_3_101_9.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v9-k101-1,t3-v9-k134-1,2026-10-18,2026-11-13
@@ -4073,11 +4073,11 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,9,77648,6489,row,VERIFIED,t3-v9-k77648-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_9_77648_9_3.txt 3 9 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v9-k77648-1,,2026-11-04,2026-11-13
 3,9,77649,7137,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):add1,,Sherwood covering perfect hash family (affine):add1,t3-v9-k77648-1,t3-v9-k100000-1,2026-11-04,2026-11-13
 3,9,100000,7209,row,VERIFIED,t3-v9-k100000-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_10_100000_9_3.txt 3 9 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v9-k100000-1,,2026-11-04,2026-11-13
-3,10,4,1000,row,CITED,t3-v10-k4-1,,,none,,Derive from strength 4,,Derive from strength 4,t3-v10-k4-1,,2026-08-23,2026-11-13
+3,10,4,1000,row,CITED,t3-v10-k4-1,,,file,table/arrays/CA_1000_3_4_10.txt,Derive from strength 4,,"Derive from strength 4 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t3-v10-k4-1;t3-v10-k4-2,,2026-08-23,2026-11-13
 3,10,5,1050,row,CITED,t3-v10-k5-1,,,none,,Li-Ji-Yin,,Li-Ji-Yin,t3-v10-k5-1,,2026-08-23,2026-11-13
-3,10,6,1100,row,CITED,t3-v10-k6-1,,,none,,Ji-Yin,,Ji-Yin,t3-v10-k6-1,,2026-08-23,2026-11-13
+3,10,6,1100,row,CITED,t3-v10-k6-1,,,file,table/arrays/CA_1100_3_6_10.txt,Ji-Yin,,Ji-Yin || Construction function of the R package CAs 0.24.4,t3-v10-k6-1;t3-v10-k6-2,,2026-08-23,2026-11-13
 3,10,8,1170,row,VERIFIED,t3-v10-k8-2,10,exact,file,table/arrays/CA_1170_3_8_10.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v10-k8-2,t3-v10-k8-1,2026-11-01,2026-11-13
-3,10,10,1215,row,CITED,t3-v10-k10-1,,,none,,ordered design (CCL),,ordered design (CCL),t3-v10-k10-1,,2026-08-23,2026-11-13
+3,10,10,1215,row,CITED,t3-v10-k10-1,,,file,table/arrays/CA_1215_3_10_10.txt,ordered design (CCL),,"ordered design (CCL) || Ordered design plus binary patches (Cohen, Colbourn and Ling 2008, Construction 1)",t3-v10-k10-1;t3-v10-k10-2,,2026-08-23,2026-11-13
 3,10,11,1292,row,CITED,t3-v10-k11-1,,,file,table/arrays/CA_1292_3_11_10.txt,orthogonal array fuse postop NCK,,"orthogonal array fuse postop NCK || Dwyer CA_Database source code ""OA+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v10-k11-1;t3-v10-k11-2,,2026-08-23,2026-11-13
 3,10,12,1299,row,CITED,t3-v10-k12-1,,,file,table/arrays/CA_1299_3_12_10.txt,orthogonal array fuse postop NCK,,"orthogonal array fuse postop NCK || Dwyer CA_Database source code ""OA+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v10-k12-1;t3-v10-k12-2,,2026-08-23,2026-11-13
 3,10,13,1807,row,VERIFIED,t3-v10-k13-5,8,exact,file,table/arrays/CA_1807_3_13_10.txt,"Delete a run and repair, program written by Claude Opus, from T. N. Sitjar's CA(1813; 3, 13, 10) of release v1.6, itself a post-optimisation of an array of Bai XunDi",,"Delete a run and repair, program written by Claude Opus, from T. N. Sitjar's CA(1813; 3, 13, 10) of release v1.6, itself a post-optimisation of an array of Bai XunDi",t3-v10-k13-5,t3-v10-k13-4,2026-11-05,2026-11-13
@@ -4100,9 +4100,9 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,10,47,2621,row,CITED,t3-v10-k47-1,,,file,table/arrays/CA_2621_3_47_10.txt,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,,"SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK || Dwyer CA_Database source code ""SCPHF+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v10-k47-1;t3-v10-k47-2,,2026-08-23,2026-11-13
 3,10,50,2628,row,CITED,t3-v10-k50-1,,,file,table/arrays/CA_2628_3_50_10.txt,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,,"SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK || Dwyer CA_Database source code ""SCPHF+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t3-v10-k50-1;t3-v10-k50-2,,2026-08-23,2026-11-13
 3,10,113,2649,row,CITED,t3-v10-k113-1,,,none,,SCPHF LFSR (TJ-IM) fuse,,SCPHF LFSR (TJ-IM) fuse,t3-v10-k113-1,,2026-08-23,2026-11-13
-3,10,133,2659,row,CITED,t3-v10-k133-1,,,none,,Raaphorst-Moura-Stevens fuse,,Raaphorst-Moura-Stevens fuse,t3-v10-k133-1,,2026-08-23,2026-11-13
-3,10,134,3559,row,CITED,t3-v10-k134-1,,,none,,Add a factor,,Add a factor,t3-v10-k134-1,,2026-08-23,2026-11-13
-3,10,362,3610,row,CITED,t3-v10-k362-1,,,none,,Cyclotomy (Torres-Jimenez),,Cyclotomy (Torres-Jimenez),t3-v10-k362-1,,2026-08-23,2026-11-13
+3,10,133,2659,row,CITED,t3-v10-k133-1,,,file,table/arrays/CA_2659_3_133_10.txt,Raaphorst-Moura-Stevens fuse,,"Raaphorst-Moura-Stevens fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v10-k133-1;t3-v10-k133-2,,2026-08-23,2026-11-13
+3,10,134,3559,row,CITED,t3-v10-k134-1,,,file,table/arrays/CA_3559_3_134_10.txt,Add a factor,,"Add a factor || One column added (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Theorem 3.2)",t3-v10-k134-1;t3-v10-k134-2,,2026-08-23,2026-11-13
+3,10,362,3610,row,CITED,t3-v10-k362-1,,,file,table/arrays/CA_3610_3_362_10.txt.gz,Cyclotomy (Torres-Jimenez),,Cyclotomy (Torres-Jimenez) || Construction function of the R package CAs 0.24.4,t3-v10-k362-1;t3-v10-k362-2,,2026-08-23,2026-11-13
 3,10,398,4376,row,CITED,t3-v10-k398-1,,,none,,Cyclotomy (Colbourn) fuse,,Cyclotomy (Colbourn) fuse,t3-v10-k398-1,,2026-08-23,2026-11-13
 3,10,428,5179,row,CITED,t3-v10-k428-1,,,none,,Path-Restricted SCPHF RE (CLS) fuse,,Path-Restricted SCPHF RE (CLS) fuse,t3-v10-k428-1,,2026-08-23,2026-11-13
 3,10,522,5210,row,CITED,t3-v10-k522-1,,,none,,Cyclotomy (Colbourn),,Cyclotomy (Colbourn),t3-v10-k522-1,,2026-08-23,2026-11-13
@@ -4138,12 +4138,12 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,10,20725,9249,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v11-k20725-1,,2026-11-04,2026-11-13
 3,10,64003,10569,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v11-k64003-1,,2026-11-04,2026-11-13
 3,10,100000,11889,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v11-k100000-1,,2026-11-04,2026-11-13
-3,11,12,1331,row,CITED,t3-v11-k12-1,,,none,,orthogonal array,,orthogonal array,t3-v11-k12-1,,2026-08-23,2026-11-13
+3,11,12,1331,row,CITED,t3-v11-k12-1,,,file,table/arrays/CA_1331_3_12_11.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t3-v11-k12-1;t3-v11-k12-2,,2026-08-23,2026-11-13
 3,11,13,1991,row,VERIFIED,t3-v11-k13-2,7,exact,file,table/arrays/CA_1991_3_13_11.txt,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",t3-v11-k13-2,t3-v11-k13-1,2026-11-01,2026-11-13
 3,11,14,2079,row,CITED,t3-v11-k14-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v11-k14-1,,2026-08-23,2026-11-13
-3,11,24,2541,row,CITED,t3-v11-k24-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v11-k24-1,,2026-08-23,2026-11-13
+3,11,24,2541,row,CITED,t3-v11-k24-1,,,file,table/arrays/CA_2541_3_24_11.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v11-k24-1;t3-v11-k24-2,,2026-08-23,2026-11-13
 3,11,113,2651,row,CITED,t3-v11-k113-1,,,none,,SCPHF LFSR (TJ-IM),,SCPHF LFSR (TJ-IM),t3-v11-k113-1,,2026-08-23,2026-11-13
-3,11,133,2661,row,CITED,t3-v11-k133-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v11-k133-1,,2026-08-23,2026-11-13
+3,11,133,2661,row,CITED,t3-v11-k133-1,,,file,table/arrays/CA_2661_3_133_11.txt,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v11-k133-1;t3-v11-k133-2,,2026-08-23,2026-11-13
 3,11,134,3749,row,VERIFIED,t3-v11-k134-3,11,exact,file,table/arrays/CA_3749_3_134_11.txt.gz,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v11-k134-3,t3-v11-k134-2,2026-11-01,2026-11-13
 3,11,144,3751,row,VERIFIED,t3-v11-k144-1,1,exact,file,table/arrays/CA_3751_3_144_11.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v11-k144-1,t3-v11-k181-1,2026-10-18,2026-11-13
 3,11,145,3872,row,VERIFIED,t3-v11-k145-1,11,exact,file,table/arrays/CA_3872_3_145_11.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v11-k145-1,t3-v11-k181-1,2026-10-18,2026-11-13
@@ -4182,7 +4182,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,11,100000,11891,row,VERIFIED,t3-v11-k100000-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_9_100000_11_3.txt 3 11 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v11-k100000-1,,2026-11-04,2026-11-13
 3,12,6,1728,row,CITED,t3-v12-k6-1,,,none,,orthogonal array (Ji-Yin),,orthogonal array (Ji-Yin),t3-v12-k6-1,,2026-08-23,2026-11-13
 3,12,8,1980,row,VERIFIED,t3-v12-k8-2,12,exact,file,table/arrays/CA_1980_3_8_12.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v12-k8-2,t3-v12-k8-1,2026-11-01,2026-11-13
-3,12,11,2046,row,CITED,t3-v12-k11-1,,,none,,ordered design (CCL),,ordered design (CCL),t3-v12-k11-1,,2026-08-23,2026-11-13
+3,12,11,2046,row,CITED,t3-v12-k11-1,,,file,table/arrays/CA_2046_3_11_12.txt,ordered design (CCL),,"ordered design (CCL) || Ordered design plus binary patches (Cohen, Colbourn and Ling 2008, Construction 1)",t3-v12-k11-1;t3-v12-k11-2,,2026-08-23,2026-11-13
 3,12,12,2158,row,CITED,t3-v12-k12-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v12-k12-1,,2026-08-23,2026-11-13
 3,12,13,2164,row,CITED,t3-v12-k13-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v12-k13-1,,2026-08-23,2026-11-13
 3,12,14,2170,row,CITED,t3-v12-k14-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v12-k14-1,,2026-08-23,2026-11-13
@@ -4198,8 +4198,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,12,29,4299,row,CITED,t3-v12-k29-1,,,none,,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,t3-v12-k29-1,,2026-08-23,2026-11-13
 3,12,59,4362,row,CITED,t3-v12-k59-1,,,none,,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,,SCPHF (Sherwood-Martirosyan-Colbourn) fuse postop NCK,t3-v12-k59-1,,2026-08-23,2026-11-13
 3,12,159,4379,row,CITED,t3-v12-k159-1,,,none,,SCPHF LFSR (TJ-IM) fuse,,SCPHF LFSR (TJ-IM) fuse,t3-v12-k159-1,,2026-08-23,2026-11-13
-3,12,183,4391,row,CITED,t3-v12-k183-1,,,none,,Raaphorst-Moura-Stevens fuse,,Raaphorst-Moura-Stevens fuse,t3-v12-k183-1,,2026-08-23,2026-11-13
-3,12,184,5975,row,CITED,t3-v12-k184-1,,,none,,Add a factor,,Add a factor,t3-v12-k184-1,,2026-08-23,2026-11-13
+3,12,183,4391,row,CITED,t3-v12-k183-1,,,file,table/arrays/CA_4391_3_183_12.txt.gz,Raaphorst-Moura-Stevens fuse,,"Raaphorst-Moura-Stevens fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v12-k183-1;t3-v12-k183-2,,2026-08-23,2026-11-13
+3,12,184,5975,row,CITED,t3-v12-k184-1,,,file,table/arrays/CA_5975_3_184_12.txt.gz,Add a factor,,"Add a factor || One column added (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Theorem 3.2)",t3-v12-k184-1;t3-v12-k184-2,,2026-08-23,2026-11-13
 3,12,187,6117,row,CITED,t3-v12-k187-1,,,none,,"perfect hash family2,364,183T177",,"perfect hash family2,364,183T177",t3-v12-k187-1,,2026-08-23,2026-11-13
 3,12,196,6228,row,VERIFIED,t3-v12-k196-2,11,exact,file,table/arrays/CA_6228_3_196_12.txt.gz,"Raaphorst-Moura-Stevens extension (Bergeron 2026) CA(6253;3,196,13), then symbol fusion CKRS 2010 Lemma 3.1, CAN(t,k,v-1) <= CAN(t,k,v) - 2, giving CA(6251;3,196,12); then 22 redundant rows deleted, giving CA(6229;3,196,12); then randomized post-optimisation of Nayeri, Colbourn and Konjevod (2013) in Bai XunDi's implementation, with an added greedy step (a row with few uniquely covered tuples is removed when those tuples can be moved into free cells of other rows), starting from CA(6229;3,196,12); no tabu search",,"Raaphorst-Moura-Stevens extension (Bergeron 2026) CA(6253;3,196,13), then symbol fusion CKRS 2010 Lemma 3.1, CAN(t,k,v-1) <= CAN(t,k,v) - 2, giving CA(6251;3,196,12); then 22 redundant rows deleted, giving CA(6229;3,196,12); then randomized post-optimisation of Nayeri, Colbourn and Konjevod (2013) in Bai XunDi's implementation, with an added greedy step (a row with few uniquely covered tuples is removed when those tuples can be moved into free cells of other rows), starting from CA(6229;3,196,12); no tabu search",t3-v12-k196-2,t3-v12-k196-1,2026-11-02,2026-11-13
 3,12,197,6402,row,VERIFIED,t3-v12-k197-1,10,exact,file,table/arrays/CA_6402_3_197_12.txt.gz,"Raaphorst-Moura-Stevens extension (Bergeron 2026) CA(6422;3,197,13), then symbol fusion CKRS 2010 Lemma 3.1, CAN(t,k,v-1) <= CAN(t,k,v) - 2, giving CA(6420;3,197,12); then 16 redundant rows deleted, giving CA(6404;3,197,12); then randomized post-optimisation of Nayeri, Colbourn and Konjevod (2013) in Bai XunDi's implementation, with an added greedy step (a row with few uniquely covered tuples is removed when those tuples can be moved into free cells of other rows), starting from CA(6404;3,197,12), through CA(6403;3,197,12); no tabu search",,"Raaphorst-Moura-Stevens extension (Bergeron 2026) CA(6422;3,197,13), then symbol fusion CKRS 2010 Lemma 3.1, CAN(t,k,v-1) <= CAN(t,k,v) - 2, giving CA(6420;3,197,12); then 16 redundant rows deleted, giving CA(6404;3,197,12); then randomized post-optimisation of Nayeri, Colbourn and Konjevod (2013) in Bai XunDi's implementation, with an added greedy step (a row with few uniquely covered tuples is removed when those tuples can be moved into free cells of other rows), starting from CA(6404;3,197,12), through CA(6403;3,197,12); no tabu search",t3-v12-k197-1,t3-v12-k235-1,2026-11-02,2026-11-13
@@ -4237,14 +4237,14 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,12,11288,13115,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v13-k11288-1,t3-v12-k10000-1,2026-11-08,2026-11-13
 3,12,38415,15299,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v13-k38415-1,,2026-11-04,2026-11-13
 3,12,100000,17483,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v13-k100000-1,,2026-11-04,2026-11-13
-3,13,14,2197,row,CITED,t3-v13-k14-1,,,none,,orthogonal array,,orthogonal array,t3-v13-k14-1,,2026-08-23,2026-11-13
+3,13,14,2197,row,CITED,t3-v13-k14-1,,,file,table/arrays/CA_2197_3_14_13.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t3-v13-k14-1;t3-v13-k14-2,,2026-08-23,2026-11-13
 3,13,15,3289,row,VERIFIED,t3-v13-k15-2,,,file,table/arrays/CA_3289_3_15_13.txt,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",t3-v13-k15-2,t3-v13-k15-1,2026-11-01,2026-11-13
 3,13,16,3832,row,CITED,t3-v13-k16-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v13-k16-1,,2026-08-23,2026-11-13
 3,13,17,3848,row,CITED,t3-v13-k17-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v13-k17-1,,2026-08-23,2026-11-13
 3,13,18,3863,row,CITED,t3-v13-k18-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v13-k18-1,,2026-08-23,2026-11-13
-3,13,28,4225,row,CITED,t3-v13-k28-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v13-k28-1,,2026-08-23,2026-11-13
+3,13,28,4225,row,CITED,t3-v13-k28-1,,,file,table/arrays/CA_4225_3_28_13.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v13-k28-1;t3-v13-k28-2,,2026-08-23,2026-11-13
 3,13,159,4381,row,CITED,t3-v13-k159-1,,,none,,SCPHF LFSR (TJ-IM),,SCPHF LFSR (TJ-IM),t3-v13-k159-1,,2026-08-23,2026-11-13
-3,13,183,4393,row,CITED,t3-v13-k183-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v13-k183-1,,2026-08-23,2026-11-13
+3,13,183,4393,row,CITED,t3-v13-k183-1,,,file,table/arrays/CA_4393_3_183_13.txt.gz,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens || Raaphorst-Moura-Stevens construction (2014),t3-v13-k183-1;t3-v13-k183-2,,2026-08-23,2026-11-13
 3,13,184,6251,row,VERIFIED,t3-v13-k184-3,13,exact,file,table/arrays/CA_6251_3_184_13.txt.gz,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v13-k184-3,t3-v13-k184-2,2026-11-01,2026-11-13
 3,13,196,6253,row,VERIFIED,t3-v13-k196-1,1,exact,file,table/arrays/CA_6253_3_196_13.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v13-k196-1,t3-v13-k235-1,2026-10-18,2026-11-13
 3,13,197,6422,row,VERIFIED,t3-v13-k197-1,13,exact,file,table/arrays/CA_6422_3_197_13.txt,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",,"Raaphorst-Moura-Stevens extension (Bergeron 2026): m columns added to the RMS CA(2q^3 - 1; 3, q^2 + q + 1, q), q a prime power, using L = max(q - 2, ceil(m (q - 2) / q)) layers of q^2 rows; N = 2q^3 - 1 + q^2 L for m = 1 and N = 2q^3 + q^2 L for m >= 2",t3-v13-k197-1,t3-v13-k235-1,2026-10-18,2026-11-13
@@ -4276,13 +4276,13 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,13,38415,15301,row,VERIFIED,t3-v13-k38415-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_7_38415_13_3.txt 3 13 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v13-k38415-1,,2026-11-04,2026-11-13
 3,13,38416,17329,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):add1,,Sherwood covering perfect hash family (affine):add1,t3-v13-k38415-1,t3-v13-k100000-1,2026-11-04,2026-11-13
 3,13,100000,17485,row,VERIFIED,t3-v13-k100000-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_8_100000_13_3.txt 3 13 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v13-k100000-1,,2026-11-04,2026-11-13
-3,14,4,2744,row,CITED,t3-v14-k4-1,,,none,,Derive from strength 4,,Derive from strength 4,t3-v14-k4-1,,2026-08-23,2026-11-13
+3,14,4,2744,row,CITED,t3-v14-k4-1,,,file,table/arrays/CA_2744_3_4_14.txt,Derive from strength 4,,"Derive from strength 4 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t3-v14-k4-1;t3-v14-k4-2,,2026-08-23,2026-11-13
 3,14,5,2842,row,CITED,t3-v14-k5-1,,,none,,Li-Ji-Yin,,Li-Ji-Yin,t3-v14-k5-1,,2026-08-23,2026-11-13
 3,14,6,2940,row,CITED,t3-v14-k6-1,,,none,,Ji-Yin,,Ji-Yin,t3-v14-k6-1,,2026-08-23,2026-11-13
 3,14,8,3094,row,VERIFIED,t3-v14-k8-2,,,file,table/arrays/CA_3094_3_8_14.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v14-k8-2,t3-v14-k8-1,2026-11-01,2026-11-13
-3,14,11,3185,row,CITED,t3-v14-k11-1,,,none,,ordered design (CCL),,ordered design (CCL),t3-v14-k11-1,,2026-08-23,2026-11-13
+3,14,11,3185,row,CITED,t3-v14-k11-1,,,file,table/arrays/CA_3185_3_11_14.txt,ordered design (CCL),,"ordered design (CCL) || Ordered design plus binary patches (Cohen, Colbourn and Ling 2008, Construction 1)",t3-v14-k11-1;t3-v14-k11-2,,2026-08-23,2026-11-13
 3,14,12,3381,row,VERIFIED,t3-v14-k12-2,14,exact,file,table/arrays/CA_3381_3_12_14.txt,"ordered design based construction of Cohen, Colbourn and Ling (2003, 2008), strength 3, as implemented in CAs (ODbasedCA), the route chosen by CAs::bestCA",,"ordered design based construction of Cohen, Colbourn and Ling (2003, 2008), strength 3, as implemented in CAs (ODbasedCA), the route chosen by CAs::bestCA",t3-v14-k12-2,t3-v14-k12-1,2026-10-21,2026-11-13
-3,14,14,3549,row,CITED,t3-v14-k14-1,,,none,,ordered design (CCL),,ordered design (CCL),t3-v14-k14-1,,2026-08-23,2026-11-13
+3,14,14,3549,row,CITED,t3-v14-k14-1,,,file,table/arrays/CA_3549_3_14_14.txt,ordered design (CCL),,"ordered design (CCL) || Ordered design plus binary patches (Cohen, Colbourn and Ling 2008, Construction 1)",t3-v14-k14-1;t3-v14-k14-2,,2026-08-23,2026-11-13
 3,14,15,3967,row,CITED,t3-v14-k15-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v14-k15-1,,2026-08-23,2026-11-13
 3,14,16,4002,row,CITED,t3-v14-k16-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v14-k16-1,,2026-08-23,2026-11-13
 3,14,17,4013,row,CITED,t3-v14-k17-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v14-k17-1,,2026-08-23,2026-11-13
@@ -4297,7 +4297,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,14,34,7172,row,CITED,t3-v14-k34-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v14-k34-1,,2026-08-23,2026-11-13
 3,14,36,7225,row,CITED,t3-v14-k36-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v14-k36-1,,2026-08-23,2026-11-13
 3,14,258,8172,derived,VERIFIED,,,,none,,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it):fuse:fuse",,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it):fuse:fuse",t3-v16-k258-1,t3-v14-k273-1,2026-11-05,2026-11-13
-3,14,273,8187,row,CITED,t3-v14-k273-1,,,none,,Raaphorst-Moura-Stevens fuse fuse,,Raaphorst-Moura-Stevens fuse fuse,t3-v14-k273-1,,2026-08-23,2026-11-13
+3,14,273,8187,row,CITED,t3-v14-k273-1,,,file,table/arrays/CA_8187_3_273_14.txt.gz,Raaphorst-Moura-Stevens fuse fuse,,"Raaphorst-Moura-Stevens fuse fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v14-k273-1;t3-v14-k273-2,,2026-08-23,2026-11-13
 3,14,275,9803,row,CITED,t3-v14-k275-1,,,none,,SCPHF LFSR (TJ-IM) fuse fuse fuse,,SCPHF LFSR (TJ-IM) fuse fuse fuse,t3-v14-k275-1,,2026-08-23,2026-11-13
 3,14,307,9819,row,CITED,t3-v14-k307-1,,,none,,Raaphorst-Moura-Stevens fuse fuse fuse,,Raaphorst-Moura-Stevens fuse fuse fuse,t3-v14-k307-1,,2026-08-23,2026-11-13
 3,14,324,12238,row,CITED,t3-v14-k324-1,,,none,,Cohen-Colbourn-Ling,,Cohen-Colbourn-Ling,t3-v14-k324-1,,2026-08-23,2026-11-13
@@ -4367,7 +4367,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,15,34,7615,row,CITED,t3-v15-k34-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v15-k34-1,,2026-08-23,2026-11-13
 3,15,36,7657,row,CITED,t3-v15-k36-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v15-k36-1,,2026-08-23,2026-11-13
 3,15,258,8174,derived,VERIFIED,,,,none,,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it):fuse",,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it):fuse",t3-v16-k258-1,t3-v15-k273-1,2026-11-05,2026-11-13
-3,15,273,8189,row,CITED,t3-v15-k273-1,,,none,,Raaphorst-Moura-Stevens fuse,,Raaphorst-Moura-Stevens fuse,t3-v15-k273-1,,2026-08-23,2026-11-13
+3,15,273,8189,row,CITED,t3-v15-k273-1,,,file,table/arrays/CA_8189_3_273_15.txt.gz,Raaphorst-Moura-Stevens fuse,,"Raaphorst-Moura-Stevens fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v15-k273-1;t3-v15-k273-2,,2026-08-23,2026-11-13
 3,15,275,9805,row,CITED,t3-v15-k275-1,,,none,,SCPHF LFSR (TJ-IM) fuse fuse,,SCPHF LFSR (TJ-IM) fuse fuse,t3-v15-k275-1,,2026-08-23,2026-11-13
 3,15,307,9821,row,CITED,t3-v15-k307-1,,,none,,Raaphorst-Moura-Stevens fuse fuse,,Raaphorst-Moura-Stevens fuse fuse,t3-v15-k307-1,,2026-08-23,2026-11-13
 3,15,338,12254,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v16-k338-1,t3-v15-k340-1,2026-11-01,2026-11-13
@@ -4400,10 +4400,10 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,15,21806,24494,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v16-k21806-1,,2026-11-04,2026-11-13
 3,15,82958,28574,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v16-k82958-1,,2026-11-04,2026-11-13
 3,15,100000,32654,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v16-k100000-1,,2026-11-04,2026-11-13
-3,16,18,4096,row,CITED,t3-v16-k18-1,,,none,,orthogonal array,,orthogonal array,t3-v16-k18-1,,2026-08-23,2026-11-13
+3,16,18,4096,row,CITED,t3-v16-k18-1,,,file,table/arrays/CA_4096_3_18_16.txt,orthogonal array,,"orthogonal array || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t3-v16-k18-1;t3-v16-k18-2,,2026-08-23,2026-11-13
 3,16,19,6376,row,VERIFIED,t3-v16-k19-2,,,file,table/arrays/CA_6376_3_19_16.txt,"hyperoval-poly2 (Theorem 7.2 and Corollary 7.3 of Bai XunDi's preprint doi:10.5281/zenodo.23787051, no fusion since v = q): q=16, c=8, N = q^3 - 2(q-v) + (v-c) M, M = 285 (CA(285;2,18,16): row deletion + tabu repair starting from Bai XunDi's CA(286;2,18,16) (OA(17^2) fused, shortened by SA))",,"hyperoval-poly2 (Theorem 7.2 and Corollary 7.3 of Bai XunDi's preprint doi:10.5281/zenodo.23787051, no fusion since v = q): q=16, c=8, N = q^3 - 2(q-v) + (v-c) M, M = 285 (CA(285;2,18,16): row deletion + tabu repair starting from Bai XunDi's CA(286;2,18,16) (OA(17^2) fused, shortened by SA))",t3-v16-k19-2,t3-v16-k19-1,2026-11-01,2026-11-13
 3,16,20,6670,row,CITED,t3-v16-k20-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v16-k20-1,,2026-08-23,2026-11-13
-3,16,34,7936,row,CITED,t3-v16-k34-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v16-k34-1,,2026-08-23,2026-11-13
+3,16,34,7936,row,CITED,t3-v16-k34-1,,,file,table/arrays/CA_7936_3_34_16.txt,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v16-k34-1;t3-v16-k34-2,,2026-08-23,2026-11-13
 3,16,258,8176,row,VERIFIED,t3-v16-k258-1,2,exact,file,table/arrays/CA_8176_3_258_16.txt.gz,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it)",,"Construction of Colbourn, Ingalls, Jedwab, Saaltink, Smith and Stevens 2024 from a pair of orthogoval affine planes (Theorem 3.3.7 of the thesis of K. Shokri, which cites it)",t3-v16-k258-1,t3-v16-k273-1,2026-11-05,2026-11-13
 3,16,273,8191,row,CITED,t3-v16-k273-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v16-k273-1,,2026-08-23,2026-11-13
 3,16,275,9807,row,CITED,t3-v16-k275-1,,,none,,SCPHF LFSR (TJ-IM) fuse,,SCPHF LFSR (TJ-IM) fuse,t3-v16-k275-1,,2026-08-23,2026-11-13
@@ -4434,7 +4434,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,16,82958,28576,row,VERIFIED,t3-v16-k82958-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_7_82958_16_3.txt 3 16 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v16-k82958-1,,2026-11-04,2026-11-13
 3,16,82959,32416,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):add1,,Sherwood covering perfect hash family (affine):add1,t3-v16-k82958-1,t3-v16-k100000-1,2026-11-04,2026-11-13
 3,16,100000,32656,row,VERIFIED,t3-v16-k100000-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_8_100000_16_3.txt 3 16 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v16-k100000-1,,2026-11-04,2026-11-13
-3,17,18,4913,row,CITED,t3-v17-k18-1,,,none,,orthogonal array,,orthogonal array,t3-v17-k18-1,,2026-08-23,2026-11-13
+3,17,18,4913,row,CITED,t3-v17-k18-1,,,file,table/arrays/CA_4913_3_18_17.txt,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t3-v17-k18-1;t3-v17-k18-2,,2026-08-23,2026-11-13
 3,17,19,6778,row,CITED,t3-v17-k19-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v17-k19-1,,2026-08-23,2026-11-13
 3,17,20,6787,row,CITED,t3-v17-k20-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t3-v17-k20-1,,2026-08-23,2026-11-13
 3,17,21,9415,row,VERIFIED,t3-v17-k21-3,,,file,table/arrays/CA_9415_3_21_17.txt,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of T. N. Sitjar's table entry CA(9422; 3, 21, 17)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of T. N. Sitjar's table entry CA(9422; 3, 21, 17)",t3-v17-k21-3,t3-v17-k21-2,2026-11-09,2026-11-13
@@ -5428,7 +5428,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,9,2633,65601,row,CITED,t4-v9-k2633-1,,,none,,CPHF Random Extension (CLS),,CPHF Random Extension (CLS),t4-v9-k2633-1,,2026-08-23,2026-11-13
 4,9,9135,72081,row,VERIFIED,t4-v9-k9135-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_11_9135_9_4.txt 4 9 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v9-k9135-1,t4-v9-k9477-1,2026-11-02,2026-11-13
 4,9,10000,78633,row,VERIFIED,t4-v9-k10000-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_12_10000_9_4.txt 4 9 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v9-k10000-2,t4-v9-k10000-1,2026-11-02,2026-11-13
-4,10,5,10000,row,CITED,t4-v10-k5-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v10-k5-1,,2026-08-23,2026-11-13
+4,10,5,10000,row,CITED,t4-v10-k5-1,,,file,table/arrays/CA_10000_4_5_10.txt,Derive from strength 5,,"Derive from strength 5 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t4-v10-k5-1;t4-v10-k5-2,,2026-08-23,2026-11-13
 4,10,6,11710,row,VERIFIED,t4-v10-k6-2,10,exact,file,table/arrays/CA_11710_4_6_10.txt,"Orbit search under PGL(2, q) on the symbols: local search over starter rows, descent through subgroups, row-level repair",,"Orbit search under PGL(2, q) on the symbols: local search over starter rows, descent through subgroups, row-level repair",t4-v10-k6-2,t4-v10-k6-1,2026-11-01,2026-11-13
 4,10,7,12855,row,CITED,t4-v10-k7-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v10-k7-1,,2026-08-23,2026-11-13
 4,10,8,13397,row,CITED,t4-v10-k8-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v10-k8-1,,2026-08-23,2026-11-13
@@ -5488,7 +5488,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,10,2595,131759,row,CITED,t4-v10-k2595-1,,,none,,CPHF Random Extension (CLS) fuse,,CPHF Random Extension (CLS) fuse,t4-v10-k2595-1,,2026-08-23,2026-11-13
 4,10,9660,146309,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v11-k9660-1,t4-v10-k10000-1,2026-11-02,2026-11-13
 4,10,10000,160939,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v11-k10000-2,t4-v10-k10000-1,2026-11-02,2026-11-13
-4,11,12,14641,row,CITED,t4-v11-k12-1,,,none,,orthogonal array,,orthogonal array,t4-v11-k12-1,,2026-08-23,2026-11-13
+4,11,12,14641,row,CITED,t4-v11-k12-1,,,file,table/arrays/CA_14641_4_12_11.txt,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t4-v11-k12-1;t4-v11-k12-2,,2026-08-23,2026-11-13
 4,11,13,21901,row,VERIFIED,t4-v11-k13-2,,,file,table/arrays/CA_21901_4_13_11.txt,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",t4-v11-k13-2,t4-v11-k13-1,2026-11-01,2026-11-13
 4,11,14,27544,row,CITED,t4-v11-k14-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t4-v11-k14-1,,2026-08-23,2026-11-13
 4,11,20,27951,row,CITED,t4-v11-k20-1,,,none,,3-Restricted SCPHF RE (CL),,3-Restricted SCPHF RE (CL),t4-v11-k20-1,,2026-08-23,2026-11-13
@@ -5532,7 +5532,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,11,2595,131761,row,CITED,t4-v11-k2595-1,,,none,,CPHF Random Extension (CLS),,CPHF Random Extension (CLS),t4-v11-k2595-1,,2026-08-23,2026-11-13
 4,11,9660,146311,row,VERIFIED,t4-v11-k9660-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_10_9660_11_4.txt 4 11 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v11-k9660-1,t4-v11-k10000-1,2026-11-02,2026-11-13
 4,11,10000,160941,row,VERIFIED,t4-v11-k10000-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_11_10000_11_4.txt 4 11 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v11-k10000-2,t4-v11-k10000-1,2026-11-02,2026-11-13
-4,12,5,20736,row,CITED,t4-v12-k5-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v12-k5-1,,2026-08-23,2026-11-13
+4,12,5,20736,row,CITED,t4-v12-k5-1,,,file,table/arrays/CA_20736_4_5_12.txt,Derive from strength 5,,"Derive from strength 5 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t4-v12-k5-1;t4-v12-k5-2,,2026-08-23,2026-11-13
 4,12,6,23772,row,VERIFIED,t4-v12-k6-2,,,file,table/arrays/CA_23772_4_6_12.txt,"Orbit search under PGL(2, q) on the symbols: local search over starter rows, descent through subgroups, row-level repair",,"Orbit search under PGL(2, q) on the symbols: local search over starter rows, descent through subgroups, row-level repair",t4-v12-k6-2,t4-v12-k6-1,2026-11-01,2026-11-13
 4,12,7,25875,row,CITED,t4-v12-k7-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v12-k7-1,,2026-08-23,2026-11-13
 4,12,8,26967,row,CITED,t4-v12-k8-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v12-k8-1,,2026-08-23,2026-11-13
@@ -5580,7 +5580,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,12,1755,199847,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v13-k1755-1,t4-v12-k1990-1,2026-11-02,2026-11-13
 4,12,3498,228395,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v13-k3498-1,t4-v12-k3528-1,2026-11-02,2026-11-13
 4,12,10000,285491,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v13-k10000-2,t4-v12-k10000-1,2026-11-02,2026-11-13
-4,13,14,28561,row,CITED,t4-v13-k14-1,,,none,,orthogonal array,,orthogonal array,t4-v13-k14-1,,2026-08-23,2026-11-13
+4,13,14,28561,row,CITED,t4-v13-k14-1,,,file,table/arrays/CA_28561_4_14_13.txt,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t4-v13-k14-1;t4-v13-k14-2,,2026-08-23,2026-11-13
 4,13,15,42757,row,VERIFIED,t4-v13-k15-2,,,file,table/arrays/CA_42757_4_15_13.txt.gz,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",t4-v13-k15-2,t4-v13-k15-1,2026-11-01,2026-11-13
 4,13,21,54925,row,CITED,t4-v13-k21-1,,,none,,3-Restricted SCPHF RE (CL),,3-Restricted SCPHF RE (CL),t4-v13-k21-1,,2026-08-23,2026-11-13
 4,13,27,56953,row,CITED,t4-v13-k27-1,,,none,,2-Restricted SCPHF RE (CL),,2-Restricted SCPHF RE (CL),t4-v13-k27-1,,2026-08-23,2026-11-13
@@ -5616,7 +5616,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,13,1755,199849,row,VERIFIED,t4-v13-k1755-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_7_1755_13_4.txt 4 13 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v13-k1755-1,t4-v13-k1990-1,2026-11-02,2026-11-13
 4,13,3498,228397,row,VERIFIED,t4-v13-k3498-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_8_3498_13_4.txt 4 13 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v13-k3498-1,t4-v13-k3549-1,2026-11-02,2026-11-13
 4,13,10000,285493,row,VERIFIED,t4-v13-k10000-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_10_10000_13_4.txt 4 13 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v13-k10000-2,t4-v13-k10000-1,2026-11-02,2026-11-13
-4,14,5,38416,row,CITED,t4-v14-k5-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v14-k5-1,,2026-08-23,2026-11-13
+4,14,5,38416,row,CITED,t4-v14-k5-1,,,file,table/arrays/CA_38416_4_5_14.txt,Derive from strength 5,,"Derive from strength 5 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t4-v14-k5-1;t4-v14-k5-2,,2026-08-23,2026-11-13
 4,14,6,43989,row,CITED,t4-v14-k6-1,,,none,,Augment OA,,Augment OA,t4-v14-k6-1,,2026-08-23,2026-11-13
 4,14,7,46804,row,CITED,t4-v14-k7-1,,,none,,Augment OA,,Augment OA,t4-v14-k7-1,,2026-08-23,2026-11-13
 4,14,8,49544,row,CITED,t4-v14-k8-1,,,none,,Augment OA,,Augment OA,t4-v14-k8-1,,2026-08-23,2026-11-13
@@ -5677,7 +5677,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,14,2833,524277,row,CITED,t4-v14-k2833-1,,,none,,CPHF Random Extension (CLS) fuse fuse,,CPHF Random Extension (CLS) fuse fuse,t4-v14-k2833-1,,2026-08-23,2026-11-13
 4,14,2991,584539,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse:fuse:fuse,,Sherwood covering perfect hash family (affine):fuse:fuse:fuse,t4-v17-k2991-1,t4-v14-k3162-1,2026-11-02,2026-11-13
 4,14,10000,589692,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse:fuse,,Sherwood covering perfect hash family (affine):fuse:fuse,t4-v16-k10000-2,t4-v14-k10000-1,2026-11-02,2026-11-13
-4,15,5,50625,row,CITED,t4-v15-k5-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v15-k5-1,,2026-08-23,2026-11-13
+4,15,5,50625,row,CITED,t4-v15-k5-1,,,file,table/arrays/CA_50625_4_5_15.txt,Derive from strength 5,,"Derive from strength 5 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t4-v15-k5-1;t4-v15-k5-2,,2026-08-23,2026-11-13
 4,15,6,57375,row,CITED,t4-v15-k6-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v15-k6-1,,2026-08-23,2026-11-13
 4,15,7,61219,row,CITED,t4-v15-k7-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v15-k7-1,,2026-08-23,2026-11-13
 4,15,8,63354,row,CITED,t4-v15-k8-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v15-k8-1,,2026-08-23,2026-11-13
@@ -5687,7 +5687,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,15,13,65474,row,CITED,t4-v15-k13-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v15-k13-1,,2026-08-23,2026-11-13
 4,15,14,65475,row,CITED,t4-v15-k14-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v15-k14-1,,2026-08-23,2026-11-13
 4,15,15,65520,row,CITED,t4-v15-k15-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t4-v15-k15-1,,2026-08-23,2026-11-13
-4,15,17,65534,row,CITED,t4-v15-k17-1,,,none,,orthogonal array fuse,,orthogonal array fuse,t4-v15-k17-1,,2026-08-23,2026-11-13
+4,15,17,65534,row,CITED,t4-v15-k17-1,,,file,table/arrays/CA_65534_4_17_15.txt.gz,orthogonal array fuse,,"orthogonal array fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t4-v15-k17-1;t4-v15-k17-2,,2026-08-23,2026-11-13
 4,15,18,83514,row,CITED,t4-v15-k18-1,,,none,,orthogonal array fuse fuse postop NCK,,orthogonal array fuse fuse postop NCK,t4-v15-k18-1,,2026-08-23,2026-11-13
 4,15,19,110273,row,VERIFIED,t4-v15-k19-3,,,file,table/arrays/CA_110273_4_19_15.txt.gz,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(110386; 4, 19, 15)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(110386; 4, 19, 15)",t4-v15-k19-3,t4-v15-k19-2,2026-11-09,2026-11-13
 4,15,20,126494,row,CITED,t4-v15-k20-1,,,none,,orthogonal array fuse fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse fuse postop NCK,t4-v15-k20-1,,2026-08-23,2026-11-13
@@ -5728,8 +5728,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,15,2833,524279,row,CITED,t4-v15-k2833-1,,,none,,CPHF Random Extension (CLS) fuse,,CPHF Random Extension (CLS) fuse,t4-v15-k2833-1,,2026-08-23,2026-11-13
 4,15,2991,584541,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse:fuse,,Sherwood covering perfect hash family (affine):fuse:fuse,t4-v17-k2991-1,t4-v15-k3162-1,2026-11-02,2026-11-13
 4,15,10000,589694,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t4-v16-k10000-2,t4-v15-k10000-1,2026-11-02,2026-11-13
-4,16,17,65536,row,CITED,t4-v16-k17-1,,,none,,orthogonal array,,orthogonal array,t4-v16-k17-1,,2026-08-23,2026-11-13
-4,16,18,83519,row,CITED,t4-v16-k18-1,,,none,,orthogonal array fuse,,orthogonal array fuse,t4-v16-k18-1,,2026-08-23,2026-11-13
+4,16,17,65536,row,CITED,t4-v16-k17-1,,,file,table/arrays/CA_65536_4_17_16.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t4-v16-k17-1;t4-v16-k17-2,,2026-08-23,2026-11-13
+4,16,18,83519,row,CITED,t4-v16-k18-1,,,file,table/arrays/CA_83519_4_18_16.txt.gz,orthogonal array fuse,,"orthogonal array fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t4-v16-k18-1;t4-v16-k18-2,,2026-08-23,2026-11-13
 4,16,19,114489,row,VERIFIED,t4-v16-k19-2,,,file,table/arrays/CA_114489_4_19_16.txt.gz,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(114495; 4, 19, 16)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(114495; 4, 19, 16)",t4-v16-k19-2,t4-v16-k19-1,2026-11-09,2026-11-13
 4,16,25,126976,row,VERIFIED,t4-v16-k25-1,,,deposit,https://zenodo.org/records/23787055/files/arrays_t4.zip::arrays/CA_126976_4_25_16.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=16",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=16",t4-v16-k25-1,t4-v16-k31-1,2026-11-01,2026-11-13
 4,16,31,130816,row,CITED,t4-v16-k31-1,,,none,,2-Restricted SCPHF RE (CL),,2-Restricted SCPHF RE (CL),t4-v16-k31-1,,2026-08-23,2026-11-13
@@ -6204,7 +6204,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,2,10201,1400,row,VERIFIED,t5-v2-k10201-1,2,exact,file,table/arrays/CA_1400_5_10201_2.txt.gz,"Power CZ (Colbourn-Zhou 2012, Thm 2.2 with Lemma 2.3) over GF(101), e = 2, 7 Reed-Solomon rows of width 101, each block the 200-row S14_101 (the Paley CA(202; 5, 101, 2) without its two constant rows, weights 1..4) under its own column relabelling; weights 0 and 5 proved by exact enumeration",,"Power CZ (Colbourn-Zhou 2012, Thm 2.2 with Lemma 2.3) over GF(101), e = 2, 7 Reed-Solomon rows of width 101, each block the 200-row S14_101 (the Paley CA(202; 5, 101, 2) without its two constant rows, weights 1..4) under its own column relabelling; weights 0 and 5 proved by exact enumeration",t5-v2-k10201-1,,2026-11-03,2026-11-13
 5,3,6,243,row,CITED,t5-v3-k6-1,,,file,table/arrays/CA_243_5_6_3.txt,orthogonal array,,"orthogonal array || Dwyer CA_Database source code ""DeMu+"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t5-v3-k6-1;t5-v3-k6-2,,2026-08-23,2026-11-13
 5,3,7,351,row,CITED,t5-v3-k7-1,,,file,table/arrays/CA_351_5_7_3.txt,cross-sum (CKRS),,"cross-sum (CKRS) || Dwyer CA_Database source code ""CrossSum"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn) || Dwyer CA_Database source code ""CrossSum"" (Aaron Dwyer's abbreviation for the method; many of his arrays cite personal communication with Colbourn)",t5-v3-k7-1;t5-v3-k7-2;t5-v3-k7-4,,2026-08-23,2026-11-13
-5,3,10,405,row,CITED,t5-v3-k10-1,,,none,,simulated annealing (AG-TJ-H),,simulated annealing (AG-TJ-H),t5-v3-k10-1,,2026-08-23,2026-11-13
+5,3,10,405,row,CITED,t5-v3-k10-1,,,file,table/arrays/CA_405_5_10_3.txt,simulated annealing (AG-TJ-H),,"simulated annealing (AG-TJ-H) || Frozen-core extension at the record size (base fixed, new rows and columns annealed)",t5-v3-k10-1;t5-v3-k10-3,,2026-08-23,2026-11-13
 5,3,12,483,row,CITED,t5-v3-k12-1,,,none,,SCPHF Sim Annealing (TJ-IM),,SCPHF Sim Annealing (TJ-IM),t5-v3-k12-1,,2026-08-23,2026-11-13
 5,3,13,687,row,CITED,t5-v3-k13-1,,,none,,CPHF 3-stage (TJ-IM),,CPHF 3-stage (TJ-IM),t5-v3-k13-1,,2026-08-23,2026-11-13
 5,3,14,805,row,CITED,t5-v3-k14-1,,,none,,CPHF 3-stage (TJ-IM),,CPHF 3-stage (TJ-IM),t5-v3-k14-1,,2026-08-23,2026-11-13
@@ -6559,7 +6559,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,5,8383,223436,row,CITED,t5-v5-k8383-1,,,none,,Power N-CT101^2T18,,Power N-CT101^2T18,t5-v5-k8383-1,,2026-08-23,2026-11-13
 5,5,8585,224596,row,CITED,t5-v5-k8585-1,,,none,,Power N-CT101^2T16,,Power N-CT101^2T16,t5-v5-k8585-1,,2026-08-23,2026-11-13
 5,5,10000,224676,row,CITED,t5-v5-k10000-1,,,none,,Power N-CT101^2,,Power N-CT101^2,t5-v5-k10000-1,,2026-08-23,2026-11-13
-5,6,6,7776,row,CITED,t5-v6-k6-1,,,none,,Derive from strength 6,,Derive from strength 6,t5-v6-k6-1,,2026-08-23,2026-11-13
+5,6,6,7776,row,CITED,t5-v6-k6-1,,,file,table/arrays/CA_7776_5_6_6.txt,Derive from strength 6,,"Derive from strength 6 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t5-v6-k6-1;t5-v6-k6-3,,2026-08-23,2026-11-13
 5,6,7,10368,row,CITED,t5-v6-k7-1,,,none,,Ji-Li-Yin,,Ji-Li-Yin,t5-v6-k7-1,,2026-08-23,2026-11-13
 5,6,8,11664,row,CITED,t5-v6-k8-1,,,none,,Xu-Ji-Dong,,Xu-Ji-Dong,t5-v6-k8-1,,2026-08-23,2026-11-13
 5,6,9,18475,row,CITED,t5-v6-k9-1,,,none,,Torres-Jimenez,,Torres-Jimenez,t5-v6-k9-1,,2026-08-23,2026-11-13
@@ -6729,7 +6729,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,6,9723,889007,row,CITED,t5-v6-k9723-1,,,none,,Power CZ3-23.17-22.3-21.1,,Power CZ3-23.17-22.3-21.1,t5-v6-k9723-1,,2026-08-23,2026-11-13
 5,6,9746,889115,row,CITED,t5-v6-k9746-1,,,none,,Power CZ3-23.16-22.5,,Power CZ3-23.16-22.5,t5-v6-k9746-1,,2026-08-23,2026-11-13
 5,6,10000,890255,row,CITED,t5-v6-k10000-1,,,none,,Power CZ3-23.20-19.1,,Power CZ3-23.20-19.1,t5-v6-k10000-1,,2026-08-23,2026-11-13
-5,7,8,16807,row,CITED,t5-v7-k8-1,,,none,,orthogonal array,,orthogonal array,t5-v7-k8-1,,2026-08-23,2026-11-13
+5,7,8,16807,row,CITED,t5-v7-k8-1,,,file,table/arrays/CA_16807_5_8_7.txt,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t5-v7-k8-1;t5-v7-k8-2,,2026-08-23,2026-11-13
 5,7,9,25039,row,VERIFIED,t5-v7-k9-2,7,exact,file,table/arrays/CA_25039_5_9_7.txt,degree-2 polynomial construction + block cover / SA post-processing,,degree-2 polynomial construction + block cover / SA post-processing,t5-v7-k9-2,t5-v7-k9-1,2026-11-01,2026-11-13
 5,7,13,31213,row,VERIFIED,t5-v7-k13-1,7,exact,file,table/arrays/CA_31213_5_13_7.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=7",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=7",t5-v7-k13-1,t5-v7-k14-1,2026-11-01,2026-11-13
 5,7,16,33271,row,VERIFIED,t5-v7-k16-2,7,exact,file,table/arrays/CA_33271_5_16_7.txt.gz,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_7 with 16 rational points, 2q^t - q^(t-2) rows",,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_7 with 16 rational points, 2q^t - q^(t-2) rows",t5-v7-k16-2,t5-v7-k16-1,2026-11-09,2026-11-13
@@ -6785,7 +6785,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,7,9266,1053954,row,CITED,t5-v7-k9266-1,,,none,,"perfect hash family9,12769,113T31",,"perfect hash family9,12769,113T31",t5-v7-k9266-1,,2026-08-23,2026-11-13
 5,7,9393,1056060,row,CITED,t5-v7-k9393-1,,,none,,Power N-CT101^2T8,,Power N-CT101^2T8,t5-v7-k9393-1,,2026-08-23,2026-11-13
 5,7,10000,1056348,row,CITED,t5-v7-k10000-1,,,none,,"perfect hash family9,11881,109T16",,"perfect hash family9,11881,109T16",t5-v7-k10000-1,,2026-08-23,2026-11-13
-5,8,9,32768,row,CITED,t5-v8-k9-1,,,none,,orthogonal array,,orthogonal array,t5-v8-k9-1,,2026-08-23,2026-11-13
+5,8,9,32768,row,CITED,t5-v8-k9-1,,,file,table/arrays/CA_32768_5_9_8.txt,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t5-v8-k9-1;t5-v8-k9-2,,2026-08-23,2026-11-13
 5,8,10,49128,row,VERIFIED,t5-v8-k10-3,,,file,table/arrays/CA_49128_5_10_8.txt,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(49136; 5, 10, 8)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(49136; 5, 10, 8)",t5-v8-k10-3,t5-v8-k10-2,2026-11-09,2026-11-13
 5,8,14,61440,row,VERIFIED,t5-v8-k14-1,,,file,table/arrays/CA_61440_5_14_8.txt.gz,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=8",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=8",t5-v8-k14-1,t5-v8-k15-1,2026-11-01,2026-11-13
 5,8,15,65024,row,CITED,t5-v8-k15-1,,,none,,3-Restricted SCPHF RE (CL),,3-Restricted SCPHF RE (CL),t5-v8-k15-1,,2026-08-23,2026-11-13
@@ -6859,7 +6859,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,8,9219,1990338,row,CITED,t5-v8-k9219-1,,,none,,"Power N-CT101^2Trin2,2,6",,"Power N-CT101^2Trin2,2,6",t5-v8-k9219-1,,2026-08-23,2026-11-13
 5,8,9411,1990359,row,CITED,t5-v8-k9411-1,,,none,,Power N-CT97^2+2,,Power N-CT97^2+2,t5-v8-k9411-1,,2026-08-23,2026-11-13
 5,8,10000,1998514,row,CITED,t5-v8-k10000-1,,,none,,"perfect hash family9,11449,107T12",,"perfect hash family9,11449,107T12",t5-v8-k10000-1,,2026-08-23,2026-11-13
-5,9,10,59049,row,CITED,t5-v9-k10-1,,,none,,orthogonal array,,orthogonal array,t5-v9-k10-1,,2026-08-23,2026-11-13
+5,9,10,59049,row,CITED,t5-v9-k10-1,,,file,table/arrays/CA_59049_5_10_9.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t5-v9-k10-1;t5-v9-k10-2,,2026-08-23,2026-11-13
 5,9,11,88209,row,VERIFIED,t5-v9-k11-2,,,file,table/arrays/CA_88209_5_11_9.txt.gz,degree-2 polynomial construction + block cover / SA post-processing,,degree-2 polynomial construction + block cover / SA post-processing,t5-v9-k11-2,t5-v9-k11-1,2026-11-01,2026-11-13
 5,9,16,111537,row,VERIFIED,t5-v9-k16-2,,,deposit,https://zenodo.org/records/23787055/files/arrays_t5.zip::arrays/CA_111537_5_16_9.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=9",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=9",t5-v9-k16-2,t5-v9-k16-1,2026-11-01,2026-11-13
 5,9,20,118089,row,VERIFIED,t5-v9-k20-1,,,deposit,https://zenodo.org/records/23787055/files/arrays_t5.zip::arrays/CA_118089_5_20_9.txt,Singer-cycle (cyclic) CPHF with 2 rows -> CA by the Sherwood-Martirosyan-Colbourn expansion,,Singer-cycle (cyclic) CPHF with 2 rows -> CA by the Sherwood-Martirosyan-Colbourn expansion,t5-v9-k20-1,t5-v9-k22-1,2026-11-01,2026-11-13
@@ -6916,7 +6916,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,9,7384,1976305,derived,VERIFIED,,,,none,,"cyclic covering perfect hash family CPHF(15; 7381, 9, 5) found here (tools/cphf/symcphf_pp.c, seed 1), every row's matrix a Singer cycle of PGL(5, 9) (an element of GF(9^5) of projective order 7381); CA(15(9^5 - 1) + 1; 5, 7381, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006:add1:add1:add1",,"cyclic covering perfect hash family CPHF(15; 7381, 9, 5) found here (tools/cphf/symcphf_pp.c, seed 1), every row's matrix a Singer cycle of PGL(5, 9) (an element of GF(9^5) of projective order 7381); CA(15(9^5 - 1) + 1; 5, 7381, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006:add1:add1:add1",t5-v9-k7381-1+t3-v9-k10000-2+t3-v9-k10000-2+t3-v9-k10000-2,t5-v9-k7910-1,2026-11-02,2026-11-13
 5,9,7385,2339833,derived,VERIFIED,,,,none,,"cyclic covering perfect hash family CPHF(15; 7381, 9, 5) found here (tools/cphf/symcphf_pp.c, seed 1), every row's matrix a Singer cycle of PGL(5, 9) (an element of GF(9^5) of projective order 7381); CA(15(9^5 - 1) + 1; 5, 7381, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006:add1:add1:add1:add1",,"cyclic covering perfect hash family CPHF(15; 7381, 9, 5) found here (tools/cphf/symcphf_pp.c, seed 1), every row's matrix a Singer cycle of PGL(5, 9) (an element of GF(9^5) of projective order 7381); CA(15(9^5 - 1) + 1; 5, 7381, 9) by the CPHF construction of Sherwood, Martirosyan and Colbourn 2006:add1:add1:add1:add1",t5-v9-k7381-1+t3-v9-k10000-2+t3-v9-k10000-2+t3-v9-k10000-2+t3-v9-k10000-2,t5-v9-k7910-1,2026-11-02,2026-11-13
 5,9,10000,2415607,derived,VERIFIED,,,,none,,"Sherwood covering perfect hash family (affine), partly cyclic:fuse:fuse",,"Sherwood covering perfect hash family (affine), partly cyclic:fuse:fuse",t5-v11-k10000-2,t5-v9-k10000-1,2026-11-02,2026-11-13
-5,10,6,100000,row,CITED,t5-v10-k6-1,,,none,,Derive from strength 6,,Derive from strength 6,t5-v10-k6-1,,2026-08-23,2026-11-13
+5,10,6,100000,row,CITED,t5-v10-k6-1,,,file,table/arrays/CA_100000_5_6_10.txt.gz,Derive from strength 6,,"Derive from strength 6 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t5-v10-k6-1;t5-v10-k6-2,,2026-08-23,2026-11-13
 5,10,7,120000,row,CITED,t5-v10-k7-1,,,none,,Ji-Li-Yin,,Ji-Li-Yin,t5-v10-k7-1,,2026-08-23,2026-11-13
 5,10,8,132547,row,CITED,t5-v10-k8-1,,,none,,Add a symbol postop NCK,,Add a symbol postop NCK,t5-v10-k8-1,,2026-08-23,2026-11-13
 5,10,9,144071,row,CITED,t5-v10-k9-1,,,none,,Add a symbol postop NCK,,Add a symbol postop NCK,t5-v10-k9-1,,2026-08-23,2026-11-13
@@ -6971,7 +6971,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,10,1683,1771449,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t5-v11-k1683-2,t5-v10-k1683-1,2026-11-02,2026-11-13
 5,10,1684,2366259,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse:add1,,Sherwood covering perfect hash family (affine):fuse:add1,t5-v11-k1683-2+t3-v11-k2146-1,t5-v10-k1723-1,2026-11-02,2026-11-13
 5,10,10000,2415609,derived,VERIFIED,,,,none,,"Sherwood covering perfect hash family (affine), partly cyclic:fuse",,"Sherwood covering perfect hash family (affine), partly cyclic:fuse",t5-v11-k10000-2,t5-v10-k10000-1,2026-11-02,2026-11-13
-5,11,12,161051,row,CITED,t5-v11-k12-1,,,none,,orthogonal array,,orthogonal array,t5-v11-k12-1,,2026-08-23,2026-11-13
+5,11,12,161051,row,CITED,t5-v11-k12-1,,,file,table/arrays/CA_161051_5_12_11.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t5-v11-k12-1;t5-v11-k12-2,,2026-08-23,2026-11-13
 5,11,13,240911,row,VERIFIED,t5-v11-k13-2,,,deposit,https://zenodo.org/records/23787055/files/arrays_t5.zip::arrays/CA_240911_5_13_11.txt,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",,"degree-2 polynomial construction (poly2) with a pencil cover of AG(2,q)",t5-v11-k13-2,t5-v11-k13-1,2026-11-01,2026-11-13
 5,11,18,307461,row,VERIFIED,t5-v11-k18-1,,,deposit,https://zenodo.org/records/23787055/files/arrays_t5.zip::arrays/CA_307461_5_18_11.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=11",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=11",t5-v11-k18-1,t5-v11-k24-1,2026-11-01,2026-11-13
 5,11,24,320771,row,VERIFIED,t5-v11-k24-2,,,file,table/arrays/CA_320771_5_24_11.txt.gz,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_11 with 24 rational points, 2q^t - q^(t-2) rows",,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_11 with 24 rational points, 2q^t - q^(t-2) rows",t5-v11-k24-2,t5-v11-k24-1,2026-11-09,2026-11-13
@@ -7015,7 +7015,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 5,11,1365,1610411,row,VERIFIED,t5-v11-k1365-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_10_1365_11_5.txt 5 11 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t5-v11-k1365-1,t5-v11-k1380-1,2026-11-02,2026-11-13
 5,11,1683,1771451,row,VERIFIED,t5-v11-k1683-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_11_1683_11_5.txt 5 11 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t5-v11-k1683-2,t5-v11-k1683-1,2026-11-02,2026-11-13
 5,11,10000,2415611,row,VERIFIED,t5-v11-k10000-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_15_10000_11_5.txt 5 11 expand CA.txt affine,"Sherwood covering perfect hash family (affine), partly cyclic",,"Sherwood covering perfect hash family (affine), partly cyclic",t5-v11-k10000-2,t5-v11-k10000-1,2026-11-02,2026-11-13
-5,12,6,248832,row,CITED,t5-v12-k6-1,,,none,,Derive from strength 6,,Derive from strength 6,t5-v12-k6-1,,2026-08-23,2026-11-13
+5,12,6,248832,row,CITED,t5-v12-k6-1,,,file,table/arrays/CA_248832_5_6_12.txt.gz,Derive from strength 6,,"Derive from strength 6 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t5-v12-k6-1;t5-v12-k6-2,,2026-08-23,2026-11-13
 5,12,7,294080,row,CITED,t5-v12-k7-1,,,none,,Augment OA,,Augment OA,t5-v12-k7-1,,2026-08-23,2026-11-13
 5,12,8,318386,row,CITED,t5-v12-k8-1,,,none,,Augment OA,,Augment OA,t5-v12-k8-1,,2026-08-23,2026-11-13
 5,12,9,343426,row,CITED,t5-v12-k9-1,,,none,,Augment OA,,Augment OA,t5-v12-k9-1,,2026-08-23,2026-11-13
@@ -8170,7 +8170,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 6,5,8633,2143212,row,CITED,t6-v5-k8633-1,,,none,,"perfect hash family13,9409,97T8",,"perfect hash family13,9409,97T8",t6-v5-k8633-1,,2026-08-23,2026-11-13
 6,5,9410,2152592,row,CITED,t6-v5-k9410-1,,,none,,"perfect hash family13,9410,98",,"perfect hash family13,9410,98",t6-v5-k9410-1,,2026-08-23,2026-11-13
 6,5,10000,2190464,row,CITED,t6-v5-k10000-1,,,none,,"perfect hash family13,10609,103T5",,"perfect hash family13,10609,103T5",t6-v5-k10000-1,,2026-08-23,2026-11-13
-6,6,7,46656,row,CITED,t6-v6-k7-1,,,none,,composition,,composition,t6-v6-k7-1,,2026-08-23,2026-11-13
+6,6,7,46656,row,CITED,t6-v6-k7-1,,,file,table/arrays/CA_46656_6_7_6.txt,composition,,"composition || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t6-v6-k7-1;t6-v6-k7-2,,2026-08-23,2026-11-13
 6,6,8,70761,row,CITED,t6-v6-k8-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t6-v6-k8-1,,2026-08-23,2026-11-13
 6,6,9,106471,row,CITED,t6-v6-k9-1,,,none,,Torres-Jimenez,,Torres-Jimenez,t6-v6-k9-1,,2026-08-23,2026-11-13
 6,6,10,131742,row,CITED,t6-v6-k10-1,,,none,,MIPOG (Younis) postop NCK,,MIPOG (Younis) postop NCK,t6-v6-k10-1,,2026-08-23,2026-11-13
@@ -8255,7 +8255,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 6,6,9579,13646062,row,CITED,t6-v6-k9579-1,,,none,,"perfect hash family13,10609,103T10",,"perfect hash family13,10609,103T10",t6-v6-k9579-1,,2026-08-23,2026-11-13
 6,6,9595,13757740,row,CITED,t6-v6-k9595-1,,,none,,Power N-CT101^2T6,,Power N-CT101^2T6,t6-v6-k9595-1,,2026-08-23,2026-11-13
 6,6,10000,13759798,row,CITED,t6-v6-k10000-1,,,none,,Power N-CT101^2,,Power N-CT101^2,t6-v6-k10000-1,,2026-08-23,2026-11-13
-6,7,8,117649,row,CITED,t6-v7-k8-1,,,none,,orthogonal array,,orthogonal array,t6-v7-k8-1,,2026-08-23,2026-11-13
+6,7,8,117649,row,CITED,t6-v7-k8-1,,,file,table/arrays/CA_117649_6_8_7.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t6-v7-k8-1;t6-v7-k8-2,,2026-08-23,2026-11-13
 6,7,9,175273,row,VERIFIED,t6-v7-k9-2,,,file,table/arrays/CA_175273_6_9_7.txt.gz,degree-2 polynomial construction + block cover / SA post-processing,,degree-2 polynomial construction + block cover / SA post-processing,t6-v7-k9-2,t6-v7-k9-1,2026-11-01,2026-11-13
 6,7,13,218491,row,VERIFIED,t6-v7-k13-2,,,deposit,https://zenodo.org/records/23787055/files/arrays_t6.zip::arrays/CA_218491_6_13_7.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=7",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=7",t6-v7-k13-2,t6-v7-k13-1,2026-11-01,2026-11-13
 6,7,16,232897,row,VERIFIED,t6-v7-k16-2,,,file,table/arrays/CA_232897_6_16_7.txt.gz,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_7 with 16 rational points, 2q^t - q^(t-2) rows",,"genus-2 two-block array (Theorem 5.2 of the preprint): the functions of L(D) in the union of the two subspaces vanishing at two places Q1, Q2 of degree two, on a curve y^2 = f(x) of genus 2 over F_7 with 16 rational points, 2q^t - q^(t-2) rows",t6-v7-k16-2,t6-v7-k16-1,2026-11-09,2026-11-13
@@ -8325,7 +8325,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 6,7,9579,13646088,row,CITED,t6-v7-k9579-1,,,none,,"perfect hash family13,10609,103T10",,"perfect hash family13,10609,103T10",t6-v7-k9579-1,,2026-08-23,2026-11-13
 6,7,9595,13757766,row,CITED,t6-v7-k9595-1,,,none,,Power N-CT101^2T6,,Power N-CT101^2T6,t6-v7-k9595-1,,2026-08-23,2026-11-13
 6,7,10000,13759824,row,CITED,t6-v7-k10000-1,,,none,,Power N-CT101^2,,Power N-CT101^2,t6-v7-k10000-1,,2026-08-23,2026-11-13
-6,8,9,262144,row,CITED,t6-v8-k9-1,,,none,,orthogonal array,,orthogonal array,t6-v8-k9-1,,2026-08-23,2026-11-13
+6,8,9,262144,row,CITED,t6-v8-k9-1,,,file,table/arrays/CA_262144_6_9_8.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t6-v8-k9-1;t6-v8-k9-2,,2026-08-23,2026-11-13
 6,8,10,393018,row,VERIFIED,t6-v8-k10-3,,,file,table/arrays/CA_393018_6_10_8.txt.gz,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(393088; 6, 10, 8)",,"Classic post-optimisation (row deletion with local re-assignment of non-essential entries), repeated, of the table's record array CA(393088; 6, 10, 8)",t6-v8-k10-3,t6-v8-k10-2,2026-11-09,2026-11-13
 6,8,14,491520,row,VERIFIED,t6-v8-k14-2,,,deposit,https://zenodo.org/records/23787055/files/arrays_t6.zip::arrays/CA_491520_6_14_8.txt,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=8",,"elliptic two-block array, CAN(t,#E(F_q),q) <= 2q^t - q^(t-1), q=8",t6-v8-k14-2,t6-v8-k14-1,2026-11-01,2026-11-13
 6,8,15,524280,row,VERIFIED,t6-v8-k15-1,,,deposit,https://zenodo.org/records/23787055/files/arrays_t6.zip::arrays/CA_524280_6_15_8.txt,"Sherwood CPHF(2;k,q,6) from the Singer tau-family with a minimum set of columns deleted, Sherwood-Martirosyan-Colbourn CPHF->CA expansion",,"Sherwood CPHF(2;k,q,6) from the Singer tau-family with a minimum set of columns deleted, Sherwood-Martirosyan-Colbourn CPHF->CA expansion",t6-v8-k15-1,t6-v8-k17-1,2026-11-01,2026-11-13
