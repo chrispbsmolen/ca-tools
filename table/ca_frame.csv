@@ -3207,7 +3207,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,24,25200,2127,derived,VERIFIED,,,,none,,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(725; 2, 28, 25), the Bose OA(729; 2, 28, 27) with two symbols fused x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27), CA(1429; 2, 900, 25), 25 + 0 constant rows]; 0 + 25 constant rows used at the top:fuse",,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(725; 2, 28, 25), the Bose OA(729; 2, 28, 27) with two symbols fused x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27), CA(1429; 2, 900, 25), 25 + 0 constant rows]; 0 + 25 constant rows used at the top:fuse",t2-v25-k25200-1,,2026-11-11,2026-11-13
 2,24,27000,2129,derived,VERIFIED,,,,none,,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27), CA(1429; 2, 900, 25), 25 + 0 constant rows]; 25 + 0 constant rows used at the top:fuse",,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27), CA(1429; 2, 900, 25), 25 + 0 constant rows]; 25 + 0 constant rows used at the top:fuse",t2-v25-k27000-1,,2026-11-11,2026-11-13
 2,24,30600,2239,derived,VERIFIED,,,,none,,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(837; 2, 34, 25), Colbourn's projection of the Bose OA(841; 2, 30, 29), CA(1539; 2, 1020, 25), 25 + 0 constant rows]; 25 + 0 constant rows used at the top:fuse",,"product of Colbourn and Torres-Jimenez 2013, Corollary 4.3 (one row saved per constant row of either ingredient, at most v), applied to CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x [CA(727; 2, 30, 25), Colbourn's projection of the Bose OA(729; 2, 28, 27) x CA(837; 2, 34, 25), Colbourn's projection of the Bose OA(841; 2, 30, 29), CA(1539; 2, 1020, 25), 25 + 0 constant rows]; 25 + 0 constant rows used at the top:fuse",t2-v25-k30600-1,,2026-11-11,2026-11-13
-2,25,26,625,row,CITED,t2-v25-k26-1,,,none,,orthogonal array,,orthogonal array,t2-v25-k26-1,,2026-08-23,2026-11-13
+2,25,26,625,row,CITED,t2-v25-k26-1,,,file,table/arrays/CA_625_2_26_25.txt,orthogonal array,,orthogonal array || Construction function of the R package CAs 0.24.4,t2-v25-k26-1;t2-v25-k26-2,,2026-08-23,2026-11-13
 2,25,28,719,row,CITED,t2-v25-k28-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v25-k28-1,,2026-08-23,2026-11-13
 2,25,29,725,row,CITED,t2-v25-k29-1,,,none,,projection (C) postop NCK,,projection (C) postop NCK,t2-v25-k29-1,,2026-08-23,2026-11-13
 2,25,30,726,row,CITED,t2-v25-k30-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v25-k30-1,,2026-08-23,2026-11-13
@@ -3224,8 +3224,8 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 2,25,41,1111,row,CITED,t2-v25-k41-1,,,none,,Add a symbol (binary),,Add a symbol (binary),t2-v25-k41-1,,2026-08-23,2026-11-13
 2,25,50,1181,row,CITED,t2-v25-k50-1,,,none,,projection (C) postop TJ-SA,,projection (C) postop TJ-SA,t2-v25-k50-1,,2026-08-23,2026-11-13
 2,25,70,1219,row,CITED,t2-v25-k70-1,,,none,,simulated annealing (Torres-Jimenez),,simulated annealing (Torres-Jimenez),t2-v25-k70-1,,2026-08-23,2026-11-13
-2,25,675,1225,row,CITED,t2-v25-k675-1,,,none,,PCAx2PCA,,PCAx2PCA,t2-v25-k675-1,,2026-08-23,2026-11-13
-2,25,676,1248,row,CITED,t2-v25-k676-1,,,none,,Direct product,,Direct product,t2-v25-k676-1,,2026-08-23,2026-11-13
+2,25,675,1225,row,CITED,t2-v25-k675-1,,,file,table/arrays/CA_1225_2_675_25.txt.gz,PCAx2PCA,,PCAx2PCA || Construction function of the R package CAs 0.24.4,t2-v25-k675-1;t2-v25-k675-2,,2026-08-23,2026-11-13
+2,25,676,1248,row,CITED,t2-v25-k676-1,,,file,table/arrays/CA_1248_2_676_25.txt.gz,Direct product,,Direct product || Construction function of the R package CAs 0.24.4,t2-v25-k676-1;t2-v25-k676-2,,2026-08-23,2026-11-13
 2,25,700,1274,row,CITED,t2-v25-k700-1,,,none,,Direct product,,Direct product,t2-v25-k700-1,,2026-08-23,2026-11-13
 2,25,701,1297,row,CITED,t2-v25-k701-1,,,none,,Direct product generalized,,Direct product generalized,t2-v25-k701-1,,2026-08-23,2026-11-13
 2,25,728,1298,row,CITED,t2-v25-k728-1,,,none,,Direct product,,Direct product,t2-v25-k728-1,,2026-08-23,2026-11-13
@@ -4722,11 +4722,11 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,23,100000,85031,row,VERIFIED,t3-v23-k100000-1,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_7_100000_23_3.txt 3 23 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t3-v23-k100000-1,,2026-11-04,2026-11-13
 3,24,6,13824,row,CITED,t3-v24-k6-1,,,none,,orthogonal array (Ji-Yin),,orthogonal array (Ji-Yin),t3-v24-k6-1,,2026-08-23,2026-11-13
 3,24,8,14904,row,VERIFIED,t3-v24-k8-2,,,file,table/arrays/CA_14904_3_8_24.txt,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),,Classic post-optimisation of the table's record array (row deletion with local re-assignment of non-essential entries),t3-v24-k8-2,t3-v24-k8-1,2026-11-01,2026-11-13
-3,24,11,15180,row,CITED,t3-v24-k11-1,,,none,,ordered design (CCL),,ordered design (CCL),t3-v24-k11-1,,2026-08-23,2026-11-13
+3,24,11,15180,row,CITED,t3-v24-k11-1,,,file,table/arrays/CA_15180_3_11_24.txt,ordered design (CCL),,"ordered design (CCL) || Ordered design plus binary patches (Cohen, Colbourn and Ling 2008, Construction 1)",t3-v24-k11-1;t3-v24-k11-2,,2026-08-23,2026-11-13
 3,24,13,15598,row,CITED,t3-v24-k13-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v24-k13-1,,2026-08-23,2026-11-13
 3,24,14,15599,row,CITED,t3-v24-k14-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v24-k14-1,,2026-08-23,2026-11-13
 3,24,15,15600,row,CITED,t3-v24-k15-1,,,none,,orthogonal array fuse postop NCK,,orthogonal array fuse postop NCK,t3-v24-k15-1,,2026-08-23,2026-11-13
-3,24,26,15623,row,CITED,t3-v24-k26-1,,,none,,orthogonal array fuse,,orthogonal array fuse,t3-v24-k26-1,,2026-08-23,2026-11-13
+3,24,26,15623,row,CITED,t3-v24-k26-1,,,file,table/arrays/CA_15623_3_26_24.txt,orthogonal array fuse,,"orthogonal array fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v24-k26-1;t3-v24-k26-2,,2026-08-23,2026-11-13
 3,24,27,19631,row,CITED,t3-v24-k27-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v24-k27-1,,2026-08-23,2026-11-13
 3,24,28,19633,row,CITED,t3-v24-k28-1,,,none,,orthogonal array fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse postop NCK,t3-v24-k28-1,,2026-08-23,2026-11-13
 3,24,29,24122,row,CITED,t3-v24-k29-1,,,none,,orthogonal array fuse fuse fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse fuse fuse postop NCK,t3-v24-k29-1,,2026-08-23,2026-11-13
@@ -4735,7 +4735,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,24,32,29209,row,CITED,t3-v24-k32-1,,,none,,orthogonal array fuse fuse fuse fuse fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse fuse fuse fuse fuse postop NCK,t3-v24-k32-1,,2026-08-23,2026-11-13
 3,24,40,29883,row,CITED,t3-v24-k40-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v24-k40-1,,2026-08-23,2026-11-13
 3,24,44,29906,row,CITED,t3-v24-k44-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v24-k44-1,,2026-08-23,2026-11-13
-3,24,52,29929,row,CITED,t3-v24-k52-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v24-k52-1,,2026-08-23,2026-11-13
+3,24,52,29929,row,CITED,t3-v24-k52-1,,,file,table/arrays/CA_29929_3_52_24.txt.gz,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v24-k52-1;t3-v24-k52-2,,2026-08-23,2026-11-13
 3,24,603,31223,row,CITED,t3-v24-k603-1,,,none,,SCPHF LFSR (TJ-IM) fuse,,SCPHF LFSR (TJ-IM) fuse,t3-v24-k603-1,,2026-08-23,2026-11-13
 3,24,651,31247,row,CITED,t3-v24-k651-1,,,none,,Raaphorst-Moura-Stevens fuse,,Raaphorst-Moura-Stevens fuse,t3-v24-k651-1,,2026-08-23,2026-11-13
 3,24,705,39333,row,CITED,t3-v24-k705-1,,,none,,SCPHF LFSR (TJ-IM) fuse fuse fuse,,SCPHF LFSR (TJ-IM) fuse fuse fuse,t3-v24-k705-1,,2026-08-23,2026-11-13
@@ -4762,11 +4762,11 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 3,24,17332,78023,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v25-k17332-1,,2026-11-04,2026-11-13
 3,24,84289,93623,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v25-k84289-1,,2026-11-04,2026-11-13
 3,24,100000,109223,derived,VERIFIED,,,,none,,Sherwood covering perfect hash family (affine):fuse,,Sherwood covering perfect hash family (affine):fuse,t3-v25-k100000-1,,2026-11-04,2026-11-13
-3,25,26,15625,row,CITED,t3-v25-k26-1,,,none,,orthogonal array,,orthogonal array,t3-v25-k26-1,,2026-08-23,2026-11-13
-3,25,28,19679,row,CITED,t3-v25-k28-1,,,none,,orthogonal array fuse fuse,,orthogonal array fuse fuse,t3-v25-k28-1,,2026-08-23,2026-11-13
+3,25,26,15625,row,CITED,t3-v25-k26-1,,,file,table/arrays/CA_15625_3_26_25.txt.gz,orthogonal array,,orthogonal array || Bush / Bose orthogonal array,t3-v25-k26-1;t3-v25-k26-2,,2026-08-23,2026-11-13
+3,25,28,19679,row,CITED,t3-v25-k28-1,,,file,table/arrays/CA_19679_3_28_25.txt.gz,orthogonal array fuse fuse,,"orthogonal array fuse fuse || Fusing symbols (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010, Lemma 3.1)",t3-v25-k28-1;t3-v25-k28-2,,2026-08-23,2026-11-13
 3,25,30,24300,row,CITED,t3-v25-k30-1,,,none,,orthogonal array fuse fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse fuse postop NCK,t3-v25-k30-1,,2026-08-23,2026-11-13
 3,25,32,29511,row,CITED,t3-v25-k32-1,,,none,,orthogonal array fuse fuse fuse fuse fuse fuse postop NCK,,orthogonal array fuse fuse fuse fuse fuse fuse postop NCK,t3-v25-k32-1,,2026-08-23,2026-11-13
-3,25,52,30625,row,CITED,t3-v25-k52-1,,,none,,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling,t3-v25-k52-1,,2026-08-23,2026-11-13
+3,25,52,30625,row,CITED,t3-v25-k52-1,,,file,table/arrays/CA_30625_3_52_25.txt.gz,Chateauneuf-Kreher doubling,,Chateauneuf-Kreher doubling || Chateauneuf-Kreher doubling,t3-v25-k52-1;t3-v25-k52-2,,2026-08-23,2026-11-13
 3,25,603,31225,row,CITED,t3-v25-k603-1,,,none,,SCPHF LFSR (TJ-IM),,SCPHF LFSR (TJ-IM),t3-v25-k603-1,,2026-08-23,2026-11-13
 3,25,651,31249,row,CITED,t3-v25-k651-1,,,none,,Raaphorst-Moura-Stevens,,Raaphorst-Moura-Stevens,t3-v25-k651-1,,2026-08-23,2026-11-13
 3,25,705,39335,row,CITED,t3-v25-k705-1,,,none,,SCPHF LFSR (TJ-IM) fuse fuse,,SCPHF LFSR (TJ-IM) fuse fuse,t3-v25-k705-1,,2026-08-23,2026-11-13
@@ -6017,7 +6017,7 @@ t,v,k,N,basis,tier,id,constant_rows,constant_rows_basis,get,get_ref,construction
 4,23,2723,1958749,row,CITED,t4-v23-k2723-1,,,none,,SCPHF Random Extension (CLS),,SCPHF Random Extension (CLS),t4-v23-k2723-1,,2026-08-23,2026-11-13
 4,23,2806,1958881,row,CITED,t4-v23-k2806-1,,,none,,CPHF Random Extension (CLS),,CPHF Random Extension (CLS),t4-v23-k2806-1,,2026-08-23,2026-11-13
 4,23,10000,2238567,row,VERIFIED,t4-v23-k10000-2,,,certificate,tools/cphf/cphfcheck table/certificates/CPHF_8_10000_23_4.txt 4 23 expand CA.txt affine,Sherwood covering perfect hash family (affine),,Sherwood covering perfect hash family (affine),t4-v23-k10000-2,t4-v23-k10000-1,2026-11-02,2026-11-13
-4,24,5,331776,row,CITED,t4-v24-k5-1,,,none,,Derive from strength 5,,Derive from strength 5,t4-v24-k5-1,,2026-08-23,2026-11-13
+4,24,5,331776,row,CITED,t4-v24-k5-1,,,file,table/arrays/CA_331776_4_5_24.txt.gz,Derive from strength 5,,"Derive from strength 5 || Composition of alphabets (Colbourn, Keri, Rivas Soriano and Schlage-Puchta 2010)",t4-v24-k5-1;t4-v24-k5-2,,2026-08-23,2026-11-13
 4,24,6,360249,row,CITED,t4-v24-k6-1,,,none,,Augment OA,,Augment OA,t4-v24-k6-1,,2026-08-23,2026-11-13
 4,24,7,374874,row,CITED,t4-v24-k7-1,,,none,,Augment OA,,Augment OA,t4-v24-k7-1,,2026-08-23,2026-11-13
 4,24,8,389586,row,CITED,t4-v24-k8-1,,,none,,Augment OA,,Augment OA,t4-v24-k8-1,,2026-08-23,2026-11-13
