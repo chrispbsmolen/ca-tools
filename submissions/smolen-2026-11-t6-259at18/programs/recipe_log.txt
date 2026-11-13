@@ -1,0 +1,11 @@
+Fri Nov 13 03:39:51 UTC 2026
+c8b21e18a0a60c99e401520eb3a833e9b50df6c30123c71aad3b77f27367c6e6  eager.py
+python 3.13.18 pysat 1.9.dev22
+classes 148 bits 44
+aux 47540 bigclauses 9076
+RESULT SAT stabs [2, 2, 4, 4, 8, 8, 8] m 8 t 20.9
+BITS [0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1]
+ROWS 259
+b3d1da58e030b02ef5f38bc0cbbb4c7aa54241807048d9add72a894d9c0318a5  CA_259_6_18_2_replay.txt
+expected b3d1da58e030b02ef5f38bc0cbbb4c7aa54241807048d9add72a894d9c0318a5
+Fri Nov 13 03:40:22 UTC 2026
