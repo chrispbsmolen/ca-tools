@@ -1,0 +1,8 @@
+f1d38c4a6ed65d7ec54894cf8bd1d68fc7ac44f77bf534791dd529c7dec15f5e  a352.txt
+total FP violations 0
+special [(0, 0), (1, 2), (2, 1)] regular candidates 42 SAT True
+words 374 distinct 374
+(49, 374)
+6b315c37e009998aaeac6de0f628c3f2c7563bffd9583a4a6e558e732e5ecd70  CA_49_3_374_2.txt
+df77b85ba7f4a07c8cb5ce0521137a22dabe13b5dc8338c8362dadaa6dc73a96  CA_49_3_359_2.txt
+output in /tmp/tmp.imLbngr7m7
