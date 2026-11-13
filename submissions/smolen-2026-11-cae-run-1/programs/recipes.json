@@ -1,0 +1,187 @@
+{
+ "CA_1023_3_73_8.txt": {
+  "kind": "direct",
+  "src": "('rms', 8)",
+  "N": 1023,
+  "k": 73,
+  "t": 3,
+  "v": 8,
+  "text": "Raaphorst-Moura-Stevens array CA(1023; 3, 73, 8)"
+ },
+ "CA_117649_6_8_7.txt": {
+  "kind": "direct",
+  "src": "('bush', 7, 6)",
+  "N": 117649,
+  "k": 8,
+  "t": 6,
+  "v": 7,
+  "text": "Bush / Bose orthogonal array OA(7^6; 6, 8, 7)"
+ },
+ "CA_127_3_21_4.txt": {
+  "kind": "direct",
+  "src": "('rms', 4)",
+  "N": 127,
+  "k": 21,
+  "t": 3,
+  "v": 4,
+  "text": "Raaphorst-Moura-Stevens array CA(127; 3, 21, 4)"
+ },
+ "CA_1455_3_91_8.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 9
+  },
+  "N": 1455,
+  "k": 91,
+  "t": 3,
+  "v": 8,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('rms', 9)",
+    "N": 1457,
+    "k": 91,
+    "t": 3,
+    "v": 9,
+    "text": "Raaphorst-Moura-Stevens array CA(1457; 3, 91, 9)"
+   }
+  ]
+ },
+ "CA_16807_5_8_7.txt": {
+  "kind": "direct",
+  "src": "('bush', 7, 5)",
+  "N": 16807,
+  "k": 8,
+  "t": 5,
+  "v": 7,
+  "text": "Bush / Bose orthogonal array OA(7^5; 5, 8, 7)"
+ },
+ "CA_249_3_31_5.txt": {
+  "kind": "direct",
+  "src": "('rms', 5)",
+  "N": 249,
+  "k": 31,
+  "t": 3,
+  "v": 5,
+  "text": "Raaphorst-Moura-Stevens array CA(249; 3, 31, 5)"
+ },
+ "CA_262144_6_9_8.txt": {
+  "kind": "direct",
+  "src": "('bush', 8, 6)",
+  "N": 262144,
+  "k": 9,
+  "t": 6,
+  "v": 8,
+  "text": "Bush / Bose orthogonal array OA(8^6; 6, 9, 8)"
+ },
+ "CA_32768_5_9_8.txt": {
+  "kind": "direct",
+  "src": "('bush', 8, 5)",
+  "N": 32768,
+  "k": 9,
+  "t": 5,
+  "v": 8,
+  "text": "Bush / Bose orthogonal array OA(8^5; 5, 9, 8)"
+ },
+ "CA_46656_6_7_6.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 2
+  },
+  "N": 46656,
+  "k": 7,
+  "t": 6,
+  "v": 6,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('weight', 7, 6)",
+    "N": 64,
+    "k": 7,
+    "t": 6,
+    "v": 2,
+    "text": "binary weight-class array, weights [0, 2, 4, 6] on 7 columns"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_729_6_7_3.txt",
+    "N": 729,
+    "k": 7,
+    "t": 6,
+    "v": 3,
+    "text": "table array CA_729_6_7_3.txt (Dwyer CA_Database source code \"OA\" (Aaron Dwyer's abbreviation for the method; many of his)"
+   }
+  ]
+ },
+ "CA_591_3_18_6.txt": {
+  "kind": "law",
+  "law": "ck",
+  "params": {},
+  "N": 591,
+  "k": 18,
+  "t": 3,
+  "v": 6,
+  "ing": [
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_361_3_9_6.txt",
+    "N": 361,
+    "k": 9,
+    "t": 3,
+    "v": 6,
+    "text": "table array CA_361_3_9_6.txt (Column extension at fixed N by simulated annealing, starting from the fusion of a Bose ort)"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_46_2_9_6.txt",
+    "N": 46,
+    "k": 9,
+    "t": 2,
+    "v": 6,
+    "text": "table array CA_46_2_9_6.txt (cover starter of Colbourn, Martirosyan, Mullen, Shasha, Sherwood and Yucas 2006 developed )"
+   }
+  ]
+ },
+ "CA_685_3_57_7.txt": {
+  "kind": "direct",
+  "src": "('rms', 7)",
+  "N": 685,
+  "k": 57,
+  "t": 3,
+  "v": 7,
+  "text": "Raaphorst-Moura-Stevens array CA(685; 3, 57, 7)"
+ },
+ "CA_7776_5_6_6.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 2
+  },
+  "N": 7776,
+  "k": 6,
+  "t": 5,
+  "v": 6,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('weight', 6, 5)",
+    "N": 32,
+    "k": 6,
+    "t": 5,
+    "v": 2,
+    "text": "binary weight-class array, weights [0, 2, 4, 6] on 6 columns"
+   },
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_243_5_6_3.txt",
+    "N": 243,
+    "k": 6,
+    "t": 5,
+    "v": 3,
+    "text": "table array CA_243_5_6_3.txt (Dwyer CA_Database source code \"DeMu+\" (Aaron Dwyer's abbreviation for the method; many of )"
+   }
+  ]
+ }
+}
