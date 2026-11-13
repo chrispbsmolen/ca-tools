@@ -1,0 +1,226 @@
+{
+ "CA_1225_2_675_25.txt": {
+  "kind": "cas",
+  "src": "recBoseCA_PCA",
+  "N": 1225,
+  "k": 675,
+  "t": 2,
+  "v": 25,
+  "text": "CAs 0.24.4 construction recBoseCA_PCA (CAs:::labelToCode(\"recBoseCA_PCA\", 2, 675, 25))"
+ },
+ "CA_1248_2_676_25.txt": {
+  "kind": "cas",
+  "src": "recBoseCA_CA",
+  "N": 1248,
+  "k": 676,
+  "t": 2,
+  "v": 25,
+  "text": "CAs 0.24.4 construction recBoseCA_CA (CAs:::labelToCode(\"recBoseCA_CA\", 2, 676, 25))"
+ },
+ "CA_15180_3_11_24.txt": {
+  "kind": "law",
+  "law": "od",
+  "params": {},
+  "N": 15180,
+  "k": 11,
+  "t": 3,
+  "v": 24,
+  "ing": [
+   {
+    "kind": "file",
+    "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_12_3_11_2.txt",
+    "N": 12,
+    "k": 11,
+    "t": 3,
+    "v": 2,
+    "text": "table array CA_12_3_11_2.txt (Paley construction from the quadratic residues of GF(q))"
+   }
+  ]
+ },
+ "CA_15623_3_26_24.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 25
+  },
+  "N": 15623,
+  "k": 26,
+  "t": 3,
+  "v": 24,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 25, 3)",
+    "N": 15625,
+    "k": 26,
+    "t": 3,
+    "v": 25,
+    "text": "Bush / Bose orthogonal array OA(25^3; 3, 26, 25)"
+   }
+  ]
+ },
+ "CA_15625_3_26_25.txt": {
+  "kind": "direct",
+  "src": "('bush', 25, 3)",
+  "N": 15625,
+  "k": 26,
+  "t": 3,
+  "v": 25,
+  "text": "Bush / Bose orthogonal array OA(25^3; 3, 26, 25)"
+ },
+ "CA_19679_3_28_25.txt": {
+  "kind": "law",
+  "law": "fuse",
+  "params": {
+   "from_v": 27
+  },
+  "N": 19679,
+  "k": 28,
+  "t": 3,
+  "v": 25,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 27, 3)",
+    "N": 19683,
+    "k": 28,
+    "t": 3,
+    "v": 27,
+    "text": "Bush / Bose orthogonal array OA(27^3; 3, 28, 27)"
+   }
+  ]
+ },
+ "CA_29929_3_52_24.txt": {
+  "kind": "law",
+  "law": "ck",
+  "params": {},
+  "N": 29929,
+  "k": 52,
+  "t": 3,
+  "v": 24,
+  "ing": [
+   {
+    "kind": "law",
+    "law": "fuse",
+    "params": {
+     "from_v": 25
+    },
+    "N": 15623,
+    "k": 26,
+    "t": 3,
+    "v": 24,
+    "ing": [
+     {
+      "kind": "direct",
+      "src": "('bush', 25, 3)",
+      "N": 15625,
+      "k": 26,
+      "t": 3,
+      "v": 25,
+      "text": "Bush / Bose orthogonal array OA(25^3; 3, 26, 25)"
+     }
+    ]
+   },
+   {
+    "kind": "cas",
+    "src": "fuseBoseCA",
+    "N": 622,
+    "k": 26,
+    "t": 2,
+    "v": 24,
+    "text": "CAs 0.24.4 construction fuseBoseCA (CAs:::labelToCode(\"fuseBoseCA\", 2, 26, 24))"
+   }
+  ]
+ },
+ "CA_30625_3_52_25.txt": {
+  "kind": "law",
+  "law": "ck",
+  "params": {},
+  "N": 30625,
+  "k": 52,
+  "t": 3,
+  "v": 25,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('bush', 25, 3)",
+    "N": 15625,
+    "k": 26,
+    "t": 3,
+    "v": 25,
+    "text": "Bush / Bose orthogonal array OA(25^3; 3, 26, 25)"
+   },
+   {
+    "kind": "cas",
+    "src": "fuseBushtCA",
+    "N": 625,
+    "k": 26,
+    "t": 2,
+    "v": 25,
+    "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 26, 25))"
+   }
+  ]
+ },
+ "CA_331776_4_5_24.txt": {
+  "kind": "law",
+  "law": "comp",
+  "params": {
+   "v1": 2
+  },
+  "N": 331776,
+  "k": 5,
+  "t": 4,
+  "v": 24,
+  "ing": [
+   {
+    "kind": "direct",
+    "src": "('weight', 5, 4)",
+    "N": 16,
+    "k": 5,
+    "t": 4,
+    "v": 2,
+    "text": "binary weight-class array, weights [0, 2, 4] on 5 columns"
+   },
+   {
+    "kind": "law",
+    "law": "comp",
+    "params": {
+     "v1": 2
+    },
+    "N": 20736,
+    "k": 5,
+    "t": 4,
+    "v": 12,
+    "ing": [
+     {
+      "kind": "direct",
+      "src": "('weight', 5, 4)",
+      "N": 16,
+      "k": 5,
+      "t": 4,
+      "v": 2,
+      "text": "binary weight-class array, weights [0, 2, 4] on 5 columns"
+     },
+     {
+      "kind": "file",
+      "src": "/tmp/claude-0/-home-claude/9f76bb07-5702-5447-a392-6baf130e0863/scratchpad/engine/../frame/repo/table/arrays/CA_1296_4_5_6.txt",
+      "N": 1296,
+      "k": 5,
+      "t": 4,
+      "v": 6,
+      "text": "table array CA_1296_4_5_6.txt (Orthogonal array of index one: all v^t words of length t plus their sum mod v as an extra )"
+     }
+    ]
+   }
+  ]
+ },
+ "CA_625_2_26_25.txt": {
+  "kind": "cas",
+  "src": "fuseBushtCA",
+  "N": 625,
+  "k": 26,
+  "t": 2,
+  "v": 25,
+  "text": "CAs 0.24.4 construction fuseBushtCA (CAs:::labelToCode(\"fuseBushtCA\", 2, 26, 25))"
+ }
+}
