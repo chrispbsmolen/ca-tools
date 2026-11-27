@@ -32,7 +32,7 @@ scphfCA,scphfCA,direct,"Expansion of a Sherwood covering perfect hash family (SC
 cphfCA,cphfCA,direct,"Expansion of a covering perfect hash family (CPHF), every way of finding the family"
 dpGeneralized,,recursive,"Direct product generalized (Colbourn and Torres-Jimenez 2013, Section 4); which product each cited row used is not recorded"
 profileProduct,,recursive,"Product from profiles of covering arrays (Colbourn and Torres-Jimenez 2013), named corollary given in the text"
-powerNCT,,recursive,Power N-CT in Colbourn's tables; the hash family sizes are not published
+powerNCT,,recursive,"Power N-CT in Colbourn's tables; its hash family sizes are not published, and were solved from the table for this site (see Learn, Reading Colbourn's labels)"
 powerCZ,,recursive,Power construction of Colbourn and Zhou 2012 with quilted ingredients (Power CZ)
 PHF,,recursive,Perfect hash family construction (strength t array on the symbols of a PHF)
 CMTW,,recursive,"Roux-type constructions of Colbourn, Martirosyan, Trung and Walker 2006"
