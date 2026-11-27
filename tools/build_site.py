@@ -71,6 +71,7 @@ table.lg th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color
 table.lg td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}table.lg td.n,table.lg th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 table.lg td.big{font-weight:800;font-size:1rem}table.lg td.a{white-space:nowrap}table.lg td.rb{min-width:9em}table.lg tr[hidden]{display:none}table.lg a.ck{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}table.lg a.ck{display:inline-block;padding:4px 0}table.lg td.rb .rbi{display:inline-block;padding:4px 0}table.lg td.a a{display:inline-block;padding:4px 0}table.lg tr.closed td{background:#eef6f0}table.lg tr:target td{background:#fff6d6}
 .sub{display:block;color:var(--mute);font-size:.78rem}
+.lbr{font-size:.7em;margin-left:2px}.lbr a{color:var(--mute);text-decoration:none}.lbr a:hover{text-decoration:underline}.lbn{display:inline-block;min-width:1.4em;font-size:.8em;color:var(--mute)}
 .lib{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 24px}
 .pg{background:#fff;aspect-ratio:1/1.3;box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 16px rgba(0,0,0,.07);padding:26px 22px 18px;display:flex;flex-direction:column;font-family:@SERIF@;text-decoration:none;color:inherit}
 .pg .j{font-family:system-ui,sans-serif;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -99,6 +100,7 @@ table.lg td.big{font-weight:800;font-size:1rem}table.lg td.a{white-space:nowrap}
 .statc{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statc div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px}.statc b{display:block;font-size:2.2rem;line-height:1}.statc span{font-size:.85rem;color:var(--mute)}
 .lv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.lv div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}.lv b{display:block}.lv span{font-size:.82rem;color:var(--mute)}
 .gl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 36px;margin:0}.gl div{border-top:1px solid var(--line);padding:14px 0}.gl dt{font-weight:700;margin:0 0 4px}.gl dd{margin:0;font-family:@SERIF@;line-height:1.5;color:#333}
+.gl .gk{grid-column:1/-1}.gkh{margin:12px 0 0;font-family:inherit;color:var(--mute);font-size:.9rem}.gls{margin:4px 0 0;padding-left:18px;border-left:2px solid var(--line)}.gls div{padding:10px 0}
 .board{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
 .bg{display:grid;grid-template-columns:repeat(3,52px);gap:4px}.bg .h{font-size:.72rem;color:var(--mute);text-align:center}
 .bg button{height:52px;border-radius:6px;border:0;font:700 1.2rem system-ui;cursor:pointer}.bg .z{background:#f1f1ec;color:#1d1d1f}.bg .o{background:#1f6b45;color:#fff}
@@ -942,6 +944,23 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
             h("learn/"), (' The <a href="%stable/ca_frame.csv">frame file</a>, which also counts proven derived sizes, has a smaller N at %s of its steps in this range.' % (
                 RAW, format(nd, ","))) if nd else ""))
 
+    LBG = [("Every combination must appear", "A covering array needs at least v<sup>t</sup> rows, one for each combination.", ["R0"]),
+           ("Fixing a symbol", "Fix one column to one symbol and the rows left over form a smaller array, so the lower bound for strength t comes from the lower bound for t minus 1.", ["R2"]),
+           ("Published exact values", "Sizes proven optimal in published work, by search or by proof.", ["R5"]),
+           ("Kleitman and Spencer", "The classical bounds for binary arrays, exact at strength 2.", ["R3", "R7", "R8"]),
+           ("Counting set systems", "Bounds from how many columns a given number of rows can support.", ["R10", "R16", "R17"]),
+           ("Strength 2 above v squared", "Strength 2 arrays on v &ge; 4 symbols need at least v<sup>2</sup>+3 rows once k is past v+1.", ["R12"]),
+           ("No orthogonal array of index one", "When no perfect array exists at a size, the lower bound rises above it.", ["R13", "R14", "R15"]),
+           ("Binary strength 3 stretches", "Extra rows forced at the ends of stretches of binary strength 3.", ["R6"])]
+    lb_slug = lambda name: "rule-" + "-".join(re.sub(r"[^a-z0-9]+", " ", name.lower()).split())
+    rule_grp = {r: (i + 1, name) for i, (name, _, rs) in enumerate(LBG) for r in rs}
+
+    def lb_sup(t, k, v, h):
+        g = rule_grp.get(lower_bounds.lower_bound(t, k, v)[1])
+        if not g:
+            return ""
+        return '<sup class=lbr><a href="%s#%s" title="Lower bound: %s">%s</a></sup>' % (h("bounds/"), lb_slug(g[1]), E(g[1]), "abcdefghij"[g[0] - 1])
+
     for (t, v), c in cells.items():
         path = cell_path(t, v) + "index.html"
         d = 2
@@ -949,10 +968,10 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
         trs = []
         for x in c["rungs"]:
             gap = x["N"] - x["floor"] if x["floor"] is not None else None
-            lbt = format(x["floor"], ",") if x["floor"] is not None else ""
+            lbt = (format(x["floor"], ",") + lb_sup(t, x["k0"], v, h)) if x["floor"] is not None else ""
             gpt = format(gap, ",") if gap is not None else ""
             if x["floor"] is not None and x["floor_k_to"] is not None and x["floor_k_to"] != x["floor"]:
-                lbt = "%s to %s" % (format(x["floor"], ","), format(x["floor_k_to"], ","))
+                lbt = "%s%s to %s%s" % (format(x["floor"], ","), lb_sup(t, x["k0"], v, h), format(x["floor_k_to"], ","), lb_sup(t, x["k1"], v, h))
                 gpt = "%s to %s" % (format(x["N"] - x["floor_k_to"], ","), format(gap, ","))
             if x["closed"]:
                 status = '<span class="tag opt">optimal</span>'
@@ -979,6 +998,8 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                 con_h = '<a class=ck href="%s">%s</a>' % (key, E(con))
             else:
                 con_h = E(con)
+            if x["sha"] and con and x["row"].get("tier") == "VERIFIED" and x["row"].get("source_id") != "S1":
+                con_h = '<span class=sub>array on file</span>' + con_h
 
             def rb_html(p):
                 rb, rrefs = p[3]
@@ -1002,7 +1023,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                            gpt, status, rbh,
                            con_h, ('<span class=sub>builds on %s</span>' % bo) if bo else "", arr))
         body = ('<div class=pageh><div class=in><div><p class=crumb><a href="%s">Table</a> / t=%d v=%d</p><h1>t=%d v=%d</h1>'
-                '<p>Strength %d covering arrays on %d symbols. The smallest known number of rows N for every k up to %s, with the proven lower bound beside it.</p>%s</div>'
+                '<p>Strength %d covering arrays on %d symbols. The smallest known number of rows N for every k up to %s, with the proven lower bound beside it. The small letter beside a lower bound names the rule that proves it, listed on the lower bounds page.</p><p class=mute style="font-size:.88rem">First reached follows the published record as far as we know it, and some dates are uncertain. Corrections are welcome by <a href="%s/issues">issue</a> or email.</p>%s</div>'
                 '<div class=btns><a href="%s">JSON</a><a href="%s">CSV</a><a class=d href="https://doi.org/%s">Cite</a></div></div></div>'
                 '<div class=stats><div><b class=num>%d</b><span>sizes</span></div><div><b class=num>%d</b><span>verified</span></div>'
                 '<div><b class=num>%d</b><span>optimal</span></div><div><b class=num>%d</b><span><a href="%s">new since the first release</a></span></div>'
@@ -1010,7 +1031,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                 '<main class=wrapw><div class=chips role=group aria-label="Show"><span class=l>Show</span><button type=button data-f=all aria-pressed=true>All sizes</button><button type=button data-f=arr aria-pressed=false>With an array on file</button><button type=button data-f=ver aria-pressed=false>Verified</button><button type=button data-f=opt aria-pressed=false>Optimal</button><span class=mute id=fn aria-live=polite></span></div>'
                 '<table class=lg><thead><tr><th class=n>k</th><th class=n>best N</th><th class=n>lower bound</th><th class=n>gap</th><th>status</th>'
                 '<th>first reached by</th><th>construction</th><th>array</th></tr></thead><tbody>%s</tbody></table></main>') % (
-            h(""), t, v, t, v, t, v, format(c["kmax"], ","), rule_p(t, v, c, h), h("t%d/v%d.json" % (t, v)), h("t%d/v%d.csv" % (t, v)), DOI,
+            h(""), t, v, t, v, t, v, format(c["kmax"], ","), REPO_URL, rule_p(t, v, c, h), h("t%d/v%d.json" % (t, v)), h("t%d/v%d.csv" % (t, v)), DOI,
             len(c["rungs"]), c["nver"], c["nopt"], c["nnew"], h("learn/") + "#new-since-the-first-release", c["last"], "".join(trs))
         cld = json.dumps({"@context": "https://schema.org", "@type": "Dataset",
                           "name": "CAN(t, k, v) best known covering array sizes, t=%d v=%d" % (t, v),
@@ -1389,6 +1410,20 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                  ". Younis is presumably %s, as Gr\u00f6mping writes. TJ-AG is Torres-Jimenez and Avila-George: Gr\u00f6mping gives their 2016 work, and the rows here link the closest paper in the library, %s. "
                  "Other codes, such as CL, CLS, WCS, TJ-IM, TJ-RC, C and TATA, are kept as Colbourn wrote them. Their rows link the paper of the construction they use where it is known; the TATA row names none." % (rl("Younis and Zamli 2011"), rl("Torres-Jimenez et al. 2018")))]
 
+    def colbourn_key_html():
+        tags = {"T followed by a number", "c", "+1, +2", "S followed by a number", "Arc"}
+        items = colbourn_key()
+        sub = "".join('<div><dt>%s</dt><dd>%s</dd></div>' % (E(x), y) for x, y in items if x in tags)
+        out = []
+        for x, y in items:
+            if x in tags:
+                continue
+            if x == "Power CTq^s":
+                out.append('<div class=gk><dt>%s</dt><dd>%s<p class=gkh>The parts that can follow the base in a Power CT label:</p><dl class="gl gls">%s</dl></dd></div>' % (E(x), y, sub))
+            else:
+                out.append('<div><dt>%s</dt><dd>%s</dd></div>' % (E(x), y))
+        return "".join(out)
+
     import lexicon
     fams, pats = lexicon.load()
     famd = {f["family"]: f for f in fams}
@@ -1600,7 +1635,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
              'This key says what is known, and where it is not. The main written account is <a href="https://www1.bht-berlin.de/FB_II/reports/Report-2026-001.pdf">Gr\u00f6mping 2026</a>: Section 5.2 for the derive step and Appendices A and B for the author codes.</p><dl class=gl>%s</dl></div></main>') % (
         SERIF, SERIF, SERIF, btns, site.href(1, "t2/v2/"), site.href(1, "t3/v2/"), site.href(1, "t2/v3/"), site.href(1, "t3/v3/"),
         "".join('<div id="%s"><dt>%s</dt><dd>%s</dd></div>' % (re.sub(r"[^a-z0-9]+", "-", x.lower()).strip("-"), E(x), E(y)) for x, y in gl),
-        "".join('<div><dt>%s</dt><dd>%s</dd></div>' % (E(x), y) for x, y in colbourn_key()))
+        colbourn_key_html())
     lscript = ("<script>function upd(){var b=[].slice.call(document.querySelectorAll('.bg button'));var g=[[],[],[],[]];b.forEach(function(x){g[+x.dataset.r][+x.dataset.c]=x.textContent});"
                "var out='';[[0,1],[0,2],[1,2]].forEach(function(p){var s={};g.forEach(function(r){s[r[p[0]]+r[p[1]]]=1});var seen=Object.keys(s).sort();"
                "var all=seen.length==4,miss=['00','01','10','11'].filter(function(z){return !s[z]});out+='<div><span>columns '+(p[0]+1)+' and '+(p[1]+1)+'</span><b>'+seen.join(' ')+'</b><span class='+(all?'ok':'miss')+'>'+(all?'all 4':'missing: '+miss.join(' '))+'</span></div>'});"
@@ -1685,14 +1720,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
           '<main class=wrapw><table class=cl><thead><tr><th>date</th><th>submitter</th><th>submission</th><th>sizes that fell</th><th>evidence</th></tr></thead><tbody>%s</tbody></table></main>') % "".join(trs)
     site.page("changelog/index.html", "Updates: records in the covering array table", "Every submission to the covering array table with submitter, date and the sizes that fell.", cl, "Updates")
 
-    groups = [("Every combination must appear", "A covering array needs at least v<sup>t</sup> rows, one for each combination.", ["R0"]),
-              ("Fixing a symbol", "Fix one column to one symbol and the rows left over form a smaller array, so the lower bound for strength t comes from the lower bound for t minus 1.", ["R2"]),
-              ("Published exact values", "Sizes proven optimal in published work, by search or by proof.", ["R5"]),
-              ("Kleitman and Spencer", "The classical bounds for binary arrays, exact at strength 2.", ["R3", "R7", "R8"]),
-              ("Counting set systems", "Bounds from how many columns a given number of rows can support.", ["R10", "R16", "R17"]),
-              ("Strength 2 above v squared", "Strength 2 arrays on v &ge; 4 symbols need at least v<sup>2</sup>+3 rows once k is past v+1.", ["R12"]),
-              ("No orthogonal array of index one", "When no perfect array exists at a size, the lower bound rises above it.", ["R13", "R14", "R15"]),
-              ("Binary strength 3 stretches", "Extra rows forced at the ends of stretches of binary strength 3.", ["R6"])]
+    groups = list(LBG)
     byrule = collections.defaultdict(list)
     for r in lb:
         byrule[r[5]].append(r)
@@ -1712,8 +1740,8 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                     if i in R.REFS:
                         cnt[i] += 1
         refs = ", ".join('<a href="%s">%s</a>' % (site.href(1, ref_path(i)), E(R.ref_label(i))) for i, _ in cnt.most_common(3))
-        rl += '<div class=rule><div><h2>%s</h2><p>%s</p></div><span class=cnt><b>%s</b> lower bounds</span><span class=refs>%s</span></div>' % (
-            name, desc, format(n, ","), '<span class=mute>a general step, applied to bounds from the other rules</span>' if rs == ["R2"] else (refs or '<span class=mute>definition</span>'))
+        rl += '<div class=rule id="%s"><div><h2><span class=lbn>%s</span> %s</h2><p>%s</p></div><span class=cnt><b>%s</b> lower bounds</span><span class=refs>%s</span></div>' % (
+            lb_slug(name), "abcdefghij"[groups.index((name, desc, rs))], name, desc, format(n, ","), '<span class=mute>a general step, applied to bounds from the other rules</span>' if rs == ["R2"] else (refs or '<span class=mute>definition</span>'))
     tot_r = sum(len(c["rungs"]) for c in cells.values())
     tot_o = sum(c["nopt"] for c in cells.values())
     bd = ('<div class=pageh><div class=in><div><h1>Lower bounds</h1><p>A lower bound is the fewest rows any covering array could possibly have, proven by a theorem. '
