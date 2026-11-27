@@ -82,6 +82,7 @@ group-ms2005,2004-10-28,paper,"doi:10.1002/jcd.20035, Crossref published-online,
 hdm-ljy2009,2008-09-11,paper,"doi:10.1007/s10623-008-9235-1, Crossref published-online, exact day"
 ipo-wcs2022,2022-05-31,paper,"doi:10.1016/j.amc.2022.126952, Crossref published-print, month only, last day of the month used"
 ipogf-fllkk2008,2008-09-30,paper,"doi:10.6028/jres.113.022, Crossref published-print, month only, last day of the month used"
+jeserigk-ckrs-coset-2026-11,2026-11-26T22:00:10Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/91
 jeserigk-pgl-ccl-2026-11,2026-11-25T14:44:16Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/88
 kim-t3-v4-2026-11,2026-11-13,email,email to the maintainer with the array and its SHA-256
 kim-t3-v4-2026-11,2026-11-15T10:20:20Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/81
@@ -208,6 +209,7 @@ smolen-2026-11-t5-z63-added-rows,2026-11-13T22:38:34Z,pushed,commit 2446fe363551
 smolen-2026-11-t6-259at18,2026-11-13T03:41:02Z,pushed,commit 33b9c051333b
 smolen-2026-11-t6-718,2026-11-03T06:04:55Z,pushed,commit 9cb26316a4fa
 smolen-2026-11-t6-k15,2026-11-03T18:01:38Z,pushed,commit 0e883ac9b510
+smolen-2026-11-t7-10-even-weight,2026-11-27T00:01:46Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/92
 starter-lcdst2012,2012-03-31,paper,"doi:10.1016/j.disc.2011.10.026, Crossref published-print, month only, last day of the month used"
 tabu-n2004,2004-03-31,paper,"doi:10.1016/S0166-218X(03)00291-9, Crossref published-print, month only, last day of the month used"
 tabu-wc2009,2009-01-31,paper,"doi:10.1016/j.jspi.2008.05.020, Crossref published-print, month only, last day of the month used"
