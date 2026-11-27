@@ -844,7 +844,7 @@ def main():
                                       f=[[r[2], r[3], r[4]] for r in R.LB.get((t, v), ())],
                                       s=[len(c["rungs"]), c["nver"], c["nopt"], c["nnew"], c["kmax"], c["rungs"][0]["N"], c["rungs"][0]["k1"], c["last"], c["kmin"]],
                                       p=h0(cell_path(t, v)))
-    jsonld = json.dumps({"@context": "https://schema.org", "@type": "Dataset",
+    jsonld = json.dumps({"@context": "https://schema.org", "@type": "Dataset", "@id": BASE + "#dataset",
                          "name": "Covering Array Tools: best known covering arrays CA(N; t, k, v)",
                          "alternateName": ["covering array table", "ca-tools table"],
                          "description": "Best known sizes of covering arrays CA(N; t, k, v) for strengths 2 to 6 with up to 25 symbols and binary arrays at strengths 7 to 10, with proven lower bounds, credit, construction, published sources and checked arrays to download. %d entries and %d arrays to download." % (nrows, narr),
@@ -1018,7 +1018,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                           "url": BASE + path[:-len("index.html")], "identifier": "https://doi.org/" + DOI,
                           "license": "https://creativecommons.org/licenses/by/4.0/", "isAccessibleForFree": True,
                           "creator": {"@type": "Person", "name": "Christopher Smolen"}, "dateModified": c["last"][:10],
-                          "isPartOf": {"@type": "Dataset", "name": "Covering Array Table: best known covering arrays CA(N; t, k, v)", "url": BASE},
+                          "isPartOf": {"@id": BASE + "#dataset"},
                           "distribution": [{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": BASE + "t%d/v%d.json" % (t, v)},
                                            {"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": BASE + "t%d/v%d.csv" % (t, v)}]}, ensure_ascii=False)
         site.page(path, "CAN(%d, k, %d): strength %d covering arrays on %d symbols" % (t, v, t, v),
