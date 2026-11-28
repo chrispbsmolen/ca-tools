@@ -952,6 +952,11 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
            ("Strength 2 above v squared", "Strength 2 arrays on v &ge; 4 symbols need at least v<sup>2</sup>+3 rows once k is past v+1.", ["R12"]),
            ("No orthogonal array of index one", "When no perfect array exists at a size, the lower bound rises above it.", ["R13", "R14", "R15"]),
            ("Binary strength 3 stretches", "Extra rows forced at the ends of stretches of binary strength 3.", ["R6"])]
+    def fr_here(row):
+        if row is None or row.get("tier") == "CITED":
+            return ""
+        return "first reached here, %s; no earlier published source known" % ((row.get("entered") or "")[:4] or "date not recorded")
+
     lb_slug = lambda name: "rule-" + "-".join(re.sub(r"[^a-z0-9]+", " ", name.lower()).split())
     rule_grp = {r: (i + 1, name) for i, (name, _, rs) in enumerate(LBG) for r in rs}
 
@@ -1002,6 +1007,10 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                 con_h = '<span class=sub>array on file</span>' + con_h
 
             def rb_html(p):
+                fh = fr_here(p[2])
+                return rb_html0(p) + ('<span class=sub>%s</span>' % fh if fh else "")
+
+            def rb_html0(p):
                 rb, rrefs = p[3]
                 if rb:
                     return ('<a class=ck href="%s">%s</a>' % (key, E(rb))) if p[2].get("source_id") == "S1" else E(rb)
@@ -1048,7 +1057,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
                      status="optimal" if x["closed"] else ("verified" if x["verified"] else "cited"),
                      credit=x["credit"], construction=x["construction"], builds_on=x["builds_on"], array_sha256=x["sha"],
                      array_page=(BASE + array_path[x["sha"]]) if x["sha"] else "",
-                     first_reached_by="; ".join(((("k = %d: " % p[0] if p[0] == p[1] else "k = %d to %d: " % (p[0], p[1])) if len(x["pieces"]) > 1 else "") + (p[3][0] or ", ".join(R.ref_label(i) for i in p[3][1]))) for p in x["pieces"]),
+                     first_reached_by="; ".join(((("k = %d: " % p[0] if p[0] == p[1] else "k = %d to %d: " % (p[0], p[1])) if len(x["pieces"]) > 1 else "") + (p[3][0] or ", ".join(R.ref_label(i) for i in p[3][1])) + (" (%s)" % fr_here(p[2]) if fr_here(p[2]) else "")) for p in x["pieces"]),
                      builds_on_names=[R.ref_label(i) for i in x["builds_on"]],
                      disputed=x["disputed"],
                      array_by=array_by_text(R, x["row"]) if x["sha"] else ((array_by_text(R, x["cert_row"]) if R.credit_of(x["cert_row"]) else "") if x["cert"] else ""),
@@ -1115,8 +1124,10 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
         if cf:
             fr_dd += '<dt>family</dt><dd><a href="%s">%s</a>, <a href="%s">certificate</a></dd>' % (h("cphf/t%d/q%d/" % (cf["t"], cf["q"])), E(cf["family"]), RAW + "table/certificates/" + cf["file"])
         if rung is not None and n == rung["N"]:
-            rb, rrefs = next(p for p in rung["pieces"] if p[0] <= k <= p[1])[3]
-            fr_dd += "<dt>size first reached by</dt><dd>%s</dd>" % (E(rb) if rb else " ".join('<span class=rbi><a href="%s">%s</a>%s</span>' % (h(ref_path(i)), E(R.ref_label(i)), "," if j < len(rrefs) - 1 else "") for j, i in enumerate(rrefs)))
+            pc = next(p for p in rung["pieces"] if p[0] <= k <= p[1])
+            rb, rrefs = pc[3]
+            fh = fr_here(pc[2])
+            fr_dd += "<dt>size first reached by</dt><dd>%s%s</dd>" % ((E(rb) if rb else " ".join('<span class=rbi><a href="%s">%s</a>%s</span>' % (h(ref_path(i)), E(R.ref_label(i)), "," if j < len(rrefs) - 1 else "") for j, i in enumerate(rrefs))), ('<span class=sub>%s</span>' % fh if fh else ""))
         body = ('<main class=wrapw><div class=arr><section><p class=crumb><a href="%s">Table</a> / <a href="%s">t=%d v=%d</a> / k = %s</p>'
                 '<h1 style="font-size:2rem;margin:0 0 4px">%s %s</h1><p class=mute style="margin:0 0 20px">An array of %s rows and %s columns on %d symbols in which every %d columns show all %s combinations.</p>'
                 '<dl>%s%s<dt>entered</dt><dd>%s</dd><dt>construction</dt><dd>%s</dd><dt>lower bound</dt><dd>%s</dd>'
@@ -1609,7 +1620,7 @@ nb.forEach(function(n,i){J('t'+n[1]+'/v'+n[3]+'.json').then(function(dd){var y=r
           ("k, columns", "How many factors, settings or parameters the array covers."), ("N, rows", "How many rows, or tests, the array uses. Smaller is better."),
           ("Size", "A stretch of k where the smallest known N stays the same. Each cell of the table is a staircase of sizes, one per row of its table."),
           ("Lower bound", "A proven bound on N: no array can have fewer rows. Sometimes called the floor."),
-          ("First reached by", "Who first reached that size, from the earliest entry, paper or table that reaches it. Rows from Colbourn's tables name the papers they build on, or Colbourn's tables with his label when they name none. When an earlier entry reached the same N over part of a size's range of k, each part is named with its own range."),
+          ("First reached by", "Who first reached that size, from the earliest entry, paper or table that reaches it. Rows from Colbourn's tables name the papers they build on, or Colbourn's tables with his label when they name none. When an earlier entry reached the same N over part of a size's range of k, each part is named with its own range. Where an array submitted here is the first entry to reach a size, it is marked \"first reached here\" with its year: no earlier published source is known to the table, which does not mean none exists. Corrections are welcome."),
           ("Array", "The array file kept for that size and who built it. It can be a later array of the same size: the builder of the file is not always the first to reach the size."),
           ("Verified", "An explicit array of that size was checked here exactly: every set of t columns, or, for a construction certificate, every step of the recipe that builds it. The size says where the array is: a file to download, a public deposit, or the family or construction certificate that builds it. Six verified best known sizes rest on arrays checked in August 2026 whose files are no longer stored, because their only public source is the CAs package; their rows keep the size, the hash and the check."),
           ("Cited", "The size is traceable to a dated table or a publication. No array for it has been checked here yet."),
