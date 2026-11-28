@@ -14204,7 +14204,6 @@ t,v,k,best_N,smallest_array_N,proven_floor,status
 6,25,9351,18088839984,,245312500,no_array
 6,25,9662,18226422896,,245312500,no_array
 6,25,10000,18232119844,,245312500,no_array
-7,2,9,170,,170,no_array
 7,2,10,222,,214,no_array
 7,2,11,240,,216,no_array
 7,2,12,256,,220,no_array
@@ -14228,7 +14227,7 @@ t,v,k,best_N,smallest_array_N,proven_floor,status
 7,2,30,8120,,288,no_array
 7,2,31,8990,,288,no_array
 7,2,32,9920,,288,no_array
-8,2,10,341,,340,no_array
+8,2,10,341,341,340,beat_best
 8,2,11,448,,428,no_array
 8,2,12,480,,432,no_array
 8,2,13,512,,440,no_array
@@ -14252,7 +14251,7 @@ t,v,k,best_N,smallest_array_N,proven_floor,status
 8,2,31,35960,,576,no_array
 8,2,32,40920,,576,no_array
 8,2,33,46376,,576,no_array
-9,2,11,682,,680,no_array
+9,2,11,682,682,680,beat_best
 9,2,12,896,,856,no_array
 9,2,13,960,,864,no_array
 9,2,14,1024,,880,no_array
@@ -14276,6 +14275,7 @@ t,v,k,best_N,smallest_array_N,proven_floor,status
 9,2,32,71920,,1152,no_array
 9,2,33,81840,,1152,no_array
 9,2,34,92752,,1152,no_array
+10,2,12,1365,1365,1360,beat_best
 10,2,13,1792,,1712,no_array
 10,2,14,1920,,1728,no_array
 10,2,15,2048,,1760,no_array

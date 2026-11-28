@@ -210,6 +210,7 @@ smolen-2026-11-t6-259at18,2026-11-13T03:41:02Z,pushed,commit 33b9c051333b
 smolen-2026-11-t6-718,2026-11-03T06:04:55Z,pushed,commit 9cb26316a4fa
 smolen-2026-11-t6-k15,2026-11-03T18:01:38Z,pushed,commit 0e883ac9b510
 smolen-2026-11-t7-10-even-weight,2026-11-27T00:01:46Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/92
+smolen-2026-11-t7-10-johnson-entringer,2026-11-27T22:58:43Z,pull_request,https://github.com/chrispbsmolen/ca-tools/pull/93
 starter-lcdst2012,2012-03-31,paper,"doi:10.1016/j.disc.2011.10.026, Crossref published-print, month only, last day of the month used"
 tabu-n2004,2004-03-31,paper,"doi:10.1016/S0166-218X(03)00291-9, Crossref published-print, month only, last day of the month used"
 tabu-wc2009,2009-01-31,paper,"doi:10.1016/j.jspi.2008.05.020, Crossref published-print, month only, last day of the month used"
