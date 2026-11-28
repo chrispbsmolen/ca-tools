@@ -18,6 +18,9 @@ t,v,k,bound,exact,reference,detail
 6,2,8,85,1,cube-je1989,Johnson-Entringer 1989 (floor(2^8/3))
 6,2,9,107,0,lb-it2019,"Izquierdo-Marquez, Torres-Jimenez 2019"
 7,2,9,170,1,cube-je1989,Johnson-Entringer 1989
+8,2,10,341,1,cube-je1989,Johnson-Entringer 1989 (floor(2^10/3)); covering array form in CKRS 2010 Section 5.1
+9,2,11,682,1,cube-je1989,Johnson-Entringer 1989 (floor(2^11/3)); covering array form in CKRS 2010 Section 5.1
+10,2,12,1365,1,cube-je1989,Johnson-Entringer 1989 (floor(2^12/3)); covering array form in CKRS 2010 Section 5.1
 2,3,5,11,1,lb-khks2023;lb-kmnnos2020,"Kokkala et al., arXiv 1901.03594, Table 2; SBA balca (CAK(10;2,3)=4)"
 2,3,6,12,1,lb-khks2023;lb-kmnnos2020,"Kokkala et al.; SBA balca (CAK(11;2,3)=5)"
 2,3,8,13,1,lb-khks2023;lb-kmnnos2020,"Kokkala et al.; SBA balca (CAK(12;2,3)=7)"
